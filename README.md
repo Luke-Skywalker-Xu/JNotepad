@@ -12,7 +12,7 @@ qq群：386279455
 
 #### 安装教程
 
-1.  Windows Windows，可以直接使用我编译好的可执行程序或自己编译
+1.  Windows 平台，可以直接使用我编译好的可执行程序或自己编译
 
 [gitee-download]: https://gitee.com/jcnc-PC/jnotepad/releases
 - [下载][gitee-download]
