@@ -19,7 +19,7 @@ qq群：386279455
 
 2. Linux/MacOS 平台，克隆后自行编译
 
-<pre><code>clone https://gitee.com/jcnc-PC/jnotepad.git</code></pre>
+<pre><code>git clone https://gitee.com/jcnc-PC/jnotepad.git</code></pre>
 
 
 
