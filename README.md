@@ -4,6 +4,8 @@
 ![](https://img.shields.io/badge/Ubuntu-Passing-49%2C198%2C84.svg?style=falt&logo=Ubuntu)
 ![](https://img.shields.io/badge/MacOS-Passing-49%2C198%2C84.svg?style=falt&logo=Apple)
 
+qq群：386279455
+
 #### 软件运行截图
 - Windows 平台
   ![linux](screenshot/windows-1.png)
