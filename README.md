@@ -1,14 +1,24 @@
 # Jnotepad
 
+![](https://img.shields.io/badge/Windows-Passing-49%2C198%2C84.svg?style=falt&logo=Windows)
+![](https://img.shields.io/badge/Ubuntu-Passing-49%2C198%2C84.svg?style=falt&logo=Ubuntu)
+![](https://img.shields.io/badge/MacOS-Passing-49%2C198%2C84.svg?style=falt&logo=Apple)
+
+#### 软件运行截图
+- Windows 平台
+  ![linux](screenshot/windows-1.png)
+
 #### 安装教程
 
-1.  Windows 平台，你可以直接使用我编译好的可执行程序:
+1.  Windows Windows，可以直接使用我编译好的可执行程序或自己编译
 
 [gitee-download]: https://gitee.com/jcnc-PC/jnotepad/releases
 - [下载][gitee-download]
 
+2. Linux/MacOS 平台，克隆后自行编译
 
-#### 使用说明
+<pre><code>clone https://gitee.com/jcnc-PC/jnotepad.git</code></pre>
+
 
 
 #### 参与贡献
