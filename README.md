@@ -15,11 +15,12 @@ qq群：386279455
 1.  Windows 平台，可以直接使用我编译好的可执行程序或自己编译
 
 [gitee-download]: https://gitee.com/jcnc-PC/jnotepad/releases
+[git clone]:git clone https://gitee.com/jcnc-PC/jnotepad.git
 - [下载][gitee-download]
 
 2. Linux/MacOS 平台，克隆后自行编译
 
-<pre><code>git clone https://gitee.com/jcnc-PC/jnotepad.git</code></pre>
+<pre><code>[git clone]</code></pre>
 
 
 
