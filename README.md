@@ -1,4 +1,4 @@
-# Jnotepad
+# JNotepad
 
 ![](https://img.shields.io/badge/Windows-Passing-49%2C198%2C84.svg?style=falt&logo=Windows)
 ![](https://img.shields.io/badge/Ubuntu-Passing-49%2C198%2C84.svg?style=falt&logo=Ubuntu)
@@ -20,7 +20,7 @@ qq群：386279455
 
 2. Linux/MacOS 平台，克隆后自行编译
 
-<pre><code>git clone https://gitee.com/jcnc-PC/jnotepad.git</code></pre>
+<pre><code>git clone https://gitee.com/jcnc-org/JNotepad.git</code></pre>
 
 
 

@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
-public class JnotePad extends Application {
+public class JNotepad extends Application {
     String iconSrc = "img/icon.png";
+
+    String Title = "JNotepad";
 
     // 定义菜单栏
     MenuBar menuBar;
@@ -31,7 +33,7 @@ public class JnotePad extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("JnotePad");
+        primaryStage.setTitle(Title);
 
         // 创建菜单栏并添加菜单项
         menuBar = new MenuBar();
