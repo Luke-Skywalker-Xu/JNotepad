@@ -1,10 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="JNotepad">
-    <output-path>$PROJECT_DIR$/out/artifacts/JNotepad</output-path>
+  <artifact type="javafx" name="JnotePad">
+    <output-path>$PROJECT_DIR$/out/artifacts/JnotePad</output-path>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="JNotepad" />
-        <option name="convertCss2Bin" value="true" />
         <option name="description" value="JNotepad" />
         <option name="htmlPlaceholderId" value="" />
         <option name="icons">
@@ -17,12 +16,12 @@
         <option name="nativeBundle" value="all" />
         <option name="title" value="JNotepad" />
         <option name="vendor" value="JCNC-Luke" />
-        <option name="version" value="1.0.1" />
+        <option name="version" value="1.0.0" />
       </options>
     </properties>
     <root id="root">
-      <element id="archive" name="JNotepad.jar">
-        <element id="module-output" name="JNotepad" />
+      <element id="archive" name="JnotePad.jar">
+        <element id="module-output" name="JnotePad" />
       </element>
     </root>
   </artifact>

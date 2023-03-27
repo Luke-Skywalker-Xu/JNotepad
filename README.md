@@ -8,9 +8,9 @@ QQ群：386279455
 
 #### 软件运行截图
 - Windows 平台
-  ![linux](screenshot/windows-1.png)
+  ![Windows](screenshot/windows-1.png)
 - MacOS 平台   
-![](../macOS100.png)
+  ![MacOS](screenshot/MacOS-1.png)
 #### 安装教程
 
 1.  Windows 平台，可以直接使用我编译好的可执行程序或自己编译
