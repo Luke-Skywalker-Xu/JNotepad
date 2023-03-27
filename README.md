@@ -10,7 +10,7 @@ QQ群：386279455
 - Windows 平台 
   ![Windows](screenshot/windows-1.png)
 - MacOS 平台   
-  ![MacOS](screenshot/MacOS-1.png)
+  ![MacOS](screenshot/Mac0S-1.png)
 #### 安装教程
 
 1.  Windows 平台，可以直接使用我编译好的可执行程序或自己编译
