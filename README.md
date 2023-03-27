@@ -7,7 +7,7 @@
 QQ群：386279455
 
 #### 软件运行截图
-- Windows 平台
+- Windows 平台 
   ![Windows](screenshot/windows-1.png)
 - MacOS 平台   
   ![MacOS](screenshot/MacOS-1.png)
