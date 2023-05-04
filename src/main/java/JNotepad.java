@@ -64,6 +64,13 @@ public class JNotepad extends Application {
         root.setBottom(statusLabel);
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
+        TextArea textArea = new TextArea(); // 创建新的文本编辑区
+        Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
+        tab.setContent(textArea);
+        tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().select(tab);
+        updateStatusLabel(textArea);
+
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
@@ -76,7 +83,7 @@ public class JNotepad extends Application {
         @Override
         public void handle(ActionEvent event) {
             TextArea textArea = new TextArea(); // 创建新的文本编辑区
-            Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
+            Tab tab = new Tab("新建文本 " + ++tabIndex); // 创建新的Tab页
             tab.setContent(textArea);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
@@ -154,6 +161,8 @@ public class JNotepad extends Application {
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {
             FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName("新建文本");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
                 try {
