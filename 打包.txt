@@ -1,0 +1,2 @@
+jpackage --name JNotepad --type app-image -m org.jcnc.jnotepad/org.jcnc.jnotepad.JNotepad --runtime-image .\target\app\ --icon src/main/resources/img/icon.ico
+
