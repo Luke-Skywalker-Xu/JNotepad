@@ -61,7 +61,7 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0");
+        statusLabel = new Label("g行: 1 \t列: 1 \t字数: 0");
         root.setBottom(statusLabel);
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
