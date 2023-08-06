@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -13,9 +14,7 @@ import javafx.stage.Stage;
 import java.io.*;
 
 public class JNotepad extends Application {
-//    String iconSrc = "img/icon.png";
-//
-//    String Title = "JNotepad";
+    String Title = "JNotepad";
 
     // 定义菜单栏
     MenuBar menuBar;
@@ -34,7 +33,7 @@ public class JNotepad extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-       // primaryStage.setTitle(Title);
+        primaryStage.setTitle(Title);
 
         // 创建菜单栏并添加菜单项
         menuBar = new MenuBar();
@@ -61,7 +60,7 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("g行: 1 \t列: 1 \t字数: 0");
+        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0");
         root.setBottom(statusLabel);
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
@@ -75,7 +74,8 @@ public class JNotepad extends Application {
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
-      //  primaryStage.getIcons().add(new Image(iconSrc));
+        primaryStage.getIcons().add(new Image("file:src/main/resources/img/icon.png"));
+
         primaryStage.show();
     }
 
