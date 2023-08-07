@@ -63,12 +63,13 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>org.jcnc.jnotepad/org.jcnc.jnotepad.JNotepad</mainClass>
-                            <launcher>app</launcher>
-                            <jlinkZipName>app</jlinkZipName>
-                            <jlinkImageName>app</jlinkImageName>
+                            <launcher>JNotepad</launcher>
+                            <jlinkZipName>JNotepad</jlinkZipName>
+                            <jlinkImageName>JNotepad</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
                             <noHeaderFiles>true</noHeaderFiles>
+                            <compress>2</compress>
                         </configuration>
                     </execution>
                 </executions>
