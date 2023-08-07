@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Objects;
 
 public class JNotepad extends Application {
     String Title = "JNotepad";
@@ -74,7 +75,8 @@ public class JNotepad extends Application {
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image("file:src/main/resources/img/icon.png"));
+
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(JNotepad.class.getResource("/img/icon.png")).toExternalForm()));
 
         primaryStage.show();
     }
