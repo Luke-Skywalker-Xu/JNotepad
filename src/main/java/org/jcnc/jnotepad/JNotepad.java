@@ -124,7 +124,6 @@ public class JNotepad extends Application {
             }
         }
     }
-
     // 保存文件事件处理器
     private class SaveFileEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -132,7 +131,11 @@ public class JNotepad extends Application {
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
             if (selectedTab != null) {
                 File file = (File) selectedTab.getUserData(); // 获取当前Tab页对应的文件对象
-                if (file.exists()) {
+                if (file == null) {
+                    // If no file is associated (newly created tab), perform Save As logic
+                    saveAsFile();
+                } else {
+                    // File is associated, proceed with regular save logic
                     try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                         TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
@@ -143,13 +146,11 @@ public class JNotepad extends Application {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-                } else {
-                    saveAsFile();
                 }
             }
         }
     }
+
 
     // 另存为文件事件处理器
     private class SaveAsFileEventHandler implements EventHandler<ActionEvent> {
