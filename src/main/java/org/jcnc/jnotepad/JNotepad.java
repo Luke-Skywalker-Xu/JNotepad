@@ -66,6 +66,22 @@ public class JNotepad extends Application {
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            Tab tab = tabPane.getSelectionModel().getSelectedItem();
+            if (tab != null) {
+                File file = (File) tab.getUserData();
+                if (file != null) {
+                    try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                        writer.write(newValue); // 写入新的文本内容
+                        writer.flush();
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
         Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
         tab.setContent(textArea);
         tabPane.getTabs().add(tab);
@@ -112,9 +128,29 @@ public class JNotepad extends Application {
                     String text = textBuilder.toString();
 
                     TextArea textArea = new TextArea(text); // 创建新的文本编辑区
+
+                    // 在创建文本编辑区后添加文本变更监听器
+                    textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+                        Tab tab = tabPane.getSelectionModel().getSelectedItem();
+                        if (tab != null) {
+                            File f = (File) tab.getUserData();
+                            if (f != null) {
+                                try {
+                                    BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+                                    writer.write(newValue); // 写入新的文本内容
+                                    writer.flush();
+                                    writer.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
                     Tab tab = new Tab(file.getName()); // 创建新的Tab页
+
                     tab.setContent(textArea);
                     tab.setUserData(file); // 将文件对象保存到Tab页的UserData中
+
                     tabPane.getTabs().add(tab);
                     tabPane.getSelectionModel().select(tab);
                     updateStatusLabel(textArea);
