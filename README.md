@@ -22,6 +22,8 @@ JNotepad 是一个使用 JavaFX 构建的简单文本编辑器，允许用户创
 
 [gitee-download]: https://gitee.com/jcnc-org/JNotepad/releases
 [java-download]: https://www.oracle.com/cn/java/technologies/downloads/
+[qq-url]: http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zOfwWb1lcle68cbEdJCjSIp3Itx0nEC0&authKey=bOsZFT9OVYZpZQbS6IYO4onBQoeBorF5nanMEi1G%2FgPbzmUkOweXBo9qB0G34R5K&noverify=0&group_code=386279455
+
 
 
 - [下载][gitee-download]
@@ -71,7 +73,7 @@ JNotepad 是一个使用 JavaFX 构建的简单文本编辑器，允许用户创
 
 1. Fork 本仓库
 1. 加入JCNC社区
-1. 加入QQ群:386279455
+1. [加入QQ群:386279455][qq-url]
 1. 新建分支
 1. 提交代码
 1. 新建 Pull Request
