@@ -7,7 +7,6 @@
 
 JNotepad 是一个使用 JavaFX 构建的简单文本编辑器，允许用户创建、打开、编辑和保存文本文件。它支持多个标签，每个标签包含一个文本编辑区域。该编辑器提供基本功能，如创建新文件、打开现有文件、保存文件和使用不同名称保存文件。
 
-QQ群:386279455
 ## 功能介绍
 
 - 创建空白文本区域的新文件。
@@ -61,7 +60,7 @@ QQ群:386279455
             <artifactId>javafx-controls</artifactId>
             <version>17.0.1</version>
         </dependency>
-
+    <dependencies>
  ## 软件运行截图
 - Windows 平台
   ![Windows](screenshot/windows-1.png)
