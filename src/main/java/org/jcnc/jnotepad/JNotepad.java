@@ -12,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.List;
 import java.util.Objects;
 
 public class JNotepad extends Application {
@@ -31,6 +32,7 @@ public class JNotepad extends Application {
 
     // 定义状态栏
     Label statusLabel;
+    boolean a = true;
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,14 +67,25 @@ public class JNotepad extends Application {
         root.setBottom(statusLabel);
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
+        List<String> rawParameters = getParameters().getRaw();
+
+        //关联文件打开
+        if (!rawParameters.isEmpty()) {
+            String filePath = rawParameters.get(0);
+            openAssociatedFile(filePath);
+        }
+
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
         autoSave(textArea); // 自动保存
 
-        Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
-        tab.setContent(textArea);
-        tabPane.getTabs().add(tab);
-        tabPane.getSelectionModel().select(tab);
-        updateStatusLabel(textArea);
+        if (a) {
+            Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
+            tab.setContent(textArea);
+            tabPane.getTabs().add(tab);
+            tabPane.getSelectionModel().select(tab);
+            updateStatusLabel(textArea);
+
+        }
 
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
@@ -104,25 +117,7 @@ public class JNotepad extends Application {
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
                 try {
-                    BufferedReader reader = new BufferedReader(new FileReader(file));
-                    String line;
-                    StringBuilder textBuilder = new StringBuilder();
-                    while ((line = reader.readLine()) != null) {
-                        textBuilder.append(line).append("\n"); // 读取文件内容
-                    }
-                    reader.close();
-                    String text = textBuilder.toString();
-
-                    TextArea textArea = new TextArea(text); // 创建新的文本编辑区
-                    autoSave(textArea); // 自动保存
-                    Tab tab = new Tab(file.getName()); // 创建新的Tab页
-
-                    tab.setContent(textArea);
-                    tab.setUserData(file); // 将文件对象保存到Tab页的UserData中
-
-                    tabPane.getTabs().add(tab);
-                    tabPane.getSelectionModel().select(tab);
-                    updateStatusLabel(textArea);
+                    getTXT(file);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -220,6 +215,42 @@ public class JNotepad extends Application {
             statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
         });
     }
+
+    private void openAssociatedFile(String filePath) {
+        File file = new File(filePath);
+        if (file.exists() && file.isFile()) {
+            try {
+                a = false;
+                getTXT(file);// 读取文件
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // 读取文件
+    private void getTXT(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+        StringBuilder textBuilder = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            textBuilder.append(line).append("\n"); // 读取文件内容
+        }
+        reader.close();
+        String text = textBuilder.toString();
+
+        TextArea textArea = new TextArea(text); // 创建新的文本编辑区
+        autoSave(textArea); // 自动保存
+        Tab tab = new Tab(file.getName()); // 创建新的Tab页
+
+        tab.setContent(textArea);
+        tab.setUserData(file); // 将文件对象保存到Tab页的UserData中
+
+        tabPane.getTabs().add(tab);
+        tabPane.getSelectionModel().select(tab);
+        updateStatusLabel(textArea);
+    }
+
 
     // 获取光标所在行数
     private int getRow(int caretPosition, String text) {
