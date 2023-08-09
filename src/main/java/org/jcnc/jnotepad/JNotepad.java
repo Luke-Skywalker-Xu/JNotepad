@@ -66,22 +66,8 @@ public class JNotepad extends Application {
         BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            Tab tab = tabPane.getSelectionModel().getSelectedItem();
-            if (tab != null) {
-                File file = (File) tab.getUserData();
-                if (file != null) {
-                    try {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                        writer.write(newValue); // 写入新的文本内容
-                        writer.flush();
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        autoSave(textArea); // 自动保存
+
         Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
         tab.setContent(textArea);
         tabPane.getTabs().add(tab);
@@ -128,24 +114,7 @@ public class JNotepad extends Application {
                     String text = textBuilder.toString();
 
                     TextArea textArea = new TextArea(text); // 创建新的文本编辑区
-
-                    // 在创建文本编辑区后添加文本变更监听器
-                    textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-                        Tab tab = tabPane.getSelectionModel().getSelectedItem();
-                        if (tab != null) {
-                            File f = (File) tab.getUserData();
-                            if (f != null) {
-                                try {
-                                    BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-                                    writer.write(newValue); // 写入新的文本内容
-                                    writer.flush();
-                                    writer.close();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
+                    autoSave(textArea); // 自动保存
                     Tab tab = new Tab(file.getName()); // 创建新的Tab页
 
                     tab.setContent(textArea);
@@ -160,6 +129,27 @@ public class JNotepad extends Application {
             }
         }
     }
+
+    private void autoSave(TextArea textArea) {
+        // 在创建文本编辑区后添加文本变更监听器
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            Tab tab = tabPane.getSelectionModel().getSelectedItem();
+            if (tab != null) {
+                File f = (File) tab.getUserData();
+                if (f != null) {
+                    try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+                        writer.write(newValue); // 写入新的文本内容
+                        writer.flush();
+                        writer.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
     // 保存文件事件处理器
     private class SaveFileEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -187,7 +177,6 @@ public class JNotepad extends Application {
         }
     }
 
-
     // 另存为文件事件处理器
     private class SaveAsFileEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -208,6 +197,7 @@ public class JNotepad extends Application {
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                     TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
+                    autoSave(textArea);// 自动保存
                     String text = textArea.getText();
                     writer.write(text); // 写入文件内容
                     writer.flush();
@@ -235,7 +225,6 @@ public class JNotepad extends Application {
     private int getRow(int caretPosition, String text) {
         return text.substring(0, caretPosition).split("\n").length;
     }
-
 
     // 获取光标所在列数
     private int getColumn(int caretPosition, String text) {
