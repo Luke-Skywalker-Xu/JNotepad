@@ -65,7 +65,7 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: 未知");
+        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: ");
         encodingLabel = new Label(); // 创建新的标签用于显示编码信息
         HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用 HBox 放置状态标签和编码标签
         root.setBottom(statusBox);
@@ -86,7 +86,10 @@ public class JNotepad extends Application {
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             // 更新状态栏信息
             updateStatusLabel(textArea);
+            // 更新编码信息
+            //updateEncodingLabel(newValue);
             updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+
         });
         autoSave(textArea); // 自动保存
 
@@ -120,6 +123,9 @@ public class JNotepad extends Application {
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
             updateStatusLabel(textArea);
+            // 更新编码信息
+            //updateEncodingLabel(newValue);
+            updateEncodingLabel(textArea.getText()); // 更新文本编码信息
         }
     }
 
@@ -226,7 +232,7 @@ public class JNotepad extends Application {
             int row = getRow(textArea.getCaretPosition(), textArea.getText());
             int column = getColumn(textArea.getCaretPosition(), textArea.getText());
             int length = textArea.getLength();
-            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length+"\t");
+            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length+"\t编码: ");
         });
     }
 
@@ -267,7 +273,7 @@ public class JNotepad extends Application {
 
     private void updateEncodingLabel(String text) {
         String[] commonEncodings = {"UTF-8", "ISO-8859-1", "UTF-16", "US-ASCII"}; // 常见编码
-        String detectedEncoding = "未知"; // 默认值
+        String detectedEncoding = ""; // 默认值
 
         for (String encoding : commonEncodings) {
             if (isEncodingValid(text, encoding)) {
@@ -276,7 +282,7 @@ public class JNotepad extends Application {
             }
         }
 
-        encodingLabel.setText("编码: " + detectedEncoding);
+        encodingLabel.setText(detectedEncoding);
     }
 
     private boolean isEncodingValid(String text, String encoding) {
