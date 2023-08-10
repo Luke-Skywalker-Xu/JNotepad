@@ -18,8 +18,6 @@ import java.util.Objects;
 
 public class JNotepad extends Application {
     String Title = "JNotepad";
-    private String lastDetectedEncoding = "未知";
-
     Label encodingLabel; // 新增属性用于显示文本编码
 
     // 定义菜单栏
@@ -67,7 +65,7 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: ");
+        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: 未知");
         encodingLabel = new Label(); // 创建新的标签用于显示编码信息
         HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用 HBox 放置状态标签和编码标签
         root.setBottom(statusBox);
