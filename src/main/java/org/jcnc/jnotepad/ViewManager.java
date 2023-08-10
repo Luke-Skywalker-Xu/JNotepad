@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 /**
  * 该类管理记事本应用程序的视图组件。
  */
-public class viewManager {
+public class ViewManager {
 
     public static Label enCodingLabel; // 显示文本编码
 
@@ -29,7 +29,7 @@ public class viewManager {
     // 状态栏
     public static Label statusLabel;
 
-    private static viewManager instance = null;
+    private static ViewManager instance = null;
 
     /**
      * 获取ViewManager的实例。如果实例不存在，则创建一个新实例。
@@ -37,9 +37,9 @@ public class viewManager {
      * @param scene 与视图相关联的JavaFX场景。
      * @return ViewManager的实例。
      */
-    public static viewManager getInstance(Scene scene) {
+    public static ViewManager getInstance(Scene scene) {
         if (instance == null) {
-            instance = new viewManager(scene);
+            instance = new ViewManager(scene);
         }
         return instance;
     }
@@ -49,7 +49,7 @@ public class viewManager {
      *
      * @param scene 与视图相关联的JavaFX场景。
      */
-    private viewManager(Scene scene) {
+    private ViewManager(Scene scene) {
         root = new BorderPane();
         scene.setRoot(root);
     }

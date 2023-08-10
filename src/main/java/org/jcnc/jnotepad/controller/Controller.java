@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.MainApp;
 import java.io.*;
 import java.util.List;
 
-import static org.jcnc.jnotepad.viewManager.*;
+import static org.jcnc.jnotepad.ViewManager.*;
 
 /**
  * 控制器类负责处理与用户界面的交互，并实现相关事件处理逻辑。

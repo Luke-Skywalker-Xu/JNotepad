@@ -13,7 +13,7 @@ import org.jcnc.jnotepad.view.View;
 import java.util.List;
 import java.util.Objects;
 
-import static org.jcnc.jnotepad.viewManager.tabPane;
+import static org.jcnc.jnotepad.ViewManager.tabPane;
 import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
 public class MainApp extends Application {
@@ -37,7 +37,7 @@ public class MainApp extends Application {
         primaryStage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResource(icon))).toString()));
         primaryStage.show();
 
-        viewManager viewManager = org.jcnc.jnotepad.viewManager.getInstance(scene);
+        ViewManager viewManager = ViewManager.getInstance(scene);
 
         viewManager.initScreen(scene);
 
@@ -52,7 +52,7 @@ public class MainApp extends Application {
         TextArea textArea = Controller.openAssociatedFileAndCreateTextArea(rawParameters);
         if (isRelevance) {
             // 创建新标签页并添加到标签栏
-            Tab tab = new Tab("新建文件 " + ++viewManager.tabIndex);
+            Tab tab = new Tab("新建文件 " + ++ViewManager.tabIndex);
             tab.setContent(textArea);
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);

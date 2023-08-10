@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.view;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.controller.Controller;
 
-import static org.jcnc.jnotepad.viewManager.*;
+import static org.jcnc.jnotepad.ViewManager.*;
 import static org.jcnc.jnotepad.controller.Controller.upDateEncodingLabel;
 import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
