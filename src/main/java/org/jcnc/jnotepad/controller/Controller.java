@@ -79,11 +79,11 @@ public class Controller {
                 };
 
                 openFileTask.setOnSucceeded(e -> {
-                    // 在任务完成后的操作（更新界面等）
+                    // 在需要时处理成功
                 });
 
                 openFileTask.setOnFailed(e -> {
-                    // 在任务失败时的操作（处理异常等）
+                    // 在需要时处理失败
                 });
 
                 Thread thread = new Thread(openFileTask);
@@ -94,19 +94,15 @@ public class Controller {
 
     // 自动保存方法
     public static void autoSave(TextArea textArea) {
-        // 当文本编辑区内容发生变化时，自动保存文本到文件
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
             if (tab != null) {
                 File f = (File) tab.getUserData();
                 if (f != null) {
-                    try {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-                        writer.write(newValue); // 写入新的文本内容
-                        writer.flush();
-                        writer.close();
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(f))) {
+                        writer.write(newValue);
                     } catch (IOException ignored) {
-                        // 处理异常，忽略
+                        // 适当地处理异常
                     }
                 }
             }
@@ -203,7 +199,6 @@ public class Controller {
 
             Platform.runLater(() -> {
                 textArea.setText(text);
-                autoSave(textArea);
 
                 Tab tab = new Tab(file.getName());
                 tab.setContent(textArea);
@@ -212,9 +207,11 @@ public class Controller {
                 tabPane.getTabs().add(tab);
                 tabPane.getSelectionModel().select(tab);
                 updateStatusLabel(textArea);
+
+                autoSave(textArea); // 在更新界面后调用 autoSave
             });
         } catch (IOException ignored) {
-            // 处理异常，忽略
+            // 适当地处理异常
         }
     }
 
