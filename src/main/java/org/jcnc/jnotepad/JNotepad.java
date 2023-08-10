@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -17,6 +18,9 @@ import java.util.Objects;
 
 public class JNotepad extends Application {
     String Title = "JNotepad";
+    private String lastDetectedEncoding = "未知";
+
+    Label encodingLabel; // 新增属性用于显示文本编码
 
     // 定义菜单栏
     MenuBar menuBar;
@@ -63,9 +67,12 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0");
-        root.setBottom(statusLabel);
-        BorderPane.setMargin(statusLabel, new Insets(5, 10, 5, 10));
+        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: ");
+        encodingLabel = new Label(); // 创建新的标签用于显示编码信息
+        HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用 HBox 放置状态标签和编码标签
+        root.setBottom(statusBox);
+        BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
+
 
         List<String> rawParameters = getParameters().getRaw();
 
@@ -76,6 +83,13 @@ public class JNotepad extends Application {
         }
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
+
+        // 添加文本变更监听器
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            // 更新状态栏信息
+            updateStatusLabel(textArea);
+            updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+        });
         autoSave(textArea); // 自动保存
 
         if (a) {
@@ -86,6 +100,8 @@ public class JNotepad extends Application {
             updateStatusLabel(textArea);
 
         }
+
+
 
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
@@ -212,7 +228,7 @@ public class JNotepad extends Application {
             int row = getRow(textArea.getCaretPosition(), textArea.getText());
             int column = getColumn(textArea.getCaretPosition(), textArea.getText());
             int length = textArea.getLength();
-            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
+            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length+"\t");
         });
     }
 
@@ -250,6 +266,31 @@ public class JNotepad extends Application {
         tabPane.getSelectionModel().select(tab);
         updateStatusLabel(textArea);
     }
+
+    private void updateEncodingLabel(String text) {
+        String[] commonEncodings = {"UTF-8", "ISO-8859-1", "UTF-16", "US-ASCII"}; // 常见编码
+        String detectedEncoding = "未知"; // 默认值
+
+        for (String encoding : commonEncodings) {
+            if (isEncodingValid(text, encoding)) {
+                detectedEncoding = encoding;
+                break;
+            }
+        }
+
+        encodingLabel.setText("编码: " + detectedEncoding);
+    }
+
+    private boolean isEncodingValid(String text, String encoding) {
+        try {
+            byte[] bytes = text.getBytes(encoding);
+            String decodedText = new String(bytes, encoding);
+            return text.equals(decodedText);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
 
     // 获取光标所在行数
