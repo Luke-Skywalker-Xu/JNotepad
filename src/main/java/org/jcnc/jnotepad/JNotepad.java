@@ -99,10 +99,7 @@ public class JNotepad extends Application {
             tabPane.getTabs().add(tab);
             tabPane.getSelectionModel().select(tab);
             updateStatusLabel(textArea);
-
         }
-
-
 
         // 创建场景并设置主界面
         Scene scene = new Scene(root, 800, 600);
@@ -232,7 +229,7 @@ public class JNotepad extends Application {
             int row = getRow(textArea.getCaretPosition(), textArea.getText());
             int column = getColumn(textArea.getCaretPosition(), textArea.getText());
             int length = textArea.getLength();
-            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length+"\t编码: ");
+            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
         });
     }
 
@@ -283,7 +280,7 @@ public class JNotepad extends Application {
             }
         }
 
-        encodingLabel.setText(detectedEncoding);
+        encodingLabel.setText("\t编码: "+detectedEncoding);
     }
 
     private boolean isEncodingValid(String text, String encoding) {
