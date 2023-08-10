@@ -60,7 +60,7 @@ public class Controller {
         @Override
         public void handle(ActionEvent event) {
             wrapText = !wrapText; // 切换自动换行状态
-            textArea.setWrapText(true);
+            textArea.setWrapText(wrapText);
         }
     }
 

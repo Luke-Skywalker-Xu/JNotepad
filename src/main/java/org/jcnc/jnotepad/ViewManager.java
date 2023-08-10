@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.controller.Controller;
 
 /**
  * 该类管理记事本应用程序的视图组件。
@@ -20,8 +21,9 @@ public class ViewManager {
     // 菜单栏组件
     public static MenuBar menuBar; //菜单栏
     public static Menu fileMenu, setMenu; //文件菜单
-    public static MenuItem newItem, openItem, saveItem, saveAsItem, lineFeedItem; //新建/打开/保存/保存至 菜单
+    public static MenuItem newItem, openItem, saveItem, saveAsItem; //新建/打开/保存/保存至 菜单
 
+    public static CheckMenuItem lineFeedItem;
     // 主界面布局
     public static BorderPane root; //主布局
 
@@ -71,8 +73,10 @@ public class ViewManager {
         saveItem = new MenuItem("保存");
         saveAsItem = new MenuItem("另存为");
         lineFeedItem = new CheckMenuItem("自动换行");
+        lineFeedItem.selectedProperty().set(true);
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
         setMenu.getItems().add(lineFeedItem);
+
         menuBar.getMenus().addAll(fileMenu, setMenu);
 
         // 创建主界面布局
