@@ -30,19 +30,21 @@ public class MainApp extends Application {
 
         double width = Constants.SCREEN_WIDTH;
         double length = Constants.SCREEN_LENGTH;
+        String name = Constants.APP_NAME;
+        String icon =Constants.APP_ICON;
 
         Scene scene = new Scene(root, width, length);
 
-        primaryStage.setTitle("JNotepad");
+        primaryStage.setTitle(name);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResource("/img/icon.png"))).toString()));
+        primaryStage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResource(icon))).toString()));
         primaryStage.show();
 
-        ViewManager poolGame = ViewManager.getInstance(scene);
+        ViewManager viewManager = ViewManager.getInstance(scene);
 
-        poolGame.initScreen(scene);
+        viewManager.initScreen(scene);
 
         initApp();
 
