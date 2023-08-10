@@ -1,19 +1,19 @@
 package org.jcnc.jnotepad.view;
 
 import javafx.scene.control.TextArea;
-import org.jcnc.jnotepad.controller.controller;
+import org.jcnc.jnotepad.controller.Controller;
 
 import static org.jcnc.jnotepad.ViewManager.*;
-import static org.jcnc.jnotepad.controller.controller.updateStatusLabel;
+import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
 public class view {
 
     public static void initItem() {
         // 为菜单项添加事件处理器
-        newItem.setOnAction(new controller.NewFileEventHandler());
-        openItem.setOnAction(new controller.OpenFileEventHandler());
-        saveItem.setOnAction(new controller.SaveFileEventHandler());
-        saveAsItem.setOnAction(new controller.SaveAsFileEventHandler());
+        newItem.setOnAction(new Controller.NewFileEventHandler());
+        openItem.setOnAction(new Controller.OpenFileEventHandler());
+        saveItem.setOnAction(new Controller.SaveFileEventHandler());
+        saveAsItem.setOnAction(new Controller.SaveAsFileEventHandler());
     }
 
     public static void initTabPane() {
@@ -26,7 +26,7 @@ public class view {
                 textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> updateStatusLabel(textArea));
 
                 // Update encoding label
-                controller.updateEncodingLabel(textArea.getText());
+                Controller.updateEncodingLabel(textArea.getText());
             }
         });
     }

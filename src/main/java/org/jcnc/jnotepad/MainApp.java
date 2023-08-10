@@ -7,14 +7,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.controller.controller;
+import org.jcnc.jnotepad.controller.Controller;
 import org.jcnc.jnotepad.view.view;
 
 import java.util.List;
 import java.util.Objects;
 
 import static org.jcnc.jnotepad.ViewManager.tabPane;
-import static org.jcnc.jnotepad.controller.controller.updateStatusLabel;
+import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
 /**
  * 启动器
@@ -54,7 +54,7 @@ public class MainApp extends Application {
     private void initApp() {
         List<String> rawParameters = getParameters().getRaw();
 
-        TextArea textArea = controller.openRelevance(rawParameters);
+        TextArea textArea = Controller.openAssociatedFileAndCreateTextArea(rawParameters);
         if (isRelevance) {
             Tab tab = new Tab("新建文件 " + ++ViewManager.tabIndex); // 创建新的Tab页
             tab.setContent(textArea);

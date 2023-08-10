@@ -13,11 +13,10 @@ import java.util.List;
 
 import static org.jcnc.jnotepad.ViewManager.*;
 
-public class controller {
-
+public class Controller {
 
     //关联文件打开
-    public static TextArea openRelevance(List<String> rawParameters) {
+    public static TextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);
