@@ -124,7 +124,6 @@ public class JNotepad extends Application {
             tabPane.getSelectionModel().select(tab);
             updateStatusLabel(textArea);
             // 更新编码信息
-            //updateEncodingLabel(newValue);
             updateEncodingLabel(textArea.getText()); // 更新文本编码信息
         }
     }
@@ -138,6 +137,7 @@ public class JNotepad extends Application {
             if (file != null) {
                 try {
                     getTXT(file);
+                    updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -242,6 +242,7 @@ public class JNotepad extends Application {
             try {
                 a = false;
                 getTXT(file);// 读取文件
+                updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
             } catch (IOException e) {
                 e.printStackTrace();
             }
