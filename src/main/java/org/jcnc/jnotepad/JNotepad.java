@@ -66,30 +66,32 @@ public class JNotepad extends Application {
 
         // 创建状态栏
         statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 ");
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab != null) {
+                TextArea textArea = (TextArea) newTab.getContent();
+                updateStatusLabel(textArea);
+            }
+
+            if (newTab != null) {
+                TextArea textArea = (TextArea) newTab.getContent();
+
+                // Update status label
+                textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> {
+                    updateStatusLabel(textArea);
+                });
+
+                // Update encoding label
+                updateEncodingLabel(textArea.getText());
+            }
+        });
         encodingLabel = new Label(); // 创建新的标签用于显示编码信息
         HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用 HBox 放置状态标签和编码标签
         root.setBottom(statusBox);
         BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
 
-
         List<String> rawParameters = getParameters().getRaw();
 
-        //关联文件打开
-        if (!rawParameters.isEmpty()) {
-            String filePath = rawParameters.get(0);
-            openAssociatedFile(filePath);
-        }
-
-        TextArea textArea = new TextArea(); // 创建新的文本编辑区
-
-        updateEncodingLabel(textArea.getText()); // 更新文本编码信息
-
-        // 添加文本变更监听器
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            // 更新状态栏信息
-            updateStatusLabel(textArea);
-        });
-        AutoSave(textArea); // 自动保存
+        TextArea textArea = openRelevance(rawParameters);
 
         if (isRelevance) {
             Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
@@ -106,6 +108,27 @@ public class JNotepad extends Application {
         primaryStage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResource("/img/icon.png"))).toString()));
 
         primaryStage.show();
+    }
+
+    //关联文件打开
+    private TextArea openRelevance(List<String> rawParameters) {
+        if (!rawParameters.isEmpty()) {
+            String filePath = rawParameters.get(0);
+            openAssociatedFile(filePath);
+        }
+
+        TextArea textArea = new TextArea(); // 创建新的文本编辑区
+
+        updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+        updateStatusLabel(textArea);
+
+        // 添加文本变更监听器
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            // 更新状态栏信息
+            updateStatusLabel(textArea);
+        });
+        AutoSave(textArea); // 自动保存
+        return textArea;
     }
 
     // 新建文件事件处理器
@@ -222,14 +245,13 @@ public class JNotepad extends Application {
         }
     }
 
-    // 更新状态栏
     private void updateStatusLabel(TextArea textArea) {
-        textArea.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
-            int row = getRow(textArea.getCaretPosition(), textArea.getText());
-            int column = getColumn(textArea.getCaretPosition(), textArea.getText());
-            int length = textArea.getLength();
-            statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
-        });
+        int caretPosition = textArea.getCaretPosition();
+        int row = getRow(caretPosition, textArea.getText());
+        int column = getColumn(caretPosition, textArea.getText());
+        int length = textArea.getLength();
+        statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
+        System.out.println("        正在监测字数");
     }
 
     //关联文件打开
@@ -292,7 +314,7 @@ public class JNotepad extends Application {
         String[] possibleEncodings = {"UTF-8", "ISO-8859-1", "UTF-16"};
         for (String encoding : possibleEncodings) {
             if (isEncodingValid(text, encoding)) {
-                System.out.println("正在检测");
+                System.out.println("正在检测编码");
                 return encoding;
             }
         }
