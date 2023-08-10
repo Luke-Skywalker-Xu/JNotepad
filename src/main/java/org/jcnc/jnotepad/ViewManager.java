@@ -15,10 +15,12 @@ public class ViewManager {
 
     public static int tabIndex = 0;
 
+    public static Boolean Line = true;
+
     // 菜单栏组件
     public static MenuBar menuBar; //菜单栏
-    public static Menu fileMenu; //文件菜单
-    public static MenuItem newItem, openItem, saveItem, saveAsItem; //新建/打开/保存/保存至 菜单
+    public static Menu fileMenu, setMenu; //文件菜单
+    public static MenuItem newItem, openItem, saveItem, saveAsItem, lineFeedItem; //新建/打开/保存/保存至 菜单
 
     // 主界面布局
     public static BorderPane root; //主布局
@@ -63,12 +65,15 @@ public class ViewManager {
         // 创建菜单栏并添加菜单项
         menuBar = new MenuBar();
         fileMenu = new Menu("文件");
+        setMenu = new Menu("设置");
         newItem = new MenuItem("新建");
         openItem = new MenuItem("打开");
         saveItem = new MenuItem("保存");
         saveAsItem = new MenuItem("另存为");
+        lineFeedItem = new CheckMenuItem("自动换行");
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
-        menuBar.getMenus().add(fileMenu);
+        setMenu.getItems().add(lineFeedItem);
+        menuBar.getMenus().addAll(fileMenu, setMenu);
 
         // 创建主界面布局
         root = new BorderPane();

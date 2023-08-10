@@ -7,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.MainApp;
+import org.jcnc.jnotepad.LunchApp;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -35,6 +35,8 @@ public class Controller {
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
 
+        // 自动换行
+        textArea.setWrapText(true);
         upDateEncodingLabel(textArea.getText()); // 更新文本编码信息
         updateStatusLabel(textArea);
 
@@ -46,6 +48,22 @@ public class Controller {
         autoSave(textArea); // 自动保存
         return textArea;
     }
+
+    public static class LineFeedEventHandler implements EventHandler<ActionEvent> {
+        private final TextArea textArea;
+        private boolean wrapText = true;
+
+        public LineFeedEventHandler(TextArea textArea) {
+            this.textArea = textArea;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            wrapText = !wrapText; // 切换自动换行状态
+            textArea.setWrapText(true);
+        }
+    }
+
 
     // 新建文件事件处理器
     public static class NewFileEventHandler implements EventHandler<ActionEvent> {
@@ -181,7 +199,7 @@ public class Controller {
         // 根据给定的文件路径打开关联文件
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            MainApp.isRelevance = false;
+            LunchApp.isRelevance = false;
             getText(file);// 调用读取文件方法
             upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
         }

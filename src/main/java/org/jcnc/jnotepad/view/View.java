@@ -15,6 +15,7 @@ public class View {
         openItem.setOnAction(new Controller.OpenFileEventHandler());
         saveItem.setOnAction(new Controller.SaveFileEventHandler());
         saveAsItem.setOnAction(new Controller.SaveAsFileEventHandler());
+        lineFeedItem.setOnAction(new Controller.LineFeedEventHandler(new TextArea()));
     }
 
     public static void initTabPane() {

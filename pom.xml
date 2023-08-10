@@ -49,7 +49,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.jcnc.jnotepad/org.jcnc.jnotepad.MainApp</mainClass>
+                            <mainClass>org.jcnc.jnotepad/org.jcnc.jnotepad.LunchApp</mainClass>
                             <launcher>JNotepad</launcher>
                             <jlinkZipName>JNotepad</jlinkZipName>
                             <jlinkImageName>JNotepad</jlinkImageName>

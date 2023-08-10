@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainApp extends Application {
+public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
 
