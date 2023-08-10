@@ -206,10 +206,10 @@ public class JNotepad extends Application {
             if (selectedTab != null) {
                 File file = (File) selectedTab.getUserData(); // 获取当前Tab页对应的文件对象
                 if (file == null) {
-                    // If no file is associated (newly created tab), perform Save As logic
+                    // 如果没有关联文件(新创建的选项卡)，执行另存为逻辑
                     saveAsFile();
                 } else {
-                    // File is associated, proceed with regular save logic
+                    // 文件已关联，继续使用常规保存逻辑
                     try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                         TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
@@ -307,13 +307,12 @@ public class JNotepad extends Application {
 
     private void updateEncodingLabel(String text) {
         String encoding = detectEncoding(text);
-        // 假设您有一个名为"encodingLabel"的标签控件来显示编码信息
         encodingLabel.setText("\t编码: " + encoding);
     }
 
     private boolean isEncodingValid(String text, String encoding) {
-        // 在这里实现您的编码有效性检查逻辑
-        // 比如，您可以尝试使用指定的编码解码文本，并检查是否出现异常来判断编码是否有效
+        // 编码有效性检查
+        // 使用指定的编码解码文本，并检查是否出现异常来判断编码是否有效
         try {
             byte[] bytes = text.getBytes(encoding);
             String decodedText = new String(bytes, encoding);
