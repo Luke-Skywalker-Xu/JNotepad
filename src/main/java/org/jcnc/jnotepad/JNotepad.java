@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -153,16 +154,29 @@ public class JNotepad extends Application {
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(null);
             if (file != null) {
-                try {
-                    getTXT(file);
-                    updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Task<Void> openFileTask = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        getTXT(file);
+                        updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText());
+                        return null;
+                    }
+                };
+
+                openFileTask.setOnSucceeded(e -> {
+                    // 在任务完成后的操作（更新界面等）
+                });
+
+                openFileTask.setOnFailed(e -> {
+                    // 在任务失败时的操作（处理异常等）
+                });
+
+                Thread thread = new Thread(openFileTask);
+                thread.start();
             }
-            
         }
     }
+
 
     private void AutoSave(TextArea textArea) {
         // 在创建文本编辑区后添加文本变更监听器
