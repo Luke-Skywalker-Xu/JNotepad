@@ -13,13 +13,21 @@ import java.util.List;
 
 import static org.jcnc.jnotepad.ViewManager.*;
 
+/**
+ * 控制器类负责处理与用户界面的交互，并实现相关事件处理逻辑。
+ */
 public class Controller {
 
-    //关联文件打开
+    /**
+     * 打开关联文件并创建一个文本编辑区。
+     *
+     * @param rawParameters 文件路径参数的列表
+     * @return 创建的文本编辑区
+     */
     public static TextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
-            openAssociatedFile(filePath);
+            openAssociatedFile(filePath); //// 调用关联文件打开方法
         }
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
@@ -81,9 +89,9 @@ public class Controller {
         }
     }
 
-
+    // 自动保存方法
     public static void AutoSave(TextArea textArea) {
-        // 在创建文本编辑区后添加文本变更监听器
+        // 当文本编辑区内容发生变化时，自动保存文本到文件
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
             if (tab != null) {
@@ -95,6 +103,7 @@ public class Controller {
                         writer.flush();
                         writer.close();
                     } catch (IOException ignored) {
+                        // 处理异常，忽略
                     }
                 }
             }
@@ -160,6 +169,7 @@ public class Controller {
         }
     }
 
+    // 更新状态栏标签信息
     public static void updateStatusLabel(TextArea textArea) {
         int caretPosition = textArea.getCaretPosition();
         int row = getRow(caretPosition, textArea.getText());
@@ -169,26 +179,28 @@ public class Controller {
         System.out.println("        正在监测字数");
     }
 
-    //关联文件打开
+    // 关联文件打开
     public static void openAssociatedFile(String filePath) {
+        // 根据给定的文件路径打开关联文件
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
             try {
                 MainApp.isRelevance = false;
-                getTXT(file);// 读取文件
+                getTXT(file);// 调用读取文件方法
                 updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
             } catch (IOException ignored) {
+                // 处理异常，忽略
             }
         }
     }
 
-    // 读取文件
+    // 读取文件并创建文本编辑区
     public static void getTXT(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line;
         StringBuilder textBuilder = new StringBuilder();
         while ((line = reader.readLine()) != null) {
-            textBuilder.append(line).append("\n"); // 读取文件内容
+            textBuilder.append(line).append("\n");  // 逐行读取文件内容
         }
         reader.close();
         String text = textBuilder.toString();
@@ -204,12 +216,12 @@ public class Controller {
         tabPane.getSelectionModel().select(tab);
         updateStatusLabel(textArea);
     }
-
+    // 更新文本编码标签信息
     public static void updateEncodingLabel(String text) {
         String encoding = detectEncoding(text);
         encodingLabel.setText("\t编码: " + encoding);
     }
-
+    // 判断编码是否有效
     public static boolean isEncodingValid(String text, String encoding) {
         // 编码有效性检查
         // 使用指定的编码解码文本，并检查是否出现异常来判断编码是否有效
@@ -221,7 +233,7 @@ public class Controller {
             return false;
         }
     }
-
+    // 检测文本编码
     public static String detectEncoding(String text) {
         // 使用不同的编码（如UTF-8、ISO-8859-1等）来解码文本，并检查是否出现异常来判断编码
         String[] possibleEncodings = {"UTF-8", "ISO-8859-1", "UTF-16"};
@@ -233,7 +245,6 @@ public class Controller {
         }
         return "未知";
     }
-
 
     // 获取光标所在行数
     public static int getRow(int caretPosition, String text) {
