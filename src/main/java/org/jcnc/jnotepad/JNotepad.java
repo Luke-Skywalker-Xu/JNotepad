@@ -34,7 +34,7 @@ public class JNotepad extends Application {
 
     // 定义状态栏
     Label statusLabel;
-    boolean a = true;
+    boolean isRelevance = true;
 
     @Override
     public void start(Stage primaryStage) {
@@ -65,7 +65,7 @@ public class JNotepad extends Application {
         root.setCenter(tabPane);
 
         // 创建状态栏
-        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 \t编码: ");
+        statusLabel = new Label("行: 1 \t列: 1 \t字数: 0 ");
         encodingLabel = new Label(); // 创建新的标签用于显示编码信息
         HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用 HBox 放置状态标签和编码标签
         root.setBottom(statusBox);
@@ -82,18 +82,16 @@ public class JNotepad extends Application {
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
 
+        updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+
         // 添加文本变更监听器
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             // 更新状态栏信息
             updateStatusLabel(textArea);
-            // 更新编码信息
-            //updateEncodingLabel(newValue);
-            updateEncodingLabel(textArea.getText()); // 更新文本编码信息
-
         });
-        autoSave(textArea); // 自动保存
+        AutoSave(textArea); // 自动保存
 
-        if (a) {
+        if (isRelevance) {
             Tab tab = new Tab("新建文件 " + ++tabIndex); // 创建新的Tab页
             tab.setContent(textArea);
             tabPane.getTabs().add(tab);
@@ -139,10 +137,11 @@ public class JNotepad extends Application {
                     e.printStackTrace();
                 }
             }
+            
         }
     }
 
-    private void autoSave(TextArea textArea) {
+    private void AutoSave(TextArea textArea) {
         // 在创建文本编辑区后添加文本变更监听器
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
@@ -209,7 +208,7 @@ public class JNotepad extends Application {
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                     TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
-                    autoSave(textArea);// 自动保存
+                    AutoSave(textArea);// 自动保存
                     String text = textArea.getText();
                     writer.write(text); // 写入文件内容
                     writer.flush();
@@ -233,11 +232,12 @@ public class JNotepad extends Application {
         });
     }
 
+    //关联文件打开
     private void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
             try {
-                a = false;
+                isRelevance = false;
                 getTXT(file);// 读取文件
                 updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
             } catch (IOException e) {
@@ -258,7 +258,7 @@ public class JNotepad extends Application {
         String text = textBuilder.toString();
 
         TextArea textArea = new TextArea(text); // 创建新的文本编辑区
-        autoSave(textArea); // 自动保存
+        AutoSave(textArea); // 自动保存
         Tab tab = new Tab(file.getName()); // 创建新的Tab页
 
         tab.setContent(textArea);
@@ -270,27 +270,33 @@ public class JNotepad extends Application {
     }
 
     private void updateEncodingLabel(String text) {
-        String[] commonEncodings = {"UTF-8", "ISO-8859-1", "UTF-16", "US-ASCII"}; // 常见编码
-        String detectedEncoding = ""; // 默认值
-
-        for (String encoding : commonEncodings) {
-            if (isEncodingValid(text, encoding)) {
-                detectedEncoding = encoding;
-                break;
-            }
-        }
-
-        encodingLabel.setText("\t编码: "+detectedEncoding);
+        String encoding = detectEncoding(text);
+        // 假设您有一个名为"encodingLabel"的标签控件来显示编码信息
+        encodingLabel.setText("\t编码: " + encoding);
     }
 
     private boolean isEncodingValid(String text, String encoding) {
+        // 在这里实现您的编码有效性检查逻辑
+        // 比如，您可以尝试使用指定的编码解码文本，并检查是否出现异常来判断编码是否有效
         try {
             byte[] bytes = text.getBytes(encoding);
             String decodedText = new String(bytes, encoding);
             return text.equals(decodedText);
-        } catch (Exception e) {
+        } catch (UnsupportedEncodingException e) {
             return false;
         }
+    }
+
+    private String detectEncoding(String text) {
+        // 使用不同的编码（如UTF-8、ISO-8859-1等）来解码文本，并检查是否出现异常来判断编码
+        String[] possibleEncodings = {"UTF-8", "ISO-8859-1", "UTF-16"};
+        for (String encoding : possibleEncodings) {
+            if (isEncodingValid(text, encoding)) {
+                System.out.println("正在检测");
+                return encoding;
+            }
+        }
+        return "未知";
     }
 
 
