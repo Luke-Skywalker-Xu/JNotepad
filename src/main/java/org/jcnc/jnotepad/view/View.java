@@ -12,7 +12,6 @@ public class View {
 
     public static void initItem() {
         // 初始化菜单项的事件处理器
-        ViewManager viewManager;
         newItem.setOnAction(new Controller.NewFileEventHandler());
         openItem.setOnAction(new Controller.OpenFileEventHandler());
         saveItem.setOnAction(new Controller.SaveFileEventHandler());

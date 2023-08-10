@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.controller;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,6 +10,8 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.MainApp;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.jcnc.jnotepad.ViewManager.*;
@@ -48,7 +51,6 @@ public class Controller {
     public static class NewFileEventHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
-
             TextArea textArea = new TextArea(); // 创建新的文本编辑区
             Tab tab = new Tab("新建文本 " + ++tabIndex); // 创建新的Tab页
             tab.setContent(textArea);
@@ -69,7 +71,7 @@ public class Controller {
             if (file != null) {
                 Task<Void> openFileTask = new Task<>() {
                     @Override
-                    protected Void call() throws Exception {
+                    protected Void call() {
                         getText(file);
                         upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText());
                         return null;
@@ -117,17 +119,15 @@ public class Controller {
         public void handle(ActionEvent event) {
             Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
             if (selectedTab != null) {
-                File file = (File) selectedTab.getUserData(); // 获取当前Tab页对应的文件对象
+                File file = (File) selectedTab.getUserData();
                 if (file == null) {
-                    // 如果没有关联文件(新创建的选项卡)，执行另存为逻辑
                     saveAsFile();
                 } else {
-                    // 文件已关联，继续使用常规保存逻辑
                     try {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                        TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+                        TextArea textArea = (TextArea) selectedTab.getContent();
                         String text = textArea.getText();
-                        writer.write(text); // 写入文件内容
+                        writer.write(text);
                         writer.flush();
                         writer.close();
                     } catch (IOException ignored) {
@@ -185,63 +185,59 @@ public class Controller {
         // 根据给定的文件路径打开关联文件
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            try {
-                MainApp.isRelevance = false;
-                getText(file);// 调用读取文件方法
-                upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
-            } catch (IOException ignored) {
-                // 处理异常，忽略
+            MainApp.isRelevance = false;
+            getText(file);// 调用读取文件方法
+            upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
+        }
+    }
+
+    public static void getText(File file) {
+        TextArea textArea = new TextArea();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder textBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                textBuilder.append(line).append("\n");
             }
+            String text = textBuilder.toString();
+
+            Platform.runLater(() -> {
+                textArea.setText(text);
+                autoSave(textArea);
+
+                Tab tab = new Tab(file.getName());
+                tab.setContent(textArea);
+                tab.setUserData(file);
+
+                tabPane.getTabs().add(tab);
+                tabPane.getSelectionModel().select(tab);
+                updateStatusLabel(textArea);
+            });
+        } catch (IOException ignored) {
+            // 处理异常，忽略
         }
     }
 
-    // 读取文件并创建文本编辑区
-    public static void getText(File file) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(file));
-        String line;
-        StringBuilder textBuilder = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            textBuilder.append(line).append("\n");  // 逐行读取文件内容
-        }
-        reader.close();
-        String text = textBuilder.toString();
-
-        TextArea textArea = new TextArea(text); // 创建新的文本编辑区
-        autoSave(textArea); // 自动保存
-        Tab tab = new Tab(file.getName()); // 创建新的Tab页
-
-        tab.setContent(textArea);
-        tab.setUserData(file); // 将文件对象保存到Tab页的UserData中
-
-        tabPane.getTabs().add(tab);
-        tabPane.getSelectionModel().select(tab);
-        updateStatusLabel(textArea);
-    }
     // 更新文本编码标签信息
     public static void upDateEncodingLabel(String text) {
         String encoding = detectEncoding(text);
         enCodingLabel.setText("\t编码: " + encoding);
     }
+
     // 判断编码是否有效
-    public static boolean isEncodingValid(String text, String encoding) {
-        // 编码有效性检查
-        // 使用指定的编码解码文本，并检查是否出现异常来判断编码是否有效
-        try {
-            byte[] bytes = text.getBytes(encoding);
-            String decodedText = new String(bytes, encoding);
-            return text.equals(decodedText);
-        } catch (UnsupportedEncodingException e) {
-            return false;
-        }
+    public static boolean isEncodingValid(String text, Charset encoding) {
+        byte[] bytes = text.getBytes(encoding);
+        String decodedText = new String(bytes, encoding);
+        return text.equals(decodedText);
     }
+
     // 检测文本编码
     public static String detectEncoding(String text) {
-        // 使用不同的编码（如UTF-8、ISO-8859-1等）来解码文本，并检查是否出现异常来判断编码
-        String[] possibleEncodings = {"UTF-8", "ISO-8859-1", "UTF-16"};
-        for (String encoding : possibleEncodings) {
-            if (isEncodingValid(text, encoding)) {
+        Charset[] possibleEncodings = {StandardCharsets.UTF_8, StandardCharsets.ISO_8859_1, StandardCharsets.UTF_16};
+        for (Charset encoding : possibleEncodings) {
+            if (isEncodingValid(text, Charset.forName(String.valueOf(encoding)))) {
                 System.out.println("正在检测编码");
-                return encoding;
+                return encoding.displayName();
             }
         }
         return "未知";
@@ -249,8 +245,17 @@ public class Controller {
 
     // 获取光标所在行数
     public static int getRow(int caretPosition, String text) {
-        return text.substring(0, caretPosition).split("\n").length;
+        caretPosition = Math.min(caretPosition, text.length());
+        String substring = text.substring(0, caretPosition);
+        int count = 0;
+        for (char c : substring.toCharArray()) {
+            if (c == '\n') {
+                count++;
+            }
+        }
+        return count + 1; // Add 1 for the current line
     }
+
 
     // 获取光标所在列数
     public static int getColumn(int caretPosition, String text) {
