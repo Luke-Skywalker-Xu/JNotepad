@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
@@ -12,11 +13,11 @@ import org.jcnc.jnotepad.view.View;
 
 import java.util.List;
 import java.util.Objects;
-
-import static org.jcnc.jnotepad.ViewManager.tabPane;
-import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainApp extends Application {
+    private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
 
     @Override
@@ -34,33 +35,38 @@ public class MainApp extends Application {
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image((Objects.requireNonNull(getClass().getResource(icon))).toString()));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
         primaryStage.show();
 
         ViewManager viewManager = ViewManager.getInstance(scene);
-
         viewManager.initScreen(scene);
 
-        // 初始化应用程序
-        initApp();
-    }
-
-    private void initApp() {
-        List<String> rawParameters = getParameters().getRaw();
-
-        // 打开关联文件并创建文本区域
-        TextArea textArea = Controller.openAssociatedFileAndCreateTextArea(rawParameters);
-        if (isRelevance) {
-            // 创建新标签页并添加到标签栏
-            Tab tab = new Tab("新建文件 " + ++ViewManager.tabIndex);
-            tab.setContent(textArea);
-            tabPane.getTabs().add(tab);
-            tabPane.getSelectionModel().select(tab);
-            updateStatusLabel(textArea);
-        }
         // 初始化菜单项和标签栏
         View.initItem();
         View.initTabPane();
+
+        if (isRelevance) {
+            // 使用线程池加载关联文件并创建文本区域
+            List<String> rawParameters = getParameters().getRaw();
+            threadPool.execute(() -> {
+                TextArea textArea = Controller.openAssociatedFileAndCreateTextArea(rawParameters);
+                Platform.runLater(() -> updateUIWithNewTextArea(textArea));
+            });
+        }
+    }
+
+    private void updateUIWithNewTextArea(TextArea textArea) {
+        Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
+        tab.setContent(textArea);
+        ViewManager.tabPane.getTabs().add(tab);
+        ViewManager.tabPane.getSelectionModel().select(tab);
+        Controller.updateStatusLabel(textArea);
+    }
+
+    @Override
+    public void stop() {
+        // 关闭线程池
+        threadPool.shutdownNow();
     }
 
     public static void main(String[] args) {

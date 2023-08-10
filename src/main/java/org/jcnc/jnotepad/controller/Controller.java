@@ -48,6 +48,7 @@ public class Controller {
     public static class NewFileEventHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent event) {
+
             TextArea textArea = new TextArea(); // 创建新的文本编辑区
             Tab tab = new Tab("新建文本 " + ++tabIndex); // 创建新的Tab页
             tab.setContent(textArea);

@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.view;
 
 import javafx.scene.control.TextArea;
+import org.jcnc.jnotepad.ViewManager;
 import org.jcnc.jnotepad.controller.Controller;
 
 import static org.jcnc.jnotepad.ViewManager.*;
@@ -11,6 +12,7 @@ public class View {
 
     public static void initItem() {
         // 初始化菜单项的事件处理器
+        ViewManager viewManager;
         newItem.setOnAction(new Controller.NewFileEventHandler());
         openItem.setOnAction(new Controller.OpenFileEventHandler());
         saveItem.setOnAction(new Controller.SaveFileEventHandler());
