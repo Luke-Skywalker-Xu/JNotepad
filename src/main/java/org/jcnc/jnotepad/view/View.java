@@ -3,11 +3,7 @@ package org.jcnc.jnotepad.view;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.controller.Controller;
 
-import static org.jcnc.jnotepad.ViewManager.newItem;
-import static org.jcnc.jnotepad.ViewManager.openItem;
-import static org.jcnc.jnotepad.ViewManager.saveItem;
-import static org.jcnc.jnotepad.ViewManager.saveAsItem;
-import static org.jcnc.jnotepad.ViewManager.tabPane;
+import static org.jcnc.jnotepad.ViewManager.*;
 import static org.jcnc.jnotepad.controller.Controller.updateEncodingLabel;
 import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
