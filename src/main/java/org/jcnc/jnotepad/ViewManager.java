@@ -3,6 +3,10 @@ package org.jcnc.jnotepad;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
@@ -10,6 +14,7 @@ import javafx.scene.layout.HBox;
  * 该类管理记事本应用程序的视图组件。
  */
 public class ViewManager {
+    public static final DataFormat TAB_DATA_FORMAT = new DataFormat("draggable-tab");
 
     public static Label enCodingLabel; // 显示文本编码
 
@@ -70,6 +75,7 @@ public class ViewManager {
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
         menuBar.getMenus().add(fileMenu);
 
+
         // 创建主界面布局
         root = new BorderPane();
         root.setTop(menuBar);
@@ -86,6 +92,43 @@ public class ViewManager {
         root.setBottom(statusBox);
         BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
 
+        // 给每个标签添加拖放功能
+        for (Tab tab : tabPane.getTabs()) {
+            addDragAndDropFunctionalityToTab(tab);
+        }
         scene.setRoot(root);
+    }
+
+    /**
+     * 为标签添加拖放功能。
+     *
+     * @param tab 要添加拖放功能的标签。
+     */
+    private void addDragAndDropFunctionalityToTab(Tab tab) {
+        tab.getTabPane().setOnDragDetected(event -> {
+            Dragboard dragboard = tab.getTabPane().startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.put(TAB_DATA_FORMAT, tab);
+            dragboard.setContent(content);
+        });
+
+        // 可选：为放置目标添加放置处理器（根据你的需求）
+        tab.getTabPane().setOnDragOver(event -> {
+            if (event.getDragboard().hasContent(TAB_DATA_FORMAT)) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+
+        tab.getTabPane().setOnDragDropped(event -> {
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasContent(TAB_DATA_FORMAT)) {
+                Tab draggedTab = (Tab) dragboard.getContent(TAB_DATA_FORMAT);
+                // 在这里处理放置操作，例如重新排列标签
+                // 这可能需要修改你的标签的位置或交换标签的位置
+                event.setDropCompleted(true);
+            }
+            event.consume();
+        });
     }
 }
