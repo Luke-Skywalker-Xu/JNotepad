@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.view;
 
 import javafx.scene.control.TextArea;
-import org.jcnc.jnotepad.ViewManager;
 import org.jcnc.jnotepad.controller.Controller;
 
 import static org.jcnc.jnotepad.ViewManager.*;

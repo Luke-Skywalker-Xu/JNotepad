@@ -10,11 +10,11 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.MainApp;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static org.jcnc.jnotepad.ViewManager.*;
+import static org.jcnc.jnotepad.controller.EncodingDetector.detectEncoding;
 
 /**
  * 控制器类负责处理与用户界面的交互，并实现相关事件处理逻辑。
@@ -221,14 +221,14 @@ public class Controller {
         enCodingLabel.setText("\t编码: " + encoding);
     }
 
-    // 判断编码是否有效
+/*    // 判断编码是否有效
     public static boolean isEncodingValid(String text, Charset encoding) {
         byte[] bytes = text.getBytes(encoding);
         String decodedText = new String(bytes, encoding);
         return text.equals(decodedText);
-    }
+    }*/
 
-    // 检测文本编码
+/*    // 检测文本编码
     public static String detectEncoding(String text) {
         Charset[] possibleEncodings = {StandardCharsets.UTF_8, StandardCharsets.ISO_8859_1, StandardCharsets.UTF_16};
         for (Charset encoding : possibleEncodings) {
@@ -238,7 +238,7 @@ public class Controller {
             }
         }
         return "未知";
-    }
+    }*/
 
     // 获取光标所在行数
     public static int getRow(int caretPosition, String text) {
