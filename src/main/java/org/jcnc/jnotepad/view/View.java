@@ -3,8 +3,8 @@ package org.jcnc.jnotepad.view;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.controller.Controller;
 
-import static org.jcnc.jnotepad.ViewManager.*;
-import static org.jcnc.jnotepad.controller.Controller.updateEncodingLabel;
+import static org.jcnc.jnotepad.viewManager.*;
+import static org.jcnc.jnotepad.controller.Controller.upDateEncodingLabel;
 import static org.jcnc.jnotepad.controller.Controller.updateStatusLabel;
 
 public class View {
@@ -30,7 +30,7 @@ public class View {
                 textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> updateStatusLabel(textArea));
 
                 // 更新编码标签
-                updateEncodingLabel(textArea.getText());
+                upDateEncodingLabel(textArea.getText());
             }
         });
     }

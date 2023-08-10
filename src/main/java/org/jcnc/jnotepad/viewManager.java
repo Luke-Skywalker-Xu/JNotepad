@@ -9,9 +9,9 @@ import javafx.scene.layout.HBox;
 /**
  * 该类管理记事本应用程序的视图组件。
  */
-public class ViewManager {
+public class viewManager {
 
-    public static Label encodingLabel; // 显示文本编码
+    public static Label enCodingLabel; // 显示文本编码
 
     public static int tabIndex = 0;
 
@@ -29,7 +29,7 @@ public class ViewManager {
     // 状态栏
     public static Label statusLabel;
 
-    private static ViewManager instance = null;
+    private static viewManager instance = null;
 
     /**
      * 获取ViewManager的实例。如果实例不存在，则创建一个新实例。
@@ -37,9 +37,9 @@ public class ViewManager {
      * @param scene 与视图相关联的JavaFX场景。
      * @return ViewManager的实例。
      */
-    public static ViewManager getInstance(Scene scene) {
+    public static viewManager getInstance(Scene scene) {
         if (instance == null) {
-            instance = new ViewManager(scene);
+            instance = new viewManager(scene);
         }
         return instance;
     }
@@ -49,7 +49,7 @@ public class ViewManager {
      *
      * @param scene 与视图相关联的JavaFX场景。
      */
-    private ViewManager(Scene scene) {
+    private viewManager(Scene scene) {
         root = new BorderPane();
         scene.setRoot(root);
     }
@@ -81,8 +81,8 @@ public class ViewManager {
         // 创建状态栏
         statusLabel = new Label("行数：1 \t列数：1 \t字数：0 ");
 
-        encodingLabel = new Label(); // 创建新的标签以显示编码信息
-        HBox statusBox = new HBox(statusLabel, encodingLabel); // 使用HBox放置状态标签和编码标签
+        enCodingLabel = new Label(); // 创建新的标签以显示编码信息
+        HBox statusBox = new HBox(statusLabel, enCodingLabel); // 使用HBox放置状态标签和编码标签
         root.setBottom(statusBox);
         BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
 

@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.MainApp;
 import java.io.*;
 import java.util.List;
 
-import static org.jcnc.jnotepad.ViewManager.*;
+import static org.jcnc.jnotepad.viewManager.*;
 
 /**
  * 控制器类负责处理与用户界面的交互，并实现相关事件处理逻辑。
@@ -32,7 +32,7 @@ public class Controller {
 
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
 
-        updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+        upDateEncodingLabel(textArea.getText()); // 更新文本编码信息
         updateStatusLabel(textArea);
 
         // 添加文本变更监听器
@@ -40,7 +40,7 @@ public class Controller {
             // 更新状态栏信息
             updateStatusLabel(textArea);
         });
-        AutoSave(textArea); // 自动保存
+        autoSave(textArea); // 自动保存
         return textArea;
     }
 
@@ -55,7 +55,7 @@ public class Controller {
             tabPane.getSelectionModel().select(tab);
             updateStatusLabel(textArea);
             // 更新编码信息
-            updateEncodingLabel(textArea.getText()); // 更新文本编码信息
+            upDateEncodingLabel(textArea.getText()); // 更新文本编码信息
         }
     }
 
@@ -69,8 +69,8 @@ public class Controller {
                 Task<Void> openFileTask = new Task<>() {
                     @Override
                     protected Void call() throws Exception {
-                        getTXT(file);
-                        updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText());
+                        getText(file);
+                        upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText());
                         return null;
                     }
                 };
@@ -90,7 +90,7 @@ public class Controller {
     }
 
     // 自动保存方法
-    public static void AutoSave(TextArea textArea) {
+    public static void autoSave(TextArea textArea) {
         // 当文本编辑区内容发生变化时，自动保存文本到文件
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = tabPane.getSelectionModel().getSelectedItem();
@@ -156,7 +156,7 @@ public class Controller {
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                     TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
-                    AutoSave(textArea);// 自动保存
+                    autoSave(textArea);// 自动保存
                     String text = textArea.getText();
                     writer.write(text); // 写入文件内容
                     writer.flush();
@@ -186,8 +186,8 @@ public class Controller {
         if (file.exists() && file.isFile()) {
             try {
                 MainApp.isRelevance = false;
-                getTXT(file);// 调用读取文件方法
-                updateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
+                getText(file);// 调用读取文件方法
+                upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText()); // 更新文本编码信息
             } catch (IOException ignored) {
                 // 处理异常，忽略
             }
@@ -195,7 +195,7 @@ public class Controller {
     }
 
     // 读取文件并创建文本编辑区
-    public static void getTXT(File file) throws IOException {
+    public static void getText(File file) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line;
         StringBuilder textBuilder = new StringBuilder();
@@ -206,7 +206,7 @@ public class Controller {
         String text = textBuilder.toString();
 
         TextArea textArea = new TextArea(text); // 创建新的文本编辑区
-        AutoSave(textArea); // 自动保存
+        autoSave(textArea); // 自动保存
         Tab tab = new Tab(file.getName()); // 创建新的Tab页
 
         tab.setContent(textArea);
@@ -217,9 +217,9 @@ public class Controller {
         updateStatusLabel(textArea);
     }
     // 更新文本编码标签信息
-    public static void updateEncodingLabel(String text) {
+    public static void upDateEncodingLabel(String text) {
         String encoding = detectEncoding(text);
-        encodingLabel.setText("\t编码: " + encoding);
+        enCodingLabel.setText("\t编码: " + encoding);
     }
     // 判断编码是否有效
     public static boolean isEncodingValid(String text, String encoding) {
