@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * 该类管理记事本应用程序的视图组件。
@@ -31,6 +32,7 @@ public class ViewManager {
 
     // 状态栏
     public static Label statusLabel;
+
 
     private static ViewManager instance = null;
 

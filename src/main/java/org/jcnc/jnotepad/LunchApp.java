@@ -3,11 +3,15 @@ package org.jcnc.jnotepad;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.component.JTab;
 import org.jcnc.jnotepad.constants.Constants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.view.manager.ViewManager;
@@ -62,11 +66,9 @@ public class LunchApp extends Application {
     }
 
     private void updateUIWithNewTextArea(TextArea textArea) {
-        Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
-        tab.setContent(textArea);
+        JTab tab = new JTab("新建文件 " + (++ViewManager.tabIndex),textArea);
         ViewManager.tabPane.getTabs().add(tab);
         ViewManager.tabPane.getSelectionModel().select(tab);
-        controller.updateStatusLabel(textArea);
     }
 
     @Override

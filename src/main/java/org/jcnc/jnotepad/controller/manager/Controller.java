@@ -4,12 +4,17 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.component.JTab;
 import org.jcnc.jnotepad.controller.event.handler.*;
+import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.*;
 import java.util.List;
@@ -27,7 +32,6 @@ public class Controller implements ControllerInterface {
         }
 
         TextArea textArea = createNewTextArea();
-        configureTextArea(textArea);
 
         return textArea;
     }
@@ -89,15 +93,6 @@ public class Controller implements ControllerInterface {
     }
 
     @Override
-    public void updateStatusLabel(TextArea textArea) {
-        int caretPosition = textArea.getCaretPosition();
-        int row = getRow(caretPosition, textArea.getText());
-        int column = getColumn(caretPosition, textArea.getText());
-        int length = textArea.getLength();
-        statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
-    }
-
-    @Override
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
@@ -116,15 +111,11 @@ public class Controller implements ControllerInterface {
                 textBuilder.append(line).append("\n");
             }
             String text = textBuilder.toString();
-
             Platform.runLater(() -> {
                 textArea.setText(text);
-
-                Tab tab = createNewTab(file.getName(), textArea);
+                JTab tab = new JTab(file.getName(),textArea);
                 tabPane.getTabs().add(tab);
                 tabPane.getSelectionModel().select(tab);
-                updateStatusLabel(textArea);
-
                 autoSave(textArea);
             });
         } catch (IOException ignored) {
@@ -162,15 +153,12 @@ public class Controller implements ControllerInterface {
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
+                JTab jtab = (JTab) newTab;
                 // 获取新选定的标签页并关联的文本区域
-                TextArea textArea = (TextArea) newTab.getContent();
-
-                // 更新状态标签
-                controller.updateStatusLabel(textArea);
-
+                HBox hBox = (HBox) jtab.getContent();
+                TextArea textArea = (TextArea) hBox.getChildren().get(1);
                 // 监听文本光标位置的变化，更新状态标签
-                textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
-
+                textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> jtab.updateRowAndColumn());
                 // 更新编码标签
                 controller.upDateEncodingLabel(textArea.getText());
             }
@@ -178,13 +166,10 @@ public class Controller implements ControllerInterface {
     }
 
 
-    private void configureTextArea(TextArea textArea) {
+    public void configureTextArea(TextArea textArea) {
         textArea.setWrapText(true);
+        textArea.setStyle("-fx-focus-traversable: false");
         upDateEncodingLabel(textArea.getText());
-        updateStatusLabel(textArea);
-
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> updateStatusLabel(textArea));
-
         autoSave(textArea);
     }
 
@@ -192,8 +177,8 @@ public class Controller implements ControllerInterface {
         return new TextArea();
     }
 
-    private Tab createNewTab(String tabName, TextArea textArea) {
-        Tab tab = new Tab(tabName);
+    private JTab createNewTab(String tabName, TextArea textArea) {
+        JTab tab = new JTab(tabName);
         tab.setContent(textArea);
         tab.setUserData(null);
         return tab;

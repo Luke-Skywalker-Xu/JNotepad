@@ -21,10 +21,7 @@ public interface ControllerInterface {
 
     EventHandler<ActionEvent> getSaveAsFileEventHandler();
 
-
     void autoSave(TextArea textArea);
-
-    void updateStatusLabel(TextArea textArea);
 
     void openAssociatedFile(String filePath);
 
