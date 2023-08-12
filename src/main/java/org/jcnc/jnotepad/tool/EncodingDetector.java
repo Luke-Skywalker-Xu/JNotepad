@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.tool;
 
 import javafx.scene.control.TextArea;
 import java.nio.charset.Charset;
