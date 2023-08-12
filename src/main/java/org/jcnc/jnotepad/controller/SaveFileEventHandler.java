@@ -14,7 +14,7 @@ import static org.jcnc.jnotepad.ViewManager.tabPane;
 public class SaveFileEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
-        Controller controller=new Controller();
+        Controller controller = new Controller();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {
             File file = (File) selectedTab.getUserData();

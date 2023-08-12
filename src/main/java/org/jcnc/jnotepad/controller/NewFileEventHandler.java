@@ -9,11 +9,6 @@ import org.jcnc.jnotepad.ViewManager;
 import static org.jcnc.jnotepad.ViewManager.tabPane;
 
 public class NewFileEventHandler implements EventHandler<ActionEvent> {
-
-
-    public NewFileEventHandler() {
-    }
-
     @Override
     public void handle(ActionEvent event) {
         Controller controller = new Controller();

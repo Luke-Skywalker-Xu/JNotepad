@@ -10,7 +10,6 @@ public class LineFeedEventHandler implements EventHandler<ActionEvent> {
     public LineFeedEventHandler(TextArea textArea) {
         this.textArea = textArea;
     }
-
     @Override
     public void handle(ActionEvent event) {
         String text = textArea.getText();

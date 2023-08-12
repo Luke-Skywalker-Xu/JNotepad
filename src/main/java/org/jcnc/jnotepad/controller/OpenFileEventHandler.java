@@ -11,10 +11,10 @@ import java.io.File;
 import static org.jcnc.jnotepad.ViewManager.tabPane;
 
 // 打开文件事件处理器
-public  class OpenFileEventHandler implements EventHandler<ActionEvent> {
+public class OpenFileEventHandler implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
-        Controller controller=new Controller();
+        Controller controller = new Controller();
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {

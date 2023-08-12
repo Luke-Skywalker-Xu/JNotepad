@@ -16,14 +16,17 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.jcnc.jnotepad.view.View.initItem;
+import static org.jcnc.jnotepad.view.View.initTabPane;
+
 public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
 
-    Controller controller=new Controller();
+    Controller controller = new Controller();
+
     @Override
     public void start(Stage primaryStage) {
-        View view=new View();
         Pane root = new Pane();
 
         double width = Constants.SCREEN_WIDTH;
@@ -44,8 +47,8 @@ public class LunchApp extends Application {
         viewManager.initScreen(scene);
 
         // 初始化菜单项和标签栏
-        view.initItem();
-        View.initTabPane();
+        initItem();
+        initTabPane();
 
         if (isRelevance) {
             // 使用线程池加载关联文件并创建文本区域

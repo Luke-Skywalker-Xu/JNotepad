@@ -127,7 +127,7 @@ public class Controller implements ControllerInterface {
                 autoSave(textArea);
             });
         } catch (IOException ignored) {
-            // 适当地处理异常
+
         }
     }
 

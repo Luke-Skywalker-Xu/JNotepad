@@ -19,7 +19,7 @@ public class View {
     }
 
     public static void initTabPane() {
-        Controller controller =new Controller();
+        Controller controller = new Controller();
 
         tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
