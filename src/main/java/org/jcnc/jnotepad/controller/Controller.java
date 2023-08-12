@@ -61,6 +61,7 @@ public class Controller {
         public void handle(ActionEvent event) {
             wrapText = !wrapText; // 切换自动换行状态
             textArea.setWrapText(wrapText);
+            Line=!Line;
         }
     }
 
@@ -238,25 +239,6 @@ public class Controller {
         String encoding = detectEncoding(text);
         enCodingLabel.setText("\t编码: " + encoding);
     }
-
-/*    // 判断编码是否有效
-    public static boolean isEncodingValid(String text, Charset encoding) {
-        byte[] bytes = text.getBytes(encoding);
-        String decodedText = new String(bytes, encoding);
-        return text.equals(decodedText);
-    }*/
-
-/*    // 检测文本编码
-    public static String detectEncoding(String text) {
-        Charset[] possibleEncodings = {StandardCharsets.UTF_8, StandardCharsets.ISO_8859_1, StandardCharsets.UTF_16};
-        for (Charset encoding : possibleEncodings) {
-            if (isEncodingValid(text, Charset.forName(String.valueOf(encoding)))) {
-                System.out.println("正在检测编码");
-                return encoding.displayName();
-            }
-        }
-        return "未知";
-    }*/
 
     // 获取光标所在行数
     public static int getRow(int caretPosition, String text) {
