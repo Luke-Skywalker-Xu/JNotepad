@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -168,7 +169,6 @@ public class Controller implements ControllerInterface {
 
     public void configureTextArea(TextArea textArea) {
         textArea.setWrapText(true);
-        textArea.setStyle("-fx-focus-traversable: false");
         upDateEncodingLabel(textArea.getText());
         autoSave(textArea);
     }

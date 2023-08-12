@@ -65,6 +65,9 @@ public class JTab extends Tab {
         textArea.textProperty().addListener((observable, oldValue, newValue) ->updateRowAndColumn());
     }
 
+    /**
+     * 更新行列状态栏
+     */
     public void  updateRowAndColumn(){
         Controller controller=  new Controller();
 
