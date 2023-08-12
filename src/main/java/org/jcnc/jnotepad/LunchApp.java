@@ -16,9 +16,14 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.jcnc.jnotepad.view.View.initItem;
+import static org.jcnc.jnotepad.view.View.initTabPane;
+
 public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
+
+    Controller controller = new Controller();
 
     @Override
     public void start(Stage primaryStage) {
@@ -42,14 +47,14 @@ public class LunchApp extends Application {
         viewManager.initScreen(scene);
 
         // 初始化菜单项和标签栏
-        View.initItem();
-        View.initTabPane();
+        initItem();
+        initTabPane();
 
         if (isRelevance) {
             // 使用线程池加载关联文件并创建文本区域
             List<String> rawParameters = getParameters().getRaw();
             threadPool.execute(() -> {
-                TextArea textArea = Controller.openAssociatedFileAndCreateTextArea(rawParameters);
+                TextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
                 Platform.runLater(() -> updateUIWithNewTextArea(textArea));
             });
         }
@@ -60,7 +65,7 @@ public class LunchApp extends Application {
         tab.setContent(textArea);
         ViewManager.tabPane.getTabs().add(tab);
         ViewManager.tabPane.getSelectionModel().select(tab);
-        Controller.updateStatusLabel(textArea);
+        controller.updateStatusLabel(textArea);
     }
 
     @Override

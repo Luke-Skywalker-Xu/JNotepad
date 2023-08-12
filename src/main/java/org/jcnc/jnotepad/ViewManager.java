@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import org.jcnc.jnotepad.controller.Controller;
 
 /**
  * 该类管理记事本应用程序的视图组件。
