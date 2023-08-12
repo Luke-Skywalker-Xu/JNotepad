@@ -1,17 +1,18 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.controller.manager.Controller;
 
 import java.io.File;
 
-import static org.jcnc.jnotepad.ViewManager.tabPane;
+import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 // 打开文件事件处理器
-public class OpenFileEventHandler implements EventHandler<ActionEvent> {
+public class OpenFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         Controller controller = new Controller();

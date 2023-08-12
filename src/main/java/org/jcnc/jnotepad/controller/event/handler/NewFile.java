@@ -1,14 +1,15 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
-import org.jcnc.jnotepad.ViewManager;
+import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import static org.jcnc.jnotepad.ViewManager.tabPane;
+import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
-public class NewFileEventHandler implements EventHandler<ActionEvent> {
+public class NewFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         Controller controller = new Controller();

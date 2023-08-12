@@ -1,17 +1,18 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import org.jcnc.jnotepad.controller.manager.Controller;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-import static org.jcnc.jnotepad.ViewManager.tabPane;
+import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 // 保存文件事件处理器
-public class SaveFileEventHandler implements EventHandler<ActionEvent> {
+public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         Controller controller = new Controller();

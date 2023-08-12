@@ -40,7 +40,6 @@ public class EncodingDetector {
         byte[] bytes = text.getBytes(encoding);
         String decoded = new String(bytes, encoding);
 
-
         // 解码后的文本相同表示编码有效
         return text.equals(decoded);
     }

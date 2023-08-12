@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad;
+package org.jcnc.jnotepad.constants;
 
 /**
  * Constants持有所有共享信息的全局变量

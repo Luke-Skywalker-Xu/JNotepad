@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad;
+package org.jcnc.jnotepad.view.manager;
 
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

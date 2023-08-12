@@ -8,16 +8,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.controller.Controller;
-import org.jcnc.jnotepad.view.View;
+import org.jcnc.jnotepad.constants.Constants;
+import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.jcnc.jnotepad.view.View.initItem;
-import static org.jcnc.jnotepad.view.View.initTabPane;
+import static org.jcnc.jnotepad.view.init.View.initItem;
+import static org.jcnc.jnotepad.view.init.View.initTabPane;
 
 public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -77,4 +78,5 @@ public class LunchApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }

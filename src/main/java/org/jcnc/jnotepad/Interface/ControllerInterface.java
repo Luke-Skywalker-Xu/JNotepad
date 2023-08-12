@@ -17,13 +17,12 @@ public interface ControllerInterface {
 
     EventHandler<ActionEvent> getOpenFileEventHandler();
 
-    void autoSave(TextArea textArea);
-
     EventHandler<ActionEvent> getSaveFileEventHandler();
 
     EventHandler<ActionEvent> getSaveAsFileEventHandler();
 
-    void saveAsFile();
+
+    void autoSave(TextArea textArea);
 
     void updateStatusLabel(TextArea textArea);
 
@@ -36,4 +35,9 @@ public interface ControllerInterface {
     int getRow(int caretPosition, String text);
 
     int getColumn(int caretPosition, String text);
+
+    void initTabPane();
+
+    void saveAsFile();
+
 }

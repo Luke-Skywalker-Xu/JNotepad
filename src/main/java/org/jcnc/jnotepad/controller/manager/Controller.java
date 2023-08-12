@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.controller.manager;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -9,11 +9,12 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.controller.event.handler.*;
 
 import java.io.*;
 import java.util.List;
 
-import static org.jcnc.jnotepad.ViewManager.*;
+import static org.jcnc.jnotepad.view.manager.ViewManager.*;
 import static org.jcnc.jnotepad.tool.EncodingDetector.detectEncoding;
 
 public class Controller implements ControllerInterface {
@@ -33,17 +34,17 @@ public class Controller implements ControllerInterface {
 
     @Override
     public EventHandler<ActionEvent> getLineFeedEventHandler(TextArea textArea) {
-        return new LineFeedEventHandler(textArea);
+        return new LineFeed(textArea);
     }
 
     @Override
     public EventHandler<ActionEvent> getNewFileEventHandler(TextArea textArea) {
-        return new NewFileEventHandler();
+        return new NewFile();
     }
 
     @Override
     public EventHandler<ActionEvent> getOpenFileEventHandler() {
-        return new OpenFileEventHandler();
+        return new OpenFile();
     }
 
     @Override
@@ -65,12 +66,12 @@ public class Controller implements ControllerInterface {
 
     @Override
     public EventHandler<ActionEvent> getSaveFileEventHandler() {
-        return new SaveFileEventHandler();
+        return new SaveFile();
     }
 
     @Override
     public EventHandler<ActionEvent> getSaveAsFileEventHandler() {
-        return new SaveAsFileEventHandler();
+        return new SaveAsFile();
     }
 
     @Override
@@ -155,6 +156,28 @@ public class Controller implements ControllerInterface {
         return caretPosition - text.lastIndexOf("\n", caretPosition - 1);
     }
 
+    @Override
+    public void initTabPane() {
+        Controller controller = new Controller();
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            if (newTab != null) {
+                // 获取新选定的标签页并关联的文本区域
+                TextArea textArea = (TextArea) newTab.getContent();
+
+                // 更新状态标签
+                controller.updateStatusLabel(textArea);
+
+                // 监听文本光标位置的变化，更新状态标签
+                textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
+
+                // 更新编码标签
+                controller.upDateEncodingLabel(textArea.getText());
+            }
+        });
+    }
+
+
     private void configureTextArea(TextArea textArea) {
         textArea.setWrapText(true);
         upDateEncodingLabel(textArea.getText());
@@ -195,6 +218,6 @@ public class Controller implements ControllerInterface {
     }
 
     private void saveFile() {
-        new SaveFileEventHandler();
+        new SaveFile();
     }
 }

@@ -1,19 +1,20 @@
-package org.jcnc.jnotepad.controller;
+package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.controller.manager.Controller;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static org.jcnc.jnotepad.ViewManager.tabPane;
+import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
-public class SaveAsFileEventHandler implements EventHandler<ActionEvent> {
+public class SaveAsFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         Controller controller = new Controller();
