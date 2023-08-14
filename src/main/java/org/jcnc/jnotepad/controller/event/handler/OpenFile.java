@@ -12,11 +12,13 @@ import java.io.File;
 import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 /**
- * 打开文件事件处理器.
+ * 打开文件的事件处理程序。
+ * <p>
+ * 当用户选择打开文件时，将创建一个新的文本编辑区，并在Tab页中显示。
  */
 public class OpenFile implements EventHandler<ActionEvent> {
     /**
-     * 处理打开文件事件.
+     * 处理打开文件事件。
      *
      * @param event 事件对象
      */

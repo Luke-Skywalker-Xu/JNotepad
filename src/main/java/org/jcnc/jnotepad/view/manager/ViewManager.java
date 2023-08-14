@@ -20,7 +20,7 @@ public class ViewManager {
     // 菜单栏组件
     public static MenuBar menuBar; //菜单栏
     public static Menu fileMenu, setMenu; //文件菜单
-    public static MenuItem newItem, openItem, saveItem, saveAsItem; //新建/打开/保存/保存至 菜单
+    public static MenuItem newItem, openItem, saveAsItem; //新建/打开/保存/保存至 菜单
 
     public static CheckMenuItem lineFeedItem;
     // 主界面布局
@@ -69,11 +69,10 @@ public class ViewManager {
         setMenu = new Menu("设置");
         newItem = new MenuItem("新建");
         openItem = new MenuItem("打开");
-        saveItem = new MenuItem("保存");
         saveAsItem = new MenuItem("另存为");
         lineFeedItem = new CheckMenuItem("自动换行");
         lineFeedItem.selectedProperty().set(true);
-        fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
+        fileMenu.getItems().addAll(newItem, openItem, saveAsItem);
         setMenu.getItems().add(lineFeedItem);
 
         menuBar.getMenus().addAll(fileMenu, setMenu);

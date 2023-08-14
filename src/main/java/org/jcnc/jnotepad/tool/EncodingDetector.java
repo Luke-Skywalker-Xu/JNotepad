@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 编码检测工具类
- *
  */
 public class EncodingDetector {
 

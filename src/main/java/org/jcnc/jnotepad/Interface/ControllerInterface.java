@@ -45,13 +45,6 @@ public interface ControllerInterface {
     EventHandler<ActionEvent> getOpenFileEventHandler();
 
     /**
-     * 获取保存文件处理事件处理程序
-     *
-     * @return 保存文件处理事件处理程序
-     */
-    EventHandler<ActionEvent> getSaveFileEventHandler();
-
-    /**
      * 获取另存为文件处理事件处理程序
      *
      * @return 另存为文件处理事件处理程序
@@ -116,10 +109,5 @@ public interface ControllerInterface {
      * 初始化 TabPane
      */
     void initTabPane();
-
-    /**
-     * 另存为文件
-     */
-    void saveAsFile();
 
 }

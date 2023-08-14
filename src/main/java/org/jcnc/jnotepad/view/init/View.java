@@ -12,7 +12,6 @@ public class View {
         // 初始化菜单项的事件处理器
         newItem.setOnAction(new Controller().getNewFileEventHandler(new TextArea()));
         openItem.setOnAction(new Controller().getOpenFileEventHandler());
-        saveItem.setOnAction(new Controller().getSaveFileEventHandler());
         saveAsItem.setOnAction(new Controller().getSaveAsFileEventHandler());
         lineFeedItem.setOnAction(new Controller().getLineFeedEventHandler(new TextArea()));
 

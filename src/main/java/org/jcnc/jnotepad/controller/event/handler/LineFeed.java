@@ -3,10 +3,12 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
-/**
- * LineFeed 类是一个事件处理程序，用于在文本区域中插入一个换行符。
- */
 
+/**
+ * 换行程序。
+ * <p>
+ * 用于在文本区域中插入一个换行符。
+ */
 public class LineFeed implements EventHandler<ActionEvent> {
     private final TextArea textArea;
 

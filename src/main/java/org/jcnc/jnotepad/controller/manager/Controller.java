@@ -65,27 +65,8 @@ public class Controller implements ControllerInterface {
     }
 
     @Override
-    public EventHandler<ActionEvent> getSaveFileEventHandler() {
-        return new SaveFile();
-    }
-
-    @Override
     public EventHandler<ActionEvent> getSaveAsFileEventHandler() {
         return new SaveAsFile();
-    }
-
-    @Override
-    public void saveAsFile() {
-        Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
-        if (selectedTab != null) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("新建文本");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
-            File file = fileChooser.showSaveDialog(null);
-            if (file != null) {
-                saveFile();
-            }
-        }
     }
 
     @Override
@@ -217,7 +198,4 @@ public class Controller implements ControllerInterface {
         thread.start();
     }
 
-    private void saveFile() {
-        new SaveFile();
-    }
 }
