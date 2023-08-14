@@ -9,6 +9,12 @@ import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
+/**
+ *处理新建文件事件的事件处理程序。
+ *当用户选择新建文件菜单或按钮时，将创建一个新的文本编辑区，并在Tab页中显示。
+ * */
+
+
 public class NewFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
