@@ -35,12 +35,12 @@ public class Controller implements ControllerInterface {
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);
+            return null;
+        } else {
+            TextArea textArea = createNewTextArea();
+            configureTextArea(textArea);
+            return textArea;
         }
-
-        TextArea textArea = createNewTextArea();
-        configureTextArea(textArea);
-
-        return textArea;
     }
 
     /**
