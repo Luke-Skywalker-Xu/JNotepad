@@ -56,7 +56,9 @@ public class LunchApp extends Application {
             List<String> rawParameters = getParameters().getRaw();
             threadPool.execute(() -> {
                 TextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
-                Platform.runLater(() -> updateUIWithNewTextArea(textArea));
+                if (!Objects.isNull(textArea)) {
+                    Platform.runLater(() -> updateUIWithNewTextArea(textArea));
+                }
             });
         }
     }
