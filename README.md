@@ -1,4 +1,5 @@
 # JNotepad
+![](src/main/resources/img/icon.svg)
 
 ![](https://img.shields.io/badge/Windows-Passing-49%2C198%2C84.svg?style=falt&logo=Windows)
 ![](https://img.shields.io/badge/Ubuntu-Passing-49%2C198%2C84.svg?style=falt&logo=Ubuntu)
