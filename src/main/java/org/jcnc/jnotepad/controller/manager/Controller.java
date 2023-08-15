@@ -89,6 +89,7 @@ public class Controller implements ControllerInterface {
                 if (file != null) {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                         writer.write(newValue);
+                        System.out.println("正在自动保存---");
                     } catch (IOException ignored) {
 
                     }
@@ -232,6 +233,15 @@ public class Controller implements ControllerInterface {
                 controller.upDateEncodingLabel(textArea.getText());
             }
         });
+    }
+
+    @Override
+    public void updateUIWithNewTextArea(TextArea textArea) {
+        Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
+        tab.setContent(textArea);
+        ViewManager.tabPane.getTabs().add(tab);
+        ViewManager.tabPane.getSelectionModel().select(tab);
+        updateStatusLabel(textArea);
     }
 
     /**

@@ -30,7 +30,6 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        Controller controller = new Controller();
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {
             FileChooser fileChooser = new FileChooser();
@@ -41,7 +40,6 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                     TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
-                    controller.autoSave(textArea);// 自动保存
                     String text = textArea.getText();
                     writer.write(text); // 写入文件内容
                     writer.flush();

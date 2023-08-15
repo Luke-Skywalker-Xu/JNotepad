@@ -32,7 +32,7 @@ public class EncodingDetector {
         // 尝试常见的编码
         for (Charset charset : commonCharsets()) {
             if (isValidEncoding(text, charset)) {
-                System.out.println(isValidEncoding(text, charset));
+                System.out.println("编码监测结果:" + isValidEncoding(text, charset));
                 return charset.name();
             }
         }

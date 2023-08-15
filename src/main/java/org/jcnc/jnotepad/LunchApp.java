@@ -57,18 +57,10 @@ public class LunchApp extends Application {
             threadPool.execute(() -> {
                 TextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
                 if (!Objects.isNull(textArea)) {
-                    Platform.runLater(() -> updateUIWithNewTextArea(textArea));
+                    Platform.runLater(() -> controller.updateUIWithNewTextArea(textArea));
                 }
             });
         }
-    }
-
-    private void updateUIWithNewTextArea(TextArea textArea) {
-        Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
-        tab.setContent(textArea);
-        ViewManager.tabPane.getTabs().add(tab);
-        ViewManager.tabPane.getSelectionModel().select(tab);
-        controller.updateStatusLabel(textArea);
     }
 
     @Override

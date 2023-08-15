@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * 控制器接口类
- *
  */
 public interface ControllerInterface {
 
@@ -110,4 +109,5 @@ public interface ControllerInterface {
      */
     void initTabPane();
 
+    void updateUIWithNewTextArea(TextArea textArea);
 }
