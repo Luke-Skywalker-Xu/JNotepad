@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad;
 
+import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -28,6 +29,8 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+
         Pane root = new Pane();
 
         double width = Constants.SCREEN_WIDTH;
@@ -36,6 +39,8 @@ public class LunchApp extends Application {
         String icon = Constants.APP_ICON;
 
         Scene scene = new Scene(root, width, length);
+
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
         primaryStage.setTitle(name);
         primaryStage.setWidth(width);
