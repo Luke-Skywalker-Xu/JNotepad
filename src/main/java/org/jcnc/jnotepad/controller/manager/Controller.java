@@ -155,6 +155,7 @@ public class Controller implements ControllerInterface {
                 textArea.setText(text);
 
                 Tab tab = createNewTab(file.getName(), textArea);
+                tab.setUserData(file);
                 ViewManager.tabPane.getTabs().add(tab);
                 ViewManager.tabPane.getSelectionModel().select(tab);
                 updateStatusLabel(textArea);
