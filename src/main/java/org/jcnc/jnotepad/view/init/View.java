@@ -8,7 +8,8 @@ import static org.jcnc.jnotepad.view.manager.ViewManager.*;
 
 public class View {
 
-    public static void initItem() {
+
+    public void initItem() {
         // 初始化菜单项的事件处理器
         newItem.setOnAction(new Controller().getNewFileEventHandler(new TextArea()));
         openItem.setOnAction(new Controller().getOpenFileEventHandler());
@@ -17,7 +18,10 @@ public class View {
 
     }
 
-    public static void initTabPane() {
+    public void initTabPane() {
         new Controller().initTabPane();
     }
+
+
+
 }

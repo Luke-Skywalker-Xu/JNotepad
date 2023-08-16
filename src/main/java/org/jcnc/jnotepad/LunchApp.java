@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.constants.Constants;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.view.init.View;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.util.List;
@@ -18,18 +19,19 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.jcnc.jnotepad.view.init.View.initItem;
-import static org.jcnc.jnotepad.view.init.View.initTabPane;
-
 public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
 
     Controller controller = new Controller();
 
+    View view;
+
+
     @Override
     public void start(Stage primaryStage) {
 
+        view =new View();
 
         Pane root = new Pane();
 
@@ -53,8 +55,8 @@ public class LunchApp extends Application {
         viewManager.initScreen(scene);
 
         // 初始化菜单项和标签栏
-        initItem();
-        initTabPane();
+        view.initItem();
+        view.initTabPane();
 
         if (isRelevance) {
             // 使用线程池加载关联文件并创建文本区域
