@@ -27,7 +27,6 @@ public class LunchApp extends Application {
 
     View view;
 
-
     @Override
     public void start(Stage primaryStage) {
 
