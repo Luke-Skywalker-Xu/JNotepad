@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.controller.event.handler.LineFeed;
@@ -158,6 +160,7 @@ public class Controller implements ControllerInterface {
                 Tab tab = createNewTab(file.getName(), textArea);
                 tab.setUserData(file);
                 ViewManager.tabPane.getTabs().add(tab);
+//                ViewManager.tabPane.sets
                 ViewManager.tabPane.getSelectionModel().select(tab);
                 updateStatusLabel(textArea);
 
@@ -265,7 +268,12 @@ public class Controller implements ControllerInterface {
      * @return 新的文本区域
      */
     private TextArea createNewTextArea() {
-        return new TextArea();
+        TextArea textArea = new TextArea();
+        textArea.setStyle(
+                "-fx-border-color:white;" +
+                "-fx-background-color:white"
+        );
+        return textArea;
     }
 
     /**

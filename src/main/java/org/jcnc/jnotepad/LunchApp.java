@@ -50,13 +50,13 @@ public class LunchApp extends Application {
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
         primaryStage.show();
-
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
 
         // 初始化菜单项和标签栏
         view.initItem();
         view.initTabPane();
+        view.initShortcutKey();
 
         if (isRelevance) {
             // 使用线程池加载关联文件并创建文本区域
