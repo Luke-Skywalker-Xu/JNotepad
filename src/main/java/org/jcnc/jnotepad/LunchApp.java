@@ -51,6 +51,7 @@ public class LunchApp extends Application {
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
 
+
         // 初始化菜单项和标签栏
         initItem();
         initTabPane();

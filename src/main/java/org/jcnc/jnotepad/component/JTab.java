@@ -1,10 +1,10 @@
 package org.jcnc.jnotepad.component;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.constants.Constants;
@@ -30,6 +30,7 @@ public class JTab extends Tab {
      */
     private TextArea textArea;
 
+
     private JTab() {
         super();
     }
@@ -45,25 +46,53 @@ public class JTab extends Tab {
 
     public void init(TextArea textArea){
 
-        Controller controller=  new Controller();
+        //布局 Tab-> ScrollPane-> HBox-> (VBox->label[])+TextArea
+        //左侧行号区
         VBox vBox = new VBox();
-        //vBox.getChildren().addAll(labels);
-        vBox.setPrefWidth(60);
+        vBox.setPrefWidth(40);
+        vBox.setBorder(Border.EMPTY);
         this.setLineNum(vBox);
 
-        double width = Constants.SCREEN_WIDTH;
-        textArea.setPrefWidth(width);
+        //文本区
+        textArea.setPrefWidth(Constants.SCREEN_WIDTH-60);
+        textArea.setScrollLeft(0);
+        textArea.setScrollTop(Double.MAX_VALUE);
         this.setTextArea(textArea);
         HBox hBox = new HBox();
+        //行号+文本用容器HBox布局
         hBox.getChildren().addAll(this.getLineNum(),this.getTextArea());
-        this.setContent(hBox);
 
-        controller.configureTextArea(textArea);
+        //滚动条 用容器ScrollPane布局
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(hBox);
+
+        //设置文本框随着滚动条的变化而变化
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = (double) newValue;
+            this.getTextArea().setPrefWidth(width-60);
+        });
+        scrollPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = (double) newValue;
+            this.getTextArea().setPrefHeight(height+100);
+        });
+
+        //处理文本框内部的滚动条问题，目前不完善，todo 待优化
+        hBox.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = (double) newValue;
+            this.getTextArea().setPrefHeight(height+3);
+        });
+
+        this.setContent(scrollPane);
+        new Controller().configureTextArea(textArea);
 
         updateRowAndColumn();
 
-        textArea.textProperty().addListener((observable, oldValue, newValue) ->updateRowAndColumn());
+        textArea.textProperty().addListener((observable, oldValue, newValue) ->{
+            updateRowAndColumn();
+        });
     }
+
+
 
     /**
      * 更新行列状态栏

@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Border;
@@ -156,7 +157,8 @@ public class Controller implements ControllerInterface {
             if (newTab != null) {
                 JTab jtab = (JTab) newTab;
                 // 获取新选定的标签页并关联的文本区域
-                HBox hBox = (HBox) jtab.getContent();
+                ScrollPane scrollPane = (ScrollPane) jtab.getContent();
+                HBox hBox = (HBox) scrollPane.getContent();
                 TextArea textArea = (TextArea) hBox.getChildren().get(1);
                 // 监听文本光标位置的变化，更新状态标签
                 textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> jtab.updateRowAndColumn());

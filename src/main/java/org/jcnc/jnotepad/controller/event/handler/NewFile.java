@@ -13,6 +13,7 @@ import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 public class NewFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
+
         Controller controller = new Controller();
         TextArea textArea = new TextArea(); // 创建新的文本编辑区
         JTab tab = new JTab("新建文本 " + ++ViewManager.tabIndex,textArea); // 创建新的Tab页
