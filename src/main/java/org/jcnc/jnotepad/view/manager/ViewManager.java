@@ -20,10 +20,10 @@ public class ViewManager {
 
     // 菜单栏组件
     public static MenuBar menuBar; //菜单栏
-    public static Menu fileMenu, setMenu; //文件菜单
-    public static MenuItem newItem, openItem, saveItem, saveAsItem; //新建/打开/保存/保存至 菜单
+    public static Menu fileMenu, setMenu, pluginMenu; //文件菜单//设置菜单//插件菜单 菜单
+    public static MenuItem newItem, openItem, saveAsItem, addItem, coutItem; //新建/打开/保存/保存至//增加//查看 菜单按钮
 
-    public static CheckMenuItem lineFeedItem;
+    public static CheckMenuItem lineFeedItem; //自动换行点击菜单按钮
     // 主界面布局
     public static BorderPane root; //主布局
 
@@ -67,18 +67,31 @@ public class ViewManager {
     public void initScreen(Scene scene) {
         // 创建菜单栏并添加菜单项
         menuBar = new MenuBar();
+
+        //文件菜单
         fileMenu = new Menu("文件");
-        setMenu = new Menu("设置");
         newItem = new MenuItem("新建");
         openItem = new MenuItem("打开");
-        saveItem = new MenuItem("保存");
         saveAsItem = new MenuItem("另存为");
+
+        fileMenu.getItems().addAll(newItem, openItem, saveAsItem);
+
+        //设置菜单
+        setMenu = new Menu("设置");
         lineFeedItem = new CheckMenuItem("自动换行");
         lineFeedItem.selectedProperty().set(true);
-        fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
-        setMenu.getItems().add(lineFeedItem);
 
-        menuBar.getMenus().addAll(fileMenu, setMenu);
+        setMenu.getItems().addAll(lineFeedItem);
+
+        //插件菜单
+        pluginMenu = new Menu("插件");
+        addItem = new MenuItem("增加插件");
+        coutItem = new MenuItem("统计字数");
+
+        pluginMenu.getItems().addAll(addItem, coutItem);
+
+        //菜单栏
+        menuBar.getMenus().addAll(fileMenu, setMenu, pluginMenu);
 
         // 创建主界面布局
         root = new BorderPane();

@@ -10,16 +10,39 @@ import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
+/**
+ * 新建文件事件的事件处理程序。
+ * <p>
+ * 当用户选择新建文件时候,将创建一个新的文本编辑区，并在Tab页中显示。
+ */
 public class NewFile implements EventHandler<ActionEvent> {
+    /**
+     * 处理新建文件事件。
+     *
+     * @param event 事件对象
+     */
     @Override
     public void handle(ActionEvent event) {
-
+        // 获取控制器
         Controller controller = new Controller();
-        TextArea textArea = new TextArea(); // 创建新的文本编辑区
-        JTab tab = new JTab("新建文本 " + ++ViewManager.tabIndex,textArea); // 创建新的Tab页
+
+        // 创建一个新的文本编辑区
+        TextArea textArea = new TextArea();
+
+        // 创建一个新的Tab页
+        JTab tab = new JTab("新建文本 " + ++ViewManager.tabIndex);
+        tab.setContent(textArea);
+
+        // 将Tab页添加到TabPane中
         tabPane.getTabs().add(tab);
+
+        // 将新建的Tab页设置为选中状态
         tabPane.getSelectionModel().select(tab);
+
+        // 更新状态标签
+        controller.updateStatusLabel(textArea);
+
         // 更新编码信息
-        controller.upDateEncodingLabel(textArea.getText()); // 更新文本编码信息
+        controller.upDateEncodingLabel(textArea.getText());
     }
 }

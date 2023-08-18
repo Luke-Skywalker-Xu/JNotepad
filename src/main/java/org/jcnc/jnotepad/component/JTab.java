@@ -79,7 +79,7 @@ public class JTab extends Tab {
         //处理文本框内部的滚动条问题，目前不完善，todo 待优化
         hBox.heightProperty().addListener((observable, oldValue, newValue) -> {
             double height = (double) newValue;
-            this.getTextArea().setPrefHeight(height+3);
+            this.getTextArea().setPrefHeight(height+10);
         });
 
         this.setContent(scrollPane);
