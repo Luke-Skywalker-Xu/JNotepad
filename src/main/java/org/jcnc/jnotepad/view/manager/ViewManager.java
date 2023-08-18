@@ -3,8 +3,12 @@ package org.jcnc.jnotepad.view.manager;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 该类管理记事本应用程序的视图组件。
@@ -20,7 +24,7 @@ public class ViewManager {
     // 菜单栏组件
     public static MenuBar menuBar; //菜单栏
     public static Menu fileMenu, setMenu, pluginMenu; //文件菜单//设置菜单//插件菜单 菜单
-    public static MenuItem newItem, openItem, saveAsItem, addItem, coutItem; //新建/打开/保存/保存至//增加//查看 菜单按钮
+    public static MenuItem newItem, openItem, saveAsItem, addItem, countItem; //新建/打开/保存/保存至//增加//查看 菜单按钮
 
     public static CheckMenuItem lineFeedItem; //自动换行点击菜单按钮
     // 主界面布局
@@ -33,6 +37,8 @@ public class ViewManager {
     public static Label statusLabel;
 
     private static ViewManager instance = null;
+
+    public static Map<String, MenuItem> itemMap = new HashMap<>();
 
     /**
      * 获取ViewManager的实例。如果实例不存在，则创建一个新实例。
@@ -68,15 +74,23 @@ public class ViewManager {
 
         //文件菜单
         fileMenu = new Menu("文件");
+
         newItem = new MenuItem("新建");
+        itemMap.put("newItem", newItem);
+
         openItem = new MenuItem("打开");
+        itemMap.put("openItem", openItem);
+
         saveAsItem = new MenuItem("另存为");
+        itemMap.put("saveAsItem", saveAsItem);
 
         fileMenu.getItems().addAll(newItem, openItem, saveAsItem);
 
         //设置菜单
         setMenu = new Menu("设置");
+
         lineFeedItem = new CheckMenuItem("自动换行");
+        itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
 
         setMenu.getItems().addAll(lineFeedItem);
@@ -84,9 +98,12 @@ public class ViewManager {
         //插件菜单
         pluginMenu = new Menu("插件");
         addItem = new MenuItem("增加插件");
-        coutItem = new MenuItem("统计字数");
+        itemMap.put("addItem", addItem);
 
-        pluginMenu.getItems().addAll(addItem, coutItem);
+        countItem = new MenuItem("统计字数");
+        itemMap.put("countItem", countItem);
+
+        pluginMenu.getItems().addAll(addItem, countItem);
 
         //菜单栏
         menuBar.getMenus().addAll(fileMenu, setMenu, pluginMenu);

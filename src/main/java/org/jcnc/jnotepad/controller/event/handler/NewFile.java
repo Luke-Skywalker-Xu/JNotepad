@@ -27,7 +27,10 @@ public class NewFile implements EventHandler<ActionEvent> {
 
         // 创建一个新的文本编辑区
         TextArea textArea = new TextArea();
-
+        textArea.setStyle(
+                "-fx-border-color:white;" +
+                        "-fx-background-color:white"
+        );
         // 创建一个新的Tab页
         Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);
         tab.setContent(textArea);
