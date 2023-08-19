@@ -17,11 +17,11 @@ public class LineNumberTextArea extends BorderPane {
         mainTextArea = new TextArea();
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
-        lineNumberArea.setMinWidth(55);
-        lineNumberArea.setMaxWidth(55);
+        lineNumberArea.setMinWidth(30);
+        lineNumberArea.setMaxWidth(30);
         // 设置显示滚动条样式类
-/*        lineNumberArea.getStyleClass().add("hide-scrollbars");
-        mainTextArea.getStyleClass().add("show-scrollbars"); */
+        lineNumberArea.getStyleClass().add("text-line-number");
+        /*mainTextArea.getStyleClass().add("show-scrollbars"); */
 
         mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
 
