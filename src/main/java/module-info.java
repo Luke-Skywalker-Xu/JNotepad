@@ -1,8 +1,9 @@
 module org.jcnc.jnotepad {
     requires javafx.controls;
     requires atlantafx.base;
-    requires cn.hutool;
-
+//    requires cn.hutool.json;
+//    requires cn.hutool.core;
+    requires com.google.gson;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;
