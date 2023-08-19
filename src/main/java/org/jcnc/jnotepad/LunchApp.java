@@ -42,7 +42,7 @@ public class LunchApp extends Application {
 
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
 
         primaryStage.setTitle(name);
         primaryStage.setWidth(width);

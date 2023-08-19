@@ -1,11 +1,8 @@
 package org.jcnc.jnotepad.ui;
 
 import javafx.beans.property.StringProperty;
-
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-
-import java.util.Objects;
 
 public class LineNumberTextArea extends BorderPane {
 
@@ -21,9 +18,10 @@ public class LineNumberTextArea extends BorderPane {
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
         lineNumberArea.setPrefWidth(30);
+        mainTextArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
+        lineNumberArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
         // 设置显示滚动条样式类
         lineNumberArea.getStyleClass().add("text-line-number");
-        /*mainTextArea.getStyleClass().add("show-scrollbars"); */
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
         mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
 
@@ -86,3 +84,4 @@ public class LineNumberTextArea extends BorderPane {
         return mainTextArea;
     }
 }
+
