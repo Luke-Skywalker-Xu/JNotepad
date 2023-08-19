@@ -7,8 +7,6 @@ import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import java.util.Objects;
-
 import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 /**
@@ -25,7 +23,7 @@ public class NewFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         // 获取控制器
-        Controller controller = new Controller();
+        Controller controller = Controller.getInstance();
 
         LineNumberTextArea lineNumberTextArea = new LineNumberTextArea();
 
@@ -38,6 +36,9 @@ public class NewFile implements EventHandler<ActionEvent> {
                 "-fx-border-color:white ;-fx-background-color:white;"
         );
 
+        //TODO: refactor：统一TextArea新建、绑定监听器入口
+        // 增加autoSave监听器绑定
+        controller.autoSave(textArea);
 
         // 创建一个新的Tab页
         Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);

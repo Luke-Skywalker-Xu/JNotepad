@@ -25,6 +25,16 @@ import java.util.List;
  */
 public class Controller implements ControllerInterface {
 
+    private static final Controller INSTANCE = new Controller();
+
+    private Controller() {
+
+    }
+
+    public static Controller getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * 打开关联文件并创建文本区域。
      *
@@ -270,7 +280,7 @@ public class Controller implements ControllerInterface {
         LineNumberTextArea textArea = new LineNumberTextArea();
         textArea.setStyle(
                 "-fx-border-color:white;" +
-                "-fx-background-color:white"
+                        "-fx-background-color:white"
         );
         return textArea;
     }

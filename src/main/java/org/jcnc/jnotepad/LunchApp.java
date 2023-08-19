@@ -23,9 +23,8 @@ public class LunchApp extends Application {
     private static final ExecutorService threadPool = Executors.newCachedThreadPool();
     public static boolean isRelevance = true;
 
+    Controller controller = Controller.getInstance();
     Scene scene;
-    Controller controller = new Controller();
-
     View view;
 
     @Override

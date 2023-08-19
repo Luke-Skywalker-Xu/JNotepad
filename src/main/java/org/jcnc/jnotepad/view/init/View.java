@@ -17,17 +17,17 @@ public class View {
 
     public void initItem() {
         // 初始化菜单项的事件处理器
-        EventHandler<ActionEvent> newFileEventHandler = new Controller().getNewFileEventHandler(new LineNumberTextArea());
+        EventHandler<ActionEvent> newFileEventHandler = Controller.getInstance().getNewFileEventHandler(new LineNumberTextArea());
         newItem.setOnAction(newFileEventHandler);
-        EventHandler<ActionEvent> openFileEventHandler = new Controller().getOpenFileEventHandler();
+        EventHandler<ActionEvent> openFileEventHandler = Controller.getInstance().getOpenFileEventHandler();
         openItem.setOnAction(openFileEventHandler);
-        EventHandler<ActionEvent> saveAsFileEventHandler = new Controller().getSaveAsFileEventHandler();
+        EventHandler<ActionEvent> saveAsFileEventHandler = Controller.getInstance().getSaveAsFileEventHandler();
         saveAsItem.setOnAction(saveAsFileEventHandler);
-        lineFeedItem.setOnAction(new Controller().getLineFeedEventHandler(new LineNumberTextArea()));
+        lineFeedItem.setOnAction(Controller.getInstance().getLineFeedEventHandler(new LineNumberTextArea()));
     }
 
     public void initTabPane() {
-        new Controller().initTabPane();
+        Controller.getInstance().initTabPane();
     }
 
     // 初始化快捷键
