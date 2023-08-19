@@ -25,9 +25,6 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 获取控制器
         Controller controller = Controller.getInstance();
 
-        LineNumberTextArea lineNumberTextArea = new LineNumberTextArea();
-
-
         // 创建一个新的文本编辑区
         LineNumberTextArea textArea = new LineNumberTextArea();
 
@@ -42,7 +39,7 @@ public class NewFile implements EventHandler<ActionEvent> {
 
         // 创建一个新的Tab页
         Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);
-        tab.setContent(lineNumberTextArea.getMainTextArea());
+        tab.setContent(textArea);
 
         // 将Tab页添加到TabPane中
         tabPane.getTabs().add(tab);
@@ -51,9 +48,9 @@ public class NewFile implements EventHandler<ActionEvent> {
         tabPane.getSelectionModel().select(tab);
 
         // 更新状态标签
-        controller.updateStatusLabel(lineNumberTextArea);
+        controller.updateStatusLabel(textArea);
 
         // 更新编码信息
-        controller.upDateEncodingLabel(lineNumberTextArea.getMainTextArea().getText());
+        controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
     }
 }
