@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 
+import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.LunchApp;
@@ -223,6 +224,9 @@ public class Controller implements ControllerInterface {
         return caretPosition - text.lastIndexOf("\n", caretPosition - 1);
     }
 
+    /**
+     * 初始化标签面板。
+     */
     /**
      * 初始化标签面板。
      */
