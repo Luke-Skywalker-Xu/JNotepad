@@ -21,17 +21,32 @@ import java.util.Objects;
 public class ShortcutKey implements ShortcutKeyInterface {
     @Override
     public void createShortcutKeyByConfig() {
-
+        String rootPath =System.getProperty("user.dir");
+        // 构建JSON文件路径
+        String jsonFilePath = rootPath +"/config/shortcutKey.json";
         InputStream inputStream = getClass().getResourceAsStream("/config/shortcutKey.json");
         StringBuffer jsonData = new StringBuffer();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonData.append(line);
+        File file = new File(jsonFilePath);
+        if(file.exists()){
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonData.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }else {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonData.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
         // 转json对象
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
