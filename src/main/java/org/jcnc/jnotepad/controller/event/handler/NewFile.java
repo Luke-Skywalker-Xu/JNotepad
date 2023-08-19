@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
@@ -25,18 +25,24 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 获取控制器
         Controller controller = Controller.getInstance();
 
+        LineNumberTextArea lineNumberTextArea = new LineNumberTextArea();
+
+
         // 创建一个新的文本编辑区
-        TextArea textArea = new TextArea();
+        LineNumberTextArea textArea = new LineNumberTextArea();
+
+
         textArea.setStyle(
-                "-fx-border-color:white;" +
-                        "-fx-background-color:white"
+                "-fx-border-color:white ;-fx-background-color:white;"
         );
+
         //TODO: refactor：统一TextArea新建、绑定监听器入口
         // 增加autoSave监听器绑定
         controller.autoSave(textArea);
+
         // 创建一个新的Tab页
         Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);
-        tab.setContent(textArea);
+        tab.setContent(lineNumberTextArea.getMainTextArea());
 
         // 将Tab页添加到TabPane中
         tabPane.getTabs().add(tab);
@@ -45,9 +51,9 @@ public class NewFile implements EventHandler<ActionEvent> {
         tabPane.getSelectionModel().select(tab);
 
         // 更新状态标签
-        controller.updateStatusLabel(textArea);
+        controller.updateStatusLabel(lineNumberTextArea);
 
         // 更新编码信息
-        controller.upDateEncodingLabel(textArea.getText());
+        controller.upDateEncodingLabel(lineNumberTextArea.getMainTextArea().getText());
     }
 }

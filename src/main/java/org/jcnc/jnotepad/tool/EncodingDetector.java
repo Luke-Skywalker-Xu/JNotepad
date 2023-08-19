@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.tool;
 
-import javafx.scene.control.TextArea;
+
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -16,8 +17,8 @@ public class EncodingDetector {
      * @param textArea 文本区域
      * @return 字符串表示的编码，如果检测失败则返回 "UNKNOWN"
      */
-    public static String detectEncoding(TextArea textArea) {
-        String text = textArea.getText();
+    public static String detectEncoding(LineNumberTextArea textArea) {
+        String text = textArea.getMainTextArea().getText();
 
         return detectEncoding(text);
     }

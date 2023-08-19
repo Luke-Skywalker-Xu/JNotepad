@@ -3,8 +3,9 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.TextArea;
+
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
 
 import java.io.File;
@@ -38,7 +39,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                     // 调用控制器的getText方法，读取文件内容
                     controller.getText(file);
                     // 更新编码标签
-                    controller.upDateEncodingLabel(((TextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getText());
+                    controller.upDateEncodingLabel(((LineNumberTextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getMainTextArea().getText());
                     return null;
                 }
             };

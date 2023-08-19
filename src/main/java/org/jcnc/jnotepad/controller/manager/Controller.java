@@ -5,10 +5,9 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
 import org.jcnc.jnotepad.Interface.ControllerInterface;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.controller.event.handler.LineFeed;
 import org.jcnc.jnotepad.controller.event.handler.NewFile;
@@ -43,13 +42,13 @@ public class Controller implements ControllerInterface {
      * @return 创建的文本区域
      */
     @Override
-    public TextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
+    public LineNumberTextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);
             return null;
         } else {
-            TextArea textArea = createNewTextArea();
+            LineNumberTextArea textArea = createNewTextArea();
             configureTextArea(textArea);
             return textArea;
         }
@@ -62,7 +61,7 @@ public class Controller implements ControllerInterface {
      * @return 行分隔事件处理程序
      */
     @Override
-    public EventHandler<ActionEvent> getLineFeedEventHandler(TextArea textArea) {
+    public EventHandler<ActionEvent> getLineFeedEventHandler(LineNumberTextArea textArea) {
         return new LineFeed(textArea);
     }
 
@@ -73,7 +72,7 @@ public class Controller implements ControllerInterface {
      * @return 新建文件事件处理程序
      */
     @Override
-    public EventHandler<ActionEvent> getNewFileEventHandler(TextArea textArea) {
+    public EventHandler<ActionEvent> getNewFileEventHandler(LineNumberTextArea textArea) {
         return new NewFile();
     }
 
@@ -93,7 +92,7 @@ public class Controller implements ControllerInterface {
      * @param textArea 文本区域
      */
     @Override
-    public void autoSave(TextArea textArea) {
+    public void autoSave(LineNumberTextArea textArea) {
         textArea.textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = ViewManager.tabPane.getSelectionModel().getSelectedItem();
             if (tab != null) {
@@ -126,11 +125,11 @@ public class Controller implements ControllerInterface {
      * @param textArea 文本区域
      */
     @Override
-    public void updateStatusLabel(TextArea textArea) {
-        int caretPosition = textArea.getCaretPosition();
-        int row = getRow(caretPosition, textArea.getText());
-        int column = getColumn(caretPosition, textArea.getText());
-        int length = textArea.getLength();
+    public void updateStatusLabel(LineNumberTextArea textArea) {
+        int caretPosition = textArea.getMainTextArea().getCaretPosition();
+        int row = getRow(caretPosition, textArea.getMainTextArea().getText());
+        int column = getColumn(caretPosition, textArea.getMainTextArea().getText());
+        int length = textArea.getMainTextArea().getLength();
         ViewManager.statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
     }
 
@@ -155,7 +154,7 @@ public class Controller implements ControllerInterface {
      */
     @Override
     public void getText(File file) {
-        TextArea textArea = createNewTextArea();
+        LineNumberTextArea textArea = createNewTextArea();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder textBuilder = new StringBuilder();
             String line;
@@ -165,7 +164,7 @@ public class Controller implements ControllerInterface {
             String text = textBuilder.toString();
 
             Platform.runLater(() -> {
-                textArea.setText(text);
+                textArea.getMainTextArea().setText(text);
 
                 Tab tab = createNewTab(file.getName(), textArea);
                 tab.setUserData(file);
@@ -234,22 +233,22 @@ public class Controller implements ControllerInterface {
         ViewManager.tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             if (newTab != null) {
                 // 获取新选定的标签页并关联的文本区域
-                TextArea textArea = (TextArea) newTab.getContent();
+                LineNumberTextArea textArea = (LineNumberTextArea) newTab.getContent();
 
                 // 更新状态标签
                 controller.updateStatusLabel(textArea);
 
                 // 监听文本光标位置的变化，更新状态标签
-                textArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
+                textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
 
                 // 更新编码标签
-                controller.upDateEncodingLabel(textArea.getText());
+                controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
             }
         });
     }
 
     @Override
-    public void updateUIWithNewTextArea(TextArea textArea) {
+    public void updateUIWithNewTextArea(LineNumberTextArea textArea) {
         Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
         tab.setContent(textArea);
         ViewManager.tabPane.getTabs().add(tab);
@@ -262,9 +261,9 @@ public class Controller implements ControllerInterface {
      *
      * @param textArea 文本区域
      */
-    private void configureTextArea(TextArea textArea) {
-        textArea.setWrapText(true);
-        upDateEncodingLabel(textArea.getText());
+    private void configureTextArea(LineNumberTextArea textArea) {
+        textArea.getMainTextArea().setWrapText(true);
+        upDateEncodingLabel(textArea.getMainTextArea().getText());
         updateStatusLabel(textArea);
 
         textArea.textProperty().addListener((observable, oldValue, newValue) -> updateStatusLabel(textArea));
@@ -277,8 +276,8 @@ public class Controller implements ControllerInterface {
      *
      * @return 新的文本区域
      */
-    private TextArea createNewTextArea() {
-        TextArea textArea = new TextArea();
+    private LineNumberTextArea createNewTextArea() {
+        LineNumberTextArea textArea = new LineNumberTextArea();
         textArea.setStyle(
                 "-fx-border-color:white;" +
                         "-fx-background-color:white"
@@ -293,7 +292,7 @@ public class Controller implements ControllerInterface {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private Tab createNewTab(String tabName, TextArea textArea) {
+    private Tab createNewTab(String tabName, LineNumberTextArea textArea) {
         Tab tab = new Tab(tabName);
         tab.setContent(textArea);
         tab.setUserData(null);
@@ -307,12 +306,12 @@ public class Controller implements ControllerInterface {
      * @return 打开文件的任务
      */
     private Task<Void> createOpenFileTask(File file) {
-        TextArea textArea = createNewTextArea();
+        LineNumberTextArea textArea = createNewTextArea();
         return new Task<>() {
             @Override
             protected Void call() {
                 getText(file);
-                upDateEncodingLabel(textArea.getText());
+                upDateEncodingLabel(textArea.getMainTextArea().getText());
                 return null;
             }
         };
