@@ -9,7 +9,8 @@ import org.jcnc.jnotepad.Interface.ShortcutKeyInterface;
 import org.jcnc.jnotepad.tool.FileUtil;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import java.io.File;
+import java.io.*;
+import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,14 +21,21 @@ import java.util.Objects;
 public class ShortcutKey implements ShortcutKeyInterface {
     @Override
     public void createShortcutKeyByConfig() {
-        String json = "src/main/resources/config/shortcutKey.json";
-        File jsonFile = new File(json);
-        // 读取json文件
-        String jsonData = FileUtil.getJsonStr(jsonFile);
+
+        InputStream inputStream = getClass().getResourceAsStream("/config/shortcutKey.json");
+        StringBuffer jsonData = new StringBuffer();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonData.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // 转json对象
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        Map<String, String> shortcutKeyConfig = gson.fromJson(jsonData, new TypeToken<Map<String, String>>() {
+        Map<String, String> shortcutKeyConfig = gson.fromJson(jsonData.toString(), new TypeToken<Map<String, String>>() {
         }.getType());
         for (Map.Entry<String, String> stringObjectEntry : shortcutKeyConfig.entrySet()) {
             // 保证json的key必须和变量名一致
