@@ -31,6 +31,9 @@ public class NewFile implements EventHandler<ActionEvent> {
                 "-fx-border-color:white;" +
                         "-fx-background-color:white"
         );
+        //TODO: refactor：统一TextArea新建、绑定监听器入口
+        // 增加autoSave监听器绑定
+        controller.autoSave(textArea);
         // 创建一个新的Tab页
         Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);
         tab.setContent(textArea);
