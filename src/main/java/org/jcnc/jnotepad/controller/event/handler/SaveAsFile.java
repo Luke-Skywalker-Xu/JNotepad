@@ -32,7 +32,7 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
         Tab selectedTab = tabPane.getSelectionModel().getSelectedItem();
         if (selectedTab != null) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName("新建文本");
+            fileChooser.setInitialFileName(selectedTab.getText());
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
