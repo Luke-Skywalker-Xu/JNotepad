@@ -19,7 +19,7 @@ public class LineNumberTextArea extends BorderPane {
         lineNumberArea.setEditable(false);
         lineNumberArea.setPrefWidth(30);
         mainTextArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
-        lineNumberArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
+     //   lineNumberArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
         // 设置显示滚动条样式类
         lineNumberArea.getStyleClass().add("text-line-number");
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
