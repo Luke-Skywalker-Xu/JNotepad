@@ -23,7 +23,7 @@ public class NewFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         // 获取控制器
-        Controller controller = new Controller();
+        Controller controller = Controller.getInstance();
 
         // 创建一个新的文本编辑区
         TextArea textArea = new TextArea();

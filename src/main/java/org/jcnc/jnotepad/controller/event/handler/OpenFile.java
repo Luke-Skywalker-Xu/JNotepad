@@ -25,7 +25,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         // 获取控制器
-        Controller controller = new Controller();
+        Controller controller = Controller.getInstance();
         // 创建文件选择器
         FileChooser fileChooser = new FileChooser();
         // 显示文件选择对话框，并获取选中的文件
