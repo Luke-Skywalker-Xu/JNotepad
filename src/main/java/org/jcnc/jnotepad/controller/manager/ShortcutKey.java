@@ -1,9 +1,8 @@
 package org.jcnc.jnotepad.controller.manager;
 
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import javafx.scene.control.Menu;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.Interface.ShortcutKeyInterface;
@@ -26,15 +25,20 @@ public class ShortcutKey implements ShortcutKeyInterface {
         // 读取json文件
         String jsonData = FileUtil.getJsonStr(jsonFile);
         // 转json对象
-        JSONObject shortcutKeyConfig = JSONUtil.parseObj(jsonData);
-        for (Map.Entry<String, Object> stringObjectEntry : shortcutKeyConfig) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson gson = gsonBuilder.create();
+        Map<String, String> shortcutKeyConfig = gson.fromJson(jsonData, new TypeToken<Map<String, String>>() {
+        }.getType());
+        for (Map.Entry<String, String> stringObjectEntry : shortcutKeyConfig.entrySet()) {
             // 保证json的key必须和变量名一致
             MenuItem menuItem = ViewManager.itemMap.get(stringObjectEntry.getKey());
-            String shortKeyValue = stringObjectEntry.getValue().toString();
-            if (ObjectUtil.isNotEmpty(shortKeyValue)&&ObjectUtil.isNotEmpty(menuItem)) {
-                // 动态添加快捷键
-                menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
+            String shortKeyValue = stringObjectEntry.getValue();
+
+            if ("".equals(shortKeyValue) || Objects.isNull(menuItem)) {
+                continue;
             }
+            // 动态添加快捷键
+            menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
         }
 
 
