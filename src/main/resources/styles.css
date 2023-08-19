@@ -7,7 +7,7 @@
 /* 不显示滚动条 */
 .text-line-number .content{
     -fx-cursor: text;
-    -fx-padding: 8px 1px 8px 1px;
+    -fx-padding: 8px 1px 8px 5px;
 }
 .text-line-number .scroll-bar:vertical {
     -fx-pref-width: 1;
