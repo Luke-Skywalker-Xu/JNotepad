@@ -94,7 +94,7 @@ public class Controller implements ControllerInterface {
      */
     @Override
     public void autoSave(LineNumberTextArea textArea) {
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        textArea.getMainTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
             Tab tab = ViewManager.tabPane.getSelectionModel().getSelectedItem();
             if (tab != null) {
                 File file = (File) tab.getUserData();
