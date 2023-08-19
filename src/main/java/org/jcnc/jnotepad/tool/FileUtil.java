@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.tool;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author 一个大转盘
@@ -18,7 +19,7 @@ public class FileUtil {
         String jsonStr = "";
         try {
             FileReader fileReader = new FileReader(jsonFile);
-            Reader reader = new InputStreamReader(new FileInputStream(jsonFile),"utf-8");
+            Reader reader = new InputStreamReader(new FileInputStream(jsonFile), StandardCharsets.UTF_8);
             int ch = 0;
             StringBuffer sb = new StringBuffer();
             while ((ch = reader.read()) != -1) {

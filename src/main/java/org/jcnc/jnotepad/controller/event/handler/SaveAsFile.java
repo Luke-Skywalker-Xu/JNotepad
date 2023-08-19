@@ -3,9 +3,8 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -39,8 +38,8 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
             if (file != null) {
                 try {
                     BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-                    TextArea textArea = (TextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
-                    String text = textArea.getText();
+                    LineNumberTextArea textArea = (LineNumberTextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
+                    String text = textArea.getMainTextArea().getText();
                     writer.write(text); // 写入文件内容
                     writer.flush();
                     writer.close();

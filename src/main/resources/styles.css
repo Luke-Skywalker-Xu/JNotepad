@@ -1,0 +1,11 @@
+/* 显示滚动条 */
+.show-scrollbars .scroll-pane {
+    -fx-hbar-policy: as-needed;
+    -fx-vbar-policy: as-needed;
+}
+
+/* 不显示滚动条 */
+.hide-scrollbars .scroll-pane {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}

@@ -2,11 +2,7 @@ package org.jcnc.jnotepad.view.init;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.controller.manager.ShortcutKey;
 
@@ -21,13 +17,13 @@ public class View {
 
     public void initItem() {
         // 初始化菜单项的事件处理器
-        EventHandler<ActionEvent> newFileEventHandler = new Controller().getNewFileEventHandler(new TextArea());
+        EventHandler<ActionEvent> newFileEventHandler = new Controller().getNewFileEventHandler(new LineNumberTextArea());
         newItem.setOnAction(newFileEventHandler);
         EventHandler<ActionEvent> openFileEventHandler = new Controller().getOpenFileEventHandler();
         openItem.setOnAction(openFileEventHandler);
         EventHandler<ActionEvent> saveAsFileEventHandler = new Controller().getSaveAsFileEventHandler();
         saveAsItem.setOnAction(saveAsFileEventHandler);
-        lineFeedItem.setOnAction(new Controller().getLineFeedEventHandler(new TextArea()));
+        lineFeedItem.setOnAction(new Controller().getLineFeedEventHandler(new LineNumberTextArea()));
     }
 
     public void initTabPane() {

@@ -11,4 +11,5 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.view.init;
     exports org.jcnc.jnotepad.view.manager;
     exports org.jcnc.jnotepad.constants;
+    exports org.jcnc.jnotepad.ui;
 }

@@ -38,3 +38,4 @@ build/
 .DS_Store
 /JNotepad/
 /src/main/JNotepad.java
+/.idea/

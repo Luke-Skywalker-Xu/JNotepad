@@ -3,12 +3,12 @@ package org.jcnc.jnotepad.view.manager;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 该类管理记事本应用程序的视图组件。
@@ -30,6 +30,8 @@ public class ViewManager {
     // 主界面布局
     public static BorderPane root; //主布局
 
+
+
     // 多个标签页
     public static TabPane tabPane; //标签页栏
 
@@ -47,6 +49,7 @@ public class ViewManager {
      * @return ViewManager的实例。
      */
     public static ViewManager getInstance(Scene scene) {
+
         if (instance == null) {
             instance = new ViewManager(scene);
         }
@@ -60,7 +63,11 @@ public class ViewManager {
      */
     private ViewManager(Scene scene) {
         root = new BorderPane();
+
         scene.setRoot(root);
+
+
+
     }
 
     /**
@@ -125,5 +132,8 @@ public class ViewManager {
         BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
 
         scene.setRoot(root);
+
+
+
     }
 }

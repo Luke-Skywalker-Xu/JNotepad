@@ -1,0 +1,70 @@
+package org.jcnc.jnotepad.ui;
+
+import javafx.beans.property.StringProperty;
+
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.BorderPane;
+
+import java.util.Objects;
+
+public class LineNumberTextArea extends BorderPane {
+
+
+    private final TextArea mainTextArea;
+    private final TextArea lineNumberArea;
+
+    public LineNumberTextArea() {
+        mainTextArea = new TextArea();
+        lineNumberArea = new TextArea();
+        lineNumberArea.setEditable(false);
+        lineNumberArea.setMinWidth(55);
+        lineNumberArea.setMaxWidth(55);
+        // 设置显示滚动条样式类
+/*        lineNumberArea.getStyleClass().add("hide-scrollbars");
+        mainTextArea.getStyleClass().add("show-scrollbars"); */
+
+        mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
+
+        // 当主要文本区域的垂直滚动位置发生变化时，使行号文本区域的滚动位置保持一致
+        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
+            lineNumberArea.setScrollTop(mainTextArea.getScrollTop());
+        });
+
+        // 当行号文本区域的垂直滚动位置发生变化时，使主要文本区域的滚动位置保持一致
+        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
+            mainTextArea.setScrollTop(lineNumberArea.getScrollTop());
+        });
+
+        setCenter(mainTextArea);
+        setLeft(lineNumberArea);
+    }
+
+    public StringProperty textProperty() {
+        return mainTextArea.textProperty();
+    }
+
+
+    private void updateLineNumberArea() {
+        // 保存当前的滚动位置
+        /*
+          更新行号文本区域的内容，根据主要文本区域的段落数生成行号。
+         */
+        double mainTextAreaScrollTop = mainTextArea.getScrollTop();
+        double lineNumberAreaScrollTop = lineNumberArea.getScrollTop();
+
+        int numOfLines = mainTextArea.getParagraphs().size();
+        StringBuilder lineNumberText = new StringBuilder();
+        for (int i = 1; i <= numOfLines; i++) {
+            lineNumberText.append(i).append("\n");
+        }
+        lineNumberArea.setText(lineNumberText.toString());
+
+        // 恢复之前的滚动位置
+        mainTextArea.setScrollTop(mainTextAreaScrollTop);
+        lineNumberArea.setScrollTop(lineNumberAreaScrollTop);
+    }
+
+    public TextArea getMainTextArea() {
+        return mainTextArea;
+    }
+}

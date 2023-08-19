@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.Interface;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.TextArea;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.io.File;
 import java.util.List;
@@ -18,7 +18,7 @@ public interface ControllerInterface {
      * @param rawParameters 原始参数列表
      * @return 创建的 TextArea
      */
-    TextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters);
+    LineNumberTextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters);
 
     /**
      * 获取换行符处理事件处理程序
@@ -26,7 +26,7 @@ public interface ControllerInterface {
      * @param textArea 文本区域
      * @return 换行符处理事件处理程序
      */
-    EventHandler<ActionEvent> getLineFeedEventHandler(TextArea textArea);
+    EventHandler<ActionEvent> getLineFeedEventHandler(LineNumberTextArea textArea);
 
     /**
      * 获取新建文件处理事件处理程序
@@ -34,7 +34,7 @@ public interface ControllerInterface {
      * @param textArea 文本区域
      * @return 新建文件处理事件处理程序
      */
-    EventHandler<ActionEvent> getNewFileEventHandler(TextArea textArea);
+    EventHandler<ActionEvent> getNewFileEventHandler(LineNumberTextArea textArea);
 
     /**
      * 获取打开文件处理事件处理程序
@@ -56,14 +56,14 @@ public interface ControllerInterface {
      *
      * @param textArea 文本区域
      */
-    void autoSave(TextArea textArea);
+    void autoSave(LineNumberTextArea textArea);
 
     /**
      * 更新状态标签
      *
      * @param textArea 文本区域
      */
-    void updateStatusLabel(TextArea textArea);
+    void updateStatusLabel(LineNumberTextArea textArea);
 
     /**
      * 打开关联文件
@@ -109,5 +109,5 @@ public interface ControllerInterface {
      */
     void initTabPane();
 
-    void updateUIWithNewTextArea(TextArea textArea);
+    void updateUIWithNewTextArea(LineNumberTextArea textArea);
 }
