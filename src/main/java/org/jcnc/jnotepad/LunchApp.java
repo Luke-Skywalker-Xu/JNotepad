@@ -4,18 +4,19 @@ import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.constants.Constants;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.init.View;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,6 +31,12 @@ public class LunchApp extends Application {
     @Override
     public void start(Stage primaryStage) {
 
+        Config config = new Config();
+
+        Properties properties = config.readPropertiesFromFile();
+        String title = properties.getProperty("title", "JNotepad");
+
+
         view = new View();
 
         Pane root = new Pane();
@@ -37,14 +44,13 @@ public class LunchApp extends Application {
 
         double width = Constants.SCREEN_WIDTH;
         double length = Constants.SCREEN_LENGTH;
-        String name = Constants.APP_NAME;
         String icon = Constants.APP_ICON;
 
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
 
-        primaryStage.setTitle(name);
+        primaryStage.setTitle(title);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
