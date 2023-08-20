@@ -75,10 +75,9 @@ public class LineNumberTextArea extends BorderPane {
             lineNumberText.append(i).append("\n");
         }
         lineNumberArea.setText(lineNumberText.toString());
-
         // 恢复之前的滚动位置
         mainTextArea.setScrollTop(mainTextAreaScrollTop);
-        lineNumberArea.setScrollTop(lineNumberAreaScrollTop);
+        lineNumberArea.setScrollTop(lineNumberAreaScrollTop - 8);
     }
 
     public TextArea getMainTextArea() {
