@@ -109,5 +109,13 @@ public interface ControllerInterface {
      */
     void initTabPane();
 
-    void updateUIWithNewTextArea(LineNumberTextArea textArea);
+    /**
+     * 更新UI和标签页
+     *
+     * @param textArea   文本域
+     * @apiNote
+     * @since 2023/8/20 12:40
+     */
+
+    void updateUiWithNewTextArea(LineNumberTextArea textArea);
 }

@@ -16,18 +16,20 @@ import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
  * 包括打开关联文件、创建文本区域、处理行分隔、新建文件、打开文件、自动保存等功能。
+ *
+ * @author 许轲
  */
 public class Controller implements ControllerInterface {
 
     private static final Controller INSTANCE = new Controller();
 
     private Controller() {
-
     }
 
     public static Controller getInstance() {
@@ -228,32 +230,42 @@ public class Controller implements ControllerInterface {
     @Override
     public void initTabPane() {
         Controller controller = new Controller();
-
         ViewManager.tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+            LineNumberTextArea textArea;
             if (newTab != null) {
                 // 获取新选定的标签页并关联的文本区域
-                LineNumberTextArea textArea = (LineNumberTextArea) newTab.getContent();
-
-                // 更新状态标签
-                controller.updateStatusLabel(textArea);
-
-                // 监听文本光标位置的变化，更新状态标签
-                textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
-
-                // 更新编码标签
-                controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
+                textArea = (LineNumberTextArea) newTab.getContent();
+            } else {
+                // 刷新状态
+                textArea = openAssociatedFileAndCreateTextArea(new ArrayList<>());
             }
+            // 更新状态标签
+            controller.updateStatusLabel(textArea);
+
+            // 监听文本光标位置的变化，更新状态标签
+            textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
+
+            // 更新编码标签
+            controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
         });
     }
 
+    /**
+     * 更新UI和标签页
+     *
+     * @param textArea   文本域
+     * @apiNote
+     * @since 2023/8/20 12:40
+     */
     @Override
-    public void updateUIWithNewTextArea(LineNumberTextArea textArea) {
+    public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
         Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
         tab.setContent(textArea);
         ViewManager.tabPane.getTabs().add(tab);
         ViewManager.tabPane.getSelectionModel().select(tab);
         updateStatusLabel(textArea);
     }
+
 
     /**
      * 配置文本区域。
