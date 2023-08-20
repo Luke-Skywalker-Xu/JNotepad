@@ -50,7 +50,7 @@ public class LineNumberTextArea extends BorderPane {
             }
         }
         //单数字宽度10像素，4为padding=左3+右1
-        int actualWidth = Math.max(count * 10 + 8, MIN_LINE_NUMBER_WIDTH);
+        int actualWidth = Math.max(count * 10 + 11, MIN_LINE_NUMBER_WIDTH);
         if (actualWidth != lineNumberArea.getWidth()) {
             lineNumberArea.setPrefWidth(actualWidth);
         }
