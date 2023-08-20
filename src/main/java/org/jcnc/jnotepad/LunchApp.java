@@ -66,7 +66,7 @@ public class LunchApp extends Application {
             threadPool.execute(() -> {
                 LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
                 if (!Objects.isNull(textArea)) {
-                    Platform.runLater(() -> controller.updateUIWithNewTextArea(textArea));
+                    Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
                 }
             });
         }
