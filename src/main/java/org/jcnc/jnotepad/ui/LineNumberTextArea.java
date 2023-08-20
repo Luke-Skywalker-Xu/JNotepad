@@ -12,16 +12,17 @@ public class LineNumberTextArea extends BorderPane {
 
     static final int[] sizeTable = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
+    private static final int MIN_LINE_NUMBER_WIDTH = 30;
 
     public LineNumberTextArea() {
         mainTextArea = new TextArea();
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
-        lineNumberArea.setPrefWidth(30);
-        mainTextArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
-        // lineNumberArea.setStyle("-fx-border-color:white;-fx-background-color:white;");
-        // 设置显示滚动条样式类
+        lineNumberArea.setPrefWidth(MIN_LINE_NUMBER_WIDTH);
+        lineNumberArea.setMinWidth(MIN_LINE_NUMBER_WIDTH);
+        // 设定自定义样式
         lineNumberArea.getStyleClass().add("text-line-number");
+        mainTextArea.getStyleClass().add("main-text-area");
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
         mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
 
@@ -49,8 +50,8 @@ public class LineNumberTextArea extends BorderPane {
             }
         }
         //单数字宽度10像素，4为padding=左3+右1
-        int actualWidth = count * 10 + 4;
-        if (actualWidth > lineNumberArea.getWidth()) {
+        int actualWidth = Math.max(count * 10 + 4, MIN_LINE_NUMBER_WIDTH);
+        if (actualWidth != lineNumberArea.getWidth()) {
             lineNumberArea.setPrefWidth(actualWidth);
         }
     }
