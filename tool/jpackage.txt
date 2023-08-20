@@ -6,3 +6,12 @@ jpackage `
   --icon src/main/resources/img/icon.ico `
   --app-version 1.1.10 `
   --vendor "JCNC"
+
+
+jpackage `
+  --name demo `
+  --type app-image `
+  -m com.example.demo/com.example.demo.Demo `
+  --runtime-image .\target\app\ `
+  --app-version 1.0.0 `
+  --vendor "JCNC"

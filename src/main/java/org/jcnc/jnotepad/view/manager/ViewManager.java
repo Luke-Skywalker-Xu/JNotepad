@@ -64,9 +64,8 @@ public class ViewManager {
     private ViewManager(Scene scene) {
         root = new BorderPane();
 
+
         scene.setRoot(root);
-
-
 
     }
 
