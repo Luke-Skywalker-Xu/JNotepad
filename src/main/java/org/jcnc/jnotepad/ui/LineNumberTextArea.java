@@ -4,13 +4,14 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * @author 许轲
+ */
 public class LineNumberTextArea extends BorderPane {
-
-
     private final TextArea mainTextArea;
     private final TextArea lineNumberArea;
 
-    static final int[] sizeTable = {9, 99, 999, 9999, 99999, 999999, 9999999,
+    static final int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
     private static final int MIN_LINE_NUMBER_WIDTH = 30;
 
@@ -27,15 +28,10 @@ public class LineNumberTextArea extends BorderPane {
         mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
 
         // 当主要文本区域的垂直滚动位置发生变化时，使行号文本区域的滚动位置保持一致
-        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
-            lineNumberArea.setScrollTop(mainTextArea.getScrollTop());
-        });
+        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> lineNumberArea.setScrollTop(mainTextArea.getScrollTop()));
 
         // 当行号文本区域的垂直滚动位置发生变化时，使主要文本区域的滚动位置保持一致
-        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
-            mainTextArea.setScrollTop(lineNumberArea.getScrollTop());
-        });
-
+        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> mainTextArea.setScrollTop(lineNumberArea.getScrollTop()));
         setCenter(mainTextArea);
         setLeft(lineNumberArea);
     }
@@ -43,13 +39,13 @@ public class LineNumberTextArea extends BorderPane {
     private void updateLineNumberWidth() {
         int numOfLines = mainTextArea.getParagraphs().size();
         int count = 1;
-        for (int i = 0; i < sizeTable.length; i++) {
-            if (numOfLines <= sizeTable[i]) {
+        for (int i = 0; i < SIZE_TABLE.length; i++) {
+            if (numOfLines <= SIZE_TABLE[i]) {
                 count = i + 1;
                 break;
             }
         }
-        //单数字宽度10像素，4为padding=左3+右1
+        // 单数字宽度10像素，4为padding=左3+右1
         int actualWidth = Math.max(count * 10 + 11, MIN_LINE_NUMBER_WIDTH);
         if (actualWidth != lineNumberArea.getWidth()) {
             lineNumberArea.setPrefWidth(actualWidth);

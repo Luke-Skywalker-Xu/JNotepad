@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
-import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.controller.event.handler.LineFeed;
 import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
@@ -26,8 +25,15 @@ import java.util.List;
  * @author 许轲
  */
 public class Controller implements ControllerInterface {
-
     private static final Controller INSTANCE = new Controller();
+    /**
+     * 是否关联
+     */
+    private boolean isRelevance = true;
+
+    public boolean isRelevance() {
+        return isRelevance;
+    }
 
     private Controller() {
     }
@@ -95,7 +101,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void autoSave(LineNumberTextArea textArea) {
         textArea.getMainTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
-            Tab tab = ViewManager.tabPane.getSelectionModel().getSelectedItem();
+            Tab tab = ViewManager.getInstance().getTabPane().getSelectionModel().getSelectedItem();
             if (tab != null) {
                 File file = (File) tab.getUserData();
                 if (file != null) {
@@ -103,7 +109,7 @@ public class Controller implements ControllerInterface {
                         writer.write(newValue);
                         System.out.println("正在自动保存---");
                     } catch (IOException ignored) {
-
+                        System.out.println("已忽视IO异常!");
                     }
                 }
             }
@@ -131,7 +137,7 @@ public class Controller implements ControllerInterface {
         int row = getRow(caretPosition, textArea.getMainTextArea().getText());
         int column = getColumn(caretPosition, textArea.getMainTextArea().getText());
         int length = textArea.getMainTextArea().getLength();
-        ViewManager.statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
+        ViewManager.getInstance().getStatusLabel().setText("行: " + row + " \t列: " + column + " \t字数: " + length);
     }
 
     /**
@@ -143,7 +149,7 @@ public class Controller implements ControllerInterface {
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            LunchApp.isRelevance = false;
+            isRelevance = false;
             openFile(file);
         }
     }
@@ -155,6 +161,7 @@ public class Controller implements ControllerInterface {
      */
     @Override
     public void getText(File file) {
+        ViewManager viewManager = ViewManager.getInstance();
         LineNumberTextArea textArea = createNewTextArea();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder textBuilder = new StringBuilder();
@@ -169,15 +176,15 @@ public class Controller implements ControllerInterface {
 
                 Tab tab = createNewTab(file.getName(), textArea);
                 tab.setUserData(file);
-                ViewManager.tabPane.getTabs().add(tab);
+                viewManager.getTabPane().getTabs().add(tab);
 //                ViewManager.tabPane.sets
-                ViewManager.tabPane.getSelectionModel().select(tab);
+                viewManager.getTabPane().getSelectionModel().select(tab);
                 updateStatusLabel(textArea);
 
                 autoSave(textArea);
             });
         } catch (IOException ignored) {
-
+            System.out.println("已忽视IO异常!");
         }
     }
 
@@ -189,7 +196,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void upDateEncodingLabel(String text) {
         String encoding = EncodingDetector.detectEncoding(text);
-        ViewManager.enCodingLabel.setText("\t编码: " + encoding);
+        ViewManager.getInstance().getEnCodingLabel().setText("\t编码: " + encoding);
     }
 
     /**
@@ -230,7 +237,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void initTabPane() {
         Controller controller = new Controller();
-        ViewManager.tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+        ViewManager.getInstance().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             LineNumberTextArea textArea;
             if (newTab != null) {
                 // 获取新选定的标签页并关联的文本区域
@@ -253,16 +260,17 @@ public class Controller implements ControllerInterface {
     /**
      * 更新UI和标签页
      *
-     * @param textArea   文本域
+     * @param textArea 文本域
      * @apiNote
      * @since 2023/8/20 12:40
      */
     @Override
     public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
-        Tab tab = new Tab("新建文件 " + (++ViewManager.tabIndex));
+        ViewManager viewManager = ViewManager.getInstance();
+        Tab tab = new Tab("新建文件 " + viewManager.selfIncreaseAndGetTabIndex());
         tab.setContent(textArea);
-        ViewManager.tabPane.getTabs().add(tab);
-        ViewManager.tabPane.getSelectionModel().select(tab);
+        viewManager.getTabPane().getTabs().add(tab);
+        viewManager.getTabPane().getSelectionModel().select(tab);
         updateStatusLabel(textArea);
     }
 

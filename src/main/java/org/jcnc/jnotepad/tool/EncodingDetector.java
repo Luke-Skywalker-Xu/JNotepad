@@ -8,8 +8,12 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 编码检测工具类
+ *
+ * @author 许轲
  */
 public class EncodingDetector {
+    private EncodingDetector() {
+    }
 
     /**
      * 检测 TextArea 中的文本编码
@@ -19,7 +23,6 @@ public class EncodingDetector {
      */
     public static String detectEncoding(LineNumberTextArea textArea) {
         String text = textArea.getMainTextArea().getText();
-
         return detectEncoding(text);
     }
 
