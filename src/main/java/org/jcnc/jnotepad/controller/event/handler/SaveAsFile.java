@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.BufferedWriter;
@@ -31,8 +32,7 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        ViewManager viewManager = ViewManager.getInstance();
-        Tab selectedTab = viewManager.getTabPane().getSelectionModel().getSelectedItem();
+        Tab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab != null) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialFileName(selectedTab.getText());

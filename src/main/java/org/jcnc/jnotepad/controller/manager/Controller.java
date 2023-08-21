@@ -12,6 +12,8 @@ import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.*;
@@ -101,7 +103,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void autoSave(LineNumberTextArea textArea) {
         textArea.getMainTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
-            Tab tab = ViewManager.getInstance().getTabPane().getSelectionModel().getSelectedItem();
+            Tab tab = JNotepadTabPane.getInstance().getSelected();
             if (tab != null) {
                 File file = (File) tab.getUserData();
                 if (file != null) {
@@ -174,11 +176,9 @@ public class Controller implements ControllerInterface {
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
 
-                Tab tab = createNewTab(file.getName(), textArea);
+                JNotepadTab tab = createNewTab(file.getName(), textArea);
                 tab.setUserData(file);
-                viewManager.getTabPane().getTabs().add(tab);
-//                ViewManager.tabPane.sets
-                viewManager.getTabPane().getSelectionModel().select(tab);
+                JNotepadTabPane.getInstance().addNewTab(tab);
                 updateStatusLabel(textArea);
 
                 autoSave(textArea);
@@ -237,7 +237,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void initTabPane() {
         Controller controller = new Controller();
-        ViewManager.getInstance().getTabPane().getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
+        JNotepadTabPane.getInstance().getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             LineNumberTextArea textArea;
             if (newTab != null) {
                 // 获取新选定的标签页并关联的文本区域
@@ -267,10 +267,8 @@ public class Controller implements ControllerInterface {
     @Override
     public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
         ViewManager viewManager = ViewManager.getInstance();
-        Tab tab = new Tab("新建文件 " + viewManager.selfIncreaseAndGetTabIndex());
-        tab.setContent(textArea);
-        viewManager.getTabPane().getTabs().add(tab);
-        viewManager.getTabPane().getSelectionModel().select(tab);
+        String tabTitle = "新建文件 " + viewManager.selfIncreaseAndGetTabIndex();
+        JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(tabTitle, textArea));
         updateStatusLabel(textArea);
     }
 
@@ -311,11 +309,8 @@ public class Controller implements ControllerInterface {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private Tab createNewTab(String tabName, LineNumberTextArea textArea) {
-        Tab tab = new Tab(tabName);
-        tab.setContent(textArea);
-        tab.setUserData(null);
-        return tab;
+    private JNotepadTab createNewTab(String tabName, LineNumberTextArea textArea) {
+        return new JNotepadTab(tabName, textArea);
     }
 
     /**

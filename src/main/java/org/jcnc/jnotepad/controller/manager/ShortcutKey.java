@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.Interface.ShortcutKeyInterface;
-import org.jcnc.jnotepad.view.manager.ViewManager;
+import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 
 import java.io.*;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class ShortcutKey implements ShortcutKeyInterface {
         }.getType());
         for (Map.Entry<String, String> stringObjectEntry : shortcutKeyConfig.entrySet()) {
             // 保证json的key必须和变量名一致
-            MenuItem menuItem = ViewManager.getInstance().getItemMap().get(stringObjectEntry.getKey());
+            MenuItem menuItem = JNotepadMenuBar.getMenuBar().getItemMap().get(stringObjectEntry.getKey());
             String shortKeyValue = stringObjectEntry.getValue();
             if ("".equals(shortKeyValue) || Objects.isNull(menuItem)) {
                 continue;

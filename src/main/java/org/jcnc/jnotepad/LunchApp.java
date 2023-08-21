@@ -68,7 +68,6 @@ public class LunchApp extends Application {
         viewManager.initScreen(scene);
 
         // 初始化菜单项和标签栏
-        view.initItem();
         view.initTabPane();
         view.initShortcutKey();
 
