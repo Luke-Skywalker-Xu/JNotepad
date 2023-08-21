@@ -5,6 +5,8 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 
@@ -37,14 +39,10 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 增加autoSave监听器绑定
         controller.autoSave(textArea);
         ViewManager viewManager = ViewManager.getInstance();
-        // 创建一个新的Tab页
-        Tab tab = new Tab("新建文本 " + viewManager.selfIncreaseAndGetTabIndex());
-        tab.setContent(textArea);
         // 将Tab页添加到TabPane中
-        viewManager.getTabPane().getTabs().add(tab);
-
-        // 将新建的Tab页设置为选中状态
-        viewManager.getTabPane().getSelectionModel().select(tab);
+        JNotepadTabPane.getInstance().addNewTab(new JNotepadTab("新建文本 "
+                + viewManager.selfIncreaseAndGetTabIndex(),
+                textArea));
 
         // 更新状态标签
         controller.updateStatusLabel(textArea);

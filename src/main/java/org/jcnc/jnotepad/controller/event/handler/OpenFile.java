@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.File;
@@ -41,7 +42,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                     // 调用控制器的getText方法，读取文件内容
                     controller.getText(file);
                     // 更新编码标签
-                    controller.upDateEncodingLabel(((LineNumberTextArea) viewManager.getTabPane().getSelectionModel().getSelectedItem().getContent()).getMainTextArea().getText());
+                    controller.upDateEncodingLabel(((LineNumberTextArea) JNotepadTabPane.getInstance().getSelected().getContent()).getMainTextArea().getText());
                     return null;
                 }
             };
