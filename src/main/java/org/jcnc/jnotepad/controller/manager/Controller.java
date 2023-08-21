@@ -11,7 +11,6 @@ import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
 import org.jcnc.jnotepad.tool.EncodingDetector;
-import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
@@ -108,9 +107,9 @@ public class Controller implements ControllerInterface {
                 if (file != null) {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                         writer.write(newValue);
-                        LogUtil.info("正在自动保存---",this.getClass());
+                        System.out.println("正在自动保存---");
                     } catch (IOException ignored) {
-                        LogUtil.info("已忽略IO异常!",this.getClass());
+                        System.out.println("已忽视IO异常!");
                     }
                 }
             }
@@ -185,7 +184,7 @@ public class Controller implements ControllerInterface {
                 autoSave(textArea);
             });
         } catch (IOException ignored) {
-            LogUtil.info("已忽略IO异常!",this.getClass());
+            System.out.println("已忽视IO异常!");
         }
     }
 
