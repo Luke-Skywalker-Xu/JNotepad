@@ -8,6 +8,7 @@ import org.jcnc.jnotepad.ui.LineNumberTextArea;
  * 换行程序。
  * <p>
  * 用于在文本区域中插入一个换行符。
+ * @author 许轲
  */
 public class LineFeed implements EventHandler<ActionEvent> {
     private final LineNumberTextArea textArea;

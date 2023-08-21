@@ -3,16 +3,17 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 /**
  * 新建文件事件的事件处理程序。
  * <p>
  * 当用户选择新建文件时候,将创建一个新的文本编辑区，并在Tab页中显示。
+ *
+ * @author 许轲
  */
 public class NewFile implements EventHandler<ActionEvent> {
     /**
@@ -28,24 +29,22 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 创建一个新的文本编辑区
         LineNumberTextArea textArea = new LineNumberTextArea();
 
-
         textArea.setStyle(
                 "-fx-border-color:white ;-fx-background-color:white;"
         );
 
-        //TODO: refactor：统一TextArea新建、绑定监听器入口
+        // TODO: refactor：统一TextArea新建、绑定监听器入口
         // 增加autoSave监听器绑定
         controller.autoSave(textArea);
-
+        ViewManager viewManager = ViewManager.getInstance();
         // 创建一个新的Tab页
-        Tab tab = new Tab("新建文本 " + ++ViewManager.tabIndex);
+        Tab tab = new Tab("新建文本 " + viewManager.selfIncreaseAndGetTabIndex());
         tab.setContent(textArea);
-
         // 将Tab页添加到TabPane中
-        tabPane.getTabs().add(tab);
+        viewManager.getTabPane().getTabs().add(tab);
 
         // 将新建的Tab页设置为选中状态
-        tabPane.getSelectionModel().select(tab);
+        viewManager.getTabPane().getSelectionModel().select(tab);
 
         // 更新状态标签
         controller.updateStatusLabel(textArea);

@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.constants.Constants;
+import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -20,9 +20,16 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * 启动程序
+ *
+ * @author 许轲
+ */
 public class LunchApp extends Application {
-    private static final ExecutorService threadPool = Executors.newCachedThreadPool();
-    public static boolean isRelevance = true;
+    /**
+     * 线程池
+     */
+    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
 
     Controller controller = Controller.getInstance();
     Scene scene;
@@ -42,9 +49,9 @@ public class LunchApp extends Application {
         Pane root = new Pane();
 
 
-        double width = Constants.SCREEN_WIDTH;
-        double length = Constants.SCREEN_LENGTH;
-        String icon = Constants.APP_ICON;
+        double width = AppConstants.SCREEN_WIDTH;
+        double length = AppConstants.SCREEN_LENGTH;
+        String icon = AppConstants.APP_ICON;
 
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
@@ -65,11 +72,10 @@ public class LunchApp extends Application {
         view.initTabPane();
         view.initShortcutKey();
 
-        if (isRelevance) {
-
+        if (controller.isRelevance()) {
             // 使用线程池加载关联文件并创建文本区域
             List<String> rawParameters = getParameters().getRaw();
-            threadPool.execute(() -> {
+            THREAD_POOL.execute(() -> {
                 LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
                 if (!Objects.isNull(textArea)) {
                     Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
@@ -82,7 +88,7 @@ public class LunchApp extends Application {
     @Override
     public void stop() {
         // 关闭线程池
-        threadPool.shutdownNow();
+        THREAD_POOL.shutdownNow();
     }
 
     public static void main(String[] args) {

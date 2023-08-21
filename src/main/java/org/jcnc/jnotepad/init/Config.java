@@ -6,8 +6,11 @@ import org.jcnc.jnotepad.Interface.ConfigInterface;
 import java.io.*;
 import java.util.Properties;
 
-import static org.jcnc.jnotepad.constants.Constants.PROPERTY_FILE_NAME;
+import static org.jcnc.jnotepad.constants.AppConstants.PROPERTY_FILE_NAME;
 
+/**
+ * @author 许轲
+ */
 public class Config implements ConfigInterface {
     public Properties readPropertiesFromFile() {
         Properties properties = new Properties();

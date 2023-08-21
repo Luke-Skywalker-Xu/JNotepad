@@ -3,19 +3,19 @@ package org.jcnc.jnotepad.controller.event.handler;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.File;
 
-import static org.jcnc.jnotepad.view.manager.ViewManager.tabPane;
 
 /**
  * 打开文件的事件处理程序。
  * <p>
  * 当用户选择打开文件时，将创建一个新的文本编辑区，并在Tab页中显示。
+ * @author 许轲
  */
 public class OpenFile implements EventHandler<ActionEvent> {
     /**
@@ -25,6 +25,8 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
+        // 获取ViewManager的实例
+        ViewManager viewManager = ViewManager.getInstance();
         // 获取控制器
         Controller controller = Controller.getInstance();
         // 创建文件选择器
@@ -39,7 +41,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                     // 调用控制器的getText方法，读取文件内容
                     controller.getText(file);
                     // 更新编码标签
-                    controller.upDateEncodingLabel(((LineNumberTextArea) tabPane.getSelectionModel().getSelectedItem().getContent()).getMainTextArea().getText());
+                    controller.upDateEncodingLabel(((LineNumberTextArea) viewManager.getTabPane().getSelectionModel().getSelectedItem().getContent()).getMainTextArea().getText());
                     return null;
                 }
             };
