@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.exception.AppException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +26,7 @@ public class ViewManager {
     private int tabIndex = 0;
 
     private Boolean line = true;
-
     /// 菜单栏组件
-
     /**
      * 菜单栏
      */
@@ -177,7 +176,7 @@ public class ViewManager {
         if (instance != null) {
             return instance;
         } else {
-            throw new RuntimeException("ViewManager的实例未初始化!");
+            throw new AppException("ViewManager实例未初始化!");
         }
     }
 
@@ -189,7 +188,6 @@ public class ViewManager {
     private ViewManager(Scene scene) {
         root = new BorderPane();
         scene.setRoot(root);
-
     }
 
     /**

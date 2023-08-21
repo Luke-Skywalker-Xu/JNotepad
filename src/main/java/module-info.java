@@ -4,6 +4,7 @@ module org.jcnc.jnotepad {
 //    requires cn.hutool.json;
 //    requires cn.hutool.core;
     requires com.google.gson;
+    requires org.slf4j;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;
@@ -13,4 +14,5 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.view.manager;
     exports org.jcnc.jnotepad.constants;
     exports org.jcnc.jnotepad.ui;
+    exports org.jcnc.jnotepad.exception;
 }

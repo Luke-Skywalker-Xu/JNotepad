@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.Interface.ShortcutKeyInterface;
+import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.*;
@@ -33,7 +34,7 @@ public class ShortcutKey implements ShortcutKeyInterface {
                     jsonData.append(line);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LogUtil.error(e.getMessage(),e,this.getClass());
             }
         } else {
             // todo new InputStreamReader(inputStream) 实参 'inputStream' 可能为null
@@ -43,7 +44,7 @@ public class ShortcutKey implements ShortcutKeyInterface {
                     jsonData.append(line);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                LogUtil.error(e.getMessage(),e,this.getClass());
             }
         }
 

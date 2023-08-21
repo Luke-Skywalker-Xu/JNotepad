@@ -30,7 +30,7 @@ public class FileUtil {
             jsonStr = sb.toString();
             return jsonStr;
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.error(e.getMessage(),e,FileUtil.class);
             return null;
         }
     }
