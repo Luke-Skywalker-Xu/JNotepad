@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
@@ -35,8 +36,6 @@ public class ViewManager {
     private static ViewManager instance = null;
 
 
-
-
     public Label getEnCodingLabel() {
         return enCodingLabel;
     }
@@ -47,7 +46,6 @@ public class ViewManager {
      * @return int 标签页索引
      * @apiNote ++tabIndex
      */
-
     public int selfIncreaseAndGetTabIndex() {
         return ++tabIndex;
     }
@@ -83,7 +81,7 @@ public class ViewManager {
         if (instance != null) {
             return instance;
         } else {
-            throw new RuntimeException("ViewManager的实例未初始化!");
+            throw new AppException("ViewManager的实例未初始化!");
         }
     }
 

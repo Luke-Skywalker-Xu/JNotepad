@@ -30,7 +30,7 @@ public class FileUtil {
             jsonStr = sb.toString();
             return jsonStr;
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.error("读取配置失败!",e,FileUtil.class);
             return null;
         }
     }
