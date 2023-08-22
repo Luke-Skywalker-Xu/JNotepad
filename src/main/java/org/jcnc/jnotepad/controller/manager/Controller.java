@@ -64,17 +64,6 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * 获取行分隔事件处理程序。
-     *
-     * @param textArea 文本区域
-     * @return 行分隔事件处理程序
-     */
-    @Override
-    public EventHandler<ActionEvent> getLineFeedEventHandler(LineNumberTextArea textArea) {
-        return new LineFeed(textArea);
-    }
-
-    /**
      * 获取新建文件事件处理程序。
      *
      * @param textArea 文本区域

@@ -22,14 +22,6 @@ public interface ControllerInterface {
     LineNumberTextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters);
 
     /**
-     * 获取换行符处理事件处理程序
-     *
-     * @param textArea 文本区域
-     * @return 换行符处理事件处理程序
-     */
-    EventHandler<ActionEvent> getLineFeedEventHandler(LineNumberTextArea textArea);
-
-    /**
      * 获取新建文件处理事件处理程序
      *
      * @param textArea 文本区域
