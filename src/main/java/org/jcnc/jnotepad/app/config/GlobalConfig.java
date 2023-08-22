@@ -5,8 +5,16 @@ import org.jcnc.jnotepad.init.Config;
 
 import java.util.Properties;
 
+/**
+ * 内存中，运行过程中的全局配置项
+ *
+ * @author zhaoteng.song
+ */
 public class GlobalConfig {
 
+    /**
+     * 自动换行配置key
+     */
     public static final String TEXT_WRAP = "text.wrap";
     private static final GlobalConfig APP_GLOBAL_CONFIG = new GlobalConfig();
 
