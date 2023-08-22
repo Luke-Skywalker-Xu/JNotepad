@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.ui.tab;
 
 import javafx.scene.control.TabPane;
+import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 
 /**
@@ -45,6 +46,7 @@ public class JNotepadTabPane extends TabPane {
         }
         this.getTabs().add(tab);
         this.getSelectionModel().select(tab);
+        fireTabSelected();
     }
 
     /**
@@ -54,5 +56,14 @@ public class JNotepadTabPane extends TabPane {
      */
     public JNotepadTab getSelected() {
         return (JNotepadTab) this.getSelectionModel().getSelectedItem();
+    }
+
+    /**
+     * tab选中行为。
+     * 应用当前菜单上选中的自动换行设置。
+     */
+    public void fireTabSelected() {
+        JNotepadTab selectedTab = getSelected();
+        selectedTab.setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
     }
 }
