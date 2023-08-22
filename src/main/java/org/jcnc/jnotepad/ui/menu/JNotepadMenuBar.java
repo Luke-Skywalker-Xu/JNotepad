@@ -4,11 +4,11 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.controller.event.handler.LineFeed;
 import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
@@ -143,7 +143,13 @@ public class JNotepadMenuBar extends MenuBar {
         newItem.setOnAction(new NewFile());
         openItem.setOnAction(new OpenFile());
         saveAsItem.setOnAction(new SaveAsFile());
-        lineFeedItem.setOnAction(new LineFeed(new LineNumberTextArea()));
+        lineFeedItem.setOnAction(new LineFeed());
+        lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {
+            // 1. 更新全局配置
+            GlobalConfig.getConfig().setAutoLineConfig(after);
+            // 2. 对当前tab生效配置
+            JNotepadTabPane.getInstance().fireTabSelected();
+        });
     }
 
     public Map<String, MenuItem> getItemMap() {

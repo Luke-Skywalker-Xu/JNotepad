@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.ui.tab;
 
 import javafx.scene.control.Tab;
+import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 /**
@@ -25,6 +26,7 @@ public class JNotepadTab extends Tab {
         super(tabTitle);
         lineNumberTextArea = textArea;
         this.setContent(lineNumberTextArea);
+        setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
     }
 
     public boolean isAutoLine() {
@@ -33,6 +35,7 @@ public class JNotepadTab extends Tab {
 
     public void setAutoLine(boolean autoLine) {
         this.autoLine = autoLine;
+        lineNumberTextArea.getMainTextArea().setWrapText(autoLine);
     }
 
     public LineNumberTextArea getLineNumberTextArea() {
