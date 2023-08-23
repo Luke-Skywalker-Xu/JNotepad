@@ -58,7 +58,9 @@
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
-            <version>68.1</version>
+            <version>73.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/icu4j-73.2.jar</systemPath>
         </dependency>
     </dependencies>
 

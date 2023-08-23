@@ -148,7 +148,6 @@ public class JNotepadMenuBar extends MenuBar {
         openItem.setOnAction(new OpenFile());
         saveItem.setOnAction(new SaveFile());
         saveAsItem.setOnAction(new SaveAsFile());
-        lineFeedItem.setOnAction(new LineFeed());
         lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 1. 更新全局配置
             GlobalConfig.getConfig().setAutoLineConfig(after);
