@@ -47,8 +47,7 @@ body:
     attributes:
       label: 版本
       description: 你当前正在使用我们软件的哪个版本/分支？
-      attributes:
-      label: 版本
-      description: 版本号
+      input:
+        - (最新)
     validations:
       required: true
