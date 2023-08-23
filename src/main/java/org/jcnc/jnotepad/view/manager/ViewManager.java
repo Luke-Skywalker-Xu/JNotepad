@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 
@@ -17,11 +18,6 @@ import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
  */
 public class ViewManager {
 
-    /**
-     * 显示文本编码
-     */
-    private Label enCodingLabel; // 显示文本编码
-
     private int tabIndex = 0;
 
     private Boolean line = true;
@@ -30,18 +26,12 @@ public class ViewManager {
     // 主界面布局
     private BorderPane root; // 主布局
 
-    // 状态栏
-    private Label statusLabel;
 
     private static ViewManager instance = null;
 
 
-    public Label getEnCodingLabel() {
-        return enCodingLabel;
-    }
     /**
      * 自增并获取标签页索引
-     *
      *
      * @return int 标签页索引
      * @apiNote ++tabIndex
@@ -57,10 +47,6 @@ public class ViewManager {
 
     public BorderPane getRoot() {
         return root;
-    }
-
-    public Label getStatusLabel() {
-        return statusLabel;
     }
 
 
@@ -109,14 +95,7 @@ public class ViewManager {
 
         // 创建标签页和文本编辑区域
         root.setCenter(JNotepadTabPane.getInstance());
-
-        // 创建状态栏
-        statusLabel = new Label("行数：1 \t列数：1 \t字数：0 ");
-
-        enCodingLabel = new Label(); // 创建新的标签以显示编码信息
-        HBox statusBox = new HBox(statusLabel, enCodingLabel); // 使用HBox放置状态标签和编码标签
-        root.setBottom(statusBox);
-        BorderPane.setMargin(statusBox, new Insets(5, 10, 5, 10));
+        root.setBottom(JNotepadStatusBox.getInstance());
 
         scene.setRoot(root);
     }

@@ -9,6 +9,8 @@ module org.jcnc.jnotepad {
     requires org.slf4j;
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
+    requires com.ibm.icu;
+
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;

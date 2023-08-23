@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.tool;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.io.*;
@@ -48,7 +49,7 @@ public class FileUtil {
      * @see LogUtil
      */
     public static void saveTab(Class<?> currentClass) {
-        Tab selectedTab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab != null) {
             // 创建一个文件窗口
             FileChooser fileChooser = new FileChooser();
@@ -58,24 +59,13 @@ public class FileUtil {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
-                try (
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(file))
-                ) {
-                    // 获取当前Tab页的文本编辑区
-                    LineNumberTextArea textArea = (LineNumberTextArea) selectedTab.getContent();
-                    // 将保存后的文件设置为已关联
-                    textArea.setRelevance(true);
-                    String text = textArea.getMainTextArea().getText();
-                    // 写入文件内容
-                    writer.write(text);
-                    writer.flush();
-                    // 更新Tab页标签上的文件名
-                    selectedTab.setText(file.getName());
-                    // 将文件对象保存到Tab页的UserData中
-                    selectedTab.setUserData(file);
-                } catch (IOException ignored) {
-                    LogUtil.getLogger(currentClass).info("已忽视IO异常!");
-                }
+                selectedTab.save();
+                // 将保存后的文件设置为已关联
+                selectedTab.getLineNumberTextArea().setRelevance(true);
+                // 更新Tab页标签上的文件名
+                selectedTab.setText(file.getName());
+                // 将文件对象保存到Tab页的UserData中
+                selectedTab.setUserData(file);
             }
         }
     }

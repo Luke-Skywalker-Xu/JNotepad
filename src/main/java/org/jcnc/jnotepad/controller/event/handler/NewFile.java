@@ -2,8 +2,8 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
@@ -24,29 +24,18 @@ public class NewFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        // 获取控制器
-        Controller controller = Controller.getInstance();
 
         // 创建一个新的文本编辑区
         LineNumberTextArea textArea = new LineNumberTextArea();
 
-        textArea.setStyle(
-                "-fx-border-color:white ;-fx-background-color:white;"
-        );
-
         // TODO: refactor：统一TextArea新建、绑定监听器入口
-        // 增加autoSave监听器绑定
-        controller.autoSave(textArea);
         ViewManager viewManager = ViewManager.getInstance();
         // 将Tab页添加到TabPane中
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab("新建文本 "
                 + viewManager.selfIncreaseAndGetTabIndex(),
                 textArea));
 
-        // 更新状态标签
-        controller.updateStatusLabel(textArea);
-
         // 更新编码信息
-        controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
+        JNotepadStatusBox.getInstance().updateEncodingLabel();
     }
 }

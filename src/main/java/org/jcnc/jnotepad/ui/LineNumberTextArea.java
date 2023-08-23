@@ -1,8 +1,18 @@
 package org.jcnc.jnotepad.ui;
 
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * @author 许轲
@@ -28,16 +38,50 @@ public class LineNumberTextArea extends BorderPane {
         // 设定自定义样式
         lineNumberArea.getStyleClass().add("text-line-number");
         mainTextArea.getStyleClass().add("main-text-area");
-        lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
-        mainTextArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberArea());
+        this.setStyle(
+                "-fx-border-color:white;" +
+                        "-fx-background-color:white"
+        );
+        setCenter(mainTextArea);
+        setLeft(lineNumberArea);
 
+        initListeners();
+    }
+
+    private void initListeners() {
         // 当主要文本区域的垂直滚动位置发生变化时，使行号文本区域的滚动位置保持一致
         mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> lineNumberArea.setScrollTop(mainTextArea.getScrollTop()));
 
         // 当行号文本区域的垂直滚动位置发生变化时，使主要文本区域的滚动位置保持一致
         lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> mainTextArea.setScrollTop(lineNumberArea.getScrollTop()));
-        setCenter(mainTextArea);
-        setLeft(lineNumberArea);
+        lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
+
+        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> JNotepadStatusBox.getInstance().updateWordCountStatusLabel());
+        this.textProperty().addListener((observable, oldValue, newValue) -> {
+            // 更新行号
+            updateLineNumberArea();
+            // 更新状态栏
+            JNotepadStatusBox.getInstance().updateWordCountStatusLabel();
+            // 自动保存
+            save();
+        });
+    }
+
+    /**
+     * 以原文件编码格式写回文件
+     */
+    public void save() {
+        JNotepadTab tab = JNotepadTabPane.getInstance().getSelected();
+        File file = (File) tab.getUserData();
+        String newValue = this.mainTextArea.getText();
+        if (file != null) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, tab.getCharset()))) {
+                writer.write(newValue);
+                LogUtil.getLogger(this.getClass()).info("正在自动保存---");
+            } catch (IOException ignored) {
+                LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
+            }
+        }
     }
 
     public boolean isRelevance() {
@@ -91,5 +135,6 @@ public class LineNumberTextArea extends BorderPane {
     public TextArea getMainTextArea() {
         return mainTextArea;
     }
+
 }
 

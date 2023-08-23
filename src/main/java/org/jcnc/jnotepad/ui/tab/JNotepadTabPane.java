@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.ui.tab;
 import javafx.scene.control.TabPane;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 
 /**
  * 标签页布局组件封装。
@@ -25,8 +26,11 @@ public class JNotepadTabPane extends TabPane {
         this.getSelectionModel().selectedItemProperty().addListener(
                 (ov, from, to) -> {
                     if (to != null) {
+                        // 更新菜单栏中与tab相关设置
                         JNotepadMenuBar.getMenuBar().updateMenuStatusBySelectedTab();
                     }
+                    // 更新状态标签
+                    JNotepadStatusBox.getInstance().updateWordCountStatusLabel();
                 }
         );
     }
@@ -65,5 +69,6 @@ public class JNotepadTabPane extends TabPane {
     public void fireTabSelected() {
         JNotepadTab selectedTab = getSelected();
         selectedTab.setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
+        JNotepadStatusBox.getInstance().updateWhenTabSelected();
     }
 }
