@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.tool;
 
 
+import javafx.application.Platform;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.nio.charset.Charset;
@@ -36,7 +37,7 @@ public class EncodingDetector {
         // 尝试常见的编码
         for (Charset charset : commonCharsets()) {
             if (isValidEncoding(text, charset)) {
-                System.out.println("编码监测结果:" + isValidEncoding(text, charset));
+                Platform.runLater(()-> LogUtil.info("编码监测结果:" + isValidEncoding(text, charset),EncodingDetector.class));
                 return charset.name();
             }
         }

@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,7 +49,7 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
                     selectedTab.setText(file.getName()); // 更新Tab页标签上的文件名
                     selectedTab.setUserData(file); // 将文件对象保存到Tab页的UserData中
                 } catch (IOException ignored) {
-                    System.out.println("已忽视IO异常!");
+                    LogUtil.info("已忽视IO异常!",this.getClass());
                 }
             }
         }

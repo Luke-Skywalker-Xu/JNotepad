@@ -11,6 +11,7 @@ import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
 import org.jcnc.jnotepad.tool.EncodingDetector;
+import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
@@ -98,9 +99,9 @@ public class Controller implements ControllerInterface {
                 if (file != null) {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                         writer.write(newValue);
-                        System.out.println("正在自动保存---");
+                        LogUtil.info("正在自动保存---",this.getClass());
                     } catch (IOException ignored) {
-                        System.out.println("已忽视IO异常!");
+                        LogUtil.info("已忽视IO异常!",this.getClass());
                     }
                 }
             }
@@ -152,7 +153,6 @@ public class Controller implements ControllerInterface {
      */
     @Override
     public void getText(File file) {
-        ViewManager viewManager = ViewManager.getInstance();
         LineNumberTextArea textArea = createNewTextArea();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder textBuilder = new StringBuilder();
@@ -173,7 +173,7 @@ public class Controller implements ControllerInterface {
                 autoSave(textArea);
             });
         } catch (IOException ignored) {
-            System.out.println("已忽视IO异常!");
+            LogUtil.info("已忽视IO异常!",this.getClass());
         }
     }
 

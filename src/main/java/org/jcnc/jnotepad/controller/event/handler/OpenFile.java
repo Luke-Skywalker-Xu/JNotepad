@@ -7,7 +7,6 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.io.File;
 
@@ -26,8 +25,6 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        // 获取ViewManager的实例
-        ViewManager viewManager = ViewManager.getInstance();
         // 获取控制器
         Controller controller = Controller.getInstance();
         // 创建文件选择器
