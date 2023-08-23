@@ -24,7 +24,7 @@ public class Config {
         Properties properties = new Properties();
 
         //设置语言包
-        LANGUAGE_PACK_NAME = CH_LANGUAGE_PACK_NAME;
+        LANGUAGE_PACK_NAME = EN_LANGUAGE_PACK_NAME;
         try (InputStream inputStream = new FileInputStream(LANGUAGE_PACK_NAME)) {
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
             properties.load(reader);
