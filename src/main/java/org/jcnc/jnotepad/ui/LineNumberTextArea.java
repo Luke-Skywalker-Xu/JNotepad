@@ -8,6 +8,10 @@ import javafx.scene.layout.BorderPane;
  * @author 许轲
  */
 public class LineNumberTextArea extends BorderPane {
+    /**
+     * 是否与本地文件关联
+     */
+    private boolean isRelevance = false;
     private final TextArea mainTextArea;
     private final TextArea lineNumberArea;
 
@@ -34,6 +38,14 @@ public class LineNumberTextArea extends BorderPane {
         lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> mainTextArea.setScrollTop(lineNumberArea.getScrollTop()));
         setCenter(mainTextArea);
         setLeft(lineNumberArea);
+    }
+
+    public boolean isRelevance() {
+        return isRelevance;
+    }
+
+    public void setRelevance(boolean relevance) {
+        isRelevance = relevance;
     }
 
     private void updateLineNumberWidth() {

@@ -37,7 +37,7 @@ public class EncodingDetector {
         // 尝试常见的编码
         for (Charset charset : commonCharsets()) {
             if (isValidEncoding(text, charset)) {
-                Platform.runLater(()-> LogUtil.info("编码监测结果:" + isValidEncoding(text, charset),EncodingDetector.class));
+                Platform.runLater(() -> LogUtil.getLogger(EncodingDetector.class).info("编码监测结果:{}", isValidEncoding(text, charset)));
                 return charset.name();
             }
         }

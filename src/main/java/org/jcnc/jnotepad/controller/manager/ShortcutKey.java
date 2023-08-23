@@ -34,7 +34,7 @@ public class ShortcutKey implements ShortcutKeyInterface {
                     jsonData.append(line);
                 }
             } catch (IOException e) {
-                LogUtil.error("读取配置失败!",e,this.getClass());
+                LogUtil.getLogger(this.getClass()).error("读取配置失败!", e);
             }
         } else {
             // todo new InputStreamReader(inputStream) 实参 'inputStream' 可能为null
@@ -44,7 +44,7 @@ public class ShortcutKey implements ShortcutKeyInterface {
                     jsonData.append(line);
                 }
             } catch (IOException e) {
-                LogUtil.error("读取配置失败!",e,this.getClass());
+                LogUtil.getLogger(this.getClass()).error("读取配置失败!", e);
             }
         }
 

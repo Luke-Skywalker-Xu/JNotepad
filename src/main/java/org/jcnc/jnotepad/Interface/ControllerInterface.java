@@ -70,7 +70,7 @@ public interface ControllerInterface {
      *
      * @param file 文件
      */
-    void getText(File file);
+    LineNumberTextArea getText(File file);
 
     /**
      * 更新编码标签
