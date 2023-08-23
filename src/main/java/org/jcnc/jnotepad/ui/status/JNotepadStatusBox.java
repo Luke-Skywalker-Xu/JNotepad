@@ -27,7 +27,7 @@ public class JNotepadStatusBox extends HBox {
     /**
      * 显示文本编码
      */
-    private final Label enCodingLabel; // 显示文本编码
+    private final Label enCodingLabel;
 
     private JNotepadStatusBox() {
         // 创建状态栏
