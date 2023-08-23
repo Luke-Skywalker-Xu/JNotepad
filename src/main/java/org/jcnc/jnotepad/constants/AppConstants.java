@@ -29,6 +29,7 @@ public class AppConstants {
     /**
      * 配置文件名
      */
-    public static final String PROPERTY_FILE_NAME = "project.txt";
+    public static final String CH_LANGUAGE_PACK_NAME = "ch_language_pack.txt";
 
+    public static final String EN_LANGUAGE_PACK_NAME = "en_language_pack.txt";
 }

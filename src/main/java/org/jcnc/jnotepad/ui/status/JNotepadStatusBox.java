@@ -4,9 +4,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
+import java.util.Properties;
 
 /**
  * 状态栏组件封装。
@@ -16,6 +18,16 @@ import java.nio.charset.Charset;
  * @author songdragon
  */
 public class JNotepadStatusBox extends HBox {
+
+    Config config = new Config();
+    Properties properties = config.readPropertiesFromFile();
+    String ROW = properties.getProperty("ROW");
+
+    String COLUMN = properties.getProperty("COLUMN");
+
+    String WORD_COUNT = properties.getProperty("WORD_COUNT");
+
+    String ENCODE = properties.getProperty("ENCODE");
 
     private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
 
@@ -31,7 +43,7 @@ public class JNotepadStatusBox extends HBox {
 
     private JNotepadStatusBox() {
         // 创建状态栏
-        statusLabel = new Label("行数：1 \t列数：1 \t字数：0 ");
+        statusLabel = new Label(ROW + "：1 \t" + COLUMN + "：1 \t" + WORD_COUNT + "：0 ");
         // 创建新的标签以显示编码信息
         enCodingLabel = new Label();
 
@@ -51,13 +63,14 @@ public class JNotepadStatusBox extends HBox {
 
     /**
      * 更新编码展示
+     *
      * @param encoding 文件编码
      */
     public void updateEncodingLabel(String encoding) {
         if (encoding == null) {
             encoding = Charset.defaultCharset().name();
         }
-        this.enCodingLabel.setText("\t编码: " + encoding);
+        this.enCodingLabel.setText("\t" + ENCODE + ": " + encoding);
     }
 
     /**
@@ -69,7 +82,7 @@ public class JNotepadStatusBox extends HBox {
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());
         int length = textArea.getLength();
-        this.statusLabel.setText("行: " + row + " \t列: " + column + " \t字数: " + length);
+        this.statusLabel.setText(ROW + ": " + row + " \t" + COLUMN + ": " + column + " \t" + WORD_COUNT + ": " + length);
     }
 
     /**

@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.controller.manager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
+import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -16,6 +17,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
@@ -24,6 +26,12 @@ import java.util.List;
  * @author 许轲
  */
 public class Controller implements ControllerInterface {
+
+    Config config = new Config();
+    Properties properties = config.readPropertiesFromFile();
+
+
+    String NEW_FILE = properties.getProperty("NEW_FILE","新建文件");
     private static final Controller INSTANCE = new Controller();
 
     private Controller() {
@@ -110,7 +118,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
         ViewManager viewManager = ViewManager.getInstance();
-        String tabTitle = "新建文件 " + viewManager.selfIncreaseAndGetTabIndex();
+        String tabTitle = NEW_FILE + viewManager.selfIncreaseAndGetTabIndex();
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(tabTitle, textArea));
     }
 

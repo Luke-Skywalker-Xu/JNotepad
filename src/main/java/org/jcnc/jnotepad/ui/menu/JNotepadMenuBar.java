@@ -6,11 +6,13 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.controller.event.handler.*;
+import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 封装菜单栏组件。
@@ -18,6 +20,24 @@ import java.util.Map;
  * @author songdragon
  */
 public class JNotepadMenuBar extends MenuBar {
+
+    Config config = new Config();
+    Properties properties = config.readPropertiesFromFile();
+    String SAVA = properties.getProperty("SAVA");
+    String FILE = properties.getProperty("FILE");
+    String NEW = properties.getProperty("NEW");
+    String OPEN = properties.getProperty("OPEN");
+    String SAVA_AS = properties.getProperty("SAVA_AS");
+
+    String SET = properties.getProperty("SET");
+
+    String WORD_WRAP = properties.getProperty("WORD_WRAP");
+
+    String PLUGIN = properties.getProperty("PLUGIN");
+
+    String ADD_PLUGIN = properties.getProperty("ADD_PLUGIN");
+
+    String STATISTICS = properties.getProperty("STATISTICS");
 
     private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
 
@@ -90,18 +110,18 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void initFileMenu() {
         // 文件菜单
-        fileMenu = new Menu("文件");
+        fileMenu = new Menu(FILE);
 
-        newItem = new MenuItem("新建");
+        newItem = new MenuItem(NEW);
         itemMap.put("newItem", newItem);
 
-        openItem = new MenuItem("打开");
+        openItem = new MenuItem(OPEN);
         itemMap.put("openItem", openItem);
 
-        saveItem = new MenuItem("保存");
+        saveItem = new MenuItem(SAVA);
         itemMap.put("saveItem", saveItem);
 
-        saveAsItem = new MenuItem("另存为");
+        saveAsItem = new MenuItem(SAVA_AS);
         itemMap.put("saveAsItem", saveAsItem);
 
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
@@ -112,9 +132,9 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void initSettingMenu() {
         // 设置菜单
-        setMenu = new Menu("设置");
+        setMenu = new Menu(SET);
 
-        lineFeedItem = new CheckMenuItem("自动换行");
+        lineFeedItem = new CheckMenuItem(WORD_WRAP);
         itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
 
@@ -126,11 +146,11 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void initPluginMenu() {
         // 插件菜单
-        pluginMenu = new Menu("插件");
-        addItem = new MenuItem("增加插件");
+        pluginMenu = new Menu(PLUGIN);
+        addItem = new MenuItem(ADD_PLUGIN);
         itemMap.put("addItem", addItem);
 
-        countItem = new MenuItem("统计字数");
+        countItem = new MenuItem(STATISTICS);
         itemMap.put("countItem", countItem);
 
         pluginMenu.getItems().addAll(addItem, countItem);
