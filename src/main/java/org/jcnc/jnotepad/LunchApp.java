@@ -65,8 +65,7 @@ public class LunchApp extends Application {
         primaryStage.show();
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
-        // 初始化菜单项和标签栏
-        view.initTabPane();
+        // 初始化快捷键
         view.initShortcutKey();
 
         // 使用线程池加载关联文件并创建文本区域

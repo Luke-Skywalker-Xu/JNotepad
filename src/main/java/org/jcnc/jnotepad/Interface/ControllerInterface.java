@@ -1,7 +1,5 @@
 package org.jcnc.jnotepad.Interface;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.io.File;
@@ -22,43 +20,6 @@ public interface ControllerInterface {
     LineNumberTextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters);
 
     /**
-     * 获取新建文件处理事件处理程序
-     *
-     * @param textArea 文本区域
-     * @return 新建文件处理事件处理程序
-     */
-    EventHandler<ActionEvent> getNewFileEventHandler(LineNumberTextArea textArea);
-
-    /**
-     * 获取打开文件处理事件处理程序
-     *
-     * @return 打开文件处理事件处理程序
-     */
-    EventHandler<ActionEvent> getOpenFileEventHandler();
-
-    /**
-     * 获取另存为文件处理事件处理程序
-     *
-     * @return 另存为文件处理事件处理程序
-     */
-    EventHandler<ActionEvent> getSaveAsFileEventHandler();
-
-
-    /**
-     * 自动保存
-     *
-     * @param textArea 文本区域
-     */
-    void autoSave(LineNumberTextArea textArea);
-
-    /**
-     * 更新状态标签
-     *
-     * @param textArea 文本区域
-     */
-    void updateStatusLabel(LineNumberTextArea textArea);
-
-    /**
      * 打开关联文件
      *
      * @param filePath 文件路径
@@ -71,36 +32,6 @@ public interface ControllerInterface {
      * @param file 文件
      */
     LineNumberTextArea getText(File file);
-
-    /**
-     * 更新编码标签
-     *
-     * @param text 编码标签文本
-     */
-    void upDateEncodingLabel(String text);
-
-    /**
-     * 获取光标所在行号
-     *
-     * @param caretPosition 光标位置
-     * @param text          文本内容
-     * @return 行号
-     */
-    int getRow(int caretPosition, String text);
-
-    /**
-     * 获取光标所在列号
-     *
-     * @param caretPosition 光标位置
-     * @param text          文本内容
-     * @return 列号
-     */
-    int getColumn(int caretPosition, String text);
-
-    /**
-     * 初始化 TabPane
-     */
-    void initTabPane();
 
     /**
      * 更新UI和标签页

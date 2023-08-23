@@ -2,13 +2,7 @@ package org.jcnc.jnotepad.controller.manager;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
-import org.jcnc.jnotepad.controller.event.handler.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.OpenFile;
-import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -16,8 +10,11 @@ import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -58,74 +55,6 @@ public class Controller implements ControllerInterface {
     }
 
     /**
-     * 获取新建文件事件处理程序。
-     *
-     * @param textArea 文本区域
-     * @return 新建文件事件处理程序
-     */
-    @Override
-    public EventHandler<ActionEvent> getNewFileEventHandler(LineNumberTextArea textArea) {
-        return new NewFile();
-    }
-
-    /**
-     * 获取打开文件事件处理程序。
-     *
-     * @return 打开文件事件处理程序
-     */
-    @Override
-    public EventHandler<ActionEvent> getOpenFileEventHandler() {
-        return new OpenFile();
-    }
-
-    /**
-     * 自动保存文本内容。
-     *
-     * @param textArea 文本区域
-     */
-    @Override
-    public void autoSave(LineNumberTextArea textArea) {
-        textArea.getMainTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
-            Tab tab = JNotepadTabPane.getInstance().getSelected();
-            if (tab != null) {
-                File file = (File) tab.getUserData();
-                if (file != null) {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                        writer.write(newValue);
-                        LogUtil.getLogger(this.getClass()).info("正在自动保存---");
-                    } catch (IOException ignored) {
-                        LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
-                    }
-                }
-            }
-        });
-    }
-
-    /**
-     * 获取另存为文件事件处理程序。
-     *
-     * @return 另存为文件事件处理程序
-     */
-    @Override
-    public EventHandler<ActionEvent> getSaveAsFileEventHandler() {
-        return new SaveAsFile();
-    }
-
-    /**
-     * 更新状态标签。
-     *
-     * @param textArea 文本区域
-     */
-    @Override
-    public void updateStatusLabel(LineNumberTextArea textArea) {
-        int caretPosition = textArea.getMainTextArea().getCaretPosition();
-        int row = getRow(caretPosition, textArea.getMainTextArea().getText());
-        int column = getColumn(caretPosition, textArea.getMainTextArea().getText());
-        int length = textArea.getMainTextArea().getLength();
-        ViewManager.getInstance().getStatusLabel().setText("行: " + row + " \t列: " + column + " \t字数: " + length);
-    }
-
-    /**
      * 打开关联文件。
      *
      * @param filePath 文件路径
@@ -148,7 +77,9 @@ public class Controller implements ControllerInterface {
         LineNumberTextArea textArea = createNewTextArea();
         // 设置当前标签页关联本地文件
         textArea.setRelevance(true);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        // 检测文件编码
+        Charset encoding = EncodingDetector.detectEncodingCharset(file);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file, encoding))) {
             StringBuilder textBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -158,85 +89,15 @@ public class Controller implements ControllerInterface {
 
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
-                JNotepadTab tab = createNewTab(file.getName(), textArea);
+                JNotepadTab tab = createNewTab(file.getName(), textArea, encoding);
                 tab.setUserData(file);
                 JNotepadTabPane.getInstance().addNewTab(tab);
-                updateStatusLabel(textArea);
-                autoSave(textArea);
             });
 
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
         return textArea;
-    }
-
-    /**
-     * 更新编码标签。
-     *
-     * @param text 文本内容
-     */
-    @Override
-    public void upDateEncodingLabel(String text) {
-        String encoding = EncodingDetector.detectEncoding(text);
-        ViewManager.getInstance().getEnCodingLabel().setText("\t编码: " + encoding);
-    }
-
-    /**
-     * 获取光标所在行号。
-     *
-     * @param caretPosition 光标位置
-     * @param text          文本内容
-     * @return 光标所在行号
-     */
-    @Override
-    public int getRow(int caretPosition, String text) {
-        caretPosition = Math.min(caretPosition, text.length());
-        String substring = text.substring(0, caretPosition);
-        int count = 0;
-        for (char c : substring.toCharArray()) {
-            if (c == '\n') {
-                count++;
-            }
-        }
-        return count + 1;
-    }
-
-    /**
-     * 获取光标所在列号。
-     *
-     * @param caretPosition 光标位置
-     * @param text          文本内容
-     * @return 光标所在列号
-     */
-    @Override
-    public int getColumn(int caretPosition, String text) {
-        return caretPosition - text.lastIndexOf("\n", caretPosition - 1);
-    }
-
-    /**
-     * 初始化标签面板。
-     */
-    @Override
-    public void initTabPane() {
-        JNotepadTabPane.getInstance().getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
-            LineNumberTextArea textArea;
-            if (newTab != null) {
-                // 获取新选定的标签页并关联的文本区域
-                textArea = (LineNumberTextArea) newTab.getContent();
-            } else {
-                // 刷新状态
-                textArea = openAssociatedFileAndCreateTextArea(new ArrayList<>());
-            }
-            // 更新状态标签
-            INSTANCE.updateStatusLabel(textArea);
-
-            // 监听文本光标位置的变化，更新状态标签
-            textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> INSTANCE.updateStatusLabel(textArea));
-
-            // 更新编码标签
-            INSTANCE.upDateEncodingLabel(textArea.getMainTextArea().getText());
-        });
     }
 
     /**
@@ -251,7 +112,6 @@ public class Controller implements ControllerInterface {
         ViewManager viewManager = ViewManager.getInstance();
         String tabTitle = "新建文件 " + viewManager.selfIncreaseAndGetTabIndex();
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(tabTitle, textArea));
-        updateStatusLabel(textArea);
     }
 
 
@@ -262,12 +122,6 @@ public class Controller implements ControllerInterface {
      */
     private void configureTextArea(LineNumberTextArea textArea) {
         textArea.getMainTextArea().setWrapText(true);
-        upDateEncodingLabel(textArea.getMainTextArea().getText());
-        updateStatusLabel(textArea);
-
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> updateStatusLabel(textArea));
-
-        autoSave(textArea);
     }
 
     /**
@@ -276,12 +130,7 @@ public class Controller implements ControllerInterface {
      * @return 新的文本区域
      */
     private LineNumberTextArea createNewTextArea() {
-        LineNumberTextArea textArea = new LineNumberTextArea();
-        textArea.setStyle(
-                "-fx-border-color:white;" +
-                        "-fx-background-color:white"
-        );
-        return textArea;
+        return new LineNumberTextArea();
     }
 
     /**
@@ -291,8 +140,8 @@ public class Controller implements ControllerInterface {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private JNotepadTab createNewTab(String tabName, LineNumberTextArea textArea) {
-        return new JNotepadTab(tabName, textArea);
+    private JNotepadTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
+        return new JNotepadTab(tabName, textArea, charset);
     }
 
     /**
@@ -305,7 +154,7 @@ public class Controller implements ControllerInterface {
         return new Task<>() {
             @Override
             protected Void call() {
-                upDateEncodingLabel(getText(file).getMainTextArea().getText());
+                getText(file);
                 return null;
             }
         };
