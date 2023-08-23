@@ -23,7 +23,7 @@ public class NewFile implements EventHandler<ActionEvent> {
 
     Config config = new Config();
     Properties properties = config.readPropertiesFromFile();
-    String NEW_TEXT = properties.getProperty("NEW_TEXT");
+    String NEW_FILE = properties.getProperty("NEW_FILE");
     /**
      *
      * 处理新建文件事件。
@@ -39,7 +39,7 @@ public class NewFile implements EventHandler<ActionEvent> {
         // TODO: refactor：统一TextArea新建、绑定监听器入口
         ViewManager viewManager = ViewManager.getInstance();
         // 将Tab页添加到TabPane中
-        JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(NEW_TEXT
+        JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(NEW_FILE
                 + viewManager.selfIncreaseAndGetTabIndex(),
                 textArea));
 

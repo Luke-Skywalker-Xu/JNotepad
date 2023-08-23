@@ -38,3 +38,5 @@ build/
 /.idea/
 /project.txt
 logs/
+/ch_language_pack.txt
+/en_language_pack.txt

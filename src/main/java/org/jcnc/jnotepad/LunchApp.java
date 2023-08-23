@@ -53,10 +53,20 @@ public class LunchApp extends Application {
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
 
+
+
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
 
+        // 使用线程池加载关联文件并创建文本区域
+        List<String> rawParameters = getParameters().getRaw();
+        THREAD_POOL.execute(() -> {
+            LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
+            if (!Objects.isNull(textArea)) {
+                Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
+            }
+        });
         primaryStage.setTitle(title);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
@@ -68,14 +78,7 @@ public class LunchApp extends Application {
         // 初始化快捷键
         view.initShortcutKey();
 
-        // 使用线程池加载关联文件并创建文本区域
-        List<String> rawParameters = getParameters().getRaw();
-        THREAD_POOL.execute(() -> {
-            LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
-            if (!Objects.isNull(textArea)) {
-                Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
-            }
-        });
+
     }
 
     @Override

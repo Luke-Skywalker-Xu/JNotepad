@@ -11,7 +11,7 @@ import static org.jcnc.jnotepad.constants.AppConstants.EN_LANGUAGE_PACK_NAME;
  * @author 许轲
  * 该类负责配置文件的读取和初始化操作。
  */
-public class Config  {
+public class Config {
 
     String LANGUAGE_PACK_NAME;
 
@@ -60,8 +60,9 @@ public class Config  {
 
     private static Properties getCHLanguagePack() {
         Properties properties = new Properties();
+
         properties.setProperty("TITLE", "JNotepad");  // 设置默认属性
-        properties.setProperty("NEW_TEXT", "新建文件");
+        properties.setProperty("NEW_FILE", "新建文件");
         properties.setProperty("SAVA", "保存");
         properties.setProperty("FILE", "文件");
         properties.setProperty("NEW", "新建");
@@ -76,7 +77,6 @@ public class Config  {
         properties.setProperty("COLUMN", "列数");
         properties.setProperty("WORD_COUNT", "字数");
         properties.setProperty("ENCODE", "编码");
-        properties.setProperty("NEW_FILE", "新建文件");
         return properties;
     }
 
@@ -84,7 +84,7 @@ public class Config  {
         Properties properties = new Properties();
 
         properties.setProperty("TITLE", "JNotepad");
-        properties.setProperty("NEW_TEXT", "New File");
+        properties.setProperty("NEW_FILE", "New File");
         properties.setProperty("SAVA", "Save");
         properties.setProperty("FILE", "File");
         properties.setProperty("NEW", "New");
@@ -99,7 +99,6 @@ public class Config  {
         properties.setProperty("COLUMN", "Column");
         properties.setProperty("WORD_COUNT", "Word Count");
         properties.setProperty("ENCODE", "Encoding");
-        properties.setProperty("NEW_FILE", "New File");
         return properties;
     }
 

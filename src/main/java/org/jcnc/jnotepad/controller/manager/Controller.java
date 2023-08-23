@@ -30,8 +30,7 @@ public class Controller implements ControllerInterface {
     Config config = new Config();
     Properties properties = config.readPropertiesFromFile();
 
-
-    String NEW_FILE = properties.getProperty("NEW_FILE","新建文件");
+    String NEW_FILE = properties.getProperty("NEW_FILE");
     private static final Controller INSTANCE = new Controller();
 
     private Controller() {
