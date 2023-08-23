@@ -5,10 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
-import org.jcnc.jnotepad.controller.event.handler.LineFeed;
-import org.jcnc.jnotepad.controller.event.handler.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.OpenFile;
-import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
+import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
@@ -52,9 +49,13 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private MenuItem openItem;
     /**
-     * 保存
+     * 另存为
      */
     private MenuItem saveAsItem;
+    /**
+     * 保存
+     */
+    private MenuItem saveItem;
     /**
      * 增加
      */
@@ -97,10 +98,13 @@ public class JNotepadMenuBar extends MenuBar {
         openItem = new MenuItem("打开");
         itemMap.put("openItem", openItem);
 
+        saveItem = new MenuItem("保存");
+        itemMap.put("saveItem", saveItem);
+
         saveAsItem = new MenuItem("另存为");
         itemMap.put("saveAsItem", saveAsItem);
 
-        fileMenu.getItems().addAll(newItem, openItem, saveAsItem);
+        fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
     }
 
     /**
@@ -142,6 +146,7 @@ public class JNotepadMenuBar extends MenuBar {
     private void initEventHandlers() {
         newItem.setOnAction(new NewFile());
         openItem.setOnAction(new OpenFile());
+        saveItem.setOnAction(new SaveFile());
         saveAsItem.setOnAction(new SaveAsFile());
         lineFeedItem.setOnAction(new LineFeed());
         lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {

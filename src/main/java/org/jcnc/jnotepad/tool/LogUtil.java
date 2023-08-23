@@ -18,68 +18,9 @@ public class LogUtil {
      *
      * @param currentClass 所要记录的类
      * @return org.apache.logging.log4j.Logger 日志对象
-     * @apiNote 传入当前需要记录的类，返回记录该类的日志类，也可直接使用工具类定义好的方法，也可调用这个方法自定义
-     * @see LogUtil
+     * @apiNote 传入当前需要记录的类，返回记录该类的日志类 <br>建议一个类调用超过两次这个方法时，应当将该日志类变成成员对象，而不是多次调用
      */
     public static Logger getLogger(Class<?> currentClass) {
         return LoggerFactory.getLogger(currentClass);
-    }
-
-    /**
-     * 日志信息打印
-     *
-     * @param message      日志信息
-     * @param currentClass 所要记录的类
-     * @apiNote 传入当前需要记录的类，方便知晓是哪个位置记录的日志
-     */
-    public static void info(String message, Class<?> currentClass) {
-        getLogger(currentClass).info(message);
-    }
-
-    /**
-     * 日志排错信息打印
-     *
-     * @param message      日志信息
-     * @param currentClass 所要记录的类
-     * @apiNote 传入当前需要记录的类，方便知晓是哪个位置记录的日志
-     */
-
-    public static void debug(String message, Class<?> currentClass) {
-        getLogger(currentClass).debug(message);
-    }
-
-    /**
-     * 日志警告信息打印
-     *
-     * @param message      日志信息
-     * @param currentClass 所要记录的类
-     * @apiNote 传入当前需要记录的类，方便知晓是哪个位置记录的日志
-     */
-    public static void warn(String message, Class<?> currentClass) {
-        getLogger(currentClass).warn(message);
-    }
-
-    /**
-     * 日志错误信息打印
-     *
-     * @param message      日志信息
-     * @param currentClass 所要记录的类
-     * @apiNote 传入当前需要记录的类，方便知晓是哪个位置记录的日志
-     */
-    public static void error(String message, Class<?> currentClass) {
-        getLogger(currentClass).error(message);
-    }
-
-    /**
-     * 日志错误信息打印
-     *
-     * @param message      日志信息
-     * @param throwable    抛出的异常
-     * @param currentClass 所要记录的类
-     * @apiNote 这个方法用来弥补当抛出异常或手动抛出异常时，无法捕捉到所抛异常
-     */
-
-    public static void error(String message, Throwable throwable, Class<?> currentClass) {
-        getLogger(currentClass).error(message, throwable);
     }
 }

@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
-import org.jcnc.jnotepad.controller.event.handler.LineFeed;
 import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
@@ -29,14 +28,6 @@ import java.util.List;
  */
 public class Controller implements ControllerInterface {
     private static final Controller INSTANCE = new Controller();
-    /**
-     * 是否关联
-     */
-    private boolean isRelevance = true;
-
-    public boolean isRelevance() {
-        return isRelevance;
-    }
 
     private Controller() {
     }
@@ -59,6 +50,8 @@ public class Controller implements ControllerInterface {
             return null;
         } else {
             LineNumberTextArea textArea = createNewTextArea();
+            // 设置当前标签页与本地文件无关联
+            textArea.setRelevance(false);
             configureTextArea(textArea);
             return textArea;
         }
@@ -99,9 +92,9 @@ public class Controller implements ControllerInterface {
                 if (file != null) {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                         writer.write(newValue);
-                        LogUtil.info("正在自动保存---",this.getClass());
+                        LogUtil.getLogger(this.getClass()).info("正在自动保存---");
                     } catch (IOException ignored) {
-                        LogUtil.info("已忽视IO异常!",this.getClass());
+                        LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
                     }
                 }
             }
@@ -141,7 +134,6 @@ public class Controller implements ControllerInterface {
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            isRelevance = false;
             openFile(file);
         }
     }
@@ -152,8 +144,10 @@ public class Controller implements ControllerInterface {
      * @param file 文件对象
      */
     @Override
-    public void getText(File file) {
+    public LineNumberTextArea getText(File file) {
         LineNumberTextArea textArea = createNewTextArea();
+        // 设置当前标签页关联本地文件
+        textArea.setRelevance(true);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder textBuilder = new StringBuilder();
             String line;
@@ -164,17 +158,17 @@ public class Controller implements ControllerInterface {
 
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
-
                 JNotepadTab tab = createNewTab(file.getName(), textArea);
                 tab.setUserData(file);
                 JNotepadTabPane.getInstance().addNewTab(tab);
                 updateStatusLabel(textArea);
-
                 autoSave(textArea);
             });
+
         } catch (IOException ignored) {
-            LogUtil.info("已忽视IO异常!",this.getClass());
+            LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
+        return textArea;
     }
 
     /**
@@ -225,7 +219,6 @@ public class Controller implements ControllerInterface {
      */
     @Override
     public void initTabPane() {
-        Controller controller = new Controller();
         JNotepadTabPane.getInstance().getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) -> {
             LineNumberTextArea textArea;
             if (newTab != null) {
@@ -236,13 +229,13 @@ public class Controller implements ControllerInterface {
                 textArea = openAssociatedFileAndCreateTextArea(new ArrayList<>());
             }
             // 更新状态标签
-            controller.updateStatusLabel(textArea);
+            INSTANCE.updateStatusLabel(textArea);
 
             // 监听文本光标位置的变化，更新状态标签
-            textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> controller.updateStatusLabel(textArea));
+            textArea.getMainTextArea().caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> INSTANCE.updateStatusLabel(textArea));
 
             // 更新编码标签
-            controller.upDateEncodingLabel(textArea.getMainTextArea().getText());
+            INSTANCE.upDateEncodingLabel(textArea.getMainTextArea().getText());
         });
     }
 
@@ -309,12 +302,10 @@ public class Controller implements ControllerInterface {
      * @return 打开文件的任务
      */
     private Task<Void> createOpenFileTask(File file) {
-        LineNumberTextArea textArea = createNewTextArea();
         return new Task<>() {
             @Override
             protected Void call() {
-                getText(file);
-                upDateEncodingLabel(textArea.getMainTextArea().getText());
+                upDateEncodingLabel(getText(file).getMainTextArea().getText());
                 return null;
             }
         };

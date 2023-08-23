@@ -2,16 +2,8 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Tab;
-import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import static org.jcnc.jnotepad.tool.FileUtil.saveTab;
 
 
 /**
@@ -32,26 +24,6 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        Tab selectedTab = JNotepadTabPane.getInstance().getSelected();
-        if (selectedTab != null) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialFileName(selectedTab.getText());
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
-            File file = fileChooser.showSaveDialog(null);
-            if (file != null) {
-                try (
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(file))
-                ) {
-                    LineNumberTextArea textArea = (LineNumberTextArea) selectedTab.getContent(); // 获取当前Tab页的文本编辑区
-                    String text = textArea.getMainTextArea().getText();
-                    writer.write(text); // 写入文件内容
-                    writer.flush();
-                    selectedTab.setText(file.getName()); // 更新Tab页标签上的文件名
-                    selectedTab.setUserData(file); // 将文件对象保存到Tab页的UserData中
-                } catch (IOException ignored) {
-                    LogUtil.info("已忽视IO异常!",this.getClass());
-                }
-            }
-        }
+        saveTab(this.getClass());
     }
 }

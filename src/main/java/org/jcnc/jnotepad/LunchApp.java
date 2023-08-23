@@ -61,26 +61,22 @@ public class LunchApp extends Application {
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
-
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
         primaryStage.show();
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
-
         // 初始化菜单项和标签栏
         view.initTabPane();
         view.initShortcutKey();
-        if (controller.isRelevance()) {
-            // 使用线程池加载关联文件并创建文本区域
-            List<String> rawParameters = getParameters().getRaw();
-            THREAD_POOL.execute(() -> {
-                LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
-                if (!Objects.isNull(textArea)) {
-                    Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
-                }
-            });
-        }
 
+        // 使用线程池加载关联文件并创建文本区域
+        List<String> rawParameters = getParameters().getRaw();
+        THREAD_POOL.execute(() -> {
+            LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
+            if (!Objects.isNull(textArea)) {
+                Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
+            }
+        });
     }
 
     @Override
