@@ -30,7 +30,7 @@ public class JNotepadTabPane extends TabPane {
                         JNotepadMenuBar.getMenuBar().updateMenuStatusBySelectedTab();
                     }
                     // 更新状态标签
-                    JNotepadStatusBox.getInstance().updateWordCountStatusLabel();
+                    JNotepadStatusBox.getInstance().updateWhenTabSelected();
                 }
         );
     }

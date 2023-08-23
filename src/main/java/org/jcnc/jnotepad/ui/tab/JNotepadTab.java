@@ -34,6 +34,7 @@ public class JNotepadTab extends Tab {
         lineNumberTextArea = textArea;
         this.setContent(lineNumberTextArea);
         setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
+        this.charset = charset;
     }
 
     public boolean isAutoLine() {
