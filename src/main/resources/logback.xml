@@ -3,15 +3,15 @@
 <!-- scanPeriod属性设置监测配置文件修改的时间间隔，默认单位为毫秒，在scan为true时才生效 -->
 <!-- debug属性如果为true时，会打印出logback内部的日志信息 -->
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <!-- 定义参数常量 -->
+    <!-- 定义参数常量 -->JJ
     <!-- 日志级别：TRACE<DEBUG<INFO<WARN<ERROR，其中常用的是DEBUG、INFO和ERROR -->
     <property name="log.level" value="debug"/>
     <!-- 文件保留时间 -->
     <property name="log.maxHistory" value="30"/>
     <!-- 日志存储路径 -->
-    <property name="log.filePath" value="logs"/>
+    <!--<property name="log.filePath" value="logs"/>-->
     <!--打包时，请使用下方的路径-->
-    <!--<property name="log.filePath" value="../logs"/>-->
+    <property name="log.filePath" value="../logs"/>
     <!-- 日志的显式格式 -->
     <property name="log.pattern"
               value="时间:[%d{yyyy-MM-dd HH:mm:ss.SSS}] 线程:[%thread] 日志级别:[%-5level] 调用位置:[%logger{50} 参见:[\(%F:%L\)]] - 日志信息:[%msg]%n">

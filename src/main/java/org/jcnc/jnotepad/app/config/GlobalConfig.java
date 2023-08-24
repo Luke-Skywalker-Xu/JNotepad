@@ -4,6 +4,8 @@ import org.jcnc.jnotepad.init.Config;
 
 import java.util.Properties;
 
+import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
+
 /**
  * 内存中，运行过程中的全局配置项
  *
@@ -11,10 +13,6 @@ import java.util.Properties;
  */
 public class GlobalConfig {
 
-    /**
-     * 自动换行配置key
-     */
-    public static final String TEXT_WRAP = "text.wrap";
     private static final GlobalConfig APP_GLOBAL_CONFIG = new GlobalConfig();
     private final Properties properties;
 

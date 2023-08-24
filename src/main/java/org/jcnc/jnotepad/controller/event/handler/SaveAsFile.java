@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import org.jcnc.jnotepad.tool.LogUtil;
 
 import static org.jcnc.jnotepad.tool.FileUtil.saveTab;
 
@@ -24,6 +25,7 @@ public class SaveAsFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
+        LogUtil.getLogger(SaveAsFile.class).info("已调用另存为功能");
         saveTab(this.getClass());
     }
 }

@@ -1,8 +1,6 @@
 package org.jcnc.jnotepad.tool;
 
-import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
@@ -13,11 +11,12 @@ import java.nio.charset.StandardCharsets;
  * @author 一个大转盘
  */
 public class FileUtil {
+
     private FileUtil() {
     }
 
     /**
-     * 把一个文件中的内容读取成一个String字符串
+     * 把一个文件中的内容读取成一个String字符串<br>
      *
      * @param jsonFile json文件
      * @return String
@@ -59,6 +58,7 @@ public class FileUtil {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
             File file = fileChooser.showSaveDialog(null);
             if (file != null) {
+                LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
                 selectedTab.save();
                 // 将保存后的文件设置为已关联
                 selectedTab.getLineNumberTextArea().setRelevance(true);

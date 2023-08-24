@@ -31,7 +31,7 @@ public interface ControllerInterface {
      *
      * @param file 文件
      */
-    LineNumberTextArea getText(File file);
+    void getText(File file);
 
     /**
      * 更新UI和标签页
