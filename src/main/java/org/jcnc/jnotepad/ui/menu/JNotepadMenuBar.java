@@ -5,10 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
-import org.jcnc.jnotepad.controller.event.handler.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.OpenFile;
-import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
-import org.jcnc.jnotepad.controller.event.handler.SaveFile;
+import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
@@ -75,12 +72,15 @@ public class JNotepadMenuBar extends MenuBar {
      * 查看
      */
     private MenuItem countItem;
-
-
+    /**
+     * 打开配置文件
+     */
+    private MenuItem openConfigItem;
     /**
      * 自动换行点击菜单按钮
      */
     private CheckMenuItem lineFeedItem;
+
 
     private final Map<String, MenuItem> itemMap = new HashMap<>();
 
@@ -128,8 +128,9 @@ public class JNotepadMenuBar extends MenuBar {
         lineFeedItem = new CheckMenuItem(WORD_WRAP);
         itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
-
-        setMenu.getItems().addAll(lineFeedItem);
+        openConfigItem = new MenuItem(OPEN_CONFIGURATION_FILE);
+        itemMap.put("openConfigItem", openConfigItem);
+        setMenu.getItems().addAll(lineFeedItem, openConfigItem);
     }
 
     /**
@@ -159,6 +160,7 @@ public class JNotepadMenuBar extends MenuBar {
         openItem.setOnAction(new OpenFile());
         saveItem.setOnAction(new SaveFile());
         saveAsItem.setOnAction(new SaveAsFile());
+        openConfigItem.setOnAction(new OpenConfig());
         lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 1. 更新全局配置
             GlobalConfig.getConfig().setAutoLineConfig(after);

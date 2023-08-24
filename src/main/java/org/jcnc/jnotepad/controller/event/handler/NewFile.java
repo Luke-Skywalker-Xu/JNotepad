@@ -2,7 +2,6 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
@@ -35,7 +34,6 @@ public class NewFile implements EventHandler<ActionEvent> {
 
         // TODO: refactor：统一TextArea新建、绑定监听器入口
         ViewManager viewManager = ViewManager.getInstance();
-        LogUtil.getLogger(NewFile.class).info("{}", NEW_FILE);
         // 将Tab页添加到TabPane中
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(NEW_FILE
                 + viewManager.selfIncreaseAndGetTabIndex(),

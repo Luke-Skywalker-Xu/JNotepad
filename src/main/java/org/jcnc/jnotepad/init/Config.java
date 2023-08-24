@@ -80,6 +80,7 @@ public class Config {
         properties.setProperty("SAVA_AS", "另存为");
         properties.setProperty("SET", "设置");
         properties.setProperty("WORD_WRAP", "自动换行");
+        properties.setProperty("OPEN_CONFIGURATION_FILE", "打开配置文件");
         properties.setProperty("PLUGIN", "插件");
         properties.setProperty("ADD_PLUGIN", "增加插件");
         properties.setProperty("STATISTICS", "统计字数");
@@ -102,6 +103,7 @@ public class Config {
         properties.setProperty("SAVA_AS", "Save As");
         properties.setProperty("SET", "Settings");
         properties.setProperty("WORD_WRAP", "Word Wrap");
+        properties.setProperty("OPEN_CONFIGURATION_FILE", "Open Configuration File");
         properties.setProperty("PLUGIN", "Plugins");
         properties.setProperty("ADD_PLUGIN", "Add Plugin");
         properties.setProperty("STATISTICS", "Word Count");

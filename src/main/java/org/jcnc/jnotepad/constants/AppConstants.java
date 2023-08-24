@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.constants;
 
 /**
  * 应用常量
+ *
  * @author 许轲
  */
 
@@ -27,9 +28,21 @@ public class AppConstants {
     public static final String APP_ICON = "/img/icon.png";
 
     /**
-     * 配置文件名
+     * 中文语言包
      */
     public static final String CH_LANGUAGE_PACK_NAME = "ch_language_pack.txt";
-
+    /**
+     * 英文语言包
+     */
     public static final String EN_LANGUAGE_PACK_NAME = "en_language_pack.txt";
+
+    /**
+     * 配置文件名
+     */
+    public static final String CONFIG_NAME = "jnotepadConfig.json";
+    /**
+     * 快捷键
+     */
+    public static final String CONFIG_SHORTCUT_KEY_NAME = "shortcutKey";
+
 }
