@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -26,8 +28,9 @@ public class Config {
 
     public Config() {
         appConfigDir = System.getProperty("user.home") + File.separator + ".jnotepad";
-        boolean isConfigDirReady = Paths.get(appConfigDir).toFile().mkdirs();
-        if (!isConfigDirReady) {
+        Path path = Paths.get(appConfigDir);
+        boolean isConfigDirReady = path.toFile().mkdirs();
+        if (!isConfigDirReady && !Files.exists(path)) {
             appConfigDir = "/tmp";
         }
     }
@@ -42,12 +45,18 @@ public class Config {
 
         //设置语言包
         languagePackName = EN_LANGUAGE_PACK_NAME;
-        try (InputStream inputStream = new FileInputStream(languagePackName)) {
-            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
-            properties.load(reader);
-        } catch (IOException e) {
+        String languageFilePath = Paths.get(appConfigDir, languagePackName).toString();
+
+        if (!Files.exists(Paths.get(languageFilePath))) {
             // 如果读取出错，则调用初始化方法
             initializePropertiesFile();
+        }
+
+        try (InputStream inputStream = new FileInputStream(languageFilePath)) {
+            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
+            properties.load(reader);
+        } catch (IOException ignored) {
+
         }
         return properties;
     }

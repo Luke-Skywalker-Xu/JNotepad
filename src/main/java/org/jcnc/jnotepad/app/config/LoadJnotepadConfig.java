@@ -10,6 +10,7 @@ import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +29,18 @@ public abstract class LoadJnotepadConfig {
     Logger logger = LogUtil.getLogger(this.getClass());
 
     public final void load() {
+        String path = getConfigPath();
+        if (!Files.exists(Paths.get(path))) {
+            // 不存在则创建
+            createConfig();
+        }
         // 判断是否存在这个配置文件
-        try (InputStream inputStream = new FileInputStream(CONFIG_NAME)) {
+        try (InputStream inputStream = new FileInputStream(getConfigPath())) {
             logger.info("正在加载配置文件...");
             // 存在则加载
             loadConfig(inputStream);
         } catch (IOException e) {
             logger.info("未检测到配置文件!");
-            // 不存在则创建
-            createConfig();
         }
     }
 
@@ -53,12 +57,16 @@ public abstract class LoadJnotepadConfig {
             // 动态添加快捷键
             menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
         }
-        String jsonConfigPath= Paths.get(new Config().getAppConfigDir(), CONFIG_NAME).toString();
+        String jsonConfigPath = getConfigPath();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonConfigPath))) {
             writer.write(JNOTEPAD_CONFIG);
         } catch (IOException e) {
             PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");
         }
+    }
+
+    private static String getConfigPath() {
+        return Paths.get(new Config().getAppConfigDir(), CONFIG_NAME).toString();
     }
 
     /**
