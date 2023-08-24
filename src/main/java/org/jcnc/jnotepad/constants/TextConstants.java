@@ -6,6 +6,10 @@ import java.util.Properties;
 
 /**
  * 文本常量
+ * <p>
+ * 任何string请都在此处readPropertiesFromFile,然后在
+ * src/main/java/org/jcnc/jnotepad/init/Config.java的getXXXXXLanguagePack
+ * 注册配置文件,设置多语言语言包
  *
  * @author gewuyou
  */
@@ -56,7 +60,7 @@ public class TextConstants {
     public static final String JNOTEPAD_EN_LANGUAGE_PACK_NAME = PROPERTIES.getProperty("JNotepad en_language_pack");
 
     /// EncodingDetector 文本常量
-    public static final String UNKNOWN = "UNKNOWN";
+    public static final String UNKNOWN = PROPERTIES.getProperty("UNKNOWN");
 
     /// JNotepadStatusBox
     public static final String ROW = PROPERTIES.getProperty("ROW");
