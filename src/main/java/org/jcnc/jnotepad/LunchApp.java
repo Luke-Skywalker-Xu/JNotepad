@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.app.config.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.init.Config;
@@ -33,26 +34,20 @@ public class LunchApp extends Application {
 
     Controller controller = Controller.getInstance();
     Scene scene;
-    View view;
 
     @Override
     public void start(Stage primaryStage) {
 
         Config config = new Config();
-
         Properties properties = config.readPropertiesFromFile();
         String title = properties.getProperty("title", "JNotepad");
 
 
-        view = new View();
-
         Pane root = new Pane();
-
 
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
-
 
 
         scene = new Scene(root, width, length);
@@ -76,9 +71,7 @@ public class LunchApp extends Application {
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
         // 初始化快捷键
-        view.initShortcutKey();
-
-
+        View.getInstance().initShortcutKey(new LoadShortcutKeyConfig());
     }
 
     @Override

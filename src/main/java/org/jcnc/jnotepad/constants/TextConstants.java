@@ -38,6 +38,8 @@ public class TextConstants {
 
     public static final String STATISTICS = PROPERTIES.getProperty("STATISTICS");
 
+    public static final String OPEN_CONFIGURATION_FILE = PROPERTIES.getProperty("OPEN_CONFIGURATION_FILE");
+
     /// GlobalConfig文本常量
     /**
      * 自动换行配置key
@@ -64,4 +66,48 @@ public class TextConstants {
     public static final String WORD_COUNT = PROPERTIES.getProperty("WORD_COUNT");
 
     public static final String ENCODE = PROPERTIES.getProperty("ENCODE");
+
+    /// 配置文件文本常量
+    /**
+     * 内置配置文件
+     */
+    public static final String JNOTEPAD_CONFIG =
+            """
+                    {
+                               "shortcutKey":[
+                                 {
+                                       "buttonName": "newItem",
+                                       "shortcutKeyValue": "ctrl+n"
+                                 },
+                                 {
+                                       "buttonName": "openItem",
+                                       "shortcutKeyValue": "ctrl+o"
+                                 },
+                                 {
+                                      "buttonName": "saveItem",
+                                      "shortcutKeyValue": "ctrl+s"
+                                 },
+                                 {
+                                       "buttonName": "saveAsItem",
+                                       "shortcutKeyValue": "ctrl+alt+s"
+                                 },
+                                 {
+                                       "buttonName": "lineFeedItem",
+                                       "shortcutKeyValue": ""
+                                 },
+                                 {
+                                       "buttonName": "openConfigItem",
+                                       "shortcutKeyValue": "alt+s"
+                                 },
+                                 {
+                                       "buttonName": "addItem",
+                                       "shortcutKeyValue": ""
+                                 },
+                                 {
+                                       "buttonName": "countItem",
+                                       "shortcutKeyValue": ""
+                                 }
+                               ]
+                    }
+                    """;
 }

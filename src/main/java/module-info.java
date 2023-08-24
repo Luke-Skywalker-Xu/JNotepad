@@ -5,12 +5,15 @@ module org.jcnc.jnotepad {
     // 但我打开源代码，他们的模块的确有包含这个，java.naming，这个没懂，我干脆自己导入
     requires java.naming;
     requires atlantafx.base;
-    requires com.google.gson;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.annotation;
     requires org.slf4j;
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
     requires com.ibm.icu;
 
+    exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;
