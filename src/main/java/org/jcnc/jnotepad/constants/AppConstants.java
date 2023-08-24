@@ -19,10 +19,6 @@ public class AppConstants {
      */
     public static final double SCREEN_LENGTH = 600;
     /**
-     * 应用名
-     */
-    public static final String APP_NAME = "JNotepad";
-    /**
      * logo地址
      */
     public static final String APP_ICON = "/img/icon.png";

@@ -42,3 +42,5 @@ build/
 logs/
 /ch_language_pack.txt
 /en_language_pack.txt
+/jnotepadConfig.json
+/qodana.yaml
