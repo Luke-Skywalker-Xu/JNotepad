@@ -60,7 +60,7 @@ public class EncodingDetector {
     public static Charset detectEncodingCharset(File file) {
         String charset = detectEncoding(file);
         if (charset.equals(UNKNOWN)) {
-            return StandardCharsets.UTF_8;
+            return Charset.defaultCharset();
         }
         return Charset.forName(charset);
     }
