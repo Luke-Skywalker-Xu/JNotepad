@@ -3,19 +3,15 @@ package org.jcnc.jnotepad.tool;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
-import javafx.application.Platform;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import static org.jcnc.jnotepad.constants.TextConstants.UNKNOWN;
 
 /**
  * 编码检测工具类
@@ -24,8 +20,8 @@ import java.nio.file.Paths;
  */
 public class EncodingDetector {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EncodingDetector.class);
-    public static final String UNKNOWN = "UNKNOWN";
+    private static final Logger LOG = LogUtil.getLogger(EncodingDetector.class);
+
 
     private EncodingDetector() {
     }
@@ -41,14 +37,13 @@ public class EncodingDetector {
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file.getPath()))) {
             charsetDetector.setText(inputStream);
             CharsetMatch match = charsetDetector.detect();
-            LOG.debug(match.getName() + " " + match.getConfidence());
+            LOG.debug("{} : {}", match.getName(), match.getConfidence());
             if (match.getConfidence() > 50) {
                 return match.getName();
             }
         } catch (Exception e) {
             LOG.error("", e);
         }
-
         return UNKNOWN;
     }
 

@@ -5,14 +5,17 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
-import org.jcnc.jnotepad.controller.event.handler.*;
-import org.jcnc.jnotepad.init.Config;
+import org.jcnc.jnotepad.controller.event.handler.NewFile;
+import org.jcnc.jnotepad.controller.event.handler.OpenFile;
+import org.jcnc.jnotepad.controller.event.handler.SaveAsFile;
+import org.jcnc.jnotepad.controller.event.handler.SaveFile;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
+
+import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
  * 封装菜单栏组件。
@@ -21,23 +24,11 @@ import java.util.Properties;
  */
 public class JNotepadMenuBar extends MenuBar {
 
-    Config config = new Config();
-    Properties properties = config.readPropertiesFromFile();
-    String SAVA = properties.getProperty("SAVA");
-    String FILE = properties.getProperty("FILE");
-    String NEW = properties.getProperty("NEW");
-    String OPEN = properties.getProperty("OPEN");
-    String SAVA_AS = properties.getProperty("SAVA_AS");
 
-    String SET = properties.getProperty("SET");
-
-    String WORD_WRAP = properties.getProperty("WORD_WRAP");
-
-    String PLUGIN = properties.getProperty("PLUGIN");
-
-    String ADD_PLUGIN = properties.getProperty("ADD_PLUGIN");
-
-    String STATISTICS = properties.getProperty("STATISTICS");
+    /**
+     * 标签页布局组件封装。
+     */
+    JNotepadTabPane jNotepadTabPane = JNotepadTabPane.getInstance();
 
     private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
 
@@ -172,7 +163,7 @@ public class JNotepadMenuBar extends MenuBar {
             // 1. 更新全局配置
             GlobalConfig.getConfig().setAutoLineConfig(after);
             // 2. 对当前tab生效配置
-            JNotepadTabPane.getInstance().fireTabSelected();
+            jNotepadTabPane.fireTabSelected();
         });
     }
 
@@ -184,7 +175,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 根据当前选中tab，更新菜单选项
      */
     public void updateMenuStatusBySelectedTab() {
-        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = jNotepadTabPane.getSelected();
         lineFeedItem.selectedProperty().setValue(selectedTab.isAutoLine());
     }
 }

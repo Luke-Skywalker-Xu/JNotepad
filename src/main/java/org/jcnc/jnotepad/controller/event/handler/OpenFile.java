@@ -32,28 +32,40 @@ public class OpenFile implements EventHandler<ActionEvent> {
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
             // 创建打开文件的任务
-            Task<Void> openFileTask = new Task<>() {
-                @Override
-                protected Void call() {
-                    // 调用控制器的getText方法，读取文件内容
-                    controller.getText(file);
-                    return null;
-                }
-            };
-
-            // 设置任务成功完成时的处理逻辑
-            openFileTask.setOnSucceeded(e -> {
-                // 处理成功的逻辑
-            });
-
-            // 设置任务失败时的处理逻辑
-            openFileTask.setOnFailed(e -> {
-                // 处理失败的逻辑
-            });
-
+            Task<Void> openFileTask = getVoidTask(controller, file);
             // 创建并启动线程执行任务
             Thread thread = new Thread(openFileTask);
             thread.start();
         }
+    }
+
+    /**
+     * 获取空返回值任务
+     *
+     * @param controller 控制器
+     * @param file       文件
+     * @return javafx.concurrent.Task<java.lang.Void>
+     * @apiNote
+     */
+    private static Task<Void> getVoidTask(Controller controller, File file) {
+        Task<Void> openFileTask = new Task<>() {
+            @Override
+            protected Void call() {
+                // 调用控制器的getText方法，读取文件内容
+                controller.getText(file);
+                return null;
+            }
+        };
+
+        // 设置任务成功完成时的处理逻辑
+        openFileTask.setOnSucceeded(e -> {
+            // 处理成功的逻辑
+        });
+
+        // 设置任务失败时的处理逻辑
+        openFileTask.setOnFailed(e -> {
+            // 处理失败的逻辑
+        });
+        return openFileTask;
     }
 }

@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.ui;
 
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.tool.LogUtil;

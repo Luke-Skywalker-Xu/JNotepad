@@ -1,11 +1,16 @@
 package org.jcnc.jnotepad.init;
 
+import org.jcnc.jnotepad.tool.LogUtil;
+import org.slf4j.Logger;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import static org.jcnc.jnotepad.constants.AppConstants.CH_LANGUAGE_PACK_NAME;
 import static org.jcnc.jnotepad.constants.AppConstants.EN_LANGUAGE_PACK_NAME;
+import static org.jcnc.jnotepad.constants.TextConstants.JNOTEPAD_CH_LANGUAGE_PACK_NAME;
+import static org.jcnc.jnotepad.constants.TextConstants.JNOTEPAD_EN_LANGUAGE_PACK_NAME;
 
 /**
  * @author 许轲
@@ -13,7 +18,9 @@ import static org.jcnc.jnotepad.constants.AppConstants.EN_LANGUAGE_PACK_NAME;
  */
 public class Config {
 
-    String LANGUAGE_PACK_NAME;
+    private String languagePackName;
+
+    Logger logger = LogUtil.getLogger(this.getClass());
 
     /**
      * 从文件中读取属性配置。
@@ -24,8 +31,8 @@ public class Config {
         Properties properties = new Properties();
 
         //设置语言包
-        LANGUAGE_PACK_NAME = EN_LANGUAGE_PACK_NAME;
-        try (InputStream inputStream = new FileInputStream(LANGUAGE_PACK_NAME)) {
+        languagePackName = EN_LANGUAGE_PACK_NAME;
+        try (InputStream inputStream = new FileInputStream(languagePackName)) {
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
             properties.load(reader);
         } catch (IOException e) {
@@ -40,26 +47,28 @@ public class Config {
      * 如果属性文件不存在，将创建一个新的属性文件并设置默认属性。
      */
     public void initializePropertiesFile() {
-        Properties chLanguagePack = getCHLanguagePack();
+        Properties chLanguagePack = getChineseLanguagePack();
 
-        Properties enLanguagePack = getENLanguagePack();
+        Properties enLanguagePack = getEnglishLanguagePack();
 
         try (OutputStream outputStream = new FileOutputStream(CH_LANGUAGE_PACK_NAME)) {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
-            chLanguagePack.store(writer, "JNotepad ch_language_pack");
+            chLanguagePack.store(writer, JNOTEPAD_CH_LANGUAGE_PACK_NAME);
 
         } catch (IOException ignored) {
+            logger.info("未检测到中文语言包!");
         }
 
         try (OutputStream outputStream = new FileOutputStream(EN_LANGUAGE_PACK_NAME)) {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
-            enLanguagePack.store(writer, "JNotepad en_language_pack");
+            enLanguagePack.store(writer, JNOTEPAD_EN_LANGUAGE_PACK_NAME);
 
         } catch (IOException ignored) {
+            logger.info("未检测到英文语言包!");
         }
     }
 
-    private static Properties getCHLanguagePack() {
+    private static Properties getChineseLanguagePack() {
         Properties properties = new Properties();
 
         properties.setProperty("TITLE", "JNotepad");  // 设置默认属性
@@ -81,7 +90,7 @@ public class Config {
         return properties;
     }
 
-    private static Properties getENLanguagePack() {
+    private static Properties getEnglishLanguagePack() {
         Properties properties = new Properties();
 
         properties.setProperty("TITLE", "JNotepad");

@@ -1,10 +1,7 @@
 package org.jcnc.jnotepad.view.manager;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;

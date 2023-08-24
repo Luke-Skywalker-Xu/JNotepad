@@ -3,7 +3,6 @@ package org.jcnc.jnotepad.controller.manager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
-import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -17,7 +16,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Properties;
+
+import static org.jcnc.jnotepad.constants.TextConstants.NEW_FILE;
 
 /**
  * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
@@ -27,10 +27,6 @@ import java.util.Properties;
  */
 public class Controller implements ControllerInterface {
 
-    Config config = new Config();
-    Properties properties = config.readPropertiesFromFile();
-
-    String NEW_FILE = properties.getProperty("NEW_FILE");
     private static final Controller INSTANCE = new Controller();
 
     private Controller() {
@@ -80,7 +76,7 @@ public class Controller implements ControllerInterface {
      * @param file 文件对象
      */
     @Override
-    public LineNumberTextArea getText(File file) {
+    public void getText(File file) {
         LineNumberTextArea textArea = createNewTextArea();
         // 设置当前标签页关联本地文件
         textArea.setRelevance(true);
@@ -104,7 +100,6 @@ public class Controller implements ControllerInterface {
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
-        return textArea;
     }
 
     /**
