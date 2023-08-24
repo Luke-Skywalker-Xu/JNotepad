@@ -41,18 +41,26 @@ public class LineNumberTextArea extends BorderPane {
                 "-fx-border-color:white;" +
                         "-fx-background-color:white"
         );
+
+        initListeners();
+
         setCenter(mainTextArea);
         setLeft(lineNumberArea);
 
-        initListeners();
+
     }
 
     private void initListeners() {
         // 当主要文本区域的垂直滚动位置发生变化时，使行号文本区域的滚动位置保持一致
-        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> lineNumberArea.setScrollTop(mainTextArea.getScrollTop()));
+        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
+            lineNumberArea.setScrollTop(mainTextArea.getScrollTop());
+        });
 
         // 当行号文本区域的垂直滚动位置发生变化时，使主要文本区域的滚动位置保持一致
-        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> mainTextArea.setScrollTop(lineNumberArea.getScrollTop()));
+        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
+            mainTextArea.setScrollTop(lineNumberArea.getScrollTop());
+        });
+
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
 
         this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> JNotepadStatusBox.getInstance().updateWordCountStatusLabel());
@@ -126,9 +134,10 @@ public class LineNumberTextArea extends BorderPane {
             lineNumberText.append(i).append("\n");
         }
         lineNumberArea.setText(lineNumberText.toString());
+
         // 恢复之前的滚动位置
         mainTextArea.setScrollTop(mainTextAreaScrollTop);
-        lineNumberArea.setScrollTop(lineNumberAreaScrollTop - 8);
+        lineNumberArea.setScrollTop(lineNumberAreaScrollTop-8);
     }
 
     public TextArea getMainTextArea() {
