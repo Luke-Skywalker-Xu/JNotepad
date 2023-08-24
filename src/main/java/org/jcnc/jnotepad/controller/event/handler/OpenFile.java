@@ -5,8 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.manager.Controller;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.io.File;
 
@@ -15,6 +13,7 @@ import java.io.File;
  * 打开文件的事件处理程序。
  * <p>
  * 当用户选择打开文件时，将创建一个新的文本编辑区，并在Tab页中显示。
+ *
  * @author 许轲
  */
 public class OpenFile implements EventHandler<ActionEvent> {
@@ -38,8 +37,6 @@ public class OpenFile implements EventHandler<ActionEvent> {
                 protected Void call() {
                     // 调用控制器的getText方法，读取文件内容
                     controller.getText(file);
-                    // 更新编码标签
-                    controller.upDateEncodingLabel(((LineNumberTextArea) JNotepadTabPane.getInstance().getSelected().getContent()).getMainTextArea().getText());
                     return null;
                 }
             };

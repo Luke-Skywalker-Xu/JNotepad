@@ -55,6 +55,13 @@
             <artifactId>logback-classic</artifactId>
             <version>1.4.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>73.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/icu4j-73.2.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

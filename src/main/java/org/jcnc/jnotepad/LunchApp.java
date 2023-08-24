@@ -53,21 +53,11 @@ public class LunchApp extends Application {
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
 
+
+
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
-
-        primaryStage.setTitle(title);
-        primaryStage.setWidth(width);
-        primaryStage.setHeight(length);
-        primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
-        primaryStage.show();
-        ViewManager viewManager = ViewManager.getInstance(scene);
-        viewManager.initScreen(scene);
-        // 初始化菜单项和标签栏
-        view.initTabPane();
-        view.initShortcutKey();
 
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();
@@ -77,6 +67,18 @@ public class LunchApp extends Application {
                 Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
             }
         });
+        primaryStage.setTitle(title);
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(length);
+        primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
+        primaryStage.show();
+        ViewManager viewManager = ViewManager.getInstance(scene);
+        viewManager.initScreen(scene);
+        // 初始化快捷键
+        view.initShortcutKey();
+
+
     }
 
     @Override

@@ -2,10 +2,9 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Tab;
-import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.slf4j.Logger;
 
@@ -28,7 +27,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前tab页
-        Tab selectedTab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }
@@ -40,10 +39,8 @@ public class SaveFile implements EventHandler<ActionEvent> {
             saveTab(this.getClass());
         } else {
             logger.info("当前保存文件为关联打开文件，调用自动保存方法");
-            // 打开的是关联文件
-            Controller controller = Controller.getInstance();
-            // 自动保存
-            controller.autoSave(textArea);
+            // 调用tab保存
+            selectedTab.save();
         }
     }
 }
