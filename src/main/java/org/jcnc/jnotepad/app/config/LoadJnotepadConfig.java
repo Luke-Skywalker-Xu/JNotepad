@@ -3,12 +3,14 @@ package org.jcnc.jnotepad.app.config;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.app.entity.ShortcutKey;
+import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.PopUpUtil;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +53,8 @@ public abstract class LoadJnotepadConfig {
             // 动态添加快捷键
             menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_NAME))) {
+        String jsonConfigPath= Paths.get(new Config().getAppConfigDir(), CONFIG_NAME).toString();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(jsonConfigPath))) {
             writer.write(JNOTEPAD_CONFIG);
         } catch (IOException e) {
             PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");

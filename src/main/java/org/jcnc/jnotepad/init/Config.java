@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import static org.jcnc.jnotepad.constants.AppConstants.CH_LANGUAGE_PACK_NAME;
@@ -20,7 +21,16 @@ public class Config {
 
     private String languagePackName;
 
+    private String appConfigDir;
     Logger logger = LogUtil.getLogger(this.getClass());
+
+    public Config() {
+        appConfigDir = System.getProperty("user.home") + File.separator + ".jnotepad";
+        boolean isConfigDirReady = Paths.get(appConfigDir).toFile().mkdirs();
+        if (!isConfigDirReady) {
+            appConfigDir = "/tmp";
+        }
+    }
 
     /**
      * 从文件中读取属性配置。
@@ -51,7 +61,8 @@ public class Config {
 
         Properties enLanguagePack = getEnglishLanguagePack();
 
-        try (OutputStream outputStream = new FileOutputStream(CH_LANGUAGE_PACK_NAME)) {
+        String chineseFilePath = Paths.get(appConfigDir, CH_LANGUAGE_PACK_NAME).toString();
+        try (OutputStream outputStream = new FileOutputStream(chineseFilePath)) {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
             chLanguagePack.store(writer, JNOTEPAD_CH_LANGUAGE_PACK_NAME);
 
@@ -59,7 +70,8 @@ public class Config {
             logger.info("未检测到中文语言包!");
         }
 
-        try (OutputStream outputStream = new FileOutputStream(EN_LANGUAGE_PACK_NAME)) {
+        String enFilePath = Paths.get(appConfigDir, EN_LANGUAGE_PACK_NAME).toString();
+        try (OutputStream outputStream = new FileOutputStream(enFilePath)) {
             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
             enLanguagePack.store(writer, JNOTEPAD_EN_LANGUAGE_PACK_NAME);
 
@@ -114,4 +126,7 @@ public class Config {
         return properties;
     }
 
+    public String getAppConfigDir() {
+        return appConfigDir;
+    }
 }
