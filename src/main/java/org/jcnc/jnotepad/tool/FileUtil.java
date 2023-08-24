@@ -16,7 +16,8 @@ public class FileUtil {
     }
 
     /**
-     * 把一个文件中的内容读取成一个String字符串
+     * 把一个文件中的内容读取成一个String字符串<br>
+     * 注意：该方法不支持多线程操作
      *
      * @param jsonFile json文件
      * @return String
@@ -28,7 +29,7 @@ public class FileUtil {
         ) {
 
             int ch;
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             while ((ch = reader.read()) != -1) {
                 sb.append((char) ch);
             }

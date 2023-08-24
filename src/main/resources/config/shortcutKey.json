@@ -2,7 +2,7 @@
   "newItem": "ctrl+n",
   "openItem": "ctrl+o",
   "saveItem": "ctrl+s",
-  "saveAsItem": "ctrl+shift+s",
+  "saveAsItem": "ctrl+alt+s",
   "lineFeedItem": "",
 
   "addItem": "",
