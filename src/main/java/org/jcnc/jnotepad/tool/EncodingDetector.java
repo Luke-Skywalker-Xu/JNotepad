@@ -36,10 +36,12 @@ public class EncodingDetector {
         CharsetDetector charsetDetector = new CharsetDetector();
         try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file.getPath()))) {
             charsetDetector.setText(inputStream);
-            CharsetMatch match = charsetDetector.detect();
-            LOG.debug("{} : {}", match.getName(), match.getConfidence());
-            if (match.getConfidence() > 50) {
-                return match.getName();
+            CharsetMatch[] matchList = charsetDetector.detectAll();
+            for (CharsetMatch match : matchList) {
+                LOG.debug("{} : {}", match.getName(), match.getConfidence());
+                if (match.getConfidence() > 50) {
+                    return match.getName();
+                }
             }
         } catch (Exception e) {
             LOG.error("", e);
