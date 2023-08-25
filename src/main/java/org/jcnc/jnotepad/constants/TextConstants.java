@@ -24,6 +24,28 @@ public class TextConstants {
      */
     public static final String TEXT_WRAP = "text.wrap";
 
+    public static final String TITLE = "title";
+    public static final String SAVE = "SAVE";
+    public static final String FILE = "FILE";
+    public static final String NEW = "NEW";
+    public static final String OPEN = "OPEN";
+    public static final String SAVE_AS = "SAVE_AS";
+    public static final String SET = "SET";
+    public static final String WORD_WRAP = "WORD_WRAP";
+    public static final String PLUGIN = "PLUGIN";
+    public static final String ADD_PLUGIN = "ADD_PLUGIN";
+    public static final String STATISTICS = "STATISTICS";
+    public static final String OPEN_CONFIGURATION_FILE = "OPEN_CONFIGURATION_FILE";
+    public static final String TOP = "TOP";
+    public static final String LANGUAGE = "LANGUAGE";
+    public static final String UPPER_CHINESE = "CHINESE";
+    public static final String UPPER_ENGLISH = "ENGLISH";
+    public static final String NEW_FILE = "NEW_FILE";
+    public static final String UNKNOWN = "UNKNOWN";
+    public static final String ROW = "ROW";
+    public static final String COLUMN = "COLUMN";
+    public static final String WORD_COUNT = "WORD_COUNT";
+    public static final String ENCODE = "ENCODE";
 
     /// Config 文本常量
 

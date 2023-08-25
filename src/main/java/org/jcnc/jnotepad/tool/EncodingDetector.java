@@ -3,16 +3,13 @@ package org.jcnc.jnotepad.tool;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
-import org.jcnc.jnotepad.constants.TextConstants;
+import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.slf4j.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
-import static org.jcnc.jnotepad.constants.TextConstants.UNKNOWN;
 
 
 /**
@@ -73,13 +70,10 @@ public class EncodingDetector {
      */
     public static Charset detectEncodingCharset(File file) {
         String charset = detectEncoding(file);
-        if (charset.equals(localizationConfig.getUnknown())) {
         try {
-            assert charset != null;
             return Charset.forName(charset);
         } catch (Exception e) {
             return Charset.defaultCharset();
         }
-        return Charset.forName(charset);
     }
 }

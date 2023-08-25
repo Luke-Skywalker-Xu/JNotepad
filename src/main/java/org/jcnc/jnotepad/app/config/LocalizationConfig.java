@@ -7,9 +7,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import static org.jcnc.jnotepad.constants.AppConstants.CH_LANGUAGE_PACK_NAME;
-import static org.jcnc.jnotepad.constants.AppConstants.EN_LANGUAGE_PACK_NAME;
-import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
+import static org.jcnc.jnotepad.constants.AppConstants.APP_NAME;
+import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
  * 本地化配置文件
@@ -42,33 +41,34 @@ public class LocalizationConfig {
             InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             properties.load(reader);
         } catch (IOException e) {
+            logger.info("未检测到本地化语言包!");
             // 如果读取出错，则调用初始化方法
             initializePropertiesFile();
         }
         logger.info("初始化本地化语言包成功!");
-        title = properties.getProperty("title", "JNotepad");
-        sava = properties.getProperty("SAVA");
-        file = properties.getProperty("FILE");
-        newly = properties.getProperty("NEW");
-        open = properties.getProperty("OPEN");
-        savaAs = properties.getProperty("SAVA_AS");
-        set = properties.getProperty("SET");
-        wordWrap = properties.getProperty("WORD_WRAP");
-        plugin = properties.getProperty("PLUGIN");
-        addPlugin = properties.getProperty("ADD_PLUGIN");
-        statistics = properties.getProperty("STATISTICS");
-        openConfigurationFile = properties.getProperty("OPEN_CONFIGURATION_FILE");
-        top = properties.getProperty("TOP");
-        language = properties.getProperty("LANGUAGE");
-        chinese = properties.getProperty("CHINESE");
-        english = properties.getProperty("ENGLISH");
+        title = properties.getProperty(TITLE, APP_NAME);
+        sava = properties.getProperty(SAVE);
+        file = properties.getProperty(FILE);
+        newly = properties.getProperty(NEW);
+        open = properties.getProperty(OPEN);
+        savaAs = properties.getProperty(SAVE_AS);
+        set = properties.getProperty(SET);
+        wordWrap = properties.getProperty(WORD_WRAP);
+        plugin = properties.getProperty(PLUGIN);
+        addPlugin = properties.getProperty(ADD_PLUGIN);
+        statistics = properties.getProperty(STATISTICS);
+        openConfigurationFile = properties.getProperty(OPEN_CONFIGURATION_FILE);
+        top = properties.getProperty(TOP);
+        language = properties.getProperty(LANGUAGE);
+        chinese = properties.getProperty(UPPER_CHINESE);
+        english = properties.getProperty(UPPER_ENGLISH);
         textWrap = properties.getProperty(TEXT_WRAP, "true");
-        newFile = properties.getProperty("NEW_FILE");
-        unknown = properties.getProperty("UNKNOWN");
-        row = properties.getProperty("ROW");
-        column = properties.getProperty("COLUMN");
-        wordCount = properties.getProperty("WORD_COUNT");
-        encode = properties.getProperty("ENCODE");
+        newFile = properties.getProperty(NEW_FILE);
+        unknown = properties.getProperty(UNKNOWN);
+        row = properties.getProperty(ROW);
+        column = properties.getProperty(COLUMN);
+        wordCount = properties.getProperty(WORD_COUNT);
+        encode = properties.getProperty(ENCODE);
     }
 
     /**
@@ -103,52 +103,52 @@ public class LocalizationConfig {
     private void setChineseLanguagePack() {
         properties.clear();
         // 设置默认属性
-        properties.setProperty("TITLE", "JNotepad");
-        properties.setProperty("NEW_FILE", "新建文件");
-        properties.setProperty("SAVA", "保存");
-        properties.setProperty("FILE", "文件");
-        properties.setProperty("NEW", "新建");
-        properties.setProperty("OPEN", "打开");
-        properties.setProperty("SAVA_AS", "另存为");
-        properties.setProperty("SET", "设置");
-        properties.setProperty("WORD_WRAP", "自动换行");
-        properties.setProperty("OPEN_CONFIGURATION_FILE", "打开配置文件");
-        properties.setProperty("PLUGIN", "插件");
-        properties.setProperty("ADD_PLUGIN", "增加插件");
-        properties.setProperty("STATISTICS", "统计字数");
-        properties.setProperty("ROW", "行数");
-        properties.setProperty("COLUMN", "列数");
-        properties.setProperty("WORD_COUNT", "字数");
-        properties.setProperty("ENCODE", "编码");
-        properties.setProperty("TOP", "窗口置顶");
-        properties.setProperty("LANGUAGE", "语言");
-        properties.setProperty("CHINESE", "中文");
-        properties.setProperty("ENGLISH", "英文");
+        properties.setProperty(TITLE, APP_NAME);
+        properties.setProperty(NEW_FILE, "新建文件");
+        properties.setProperty(SAVE, "保存");
+        properties.setProperty(FILE, "文件");
+        properties.setProperty(NEW, "新建");
+        properties.setProperty(OPEN, "打开");
+        properties.setProperty(SAVE_AS, "另存为");
+        properties.setProperty(SET, "设置");
+        properties.setProperty(WORD_WRAP, "自动换行");
+        properties.setProperty(OPEN_CONFIGURATION_FILE, "打开配置文件");
+        properties.setProperty(PLUGIN, "插件");
+        properties.setProperty(ADD_PLUGIN, "增加插件");
+        properties.setProperty(STATISTICS, "统计字数");
+        properties.setProperty(ROW, "行数");
+        properties.setProperty(COLUMN, "列数");
+        properties.setProperty(WORD_COUNT, "字数");
+        properties.setProperty(ENCODE, "编码");
+        properties.setProperty(TOP, "窗口置顶");
+        properties.setProperty(LANGUAGE, "语言");
+        properties.setProperty(UPPER_CHINESE, "中文");
+        properties.setProperty(UPPER_ENGLISH, "英文");
     }
 
     private void setEnglishLanguagePack() {
         properties.clear();
-        properties.setProperty("TITLE", "JNotepad");
-        properties.setProperty("NEW_FILE", "New File");
-        properties.setProperty("SAVA", "Save");
-        properties.setProperty("FILE", "File");
-        properties.setProperty("NEW", "New");
-        properties.setProperty("OPEN", "Open");
-        properties.setProperty("SAVA_AS", "Save As");
-        properties.setProperty("SET", "Settings");
-        properties.setProperty("WORD_WRAP", "Word Wrap");
-        properties.setProperty("OPEN_CONFIGURATION_FILE", "Open Configuration File");
-        properties.setProperty("PLUGIN", "Plugins");
-        properties.setProperty("ADD_PLUGIN", "Add Plugin");
-        properties.setProperty("STATISTICS", "Word Count");
-        properties.setProperty("ROW", "Row");
-        properties.setProperty("COLUMN", "Column");
-        properties.setProperty("WORD_COUNT", "Word Count");
-        properties.setProperty("ENCODE", "Encoding");
-        properties.setProperty("TOP", "Window Top");
-        properties.setProperty("LANGUAGE", "Language");
-        properties.setProperty("CHINESE", "Chinese");
-        properties.setProperty("ENGLISH", "English");
+        properties.setProperty(TITLE, APP_NAME);
+        properties.setProperty(NEW_FILE, "New File");
+        properties.setProperty(SAVE, "Save");
+        properties.setProperty(FILE, "File");
+        properties.setProperty(NEW, "New");
+        properties.setProperty(OPEN, "Open");
+        properties.setProperty(SAVE_AS, "Save As");
+        properties.setProperty(SET, "Settings");
+        properties.setProperty(WORD_WRAP, "Word Wrap");
+        properties.setProperty(OPEN_CONFIGURATION_FILE, "Open Configuration File");
+        properties.setProperty(PLUGIN, "Plugins");
+        properties.setProperty(ADD_PLUGIN, "Add Plugin");
+        properties.setProperty(STATISTICS, "Word Count");
+        properties.setProperty(ROW, "Row");
+        properties.setProperty(COLUMN, "Column");
+        properties.setProperty(WORD_COUNT, "Word Count");
+        properties.setProperty(ENCODE, "Encoding");
+        properties.setProperty(TOP, "Window Top");
+        properties.setProperty(LANGUAGE, "Language");
+        properties.setProperty(UPPER_CHINESE, "Chinese");
+        properties.setProperty(UPPER_ENGLISH, "English");
     }
 
     private String textWrap;
@@ -192,6 +192,9 @@ public class LocalizationConfig {
 
     private String newFile;
     /// EncodingDetector 文本常量
+    /**
+     * 未知
+     */
     private String unknown;
 
     /// JNotepadStatusBox
