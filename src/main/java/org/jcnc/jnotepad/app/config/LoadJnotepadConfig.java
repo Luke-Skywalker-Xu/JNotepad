@@ -1,12 +1,8 @@
 package org.jcnc.jnotepad.app.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.app.entity.ShortcutKey;
-import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.PopUpUtil;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
@@ -67,7 +63,6 @@ public abstract class LoadJnotepadConfig<T> {
             logger.info("未检测到配置文件!");
             // 不存在则创建
             createConfig();
-            logger.info("已创建默认配置文件!");
         }
     }
 
