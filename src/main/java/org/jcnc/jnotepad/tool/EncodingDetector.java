@@ -3,16 +3,12 @@ package org.jcnc.jnotepad.tool;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
-import org.jcnc.jnotepad.constants.TextConstants;
 import org.slf4j.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
-import static org.jcnc.jnotepad.constants.TextConstants.UNKNOWN;
 
 
 /**
@@ -27,7 +23,6 @@ public class EncodingDetector {
      * 编码侦测概率，阈值：50%
      */
     public static final int THRESHOLD_CONFIDENCE = 50;
-
 
     private EncodingDetector() {
     }
@@ -44,11 +39,11 @@ public class EncodingDetector {
             charsetDetector.setText(inputStream);
             CharsetMatch[] matchList = charsetDetector.detectAll();
             if (matchList == null || matchList.length == 0) {
-                return UNKNOWN;
+                return null;
             }
             CharsetMatch maxConfidence = matchList[0];
             if (maxConfidence.getConfidence() < THRESHOLD_CONFIDENCE) {
-                return UNKNOWN;
+                return null;
             }
             for (int i = 1; i < matchList.length; i++) {
                 CharsetMatch match = matchList[i];
@@ -62,7 +57,7 @@ public class EncodingDetector {
         } catch (Exception e) {
             LOG.error("", e);
         }
-        return UNKNOWN;
+        return null;
     }
 
     /**
@@ -73,9 +68,11 @@ public class EncodingDetector {
      */
     public static Charset detectEncodingCharset(File file) {
         String charset = detectEncoding(file);
-        if (charset.equals(UNKNOWN)) {
+        try {
+            assert charset != null;
+            return Charset.forName(charset);
+        } catch (Exception e) {
             return Charset.defaultCharset();
         }
-        return Charset.forName(charset);
     }
 }
