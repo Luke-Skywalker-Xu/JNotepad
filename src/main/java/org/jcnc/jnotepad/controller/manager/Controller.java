@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.controller.manager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
+import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -16,8 +17,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
-
-import static org.jcnc.jnotepad.constants.TextConstants.NEW_FILE;
 
 /**
  * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
@@ -89,7 +88,7 @@ public class Controller implements ControllerInterface {
                 textBuilder.append(line).append("\n");
             }
             String text = textBuilder.toString();
-
+            LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
                 JNotepadTab tab = createNewTab(file.getName(), textArea, encoding);
@@ -112,7 +111,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
         ViewManager viewManager = ViewManager.getInstance();
-        String tabTitle = NEW_FILE + viewManager.selfIncreaseAndGetTabIndex();
+        String tabTitle = LocalizationConfig.getLocalizationConfig().getNewFile() + viewManager.selfIncreaseAndGetTabIndex();
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(tabTitle, textArea));
     }
 

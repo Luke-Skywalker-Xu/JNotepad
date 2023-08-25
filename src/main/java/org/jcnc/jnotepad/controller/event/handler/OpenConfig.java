@@ -22,11 +22,11 @@ public class OpenConfig extends OpenHandler {
         // 显示文件选择对话框，并获取选中的文件
         File file = new File(CONFIG_NAME);
         LogUtil.getLogger(this.getClass()).info("已调用打开配置文件功能");
+        LogUtil.getLogger(this.getClass()).info("{}", file);
         // 创建打开文件的任务
         Task<Void> openFileTask = getVoidTask(controller, file);
         // 创建并启动线程执行任务
         Thread thread = new Thread(openFileTask);
         thread.start();
-
     }
 }

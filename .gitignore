@@ -2,13 +2,15 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+test/
 ### IntelliJ IDEA ###
 .idea/
 *.iws
 *.iml
 *.ipr
-
+### 此处忽略了json与xml后缀
+*.xml
+*.json
 ### Eclipse ###
 .apt_generated
 .classpath

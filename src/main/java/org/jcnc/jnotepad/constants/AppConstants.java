@@ -18,19 +18,11 @@ public class AppConstants {
      * 初始高度
      */
     public static final double SCREEN_LENGTH = 600;
+    public static final String APP_NAME = "JNotepad";
     /**
      * logo地址
      */
     public static final String APP_ICON = "/img/icon.png";
-
-    /**
-     * 中文语言包
-     */
-    public static final String CH_LANGUAGE_PACK_NAME = "ch_language_pack.txt";
-    /**
-     * 英文语言包
-     */
-    public static final String EN_LANGUAGE_PACK_NAME = "en_language_pack.txt";
 
     /**
      * 配置文件名
