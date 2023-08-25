@@ -3,14 +3,12 @@ package org.jcnc.jnotepad.tool;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
-import org.jcnc.jnotepad.constants.TextConstants;
 import org.slf4j.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import static org.jcnc.jnotepad.constants.TextConstants.UNKNOWN;
 

@@ -22,6 +22,14 @@ public class Config {
 
     Logger logger = LogUtil.getLogger(this.getClass());
 
+    public void setLanguagePackName(String languagePackName) {
+        this.languagePackName = languagePackName;
+    }
+
+    public String getLanguagePackName() {
+        return languagePackName;
+    }
+
     /**
      * 从文件中读取属性配置。
      *
@@ -29,11 +37,11 @@ public class Config {
      */
     public Properties readPropertiesFromFile() {
         Properties properties = new Properties();
-
-        //设置语言包
+        // 设置语言包
         languagePackName = EN_LANGUAGE_PACK_NAME;
         try (InputStream inputStream = new FileInputStream(languagePackName)) {
-            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
+            // 使用 UTF-8 编码
+            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             properties.load(reader);
         } catch (IOException e) {
             // 如果读取出错，则调用初始化方法
@@ -52,7 +60,8 @@ public class Config {
         Properties enLanguagePack = getEnglishLanguagePack();
 
         try (OutputStream outputStream = new FileOutputStream(CH_LANGUAGE_PACK_NAME)) {
-            OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
+            // 使用 UTF-8 编码
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
             chLanguagePack.store(writer, JNOTEPAD_CH_LANGUAGE_PACK_NAME);
 
         } catch (IOException ignored) {
@@ -60,7 +69,8 @@ public class Config {
         }
 
         try (OutputStream outputStream = new FileOutputStream(EN_LANGUAGE_PACK_NAME)) {
-            OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);  // 使用 UTF-8 编码
+            // 使用 UTF-8 编码
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
             enLanguagePack.store(writer, JNOTEPAD_EN_LANGUAGE_PACK_NAME);
 
         } catch (IOException ignored) {
@@ -70,8 +80,8 @@ public class Config {
 
     private static Properties getChineseLanguagePack() {
         Properties properties = new Properties();
-
-        properties.setProperty("TITLE", "JNotepad");  // 设置默认属性
+        // 设置默认属性
+        properties.setProperty("TITLE", "JNotepad");
         properties.setProperty("NEW_FILE", "新建文件");
         properties.setProperty("SAVA", "保存");
         properties.setProperty("FILE", "文件");
@@ -88,6 +98,10 @@ public class Config {
         properties.setProperty("COLUMN", "列数");
         properties.setProperty("WORD_COUNT", "字数");
         properties.setProperty("ENCODE", "编码");
+        properties.setProperty("TOP", "窗口置顶");
+        properties.setProperty("LANGUAGE", "语言");
+        properties.setProperty("CHINESE", "中文");
+        properties.setProperty("ENGLISH", "英文");
         return properties;
     }
 
@@ -111,6 +125,10 @@ public class Config {
         properties.setProperty("COLUMN", "Column");
         properties.setProperty("WORD_COUNT", "Word Count");
         properties.setProperty("ENCODE", "Encoding");
+        properties.setProperty("TOP", "Window Top");
+        properties.setProperty("LANGUAGE", "Language");
+        properties.setProperty("CHINESE", "Chinese");
+        properties.setProperty("ENGLISH", "English");
         return properties;
     }
 

@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.constants;
 
 import org.jcnc.jnotepad.init.Config;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -17,8 +18,11 @@ public class TextConstants {
     private TextConstants() {
     }
 
-    private static final Config CONFIG = new Config();
-    private static final Properties PROPERTIES = CONFIG.readPropertiesFromFile();
+    public static final Config CONFIG = new Config();
+    public static final Properties PROPERTIES = CONFIG.readPropertiesFromFile();
+
+    /// 应用程序文本常量
+    public static final String TITLE = PROPERTIES.getProperty("title", "JNotepad");
 
     ///菜单栏文本常量
 
@@ -43,6 +47,15 @@ public class TextConstants {
     public static final String STATISTICS = PROPERTIES.getProperty("STATISTICS");
 
     public static final String OPEN_CONFIGURATION_FILE = PROPERTIES.getProperty("OPEN_CONFIGURATION_FILE");
+
+    public static final String TOP = PROPERTIES.getProperty("TOP");
+
+    public static final String LANGUAGE = PROPERTIES.getProperty("LANGUAGE");
+
+    public static final String CHINESE = PROPERTIES.getProperty("CHINESE");
+
+    public static final String ENGLISH = PROPERTIES.getProperty("ENGLISH");
+
 
     /// GlobalConfig文本常量
     /**
@@ -70,7 +83,11 @@ public class TextConstants {
     public static final String WORD_COUNT = PROPERTIES.getProperty("WORD_COUNT");
 
     public static final String ENCODE = PROPERTIES.getProperty("ENCODE");
-
+    /// 语言映射
+    public static final Map<String, String> LANGUAGE_MAP = Map.of(
+            "chinese", "JNotepad ch_language_pack",
+            "english", "JNotepad en_language_pack"
+    );
     /// 配置文件文本常量
     /**
      * 内置配置文件
@@ -78,6 +95,7 @@ public class TextConstants {
     public static final String JNOTEPAD_CONFIG =
             """
                     {
+                               "language":"chinese",
                                "shortcutKey":[
                                  {
                                        "buttonName": "newItem",

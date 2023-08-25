@@ -7,19 +7,22 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.app.config.LoadJnotepadConfig;
+import org.jcnc.jnotepad.app.config.LoadLanguageConfig;
 import org.jcnc.jnotepad.app.config.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
-import org.jcnc.jnotepad.init.Config;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.init.View;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.jcnc.jnotepad.constants.TextConstants.TITLE;
 
 /**
  * 启动程序
@@ -34,21 +37,25 @@ public class LunchApp extends Application {
 
     Controller controller = Controller.getInstance();
     Scene scene;
+    /**
+     * 配置文件数组
+     */
+    static List<LoadJnotepadConfig> loadJnotepadConfigs = new ArrayList<>();
+
+    static {
+        // 快捷键配置文件
+        loadJnotepadConfigs.add(new LoadShortcutKeyConfig());
+        // 语言配置文件
+        loadJnotepadConfigs.add(new LoadLanguageConfig());
+    }
 
     @Override
     public void start(Stage primaryStage) {
-
-        Config config = new Config();
-        Properties properties = config.readPropertiesFromFile();
-        String title = properties.getProperty("title", "JNotepad");
-
-
         Pane root = new Pane();
 
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
-
 
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
@@ -62,7 +69,7 @@ public class LunchApp extends Application {
                 Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
             }
         });
-        primaryStage.setTitle(title);
+        primaryStage.setTitle(TITLE);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
@@ -71,7 +78,7 @@ public class LunchApp extends Application {
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
         // 初始化快捷键
-        View.getInstance().initShortcutKey(new LoadShortcutKeyConfig());
+        View.getInstance().initJnotepadConfigs(loadJnotepadConfigs);
     }
 
     @Override

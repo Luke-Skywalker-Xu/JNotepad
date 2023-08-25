@@ -4,6 +4,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
@@ -38,13 +39,18 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private Menu fileMenu;
     /**
-     * 插件菜单
+     * 设置菜单
      */
     private Menu setMenu;
     /**
      * 插件菜单
      */
     private Menu pluginMenu;
+
+    /**
+     * 语言菜单
+     */
+    private Menu languageMenu;
 
     ///  菜单按钮
 
@@ -80,8 +86,19 @@ public class JNotepadMenuBar extends MenuBar {
      * 自动换行点击菜单按钮
      */
     private CheckMenuItem lineFeedItem;
+    /**
+     * 置顶按钮
+     */
+    private CheckMenuItem topItem;
 
-
+    /**
+     * 中文选项
+     */
+    private MenuItem chineseItem;
+    /**
+     * 英文选项
+     */
+    private MenuItem englishItem;
     private final Map<String, MenuItem> itemMap = new HashMap<>();
 
     /**
@@ -89,11 +106,29 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void init() {
         initFileMenu();
+        initLanguageMenu();
         initSettingMenu();
         initPluginMenu();
+
         // 菜单栏
         this.getMenus().addAll(fileMenu, setMenu, pluginMenu);
         initEventHandlers();
+    }
+
+    /**
+     * 初始化语言菜单
+     */
+    private void initLanguageMenu() {
+        // 语言菜单
+        languageMenu = new Menu(LANGUAGE);
+
+        chineseItem = new MenuItem(CHINESE);
+        itemMap.put("chineseItem", chineseItem);
+
+        englishItem = new MenuItem(ENGLISH);
+        itemMap.put("englishItem", englishItem);
+
+        languageMenu.getItems().addAll(chineseItem, englishItem);
     }
 
     /**
@@ -128,9 +163,15 @@ public class JNotepadMenuBar extends MenuBar {
         lineFeedItem = new CheckMenuItem(WORD_WRAP);
         itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
+
+        topItem = new CheckMenuItem(TOP);
+        itemMap.put("topItem", topItem);
+
         openConfigItem = new MenuItem(OPEN_CONFIGURATION_FILE);
         itemMap.put("openConfigItem", openConfigItem);
-        setMenu.getItems().addAll(lineFeedItem, openConfigItem);
+
+        itemMap.put("languageMenu", languageMenu);
+        setMenu.getItems().addAll(lineFeedItem, openConfigItem, topItem, languageMenu);
     }
 
     /**
@@ -167,6 +208,13 @@ public class JNotepadMenuBar extends MenuBar {
             // 2. 对当前tab生效配置
             jNotepadTabPane.fireTabSelected();
         });
+        topItem.selectedProperty().addListener((observableValue, before, after) -> {
+            // 获取窗口容器
+            Stage primaryStage = (Stage) this.getScene().getWindow();
+            // 设置窗口为置顶
+            primaryStage.setAlwaysOnTop(after);
+        });
+
     }
 
     public Map<String, MenuItem> getItemMap() {

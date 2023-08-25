@@ -1,5 +1,8 @@
 package org.jcnc.jnotepad.app.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.app.entity.ShortcutKey;
@@ -9,11 +12,10 @@ import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static org.jcnc.jnotepad.constants.AppConstants.CONFIG_NAME;
+import static org.jcnc.jnotepad.constants.AppConstants.CONFIG_SHORTCUT_KEY_NAME;
 import static org.jcnc.jnotepad.constants.TextConstants.JNOTEPAD_CONFIG;
 
 /**
@@ -25,6 +27,7 @@ import static org.jcnc.jnotepad.constants.TextConstants.JNOTEPAD_CONFIG;
 public abstract class LoadJnotepadConfig {
     Logger logger = LogUtil.getLogger(this.getClass());
 
+
     public final void load() {
         // 判断是否存在这个配置文件
         try (InputStream inputStream = new FileInputStream(CONFIG_NAME)) {
@@ -35,10 +38,54 @@ public abstract class LoadJnotepadConfig {
             logger.info("未检测到配置文件!");
             // 不存在则创建
             createConfig();
+            logger.info("已创建默认配置文件!");
         }
     }
 
-    void createConfig() {
+    /**
+     * 解析配置文件
+     *
+     * @param inputStream 输入流
+     * @return java.util.List<java.util.LinkedHashMap < java.lang.String, java.lang.String>>
+     * @since 2023/8/25 15:18
+     */
+    protected List<LinkedHashMap<String, String>> parseConfig(InputStream inputStream) {
+        StringBuffer jsonData = new StringBuffer();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonData.append(line);
+            }
+        } catch (IOException e) {
+            PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");
+        }
+        // 转json对象
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, List<Object>> mainConfig = null;
+        try {
+            mainConfig = mapper.readValue(jsonData.toString(), new TypeReference<HashMap<String, List<Object>>>() {
+            });
+        } catch (JsonProcessingException e) {
+            PopUpUtil.errorAlert("错误", "解析错误", "配置文件解析错误!");
+            logger.error("配置文件解析错误!", e);
+        }
+        if (mainConfig == null) {
+            logger.error("未获取到主要配置文件!");
+            return Collections.emptyList();
+        }
+        return mainConfig.get(CONFIG_SHORTCUT_KEY_NAME)
+                .stream()
+                .map(e -> {
+                    if (e instanceof LinkedHashMap) {
+                        return (LinkedHashMap<String, String>) e;
+                    } else {
+                        throw new IllegalArgumentException("Invalid element type");
+                    }
+                })
+                .toList();
+    }
+
+    private void createConfig() {
         List<ShortcutKey> shortcutKeyList = getShortcutKeys();
         JnotepadConfig.getInstance().setShortcutKeyList(shortcutKeyList);
         for (ShortcutKey shortcutKey : shortcutKeyList) {

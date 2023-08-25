@@ -1,9 +1,6 @@
 package org.jcnc.jnotepad.app.config;
 
-import org.jcnc.jnotepad.init.Config;
-
-import java.util.Properties;
-
+import static org.jcnc.jnotepad.constants.TextConstants.PROPERTIES;
 import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
 
 /**
@@ -14,10 +11,8 @@ import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
 public class GlobalConfig {
 
     private static final GlobalConfig APP_GLOBAL_CONFIG = new GlobalConfig();
-    private final Properties properties;
 
     private GlobalConfig() {
-        properties = new Config().readPropertiesFromFile();
     }
 
     /**
@@ -26,12 +21,12 @@ public class GlobalConfig {
      * @return true, 自动换行；false，不自动换行
      */
     public boolean getAutoLineConfig() {
-        return Boolean.parseBoolean(properties.getProperty(TEXT_WRAP, "true"));
+        return Boolean.parseBoolean(PROPERTIES.getProperty(TEXT_WRAP, "true"));
     }
 
     public void setAutoLineConfig(boolean isAutoLine) {
         String autoLineConfig = String.valueOf(isAutoLine);
-        properties.setProperty(TEXT_WRAP, autoLineConfig);
+        PROPERTIES.setProperty(TEXT_WRAP, autoLineConfig);
     }
 
     public static GlobalConfig getConfig() {

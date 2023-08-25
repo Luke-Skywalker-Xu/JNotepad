@@ -12,7 +12,7 @@ module org.jcnc.jnotepad {
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
     requires com.ibm.icu;
-
+    exports org.jcnc.jnotepad.init;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;

@@ -47,7 +47,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             // 如果该文件是配置文件则刷新快捷键
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 初始化快捷键
-                View.getInstance().initShortcutKey(new LoadShortcutKeyConfig());
+                View.getInstance().initJnotepadConfig(new LoadShortcutKeyConfig());
                 logger.info("已刷新快捷键!");
             }
         }
