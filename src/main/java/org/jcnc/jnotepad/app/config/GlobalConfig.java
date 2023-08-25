@@ -1,7 +1,5 @@
 package org.jcnc.jnotepad.app.config;
 
-import static org.jcnc.jnotepad.constants.TextConstants.PROPERTIES;
-import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
 
 /**
  * 内存中，运行过程中的全局配置项
@@ -11,6 +9,7 @@ import static org.jcnc.jnotepad.constants.TextConstants.TEXT_WRAP;
 public class GlobalConfig {
 
     private static final GlobalConfig APP_GLOBAL_CONFIG = new GlobalConfig();
+    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
 
     private GlobalConfig() {
     }
@@ -21,12 +20,12 @@ public class GlobalConfig {
      * @return true, 自动换行；false，不自动换行
      */
     public boolean getAutoLineConfig() {
-        return Boolean.parseBoolean(PROPERTIES.getProperty(TEXT_WRAP, "true"));
+        return Boolean.parseBoolean(localizationConfig.getTextWrap());
     }
 
     public void setAutoLineConfig(boolean isAutoLine) {
         String autoLineConfig = String.valueOf(isAutoLine);
-        PROPERTIES.setProperty(TEXT_WRAP, autoLineConfig);
+        localizationConfig.setTextWrap(autoLineConfig);
     }
 
     public static GlobalConfig getConfig() {

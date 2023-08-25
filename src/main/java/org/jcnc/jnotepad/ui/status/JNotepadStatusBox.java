@@ -4,12 +4,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
-
-import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
  * 状态栏组件封装。
@@ -21,27 +20,31 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
 public class JNotepadStatusBox extends HBox {
 
     private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
-
+    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     /**
      * 字数统计及光标
      */
-    private final Label statusLabel;
+    private Label statusLabel;
 
     /**
      * 显示文本编码
      */
-    private final Label enCodingLabel;
+    private Label enCodingLabel;
 
     private JNotepadStatusBox() {
+        initStatusBox();
+    }
+
+    public void initStatusBox() {
+        this.getChildren().clear();
         // 创建状态栏
-        statusLabel = new Label(ROW + "：1 \t" + COLUMN + "：1 \t" + WORD_COUNT + "：0 ");
+        statusLabel = new Label(localizationConfig.getRow() + "：1 \t" + localizationConfig.getColumn() + "：1 \t" + localizationConfig.getWordCount() + "：0 ");
         // 创建新的标签以显示编码信息
         enCodingLabel = new Label();
-
+        updateEncodingLabel();
         this.getChildren().add(statusLabel);
         this.getChildren().add(enCodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));
-
     }
 
     public static JNotepadStatusBox getInstance() {
@@ -61,7 +64,7 @@ public class JNotepadStatusBox extends HBox {
         if (encoding == null) {
             encoding = Charset.defaultCharset().name();
         }
-        this.enCodingLabel.setText("\t" + ENCODE + ": " + encoding);
+        this.enCodingLabel.setText("\t" + localizationConfig.getEncode() + ": " + encoding);
     }
 
     /**
@@ -77,7 +80,7 @@ public class JNotepadStatusBox extends HBox {
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());
         int length = textArea.getLength();
-        this.statusLabel.setText(ROW + ": " + row + " \t" + COLUMN + ": " + column + " \t" + WORD_COUNT + ": " + length);
+        this.statusLabel.setText(localizationConfig.getRow() + ": " + row + " \t" + localizationConfig.getColumn() + ": " + column + " \t" + localizationConfig.getWordCount() + ": " + length);
     }
 
     /**

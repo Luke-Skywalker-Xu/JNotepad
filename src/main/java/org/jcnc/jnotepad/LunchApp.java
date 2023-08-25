@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.LoadJnotepadConfig;
 import org.jcnc.jnotepad.app.config.LoadLanguageConfig;
 import org.jcnc.jnotepad.app.config.LoadShortcutKeyConfig;
+import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -22,7 +23,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.jcnc.jnotepad.constants.TextConstants.TITLE;
+
 
 /**
  * 启动程序
@@ -34,19 +35,19 @@ public class LunchApp extends Application {
      * 线程池
      */
     private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
-
+    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     Controller controller = Controller.getInstance();
     Scene scene;
     /**
      * 配置文件数组
      */
-    static List<LoadJnotepadConfig> loadJnotepadConfigs = new ArrayList<>();
+    static List<LoadJnotepadConfig<?>> loadJnotepadConfigs = new ArrayList<>();
 
     static {
-        // 快捷键配置文件
-        loadJnotepadConfigs.add(new LoadShortcutKeyConfig());
         // 语言配置文件
         loadJnotepadConfigs.add(new LoadLanguageConfig());
+        // 快捷键配置文件
+        loadJnotepadConfigs.add(new LoadShortcutKeyConfig());
     }
 
     @Override
@@ -69,16 +70,16 @@ public class LunchApp extends Application {
                 Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
             }
         });
-        primaryStage.setTitle(TITLE);
+        ViewManager viewManager = ViewManager.getInstance(scene);
+        viewManager.initScreen(scene);
+        // 加载配置文件
+        View.getInstance().initJnotepadConfigs(loadJnotepadConfigs);
+        primaryStage.setTitle(localizationConfig.getTitle());
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
         primaryStage.show();
-        ViewManager viewManager = ViewManager.getInstance(scene);
-        viewManager.initScreen(scene);
-        // 初始化快捷键
-        View.getInstance().initJnotepadConfigs(loadJnotepadConfigs);
     }
 
     @Override

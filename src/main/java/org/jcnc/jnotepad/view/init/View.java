@@ -21,8 +21,8 @@ public class View {
      * @param loadJnotepadConfigs 需要加载的配置文件数组
      * @since 2023/8/24 15:29
      */
-    public void initJnotepadConfigs(List<LoadJnotepadConfig> loadJnotepadConfigs) {
-        for (LoadJnotepadConfig loadJnotepadConfig : loadJnotepadConfigs) {
+    public void initJnotepadConfigs(List<LoadJnotepadConfig<?>> loadJnotepadConfigs) {
+        for (LoadJnotepadConfig<?> loadJnotepadConfig : loadJnotepadConfigs) {
             initJnotepadConfig(loadJnotepadConfig);
         }
     }
@@ -33,7 +33,7 @@ public class View {
      * @param loadJnotepadConfig 配置文件
      * @since 2023/8/24 15:29
      */
-    public void initJnotepadConfig(LoadJnotepadConfig loadJnotepadConfig) {
+    public void initJnotepadConfig(LoadJnotepadConfig<?> loadJnotepadConfig) {
         loadJnotepadConfig.load();
     }
 

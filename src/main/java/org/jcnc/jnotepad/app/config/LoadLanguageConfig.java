@@ -1,31 +1,41 @@
 package org.jcnc.jnotepad.app.config;
 
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.List;
+import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
+import org.slf4j.Logger;
 
-import static org.jcnc.jnotepad.constants.TextConstants.CONFIG;
-import static org.jcnc.jnotepad.constants.TextConstants.LANGUAGE_MAP;
+import java.io.InputStream;
+
+import static org.jcnc.jnotepad.constants.TextConstants.LANGUAGE_FILE_MAP;
 
 /**
  * 加载语言配置文件
  *
  * @author gewuyou
- * @see [相关类/方法]
  */
-public class LoadLanguageConfig extends LoadJnotepadConfig {
+public class LoadLanguageConfig extends LoadJnotepadConfig<String> {
+    Logger log = LogUtil.getLogger(this.getClass());
+
+    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
+
+    @Override
+    protected String parseConfig(InputStream inputStream) {
+        return getConfigJson(inputStream).get("language").asText();
+    }
+
     @Override
     protected void loadConfig(InputStream inputStream) {
-        List<LinkedHashMap<String, String>> configData = parseConfig(inputStream);
-        String language = "";
-        for (LinkedHashMap<String, String> config : configData) {
-            language = config.get("language");
-            if (language != null) {
-                break;
-            }
-        }
+        log.info("正在加载语言配置文件...");
+        String language = parseConfig(inputStream);
         if (!"".equals(language) && language != null) {
-            CONFIG.setLanguagePackName(LANGUAGE_MAP.get(language));
+            log.info("正在加载语言包:{}", language);
+            localizationConfig.setLanguagePackName(LANGUAGE_FILE_MAP.get(language));
+            // 刷新语言包
+            localizationConfig.initLocalizationConfig();
+            JNotepadMenuBar jNotepadMenuBar = JNotepadMenuBar.getMenuBar();
+            // 刷新菜单栏
+            jNotepadMenuBar.initMenuBar();
+            jNotepadMenuBar.toggleLanguageCheck(language);
         }
     }
 }
