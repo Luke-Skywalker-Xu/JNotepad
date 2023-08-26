@@ -287,7 +287,6 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void setCurrentLanguage(String language) throws JsonProcessingException {
         boolean flag = false;
-        ObjectNode json = JsonUtil.OBJECT_MAPPER.createObjectNode();
         // 获取本地配置文件
         logger.info("尝试读取本地配置文件!");
         StringBuilder jsonData = new StringBuilder();
@@ -300,30 +299,12 @@ public class JNotepadMenuBar extends MenuBar {
             logger.error("读取失败,配置文件错误或不存在配置文件!");
             flag = true;
         }
+        ObjectNode json = null;
+
         if (!flag) {
-            ObjectMapper objectMapper = JsonUtil.OBJECT_MAPPER;
-            JsonNode jsonNode;
-            try {
-                jsonNode = objectMapper.readTree(jsonData.toString());
-            } catch (JsonProcessingException e) {
-                throw new AppException(e.getMessage());
-            }
-            final ObjectNode finalJson = json;
-            jsonNode.fields().forEachRemaining(entry -> {
-                String key = entry.getKey();
-                JsonNode childNode = entry.getValue();
-                if (!LOWER_LANGUAGE.equals(key)) {
-                    if (childNode.isArray()) {
-                        ArrayNode arrayNode = finalJson.putArray(key);
-                        arrayNode.add(childNode.toString());
-                    } else {
-                        finalJson.put(key, childNode.toString());
-                    }
-                }
-            });
+            json = JsonUtil.OBJECT_MAPPER.readValue(jsonData.toString(), ObjectNode.class);
             logger.info("读取本地配置文件成功!");
-        }
-        if (flag) {
+        } else {
             logger.info("获取默认内置配置文件!");
             // 如果读取本地失败则获取默认配置文件
             json = createShortcutKeyJson();
