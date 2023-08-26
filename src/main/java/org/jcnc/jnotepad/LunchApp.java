@@ -14,6 +14,7 @@ import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
 import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.view.init.View;
 import org.jcnc.jnotepad.view.manager.ViewManager;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 
 /**
@@ -34,7 +34,8 @@ public class LunchApp extends Application {
     /**
      * 线程池
      */
-    private static final ExecutorService THREAD_POOL = Executors.newCachedThreadPool();
+    private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
+
     LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     Controller controller = Controller.getInstance();
     Scene scene;
@@ -71,7 +72,7 @@ public class LunchApp extends Application {
 
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();
-        THREAD_POOL.execute(() -> {
+        threadPool.execute(() -> {
             LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
             if (!Objects.isNull(textArea)) {
                 Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
@@ -92,7 +93,7 @@ public class LunchApp extends Application {
     @Override
     public void stop() {
         // 关闭线程池
-        THREAD_POOL.shutdownNow();
+        threadPool.shutdownNow();
     }
 
     public static void main(String[] args) {

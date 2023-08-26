@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -17,6 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
+
+import static org.jcnc.jnotepad.manager.ThreadPoolManager.threadContSelfSubtracting;
 
 /**
  * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
@@ -151,14 +154,21 @@ public class Controller implements ControllerInterface {
      * @param file 文件对象
      * @return 打开文件的任务
      */
-    private Task<Void> createOpenFileTask(File file) {
-        return new Task<>() {
+    public Task<Void> createOpenFileTask(File file) {
+        Task<Void> openFileTask = new Task<>() {
             @Override
             protected Void call() {
                 getText(file);
                 return null;
             }
+
         };
+        // 设置任务成功完成时的处理逻辑
+        openFileTask.setOnSucceeded(e -> threadContSelfSubtracting());
+
+        // 设置任务失败时的处理逻辑
+        openFileTask.setOnFailed(e -> threadContSelfSubtracting());
+        return openFileTask;
     }
 
     /**
@@ -167,9 +177,7 @@ public class Controller implements ControllerInterface {
      * @param file 文件对象
      */
     private void openFile(File file) {
-        Task<Void> openFileTask = createOpenFileTask(file);
-        Thread thread = new Thread(openFileTask);
-        thread.start();
+        ThreadPoolManager.getThreadPool().submit(createOpenFileTask(file));
     }
 
 }
