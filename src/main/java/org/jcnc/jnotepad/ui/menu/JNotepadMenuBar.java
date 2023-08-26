@@ -3,6 +3,8 @@ package org.jcnc.jnotepad.ui.menu;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -11,13 +13,12 @@ import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.exception.AppException;
+import org.jcnc.jnotepad.tool.JsonUtil;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.init.View;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 
 import java.io.*;
@@ -278,10 +279,10 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void setCurrentLanguage(String language) {
         boolean flag = false;
-        JSONObject json = new JSONObject();
+        ObjectNode json = JsonUtil.OBJECT_MAPPER.createObjectNode();
         // 获取本地配置文件
         logger.info("尝试读取本地配置文件!");
-        StringBuffer jsonData = new StringBuffer();
+        StringBuilder jsonData = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(CONFIG_NAME)))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -292,20 +293,21 @@ public class JNotepadMenuBar extends MenuBar {
             flag = true;
         }
         if (!flag) {
-            ObjectMapper objectMapper = new ObjectMapper();
+            ObjectMapper objectMapper = JsonUtil.OBJECT_MAPPER;
             JsonNode jsonNode;
             try {
                 jsonNode = objectMapper.readTree(jsonData.toString());
             } catch (JsonProcessingException e) {
                 throw new AppException(e.getMessage());
             }
-            JSONObject finalJson = json;
+            final ObjectNode finalJson = json;
             jsonNode.fields().forEachRemaining(entry -> {
                 String key = entry.getKey();
                 JsonNode childNode = entry.getValue();
                 if (!LOWER_LANGUAGE.equals(key)) {
                     if (childNode.isArray()) {
-                        finalJson.put(key, new JSONArray(childNode.toString()));
+                        ArrayNode arrayNode = finalJson.putArray(key);
+                        arrayNode.add(childNode.toString());
                     } else {
                         finalJson.put(key, childNode.toString());
                     }
@@ -320,7 +322,8 @@ public class JNotepadMenuBar extends MenuBar {
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_NAME, Charset.forName(UTF8.name())))) {
             // 更新语言值为 language 并写回本地
-            writer.write(json.put(LOWER_LANGUAGE, language).toString(4));
+            json.put(LOWER_LANGUAGE, language);
+            writer.write(JsonUtil.toJsonString(json));
             // 刷新文件
             writer.flush();
             // 重新加载语言包和快捷键
