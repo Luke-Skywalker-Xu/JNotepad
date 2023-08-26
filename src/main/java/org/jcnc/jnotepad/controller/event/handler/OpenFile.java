@@ -1,9 +1,10 @@
 package org.jcnc.jnotepad.controller.event.handler;
 
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.manager.ThreadPoolManager;
 
 import java.io.File;
 
@@ -15,7 +16,7 @@ import java.io.File;
  *
  * @author 许轲
  */
-public class OpenFile extends OpenHandler {
+public class OpenFile implements EventHandler<ActionEvent> {
     /**
      * 处理打开文件事件。
      *
@@ -30,11 +31,8 @@ public class OpenFile extends OpenHandler {
         // 显示文件选择对话框，并获取选中的文件
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            // 创建打开文件的任务
-            Task<Void> openFileTask = getVoidTask(controller, file);
-            // 创建并启动线程执行任务
-            Thread thread = new Thread(openFileTask);
-            thread.start();
+            // 创建打开文件的任务并启动线程执行任务
+            ThreadPoolManager.getThreadPool().submit(controller.createOpenFileTask(file));
         }
     }
 }

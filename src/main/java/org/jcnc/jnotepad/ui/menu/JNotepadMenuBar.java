@@ -256,13 +256,13 @@ public class JNotepadMenuBar extends MenuBar {
             // 设置窗口为置顶
             primaryStage.setAlwaysOnTop(after);
         });
-        englishItem.setOnAction(new OpenHandler() {
+        englishItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setCurrentLanguage(ENGLISH);
             }
         });
-        chineseItem.setOnAction(new OpenHandler() {
+        chineseItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setCurrentLanguage(CHINESE);
