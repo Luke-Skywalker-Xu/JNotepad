@@ -1,10 +1,12 @@
 package org.jcnc.jnotepad.constants;
 
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.jcnc.jnotepad.tool.JsonUtil;
 
 import java.util.Map;
+
 /**
  * 文本常量
  * <p>
@@ -74,56 +76,57 @@ public class TextConstants {
     /**
      * 内置配置文件
      */
-    public static final String JNOTEPAD_CONFIG = createShortcutKeyJson().toString(4);
+    public static final String JNOTEPAD_CONFIG = createShortcutKeyJsonString();
 
-    public static JSONObject createShortcutKeyJson() {
-        JSONObject json = new JSONObject();
+    private static String createShortcutKeyJsonString() {
+        return JsonUtil.toJsonString(createShortcutKeyJson());
+    }
 
+    public static ObjectNode createShortcutKeyJson() {
+        ObjectNode json = JsonUtil.OBJECT_MAPPER.createObjectNode();
         json.put(LOWER_LANGUAGE, CHINESE);
 
-        JSONArray shortcutKeyArray = new JSONArray();
+        ArrayNode shortcutKeyArray = json.putArray("shortcutKey");
 
-        JSONObject newItem = new JSONObject();
+        ObjectNode newItem = json.objectNode();
         newItem.put(BUTTON_NAME, "newItem");
         newItem.put(SHORTCUT_KEY_VALUE, "ctrl+n");
-        shortcutKeyArray.put(newItem);
+        shortcutKeyArray.add(newItem);
 
-        JSONObject openItem = new JSONObject();
+        ObjectNode openItem = json.objectNode();
         openItem.put(BUTTON_NAME, "openItem");
         openItem.put(SHORTCUT_KEY_VALUE, "ctrl+o");
-        shortcutKeyArray.put(openItem);
+        shortcutKeyArray.add(openItem);
 
-        JSONObject saveItem = new JSONObject();
+        ObjectNode saveItem = json.objectNode();
         saveItem.put(BUTTON_NAME, "saveItem");
         saveItem.put(SHORTCUT_KEY_VALUE, "ctrl+s");
-        shortcutKeyArray.put(saveItem);
+        shortcutKeyArray.add(saveItem);
 
-        JSONObject saveAsItem = new JSONObject();
+        ObjectNode saveAsItem = json.objectNode();
         saveAsItem.put(BUTTON_NAME, "saveAsItem");
         saveAsItem.put(SHORTCUT_KEY_VALUE, "ctrl+alt+s");
-        shortcutKeyArray.put(saveAsItem);
+        shortcutKeyArray.add(saveAsItem);
 
-        JSONObject lineFeedItem = new JSONObject();
+        ObjectNode lineFeedItem = json.objectNode();
         lineFeedItem.put(BUTTON_NAME, "lineFeedItem");
         lineFeedItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.put(lineFeedItem);
+        shortcutKeyArray.add(lineFeedItem);
 
-        JSONObject openConfigItem = new JSONObject();
+        ObjectNode openConfigItem = json.objectNode();
         openConfigItem.put(BUTTON_NAME, "openConfigItem");
         openConfigItem.put(SHORTCUT_KEY_VALUE, "alt+s");
-        shortcutKeyArray.put(openConfigItem);
+        shortcutKeyArray.add(openConfigItem);
 
-        JSONObject addItem = new JSONObject();
+        ObjectNode addItem = json.objectNode();
         addItem.put(BUTTON_NAME, "addItem");
         addItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.put(addItem);
+        shortcutKeyArray.add(addItem);
 
-        JSONObject countItem = new JSONObject();
+        ObjectNode countItem = json.objectNode();
         countItem.put(BUTTON_NAME, "countItem");
         countItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.put(countItem);
-
-        json.put("shortcutKey", shortcutKeyArray);
+        shortcutKeyArray.add(countItem);
 
         return json;
     }
