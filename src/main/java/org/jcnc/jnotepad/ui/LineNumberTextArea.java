@@ -52,14 +52,10 @@ public class LineNumberTextArea extends BorderPane {
 
     private void initListeners() {
         // 当主要文本区域的垂直滚动位置发生变化时，使行号文本区域的滚动位置保持一致
-        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
-            lineNumberArea.setScrollTop(mainTextArea.getScrollTop());
-        });
+        mainTextArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> lineNumberArea.setScrollTop(mainTextArea.getScrollTop()));
 
         // 当行号文本区域的垂直滚动位置发生变化时，使主要文本区域的滚动位置保持一致
-        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> {
-            mainTextArea.setScrollTop(lineNumberArea.getScrollTop());
-        });
+        lineNumberArea.scrollTopProperty().addListener((observable, oldValue, newValue) -> mainTextArea.setScrollTop(lineNumberArea.getScrollTop()));
 
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
 
@@ -79,14 +75,16 @@ public class LineNumberTextArea extends BorderPane {
      */
     public void save() {
         JNotepadTab tab = JNotepadTabPane.getInstance().getSelected();
-        File file = (File) tab.getUserData();
-        String newValue = this.mainTextArea.getText();
-        if (file != null) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, tab.getCharset()))) {
-                writer.write(newValue);
-                LogUtil.getLogger(this.getClass()).info("正在自动保存---");
-            } catch (IOException ignored) {
-                LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
+        if (tab != null) {
+            File file = (File) tab.getUserData();
+            String newValue = this.mainTextArea.getText();
+            if (file != null) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, tab.getCharset()))) {
+                    writer.write(newValue);
+                    LogUtil.getLogger(this.getClass()).info("正在自动保存---");
+                } catch (IOException ignored) {
+                    LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
+                }
             }
         }
     }
@@ -137,7 +135,7 @@ public class LineNumberTextArea extends BorderPane {
 
         // 恢复之前的滚动位置
         mainTextArea.setScrollTop(mainTextAreaScrollTop);
-        lineNumberArea.setScrollTop(lineNumberAreaScrollTop-8);
+        lineNumberArea.setScrollTop(lineNumberAreaScrollTop - 8);
     }
 
     public TextArea getMainTextArea() {

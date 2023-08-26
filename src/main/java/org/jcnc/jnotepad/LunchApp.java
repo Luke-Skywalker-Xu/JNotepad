@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad;
 
+
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -55,7 +56,6 @@ public class LunchApp extends Application {
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
-
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());

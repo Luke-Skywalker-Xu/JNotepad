@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.app.config;
 
+import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.slf4j.Logger;
 
@@ -11,8 +12,9 @@ import static org.jcnc.jnotepad.constants.AppConstants.APP_NAME;
 import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
- * 本地化配置文件
- *
+ * 本地化配置文件<br>
+ * 注意：该配置文件必须先于快捷键配置文件加载
+ * @see LunchApp
  * @author gewuyou
  */
 public class LocalizationConfig {

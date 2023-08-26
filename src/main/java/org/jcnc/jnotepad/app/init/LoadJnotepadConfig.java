@@ -74,7 +74,7 @@ public abstract class LoadJnotepadConfig<T> {
      * 解析配置文件
      *
      * @param inputStream 输入流
-     * @return java.util.List<java.util.LinkedHashMap < java.lang.String, java.lang.String>>
+     * @return T
      * @since 2023/8/25 15:18
      */
     protected abstract T parseConfig(InputStream inputStream);
