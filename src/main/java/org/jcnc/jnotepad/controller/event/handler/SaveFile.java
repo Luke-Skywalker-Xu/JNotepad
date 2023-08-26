@@ -2,8 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
-import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
+import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
@@ -47,12 +46,9 @@ public class SaveFile implements EventHandler<ActionEvent> {
             selectedTab.save();
             // 如果该文件是配置文件则刷新快捷键
             if (CONFIG_NAME.equals(selectedTab.getText())) {
-
-                // 刷新语言包
-                View.getInstance().initJnotepadConfig(new LoadLanguageConfig());
+                // 重新加载语言包和快捷键
+                View.getInstance().initJnotepadConfigs(LunchApp.getLocalizationConfigs());
                 logger.info("已刷新语言包!");
-                // 初始化快捷键
-                View.getInstance().initJnotepadConfig(new LoadShortcutKeyConfig());
                 logger.info("已刷新快捷键!");
             }
         }
