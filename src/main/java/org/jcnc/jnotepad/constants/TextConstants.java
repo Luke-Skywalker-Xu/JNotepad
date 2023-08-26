@@ -2,7 +2,8 @@ package org.jcnc.jnotepad.constants;
 
 
 import java.util.Map;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 /**
  * 文本常量
  * <p>
@@ -65,44 +66,57 @@ public class TextConstants {
     /**
      * 内置配置文件
      */
-    public static final String JNOTEPAD_CONFIG =
-            """
-                    {
-                               "language":"chinese",
-                               "shortcutKey":[
-                                 {
-                                       "buttonName": "newItem",
-                                       "shortcutKeyValue": "ctrl+n"
-                                 },
-                                 {
-                                       "buttonName": "openItem",
-                                       "shortcutKeyValue": "ctrl+o"
-                                 },
-                                 {
-                                      "buttonName": "saveItem",
-                                      "shortcutKeyValue": "ctrl+s"
-                                 },
-                                 {
-                                       "buttonName": "saveAsItem",
-                                       "shortcutKeyValue": "ctrl+alt+s"
-                                 },
-                                 {
-                                       "buttonName": "lineFeedItem",
-                                       "shortcutKeyValue": ""
-                                 },
-                                 {
-                                       "buttonName": "openConfigItem",
-                                       "shortcutKeyValue": "alt+s"
-                                 },
-                                 {
-                                       "buttonName": "addItem",
-                                       "shortcutKeyValue": ""
-                                 },
-                                 {
-                                       "buttonName": "countItem",
-                                       "shortcutKeyValue": ""
-                                 }
-                               ]
-                    }
-                    """;
+    public static final String JNOTEPAD_CONFIG = createShortcutKeyJson().toString(4);
+
+    public static JSONObject createShortcutKeyJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("language", "chinese");
+
+        JSONArray shortcutKeyArray = new JSONArray();
+
+        JSONObject newItem = new JSONObject();
+        newItem.put("buttonName", "newItem");
+        newItem.put("shortcutKeyValue", "ctrl+n");
+        shortcutKeyArray.put(newItem);
+
+        JSONObject openItem = new JSONObject();
+        openItem.put("buttonName", "openItem");
+        openItem.put("shortcutKeyValue", "ctrl+o");
+        shortcutKeyArray.put(openItem);
+
+        JSONObject saveItem = new JSONObject();
+        saveItem.put("buttonName", "saveItem");
+        saveItem.put("shortcutKeyValue", "ctrl+s");
+        shortcutKeyArray.put(saveItem);
+
+        JSONObject saveAsItem = new JSONObject();
+        saveAsItem.put("buttonName", "saveAsItem");
+        saveAsItem.put("shortcutKeyValue", "ctrl+alt+s");
+        shortcutKeyArray.put(saveAsItem);
+
+        JSONObject lineFeedItem = new JSONObject();
+        lineFeedItem.put("buttonName", "lineFeedItem");
+        lineFeedItem.put("shortcutKeyValue", "");
+        shortcutKeyArray.put(lineFeedItem);
+
+        JSONObject openConfigItem = new JSONObject();
+        openConfigItem.put("buttonName", "openConfigItem");
+        openConfigItem.put("shortcutKeyValue", "alt+s");
+        shortcutKeyArray.put(openConfigItem);
+
+        JSONObject addItem = new JSONObject();
+        addItem.put("buttonName", "addItem");
+        addItem.put("shortcutKeyValue", "");
+        shortcutKeyArray.put(addItem);
+
+        JSONObject countItem = new JSONObject();
+        countItem.put("buttonName", "countItem");
+        countItem.put("shortcutKeyValue", "");
+        shortcutKeyArray.put(countItem);
+
+        json.put("shortcutKey", shortcutKeyArray);
+
+        return json;
+    }
 }

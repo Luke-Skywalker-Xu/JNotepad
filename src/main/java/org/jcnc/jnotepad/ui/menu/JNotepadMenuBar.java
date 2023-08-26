@@ -10,13 +10,13 @@ import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
-import static org.jcnc.jnotepad.constants.TextConstants.ENGLISH;
+import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
  * 封装菜单栏组件。
@@ -246,10 +246,20 @@ public class JNotepadMenuBar extends MenuBar {
             // 设置窗口为置顶
             primaryStage.setAlwaysOnTop(after);
         });
-        // todo 切换语言并将语言修改设置回本地
+        // todo 切换语言并将语言修改设置回本地,
+        //  1.只更新json的language为english,没有保存
         englishItem.setOnAction(new OpenHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
+                // 获取当前的语言值
+                JSONObject json = createShortcutKeyJson();
+
+                // 更新语言值为 "english"
+                json.put("language", "english");
+
+                // 打印更新后的配置
+                System.out.println(json.toString(4)); // 使用四个空格缩进
 
             }
         });
