@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.view.init;
 
-import org.jcnc.jnotepad.app.config.LoadJnotepadConfig;
+import org.jcnc.jnotepad.app.init.LoadJnotepadConfig;
 
 import java.util.List;
 
