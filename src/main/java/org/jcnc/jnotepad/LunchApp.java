@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad;
 
+
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -7,10 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.config.LoadJnotepadConfig;
-import org.jcnc.jnotepad.app.config.LoadLanguageConfig;
-import org.jcnc.jnotepad.app.config.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.app.init.LoadJnotepadConfig;
+import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
+import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 
 
 /**
@@ -53,11 +53,9 @@ public class LunchApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
-
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         String icon = AppConstants.APP_ICON;
-
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());

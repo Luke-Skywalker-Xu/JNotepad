@@ -2,8 +2,8 @@ package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.app.config.LoadLanguageConfig;
-import org.jcnc.jnotepad.app.config.LoadShortcutKeyConfig;
+import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
+import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;

@@ -1,5 +1,6 @@
-package org.jcnc.jnotepad.app.config;
+package org.jcnc.jnotepad.app.init;
 
+import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;

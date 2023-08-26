@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.app.config;
+package org.jcnc.jnotepad.app.init;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.scene.control.MenuItem;
