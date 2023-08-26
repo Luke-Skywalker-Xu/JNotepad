@@ -260,13 +260,21 @@ public class JNotepadMenuBar extends MenuBar {
         englishItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setCurrentLanguage(ENGLISH);
+                try {
+                    setCurrentLanguage(ENGLISH);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
         chineseItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setCurrentLanguage(CHINESE);
+                try {
+                    setCurrentLanguage(CHINESE);
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
@@ -277,7 +285,7 @@ public class JNotepadMenuBar extends MenuBar {
      * @param language 要设置的语言
      * @since 2023/8/26 16:16
      */
-    private void setCurrentLanguage(String language) {
+    private void setCurrentLanguage(String language) throws JsonProcessingException {
         boolean flag = false;
         ObjectNode json = JsonUtil.OBJECT_MAPPER.createObjectNode();
         // 获取本地配置文件

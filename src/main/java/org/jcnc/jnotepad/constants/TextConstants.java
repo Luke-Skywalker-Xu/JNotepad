@@ -1,8 +1,12 @@
 package org.jcnc.jnotepad.constants;
 
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.jcnc.jnotepad.json.DataGenerator;
+import org.jcnc.jnotepad.json.MyData;
 import org.jcnc.jnotepad.tool.JsonUtil;
 
 import java.util.Map;
@@ -76,58 +80,32 @@ public class TextConstants {
     /**
      * 内置配置文件
      */
-    public static final String JNOTEPAD_CONFIG = createShortcutKeyJsonString();
+    public static final String JNOTEPAD_CONFIG;
 
-    private static String createShortcutKeyJsonString() {
+    static {
+        try {
+            JNOTEPAD_CONFIG = createShortcutKeyJsonString();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String createShortcutKeyJsonString() throws JsonProcessingException {
         return JsonUtil.toJsonString(createShortcutKeyJson());
     }
 
-    public static ObjectNode createShortcutKeyJson() {
-        ObjectNode json = JsonUtil.OBJECT_MAPPER.createObjectNode();
-        json.put(LOWER_LANGUAGE, CHINESE);
+    public static ObjectNode createShortcutKeyJson() throws JsonProcessingException {
+        MyData myData = DataGenerator.generateMyData();
 
-        ArrayNode shortcutKeyArray = json.putArray("shortcutKey");
+        // 创建 ObjectMapper 和 ObjectWriter 来将对象转换为 JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
 
-        ObjectNode newItem = json.objectNode();
-        newItem.put(BUTTON_NAME, "newItem");
-        newItem.put(SHORTCUT_KEY_VALUE, "ctrl+n");
-        shortcutKeyArray.add(newItem);
+        // 将 MyData 对象转换为 JSON 字符串
+        String json = writer.writeValueAsString(myData);
 
-        ObjectNode openItem = json.objectNode();
-        openItem.put(BUTTON_NAME, "openItem");
-        openItem.put(SHORTCUT_KEY_VALUE, "ctrl+o");
-        shortcutKeyArray.add(openItem);
+        // 将 JSON 字符串转换为 ObjectNode 对象
 
-        ObjectNode saveItem = json.objectNode();
-        saveItem.put(BUTTON_NAME, "saveItem");
-        saveItem.put(SHORTCUT_KEY_VALUE, "ctrl+s");
-        shortcutKeyArray.add(saveItem);
-
-        ObjectNode saveAsItem = json.objectNode();
-        saveAsItem.put(BUTTON_NAME, "saveAsItem");
-        saveAsItem.put(SHORTCUT_KEY_VALUE, "ctrl+alt+s");
-        shortcutKeyArray.add(saveAsItem);
-
-        ObjectNode lineFeedItem = json.objectNode();
-        lineFeedItem.put(BUTTON_NAME, "lineFeedItem");
-        lineFeedItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.add(lineFeedItem);
-
-        ObjectNode openConfigItem = json.objectNode();
-        openConfigItem.put(BUTTON_NAME, "openConfigItem");
-        openConfigItem.put(SHORTCUT_KEY_VALUE, "alt+s");
-        shortcutKeyArray.add(openConfigItem);
-
-        ObjectNode addItem = json.objectNode();
-        addItem.put(BUTTON_NAME, "addItem");
-        addItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.add(addItem);
-
-        ObjectNode countItem = json.objectNode();
-        countItem.put(BUTTON_NAME, "countItem");
-        countItem.put(SHORTCUT_KEY_VALUE, "");
-        shortcutKeyArray.add(countItem);
-
-        return json;
+        return objectMapper.readValue(json, ObjectNode.class);
     }
 }
