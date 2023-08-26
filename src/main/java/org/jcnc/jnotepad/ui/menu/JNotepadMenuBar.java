@@ -1,21 +1,32 @@
 package org.jcnc.jnotepad.ui.menu;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.controller.event.handler.*;
+import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.view.init.View;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.fasterxml.jackson.core.JsonEncoding.UTF8;
+import static org.jcnc.jnotepad.constants.AppConstants.CONFIG_NAME;
 import static org.jcnc.jnotepad.constants.TextConstants.*;
 
 /**
@@ -24,7 +35,6 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
  * @author songdragon
  */
 public class JNotepadMenuBar extends MenuBar {
-
 
     /**
      * 标签页布局组件封装。
@@ -246,29 +256,80 @@ public class JNotepadMenuBar extends MenuBar {
             // 设置窗口为置顶
             primaryStage.setAlwaysOnTop(after);
         });
-        // todo 切换语言并将语言修改设置回本地,
-        //  1.只更新json的language为english,没有保存
         englishItem.setOnAction(new OpenHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
-                // 获取当前的语言值
-                JSONObject json = createShortcutKeyJson();
-
-                // 更新语言值为 "english"
-                json.put("language", "english");
-
-                // 打印更新后的配置
-                System.out.println(json.toString(4)); // 使用四个空格缩进
-
+                setCurrentLanguage(ENGLISH);
             }
         });
         chineseItem.setOnAction(new OpenHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
+                setCurrentLanguage(CHINESE);
             }
         });
+    }
+
+    /**
+     * 设置当前语言<br>
+     *
+     * @param language 要设置的语言
+     * @since 2023/8/26 16:16
+     */
+    private void setCurrentLanguage(String language) {
+        boolean flag = false;
+        JSONObject json = new JSONObject();
+        // 获取本地配置文件
+        logger.info("尝试读取本地配置文件!");
+        StringBuffer jsonData = new StringBuffer();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(CONFIG_NAME)))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonData.append(line);
+            }
+        } catch (IOException e) {
+            logger.error("读取失败,配置文件错误或不存在配置文件!");
+            flag = true;
+        }
+        if (!flag) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode;
+            try {
+                jsonNode = objectMapper.readTree(jsonData.toString());
+            } catch (JsonProcessingException e) {
+                throw new AppException(e.getMessage());
+            }
+            JSONObject finalJson = json;
+            jsonNode.fields().forEachRemaining(entry -> {
+                String key = entry.getKey();
+                JsonNode childNode = entry.getValue();
+                if (!LOWER_LANGUAGE.equals(key)) {
+                    if (childNode.isArray()) {
+                        finalJson.put(key, new JSONArray(childNode.toString()));
+                    } else {
+                        finalJson.put(key, childNode.toString());
+                    }
+                }
+            });
+            logger.info("读取本地配置文件成功!");
+        }
+        if (flag) {
+            logger.info("获取默认内置配置文件!");
+            // 如果读取本地失败则获取默认配置文件
+            json = createShortcutKeyJson();
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_NAME, Charset.forName(UTF8.name())))) {
+            // 更新语言值为 language 并写回本地
+            writer.write(json.put(LOWER_LANGUAGE, language).toString(4));
+            // 刷新文件
+            writer.flush();
+            // 重新加载语言包和快捷键
+            View.getInstance().initJnotepadConfigs(LunchApp.getLocalizationConfigs());
+            logger.info("已刷新语言包!");
+            logger.info("已刷新快捷键!");
+        } catch (IOException e) {
+            logger.error("配置文件写入失败,请检查配置文件");
+        }
     }
 
     public Map<String, MenuItem> getItemMap() {

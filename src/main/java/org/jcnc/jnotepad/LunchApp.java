@@ -41,13 +41,22 @@ public class LunchApp extends Application {
     /**
      * 配置文件数组
      */
-    static List<LoadJnotepadConfig<?>> loadJnotepadConfigs = new ArrayList<>();
+    private static final List<LoadJnotepadConfig<?>> LOAD_JNOTEPAD_CONFIGS = new ArrayList<>();
 
     static {
         // 语言配置文件
-        loadJnotepadConfigs.add(new LoadLanguageConfig());
+        LOAD_JNOTEPAD_CONFIGS.add(new LoadLanguageConfig());
         // 快捷键配置文件
-        loadJnotepadConfigs.add(new LoadShortcutKeyConfig());
+        LOAD_JNOTEPAD_CONFIGS.add(new LoadShortcutKeyConfig());
+    }
+
+    /**
+     * 获取配置文件数组
+     *
+     * @since 2023/8/26 16:05
+     */
+    public static List<LoadJnotepadConfig<?>> getLocalizationConfigs() {
+        return LOAD_JNOTEPAD_CONFIGS;
     }
 
     @Override
@@ -71,7 +80,7 @@ public class LunchApp extends Application {
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
         // 加载配置文件
-        View.getInstance().initJnotepadConfigs(loadJnotepadConfigs);
+        View.getInstance().initJnotepadConfigs(LOAD_JNOTEPAD_CONFIGS);
         primaryStage.setTitle(localizationConfig.getTitle());
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
