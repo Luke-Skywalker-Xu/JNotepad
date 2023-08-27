@@ -3,24 +3,18 @@ package org.jcnc.jnotepad;
 
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
-import org.jcnc.jnotepad.app.init.LoadJnotepadConfig;
-import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
-import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.constants.TextConstants;
+import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.view.init.View;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -38,26 +32,6 @@ public class LunchApp extends Application {
     private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
     Controller controller = Controller.getInstance();
     Scene scene;
-    /**
-     * 配置文件数组
-     */
-    private static final List<LoadJnotepadConfig<?>> LOAD_JNOTEPAD_CONFIGS = new ArrayList<>();
-
-    static {
-        // 语言配置文件
-        LOAD_JNOTEPAD_CONFIGS.add(new LoadLanguageConfig());
-        // 快捷键配置文件
-        LOAD_JNOTEPAD_CONFIGS.add(new LoadShortcutKeyConfig());
-    }
-
-    /**
-     * 获取配置文件数组
-     *
-     * @since 2023/8/26 16:05
-     */
-    public static List<LoadJnotepadConfig<?>> getLocalizationConfigs() {
-        return LOAD_JNOTEPAD_CONFIGS;
-    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -69,24 +43,25 @@ public class LunchApp extends Application {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
 
-        // 使用线程池加载关联文件并创建文本区域
-        List<String> rawParameters = getParameters().getRaw();
-        threadPool.execute(() -> {
-            LineNumberTextArea textArea = controller.openAssociatedFileAndCreateTextArea(rawParameters);
-            if (!Objects.isNull(textArea)) {
-                Platform.runLater(() -> controller.updateUiWithNewTextArea(textArea));
-            }
-        });
         ViewManager viewManager = ViewManager.getInstance(scene);
         viewManager.initScreen(scene);
-        // 加载配置文件
-        View.getInstance().initJnotepadConfigs(LOAD_JNOTEPAD_CONFIGS);
+        initUIComponents();
+
+
         UIResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
         primaryStage.show();
+    }
+
+    private void initUIComponents() {
+        LocalizationController.initLocal();
+
+        // 使用线程池加载关联文件并创建文本区域
+        List<String> rawParameters = getParameters().getRaw();
+        controller.openAssociatedFileAndCreateTextArea(rawParameters);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package org.jcnc.jnotepad.controller.event.handler;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import org.jcnc.jnotepad.tool.LogUtil;
-
-import static org.jcnc.jnotepad.tool.FileUtil.saveTab;
 
 
 /**
@@ -17,7 +14,7 @@ import static org.jcnc.jnotepad.tool.FileUtil.saveTab;
  *
  * @author 许轲
  */
-public class SaveAsFile implements EventHandler<ActionEvent> {
+public class SaveAsFile extends SaveFile {
     /**
      * 处理保存文件事件。
      *

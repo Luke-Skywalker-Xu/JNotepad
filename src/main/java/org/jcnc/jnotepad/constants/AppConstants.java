@@ -23,13 +23,4 @@ public class AppConstants {
      */
     public static final String APP_ICON = "/img/icon.png";
 
-    /**
-     * 配置文件名
-     */
-    public static final String CONFIG_NAME = "jnotepadConfig.json";
-    /**
-     * 快捷键
-     */
-    public static final String CONFIG_SHORTCUT_KEY_NAME = "shortcutKey";
-
 }

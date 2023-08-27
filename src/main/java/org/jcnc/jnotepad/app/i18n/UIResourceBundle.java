@@ -6,7 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -63,10 +63,10 @@ public class UIResourceBundle {
      * 重置当前local
      */
     public final void resetLocal() {
-        if (this.currentLocale == LocalizationConfig.getCurrentLocal()) {
+        if (this.currentLocale == LocalizationController.getCurrentLocal()) {
             return;
         }
-        this.currentLocale = LocalizationConfig.getCurrentLocal();
+        this.currentLocale = LocalizationController.getCurrentLocal();
         ResourceBundle resourceBundle = ResourceBundle.getBundle(BASENAME, currentLocale);
         this.setResources(resourceBundle);
 

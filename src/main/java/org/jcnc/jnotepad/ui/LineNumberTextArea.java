@@ -3,7 +3,10 @@ package org.jcnc.jnotepad.ui;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.app.config.AppConfig;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
@@ -30,6 +33,8 @@ public class LineNumberTextArea extends BorderPane {
 
     public LineNumberTextArea() {
         mainTextArea = new TextArea();
+        mainTextArea.setWrapText(AppConfigController.getInstance().getAutoLineConfig());
+
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
         lineNumberArea.setPrefWidth(MIN_LINE_NUMBER_WIDTH);
