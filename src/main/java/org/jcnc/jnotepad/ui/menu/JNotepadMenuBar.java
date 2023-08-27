@@ -1,9 +1,6 @@
 package org.jcnc.jnotepad.ui.menu;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -15,7 +12,6 @@ import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.JsonUtil;
 import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.init.View;
@@ -41,8 +37,6 @@ public class JNotepadMenuBar extends MenuBar {
      * 标签页布局组件封装。
      */
     JNotepadTabPane jNotepadTabPane = JNotepadTabPane.getInstance();
-
-    JNotepadStatusBox jNotepadStatusBox = JNotepadStatusBox.getInstance();
 
     private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
 
@@ -262,8 +256,9 @@ public class JNotepadMenuBar extends MenuBar {
             public void handle(ActionEvent actionEvent) {
                 try {
                     setCurrentLanguage(ENGLISH);
+
                 } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
+                    throw new AppException(e.getMessage());
                 }
             }
         });
@@ -272,8 +267,9 @@ public class JNotepadMenuBar extends MenuBar {
             public void handle(ActionEvent actionEvent) {
                 try {
                     setCurrentLanguage(CHINESE);
+
                 } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
+                    throw new AppException(e.getMessage());
                 }
             }
         });
@@ -286,6 +282,10 @@ public class JNotepadMenuBar extends MenuBar {
      * @since 2023/8/26 16:16
      */
     private void setCurrentLanguage(String language) throws JsonProcessingException {
+        // 如果当前已是该语言则不执行该方法
+        if (localizationConfig.getLanguagePackName().equals(LANGUAGE_FILE_MAP.get(language))) {
+            return;
+        }
         boolean flag = false;
         // 获取本地配置文件
         logger.info("尝试读取本地配置文件!");
@@ -299,7 +299,7 @@ public class JNotepadMenuBar extends MenuBar {
             logger.error("读取失败,配置文件错误或不存在配置文件!");
             flag = true;
         }
-        ObjectNode json = null;
+        ObjectNode json;
 
         if (!flag) {
             json = JsonUtil.OBJECT_MAPPER.readValue(jsonData.toString(), ObjectNode.class);

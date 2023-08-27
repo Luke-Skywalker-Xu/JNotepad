@@ -200,6 +200,7 @@ public class LocalizationConfig {
     private String unknown;
 
     /// JNotepadStatusBox
+
     private String row;
 
     private String column;

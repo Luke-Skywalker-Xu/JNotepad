@@ -35,6 +35,11 @@ public class JNotepadStatusBox extends HBox {
         initStatusBox();
     }
 
+    /**
+     * 初始化状态栏组件
+     *
+     * @since 2023/8/27 9:33
+     */
     public void initStatusBox() {
         this.getChildren().clear();
         // 创建状态栏
@@ -42,6 +47,7 @@ public class JNotepadStatusBox extends HBox {
         // 创建新的标签以显示编码信息
         enCodingLabel = new Label();
         updateEncodingLabel();
+        updateWhenTabSelected();
         this.getChildren().add(statusLabel);
         this.getChildren().add(enCodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));

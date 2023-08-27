@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.app.init;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.slf4j.Logger;
 
 import java.io.InputStream;
@@ -37,6 +38,7 @@ public class LoadLanguageConfig extends LoadJnotepadConfig<String> {
             // 刷新菜单栏
             jNotepadMenuBar.initMenuBar();
             jNotepadMenuBar.toggleLanguageCheck(language);
+            JNotepadStatusBox.getInstance().initStatusBox();
         }
     }
 }

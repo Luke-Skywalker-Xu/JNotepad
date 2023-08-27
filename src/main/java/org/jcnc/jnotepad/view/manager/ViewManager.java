@@ -21,8 +21,10 @@ public class ViewManager {
 
 
     // 主界面布局
-    private BorderPane root; // 主布局
-
+    /**
+     * 主布局
+     */
+    private BorderPane root;
 
     private static ViewManager instance = null;
 
