@@ -1,14 +1,10 @@
 package org.jcnc.jnotepad.controller.config;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.jcnc.jnotepad.app.config.AppConfig;
-import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
-import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.JsonUtil;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.PopUpUtil;
-import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
