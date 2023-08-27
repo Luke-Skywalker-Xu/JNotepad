@@ -9,7 +9,6 @@ import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
-import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.JsonUtil;
@@ -127,9 +126,7 @@ public class JNotepadMenuBar extends MenuBar {
         switch (language) {
             case CHINESE -> chineseItem.setSelected(true);
             case ENGLISH -> englishItem.setSelected(true);
-            default -> {
-
-            }
+            default -> logger.error("未知语言:{}", language);
         }
     }
 
@@ -151,7 +148,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化语言菜单
      */
     private void initLanguageMenu() {
-        logger.info("初始化语言菜单:{}", UIResourceBundle.getContent(LANGUAGE));
+        logger.info("初始化语言菜单!");
         // 语言菜单
         languageMenu = new Menu();
         UIResourceBundle.bindStringProperty(languageMenu.textProperty(), LANGUAGE);
@@ -177,7 +174,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化文件菜单
      */
     private void initFileMenu() {
-        logger.info("初始化文件菜单:{}", UIResourceBundle.getContent(FILE));
+        logger.info("初始化文件菜单!");
         // 文件菜单
         fileMenu = new Menu();
         UIResourceBundle.bindStringProperty(fileMenu.textProperty(), FILE);
@@ -206,7 +203,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化设置菜单
      */
     private void initSettingMenu() {
-        logger.info("初始化设置菜单:{}", UIResourceBundle.getContent(SET));
+        logger.info("初始化设置菜单");
         // 设置菜单
         setMenu = new Menu();
         UIResourceBundle.bindStringProperty(setMenu.textProperty(), SET);
@@ -232,7 +229,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化插件菜单
      */
     private void initPluginMenu() {
-        logger.info("初始化插件菜单:{}", UIResourceBundle.getContent(PLUGIN));
+        logger.info("初始化插件菜单!");
         // 插件菜单
         pluginMenu = new Menu();
         UIResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
@@ -276,7 +273,6 @@ public class JNotepadMenuBar extends MenuBar {
         englishItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
-
                 try {
                     setCurrentLanguage(ENGLISH);
                     toggleLanguage(actionEvent);
@@ -350,7 +346,7 @@ public class JNotepadMenuBar extends MenuBar {
             writer.write(JsonUtil.toJsonString(json));
             // 刷新文件
             writer.flush();
-            // 重新加载快捷键
+            // 重新加载快捷键与语言包
             View.getInstance().initJnotepadConfigs(LunchApp.getLocalizationConfigs());
             logger.info("已刷新语言包!");
             logger.info("已刷新快捷键!");

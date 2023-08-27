@@ -2,15 +2,14 @@ package org.jcnc.jnotepad.app.config;
 
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.slf4j.Logger;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
-import static org.jcnc.jnotepad.constants.AppConstants.APP_NAME;
-import static org.jcnc.jnotepad.constants.TextConstants.*;
+import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
+import static org.jcnc.jnotepad.constants.TextConstants.ENGLISH;
 
 /**
  * 本地化配置文件<br>
@@ -21,10 +20,7 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
  */
 public class LocalizationConfig {
     private static final LocalizationConfig LOCALIZATION_CONFIG = new LocalizationConfig();
-    private final Properties properties = new Properties();
-
     private String language;
-
     private static final Map<String, Locale> SUPPORT_LOCALES;
     private static final Map<Locale, String> SUPPORT_LANGUAGES;
 
@@ -39,17 +35,17 @@ public class LocalizationConfig {
         SUPPORT_LANGUAGES.put(Locale.ENGLISH, ENGLISH);
     }
 
-    public static final Locale getCurrentLocal() {
+    public static Locale getCurrentLocal() {
         return Locale.getDefault();
     }
 
-    public static final void setCurrentLocal(Locale locale) {
+    public static void setCurrentLocal(Locale locale) {
         Locale.setDefault(locale);
         UIResourceBundle.getInstance().resetLocal();
         LOCALIZATION_CONFIG.setLanguage(SUPPORT_LANGUAGES.get(locale));
     }
 
-    public static final void setCurrentLocal(String language) {
+    public static void setCurrentLocal(String language) {
         Locale locale = SUPPORT_LOCALES.get(language);
         if (locale != null) {
             setCurrentLocal(locale);
@@ -74,7 +70,6 @@ public class LocalizationConfig {
 
     public void setTextWrap(String textWrap) {
         this.textWrap = textWrap;
-        properties.setProperty(TEXT_WRAP, textWrap);
     }
 
     private void setLanguage(String language) {

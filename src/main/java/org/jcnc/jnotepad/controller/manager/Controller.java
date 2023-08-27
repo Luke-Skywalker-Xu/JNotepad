@@ -3,7 +3,6 @@ package org.jcnc.jnotepad.controller.manager;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;

@@ -42,12 +42,12 @@ public class ThreadPoolManager {
      */
     private static final BlockingQueue<Runnable> BLOCKING_QUEUE = new LinkedBlockingQueue<>(4);
     /**
-     * 当前线程数
+     * 当前运行线程数
      */
     private static final AtomicInteger THREAD_COUNT = new AtomicInteger(1);
 
     /**
-     * 线程数自减
+     * 当前运行线程数自减
      *
      * @apiNote 当你创建任务时，务必在最后执行一次该方法
      * @see ThreadPoolManager

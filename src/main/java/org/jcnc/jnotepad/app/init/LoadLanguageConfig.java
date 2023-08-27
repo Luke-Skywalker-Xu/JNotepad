@@ -16,8 +16,6 @@ import java.io.InputStream;
 public class LoadLanguageConfig extends LoadJnotepadConfig<String> {
     Logger log = LogUtil.getLogger(this.getClass());
 
-    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
-
     @Override
     protected String parseConfig(InputStream inputStream) {
         return getConfigJson(inputStream).get("language").asText();
@@ -30,7 +28,7 @@ public class LoadLanguageConfig extends LoadJnotepadConfig<String> {
         if (!"".equals(language) && language != null) {
             log.info("正在加载语言包:{}", language);
             // 刷新语言包
-            localizationConfig.setCurrentLocal(language);
+            LocalizationConfig.setCurrentLocal(language);
             JNotepadMenuBar jNotepadMenuBar = JNotepadMenuBar.getMenuBar();
             // 刷新菜单栏
             jNotepadMenuBar.toggleLanguageCheck(language);

@@ -1,19 +1,15 @@
 package org.jcnc.jnotepad.ui.status;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
-import java.util.ResourceBundle;
 
 /**
  * 状态栏组件封装。
@@ -36,7 +32,6 @@ public class JNotepadStatusBox extends HBox {
      * 显示文本编码
      */
     private Label encodingLabel;
-    private final String ENCODING_LABEL_FORMAT = "\t%s : %s";
 
 
     private JNotepadStatusBox() {
@@ -61,12 +56,7 @@ public class JNotepadStatusBox extends HBox {
         this.getChildren().add(encodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));
 
-        UIResourceBundle.getInstance().addListener(new ChangeListener<ResourceBundle>() {
-            @Override
-            public void changed(ObservableValue<? extends ResourceBundle> observable, ResourceBundle oldValue, ResourceBundle newValue) {
-                updateWhenTabSelected();
-            }
-        });
+        UIResourceBundle.getInstance().addListener((observable, oldValue, newValue) -> updateWhenTabSelected());
 
     }
 
@@ -167,6 +157,7 @@ public class JNotepadStatusBox extends HBox {
     }
 
     protected String getEncodingFormattedText(String encoding) {
-        return String.format(ENCODING_LABEL_FORMAT, UIResourceBundle.getContent(TextConstants.ENCODE), encoding);
+        String encodingLabelFormat = "\t%s : %s";
+        return String.format(encodingLabelFormat, UIResourceBundle.getContent(TextConstants.ENCODE), encoding);
     }
 }

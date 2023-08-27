@@ -18,7 +18,6 @@ public class AppConstants {
      * 初始高度
      */
     public static final double SCREEN_LENGTH = 600;
-    public static final String APP_NAME = "JNotepad";
     /**
      * logo地址
      */

@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.app.init.LoadJnotepadConfig;
 import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
@@ -37,8 +36,6 @@ public class LunchApp extends Application {
      * 线程池
      */
     private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
-
-    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     Controller controller = Controller.getInstance();
     Scene scene;
     /**
