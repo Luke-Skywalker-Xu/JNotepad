@@ -42,9 +42,6 @@ public class LunchApp extends Application {
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
-
-        ViewManager viewManager = ViewManager.getInstance(scene);
-        viewManager.initScreen(scene);
         initUIComponents();
 
 
@@ -57,7 +54,13 @@ public class LunchApp extends Application {
     }
 
     private void initUIComponents() {
+
+        //1. 加载语言
         LocalizationController.initLocal();
+
+        //2. 加载组件
+        ViewManager viewManager = ViewManager.getInstance(scene);
+        viewManager.initScreen(scene);
 
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();

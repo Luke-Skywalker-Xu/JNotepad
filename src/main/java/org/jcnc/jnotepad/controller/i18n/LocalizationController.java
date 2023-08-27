@@ -49,6 +49,7 @@ public class LocalizationController {
 
     /**
      * 设置当前语言配置
+     *
      * @param locale 当前语言Local对象
      */
     public static void setCurrentLocal(Locale locale) {
@@ -64,19 +65,8 @@ public class LocalizationController {
         }
         Locale.setDefault(locale);
 
-        UIResourceBundle.getInstance().resetLocal();
+        UIResourceBundle.getInstance().resetLocal(getCurrentLocal());
         LOCALIZATION_CONFIG.setLanguage(SUPPORT_LANGUAGES.get(locale));
-    }
-
-    /**
-     * 设置当前语言配置
-     * @param language 当前语言自定义字符形式
-     */
-    public static void setCurrentLanguage(String language) {
-        Locale locale = SUPPORT_LOCALES.get(language);
-        if (locale != null) {
-            setCurrentLocal(locale);
-        }
     }
 
     private LocalizationController() {
@@ -85,9 +75,6 @@ public class LocalizationController {
 
     private final AppConfigController appConfigController;
 
-    public static LocalizationController getLocalizationConfig() {
-        return LOCALIZATION_CONFIG;
-    }
 
     private void setLanguage(String language) {
         appConfigController.updateLanguage(language);
@@ -95,6 +82,7 @@ public class LocalizationController {
 
     /**
      * 查询当前语言配置
+     *
      * @return appConfig中的当前语言配置
      */
     public String getLanguage() {

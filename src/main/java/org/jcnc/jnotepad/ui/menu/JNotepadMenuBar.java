@@ -32,7 +32,6 @@ public class JNotepadMenuBar extends MenuBar {
 
     private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
 
-    LocalizationController localizationController = LocalizationController.getLocalizationConfig();
     AppConfigController appConfigController = AppConfigController.getInstance();
     Logger logger = LogUtil.getLogger(this.getClass());
 
