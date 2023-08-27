@@ -12,6 +12,7 @@ import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,6 +70,7 @@ public class AppConfigController {
 
     /**
      * 将appConfig对象持久化到配置文件中
+     *
      * @param appConfig 应用配置对象
      */
     private void writeAppConfig(AppConfig appConfig) {
@@ -88,6 +90,10 @@ public class AppConfigController {
         if (configPath.toFile().exists()) {
             return;
         }
+        File directory = new File(dir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
         writeAppConfig(null);
     }
 
@@ -101,6 +107,7 @@ public class AppConfigController {
 
     /**
      * 获取当前配置文件所在目录
+     *
      * @return
      */
     public String getDir() {
@@ -130,6 +137,7 @@ public class AppConfigController {
 
     /**
      * 更新配置文件中的语言设置
+     *
      * @param language 更新后的语言设置
      */
     public void updateLanguage(String language) {
