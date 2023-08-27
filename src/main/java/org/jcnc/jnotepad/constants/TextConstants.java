@@ -22,10 +22,6 @@ public class TextConstants {
 
 
     /// GlobalConfig文本常量
-    /**
-     * 自动换行配置key
-     */
-    public static final String TEXT_WRAP = "text.wrap";
 
     public static final String TITLE = "title";
     public static final String SAVE = "SAVE";
@@ -44,7 +40,6 @@ public class TextConstants {
     public static final String UPPER_CHINESE = "CHINESE";
     public static final String UPPER_ENGLISH = "ENGLISH";
     public static final String NEW_FILE = "NEW_FILE";
-    public static final String UNKNOWN = "UNKNOWN";
     public static final String ROW = "ROW";
     public static final String COLUMN = "COLUMN";
     public static final String WORD_COUNT = "WORD_COUNT";

@@ -3,7 +3,6 @@ package org.jcnc.jnotepad.app.init;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.PopUpUtil;

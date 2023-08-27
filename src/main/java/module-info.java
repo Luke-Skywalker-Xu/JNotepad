@@ -23,6 +23,8 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.constants;
     exports org.jcnc.jnotepad.ui;
     exports org.jcnc.jnotepad.app.init;
-    exports org.jcnc.jnotepad.json; // 导出 JSON 相关的包，以便 Jackson 库可以访问
-    opens org.jcnc.jnotepad.json;   // 打开 JSON 相关的包，以便 Jackson 库可以使用反射
+    // 导出 JSON 相关的包，以便 Jackson 库可以访问
+    exports org.jcnc.jnotepad.json;
+    // 打开 JSON 相关的包，以便 Jackson 库可以使用反射
+    opens org.jcnc.jnotepad.json;
 }

@@ -3,7 +3,6 @@ package org.jcnc.jnotepad.tool;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;
-import org.jcnc.jnotepad.app.config.LocalizationConfig;
 import org.slf4j.Logger;
 
 import java.io.BufferedInputStream;
@@ -18,7 +17,6 @@ import java.nio.charset.Charset;
  * @author 许轲
  */
 public class EncodingDetector {
-    static LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     private static final Logger LOG = LogUtil.getLogger(EncodingDetector.class);
     /**
      * 编码侦测概率，阈值：50%
@@ -71,6 +69,8 @@ public class EncodingDetector {
     public static Charset detectEncodingCharset(File file) {
         String charset = detectEncoding(file);
         try {
+            // 断言charset != null
+            assert charset != null;
             return Charset.forName(charset);
         } catch (Exception e) {
             return Charset.defaultCharset();

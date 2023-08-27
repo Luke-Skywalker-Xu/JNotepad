@@ -17,9 +17,6 @@ public class ViewManager {
 
     private int tabIndex = 0;
 
-    private Boolean line = true;
-
-
     // 主界面布局
     /**
      * 主布局
@@ -37,15 +34,6 @@ public class ViewManager {
      */
     public int selfIncreaseAndGetTabIndex() {
         return ++tabIndex;
-    }
-
-    public Boolean getLine() {
-        return line;
-    }
-
-
-    public BorderPane getRoot() {
-        return root;
     }
 
 

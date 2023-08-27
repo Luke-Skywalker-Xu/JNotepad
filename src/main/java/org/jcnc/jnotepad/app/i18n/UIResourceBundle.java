@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.app.i18n;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -28,7 +29,7 @@ public class UIResourceBundle {
      */
     private Locale currentLocale;
 
-    public static final UIResourceBundle getInstance() {
+    public static UIResourceBundle getInstance() {
         return INSTANCE;
     }
 
@@ -39,11 +40,12 @@ public class UIResourceBundle {
     /**
      * 资源文件的观察者绑定。
      */
-    private ObjectProperty<ResourceBundle> resources = new SimpleObjectProperty<>();
+    private final ObjectProperty<ResourceBundle> resources = new SimpleObjectProperty<>();
 
     /**
      * 获取当前资源文件
-     * @return
+     *
+     * @return 资源文件
      */
     public ObjectProperty<ResourceBundle> resourcesProperty() {
         return resources;
@@ -72,26 +74,19 @@ public class UIResourceBundle {
 
     /**
      * 获取key对应的绑定属性内容
+     *
      * @param key key
      * @return key对应的内容
      */
     public StringBinding getStringBinding(String key) {
-        return new StringBinding() {
-            {
-                bind(resourcesProperty());
-            }
-
-            @Override
-            public String computeValue() {
-                return getResources().getString(key);
-            }
-        };
+        return Bindings.createStringBinding(() -> getResources().getString(key), resourcesProperty());
     }
 
     /**
      * 工具方法：绑定StringProperty和Key对应的内容
-     * @param stringProperty
-     * @param key
+     *
+     * @param stringProperty 字符串属性
+     * @param key            键值
      */
     public static void bindStringProperty(StringProperty stringProperty, String key) {
         if (stringProperty == null) {
@@ -102,16 +97,18 @@ public class UIResourceBundle {
 
     /**
      * 获取当前资源中的key值
-     * @param key
-     * @return
+     *
+     * @param key 资源所对应键
+     * @return 当前键所对应的值
      */
     public static String getContent(String key) {
-        return getInstance().getResources().getString(key);
+        return INSTANCE.getResources().getString(key);
     }
 
     /**
      * 注册资源变更监听器
-     * @param listener
+     *
+     * @param listener 变更监听器
      */
     public void addListener(ChangeListener<? super ResourceBundle> listener) {
         this.resources.addListener(listener);
