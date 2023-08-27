@@ -41,11 +41,11 @@ public class EncodingDetector {
             charsetDetector.setText(inputStream);
             CharsetMatch[] matchList = charsetDetector.detectAll();
             if (matchList == null || matchList.length == 0) {
-                return localizationConfig.getUnknown();
+                return null;
             }
             CharsetMatch maxConfidence = matchList[0];
             if (maxConfidence.getConfidence() < THRESHOLD_CONFIDENCE) {
-                return localizationConfig.getUnknown();
+                return null;
             }
             for (int i = 1; i < matchList.length; i++) {
                 CharsetMatch match = matchList[i];
@@ -59,7 +59,7 @@ public class EncodingDetector {
         } catch (Exception e) {
             LOG.error("", e);
         }
-        return localizationConfig.getUnknown();
+        return null;
     }
 
     /**

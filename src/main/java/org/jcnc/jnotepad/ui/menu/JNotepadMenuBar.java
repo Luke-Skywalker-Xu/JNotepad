@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.config.GlobalConfig;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.JsonUtil;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.fasterxml.jackson.core.JsonEncoding.UTF8;
@@ -44,7 +47,7 @@ public class JNotepadMenuBar extends MenuBar {
     Logger logger = LogUtil.getLogger(this.getClass());
 
     private JNotepadMenuBar() {
-
+        initMenuBar();
     }
 
     /**
@@ -148,16 +151,21 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化语言菜单
      */
     private void initLanguageMenu() {
-        logger.info("初始化语言菜单:{}", localizationConfig.getLanguage());
+        logger.info("初始化语言菜单:{}", UIResourceBundle.getContent(LANGUAGE));
         // 语言菜单
-        languageMenu = new Menu(localizationConfig.getLanguage());
+        languageMenu = new Menu();
+        UIResourceBundle.bindStringProperty(languageMenu.textProperty(), LANGUAGE);
         ToggleGroup languageToggleGroup = new ToggleGroup();
 
-        chineseItem = new RadioMenuItem(localizationConfig.getChinese());
+        chineseItem = new RadioMenuItem();
+        UIResourceBundle.bindStringProperty(chineseItem.textProperty(), UPPER_CHINESE);
+        chineseItem.setUserData(Locale.CHINESE);
         itemMap.put("chineseItem", chineseItem);
         languageToggleGroup.getToggles().add(chineseItem);
 
-        englishItem = new RadioMenuItem(localizationConfig.getEnglish());
+        englishItem = new RadioMenuItem();
+        UIResourceBundle.bindStringProperty(englishItem.textProperty(), UPPER_ENGLISH);
+        englishItem.setUserData(Locale.ENGLISH);
         itemMap.put("englishItem", englishItem);
         languageToggleGroup.getToggles().add(englishItem);
 
@@ -169,20 +177,26 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化文件菜单
      */
     private void initFileMenu() {
-        logger.info("初始化文件菜单:{}", localizationConfig.getFile());
+        logger.info("初始化文件菜单:{}", UIResourceBundle.getContent(FILE));
         // 文件菜单
-        fileMenu = new Menu(localizationConfig.getFile());
+        fileMenu = new Menu();
+        UIResourceBundle.bindStringProperty(fileMenu.textProperty(), FILE);
 
-        newItem = new MenuItem(localizationConfig.getNewly());
+        newItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(newItem.textProperty(), NEW);
+
         itemMap.put("newItem", newItem);
 
-        openItem = new MenuItem(localizationConfig.getOpen());
+        openItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(openItem.textProperty(), OPEN);
         itemMap.put("openItem", openItem);
 
-        saveItem = new MenuItem(localizationConfig.getSava());
+        saveItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(saveItem.textProperty(), SAVE);
         itemMap.put("saveItem", saveItem);
 
-        saveAsItem = new MenuItem(localizationConfig.getSavaAs());
+        saveAsItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(saveAsItem.textProperty(), SAVE_AS);
         itemMap.put("saveAsItem", saveAsItem);
 
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
@@ -192,18 +206,22 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化设置菜单
      */
     private void initSettingMenu() {
-        logger.info("初始化设置菜单:{}", localizationConfig.getSet());
+        logger.info("初始化设置菜单:{}", UIResourceBundle.getContent(SET));
         // 设置菜单
-        setMenu = new Menu(localizationConfig.getSet());
+        setMenu = new Menu();
+        UIResourceBundle.bindStringProperty(setMenu.textProperty(), SET);
 
-        lineFeedItem = new CheckMenuItem(localizationConfig.getWordWrap());
+        lineFeedItem = new CheckMenuItem();
+        UIResourceBundle.bindStringProperty(lineFeedItem.textProperty(), WORD_WRAP);
         itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
 
-        topItem = new CheckMenuItem(localizationConfig.getTop());
+        topItem = new CheckMenuItem();
+        UIResourceBundle.bindStringProperty(topItem.textProperty(), TOP);
         itemMap.put("topItem", topItem);
 
-        openConfigItem = new MenuItem(localizationConfig.getOpenConfigurationFile());
+        openConfigItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(openConfigItem.textProperty(), OPEN_CONFIGURATION_FILE);
         itemMap.put("openConfigItem", openConfigItem);
 
         itemMap.put("languageMenu", languageMenu);
@@ -214,13 +232,17 @@ public class JNotepadMenuBar extends MenuBar {
      * 初始化插件菜单
      */
     private void initPluginMenu() {
-        logger.info("初始化插件菜单:{}", localizationConfig.getPlugin());
+        logger.info("初始化插件菜单:{}", UIResourceBundle.getContent(PLUGIN));
         // 插件菜单
-        pluginMenu = new Menu(localizationConfig.getPlugin());
-        addItem = new MenuItem(localizationConfig.getAddPlugin());
+        pluginMenu = new Menu();
+        UIResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
+
+        addItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(addItem.textProperty(), ADD_PLUGIN);
         itemMap.put("addItem", addItem);
 
-        countItem = new MenuItem(localizationConfig.getStatistics());
+        countItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(countItem.textProperty(), STATISTICS);
         itemMap.put("countItem", countItem);
 
         pluginMenu.getItems().addAll(addItem, countItem);
@@ -254,8 +276,10 @@ public class JNotepadMenuBar extends MenuBar {
         englishItem.setOnAction(new LocalizationHandler() {
             @Override
             public void handle(ActionEvent actionEvent) {
+
                 try {
                     setCurrentLanguage(ENGLISH);
+                    toggleLanguage(actionEvent);
 
                 } catch (JsonProcessingException e) {
                     throw new AppException(e.getMessage());
@@ -267,12 +291,23 @@ public class JNotepadMenuBar extends MenuBar {
             public void handle(ActionEvent actionEvent) {
                 try {
                     setCurrentLanguage(CHINESE);
-
+                    toggleLanguage(actionEvent);
                 } catch (JsonProcessingException e) {
                     throw new AppException(e.getMessage());
                 }
             }
         });
+    }
+
+    private void toggleLanguage(ActionEvent actionEvent) {
+        if (actionEvent == null) {
+            return;
+        }
+        RadioMenuItem languageItem = (RadioMenuItem) actionEvent.getSource();
+        if (languageItem == null) {
+            return;
+        }
+        LocalizationConfig.setCurrentLocal((Locale) languageItem.getUserData());
     }
 
     /**
@@ -283,7 +318,7 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private void setCurrentLanguage(String language) throws JsonProcessingException {
         // 如果当前已是该语言则不执行该方法
-        if (localizationConfig.getLanguagePackName().equals(LANGUAGE_FILE_MAP.get(language))) {
+        if (localizationConfig.getLanguage().equals(language)) {
             return;
         }
         boolean flag = false;
@@ -315,7 +350,7 @@ public class JNotepadMenuBar extends MenuBar {
             writer.write(JsonUtil.toJsonString(json));
             // 刷新文件
             writer.flush();
-            // 重新加载语言包和快捷键
+            // 重新加载快捷键
             View.getInstance().initJnotepadConfigs(LunchApp.getLocalizationConfigs());
             logger.info("已刷新语言包!");
             logger.info("已刷新快捷键!");

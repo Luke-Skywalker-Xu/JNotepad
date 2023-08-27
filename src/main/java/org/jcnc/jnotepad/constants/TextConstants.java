@@ -10,14 +10,8 @@ import org.jcnc.jnotepad.json.DataGenerator;
 import org.jcnc.jnotepad.json.MyData;
 import org.jcnc.jnotepad.tool.JsonUtil;
 
-import java.util.Map;
-
 /**
- * 文本常量
- * <p>
- * 任何string请都在此处readPropertiesFromFile,然后在
- * src/main/java/org/jcnc/jnotepad/init/Config.java的getXXXXXLanguagePack
- * 注册配置文件,设置多语言语言包
+ * 文本常量，被多处使用的常量放到此处。如果只有一个class使用，在class中使用private static final声明。
  *
  * @author gewuyou
  */
@@ -57,22 +51,12 @@ public class TextConstants {
     public static final String ENCODE = "ENCODE";
 
     /// Config 文本常量
-
-    public static final String CH_LANGUAGE_PACK_NAME = "ch_language_pack.txt";
-    public static final String EN_LANGUAGE_PACK_NAME = "en_language_pack.txt";
-
     public static final String ENGLISH = "english";
 
     public static final String CHINESE = "chinese";
 
     public static final String LOWER_LANGUAGE = "language";
-    /**
-     * 语言映射
-     */
-    public static final Map<String, String> LANGUAGE_FILE_MAP = Map.of(
-            CHINESE, CH_LANGUAGE_PACK_NAME,
-            ENGLISH, EN_LANGUAGE_PACK_NAME
-    );
+
     /// 配置文件文本常量
     /**
      * 内置配置文件

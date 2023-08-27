@@ -9,10 +9,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.app.init.LoadJnotepadConfig;
 import org.jcnc.jnotepad.app.init.LoadLanguageConfig;
 import org.jcnc.jnotepad.app.init.LoadShortcutKeyConfig;
 import org.jcnc.jnotepad.constants.AppConstants;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
@@ -82,7 +84,7 @@ public class LunchApp extends Application {
         viewManager.initScreen(scene);
         // 加载配置文件
         View.getInstance().initJnotepadConfigs(LOAD_JNOTEPAD_CONFIGS);
-        primaryStage.setTitle(localizationConfig.getTitle());
+        UIResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
