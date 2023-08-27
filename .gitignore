@@ -38,9 +38,13 @@ build/
 /JNotepad/
 /src/main/JNotepad.java
 /.idea/
+!.idea/codeStyles/
+!.idea/fileTemplates/
+!.idea/encodings.xml
 /project.txt
 logs/
 /ch_language_pack.txt
 /en_language_pack.txt
 /jnotepadConfig.json
 /qodana.yaml
+.mvn/
