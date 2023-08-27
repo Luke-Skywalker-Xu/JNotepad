@@ -140,7 +140,7 @@ public class LineNumberTextArea extends BorderPane {
 
         // 恢复之前的滚动位置
         mainTextArea.setScrollTop(mainTextAreaScrollTop);
-        lineNumberArea.setScrollTop(lineNumberAreaScrollTop - 8);
+        lineNumberArea.setScrollTop(lineNumberAreaScrollTop);
     }
 
     public TextArea getMainTextArea() {
