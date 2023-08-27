@@ -66,13 +66,7 @@ public class TextConstants {
     public static final String CHINESE = "chinese";
 
     public static final String LOWER_LANGUAGE = "language";
-    /**
-     * 语言映射
-     */
-    public static final Map<String, String> LANGUAGE_FILE_MAP = Map.of(
-            CHINESE, CH_LANGUAGE_PACK_NAME,
-            ENGLISH, EN_LANGUAGE_PACK_NAME
-    );
+
     /// 配置文件文本常量
     /**
      * 内置配置文件

@@ -1,14 +1,19 @@
 package org.jcnc.jnotepad.ui.status;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
+import java.util.ResourceBundle;
 
 /**
  * 状态栏组件封装。
@@ -20,16 +25,19 @@ import java.nio.charset.Charset;
 public class JNotepadStatusBox extends HBox {
 
     private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
-    LocalizationConfig localizationConfig = LocalizationConfig.getLocalizationConfig();
     /**
      * 字数统计及光标
      */
     private Label statusLabel;
+    private static final String STATUS_LABEL_FORMAT = "%s : %d \t%s: %d \t%s: %d \t";
+
 
     /**
      * 显示文本编码
      */
-    private Label enCodingLabel;
+    private Label encodingLabel;
+    private final String ENCODING_LABEL_FORMAT = "\t%s : %s";
+
 
     private JNotepadStatusBox() {
         initStatusBox();
@@ -43,14 +51,23 @@ public class JNotepadStatusBox extends HBox {
     public void initStatusBox() {
         this.getChildren().clear();
         // 创建状态栏
-        statusLabel = new Label(localizationConfig.getRow() + "：1 \t" + localizationConfig.getColumn() + "：1 \t" + localizationConfig.getWordCount() + "：0 ");
+        statusLabel = new Label();
+        statusLabel.setText(getStatusBarFormattedText(0, 0, 1));
         // 创建新的标签以显示编码信息
-        enCodingLabel = new Label();
+        encodingLabel = new Label();
         updateEncodingLabel();
         updateWhenTabSelected();
         this.getChildren().add(statusLabel);
-        this.getChildren().add(enCodingLabel);
+        this.getChildren().add(encodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));
+
+        UIResourceBundle.getInstance().addListener(new ChangeListener<ResourceBundle>() {
+            @Override
+            public void changed(ObservableValue<? extends ResourceBundle> observable, ResourceBundle oldValue, ResourceBundle newValue) {
+                updateWhenTabSelected();
+            }
+        });
+
     }
 
     public static JNotepadStatusBox getInstance() {
@@ -70,7 +87,7 @@ public class JNotepadStatusBox extends HBox {
         if (encoding == null) {
             encoding = Charset.defaultCharset().name();
         }
-        this.enCodingLabel.setText("\t" + localizationConfig.getEncode() + ": " + encoding);
+        this.encodingLabel.setText(getEncodingFormattedText(encoding));
     }
 
     /**
@@ -86,7 +103,7 @@ public class JNotepadStatusBox extends HBox {
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());
         int length = textArea.getLength();
-        this.statusLabel.setText(localizationConfig.getRow() + ": " + row + " \t" + localizationConfig.getColumn() + ": " + column + " \t" + localizationConfig.getWordCount() + ": " + length);
+        this.statusLabel.setText(getStatusBarFormattedText(row, column, length));
     }
 
     /**
@@ -135,4 +152,21 @@ public class JNotepadStatusBox extends HBox {
         return caretPosition - text.lastIndexOf("\n", caretPosition - 1);
     }
 
+    protected String getStatusBarFormattedText(int row, int column, int wordCount) {
+        String rowText = UIResourceBundle.getContent(TextConstants.ROW);
+        String columnText = UIResourceBundle.getContent(TextConstants.COLUMN);
+        String wordCountText = UIResourceBundle.getContent(TextConstants.WORD_COUNT);
+        return String.format(STATUS_LABEL_FORMAT,
+                rowText,
+                row,
+                columnText,
+                column,
+                wordCountText,
+                wordCount
+        );
+    }
+
+    protected String getEncodingFormattedText(String encoding) {
+        return String.format(ENCODING_LABEL_FORMAT, UIResourceBundle.getContent(TextConstants.ENCODE), encoding);
+    }
 }

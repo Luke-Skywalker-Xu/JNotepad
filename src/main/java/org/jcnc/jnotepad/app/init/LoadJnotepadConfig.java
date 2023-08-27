@@ -85,7 +85,6 @@ public abstract class LoadJnotepadConfig<T> {
         } catch (IOException e) {
             PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");
         }
-        LocalizationConfig.getLocalizationConfig().initLocalizationConfig();
     }
 
 

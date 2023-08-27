@@ -31,4 +31,5 @@ public class GlobalConfig {
     public static GlobalConfig getConfig() {
         return APP_GLOBAL_CONFIG;
     }
+
 }

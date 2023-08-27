@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import org.jcnc.jnotepad.Interface.ControllerInterface;
 import org.jcnc.jnotepad.app.config.LocalizationConfig;
+import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
@@ -114,7 +116,7 @@ public class Controller implements ControllerInterface {
     @Override
     public void updateUiWithNewTextArea(LineNumberTextArea textArea) {
         ViewManager viewManager = ViewManager.getInstance();
-        String tabTitle = LocalizationConfig.getLocalizationConfig().getNewFile() + viewManager.selfIncreaseAndGetTabIndex();
+        String tabTitle = UIResourceBundle.getContent(TextConstants.NEW_FILE) + viewManager.selfIncreaseAndGetTabIndex();
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(tabTitle, textArea));
     }
 
