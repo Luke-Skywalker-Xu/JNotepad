@@ -285,16 +285,14 @@ public class JNotepadMenuBar extends MenuBar {
             // 设置窗口为置顶
             primaryStage.setAlwaysOnTop(after);
         });
-        englishItem.setOnAction(actionEvent -> {
-            setCurrentLanguage(ENGLISH);
-            toggleLanguage(actionEvent);
-        });
-        chineseItem.setOnAction(actionEvent -> {
-            setCurrentLanguage(CHINESE);
-            toggleLanguage(actionEvent);
-        });
+        englishItem.setOnAction(this::toggleLanguage);
+        chineseItem.setOnAction(this::toggleLanguage);
     }
 
+    /**
+     * 切换语言
+     * @param actionEvent 点击事件
+     */
     private void toggleLanguage(ActionEvent actionEvent) {
         if (actionEvent == null) {
             return;
@@ -306,20 +304,6 @@ public class JNotepadMenuBar extends MenuBar {
         LocalizationController.setCurrentLocal((Locale) languageItem.getUserData());
     }
 
-    /**
-     * 设置当前语言<br>
-     *
-     * @param language 要设置的语言
-     * @since 2023/8/26 16:16
-     */
-    private void setCurrentLanguage(String language) {
-        // 如果当前已是该语言则不执行该方法
-        if (localizationController.getLanguage().equals(language)) {
-            return;
-        }
-        LocalizationController.setCurrentLanguage(language);
-        AppConfigController.getInstance().updateLanguage(language);
-    }
 
     /**
      * 根据当前选中tab，更新菜单选项

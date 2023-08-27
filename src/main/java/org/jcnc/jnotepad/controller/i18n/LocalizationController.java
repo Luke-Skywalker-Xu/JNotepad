@@ -40,11 +40,22 @@ public class LocalizationController {
         return Locale.getDefault();
     }
 
+    /**
+     * 初始化语言配置
+     */
     public static void initLocal() {
         setCurrentLocal(null);
     }
 
+    /**
+     * 设置当前语言配置
+     * @param locale 当前语言Local对象
+     */
     public static void setCurrentLocal(Locale locale) {
+        if (locale != null && locale.equals(getCurrentLocal())) {
+            // 要更新的语言与当前语言一致，则不执行
+            return;
+        }
         if (locale == null) {
             locale = SUPPORT_LOCALES.get(LOCALIZATION_CONFIG.getLanguage());
         }
@@ -57,6 +68,10 @@ public class LocalizationController {
         LOCALIZATION_CONFIG.setLanguage(SUPPORT_LANGUAGES.get(locale));
     }
 
+    /**
+     * 设置当前语言配置
+     * @param language 当前语言自定义字符形式
+     */
     public static void setCurrentLanguage(String language) {
         Locale locale = SUPPORT_LOCALES.get(language);
         if (locale != null) {
@@ -78,6 +93,10 @@ public class LocalizationController {
         appConfigController.updateLanguage(language);
     }
 
+    /**
+     * 查询当前语言配置
+     * @return appConfig中的当前语言配置
+     */
     public String getLanguage() {
         return appConfigController.getLanguage();
     }
