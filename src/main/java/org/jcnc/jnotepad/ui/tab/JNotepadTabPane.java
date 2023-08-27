@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.ui.tab;
 
 import javafx.scene.control.TabPane;
-import org.jcnc.jnotepad.app.config.GlobalConfig;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 
@@ -68,7 +68,7 @@ public class JNotepadTabPane extends TabPane {
      */
     public void fireTabSelected() {
         JNotepadTab selectedTab = getSelected();
-        selectedTab.setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
+        selectedTab.setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
         JNotepadStatusBox.getInstance().updateWhenTabSelected();
     }
 }

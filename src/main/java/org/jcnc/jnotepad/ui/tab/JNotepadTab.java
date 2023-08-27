@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.ui.tab;
 
 import javafx.scene.control.Tab;
-import org.jcnc.jnotepad.app.config.GlobalConfig;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 
 import java.nio.charset.Charset;
@@ -33,7 +33,7 @@ public class JNotepadTab extends Tab {
         super(tabTitle);
         lineNumberTextArea = textArea;
         this.setContent(lineNumberTextArea);
-        setAutoLine(GlobalConfig.getConfig().getAutoLineConfig());
+        setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
     }
 

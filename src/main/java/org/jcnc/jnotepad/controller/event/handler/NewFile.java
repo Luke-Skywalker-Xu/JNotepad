@@ -27,10 +27,15 @@ public class NewFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
+        addNewFileTab();
 
+    }
+
+    public void addNewFileTab() {
         // 创建一个新的文本编辑区
         LineNumberTextArea textArea = new LineNumberTextArea();
-
+        // 设置当前标签页与本地文件无关联
+        textArea.setRelevance(false);
         // TODO: refactor：统一TextArea新建、绑定监听器入口
         ViewManager viewManager = ViewManager.getInstance();
         // 将Tab页添加到TabPane中

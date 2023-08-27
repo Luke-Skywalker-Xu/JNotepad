@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 控制器接口类
+ *
  * @author 许轲
  */
 public interface ControllerInterface {
@@ -17,7 +18,7 @@ public interface ControllerInterface {
      * @param rawParameters 原始参数列表
      * @return 创建的 TextArea
      */
-    LineNumberTextArea openAssociatedFileAndCreateTextArea(List<String> rawParameters);
+    void openAssociatedFileAndCreateTextArea(List<String> rawParameters);
 
     /**
      * 打开关联文件
@@ -26,20 +27,4 @@ public interface ControllerInterface {
      */
     void openAssociatedFile(String filePath);
 
-    /**
-     * 获取文件内容
-     *
-     * @param file 文件
-     */
-    void getText(File file);
-
-    /**
-     * 更新UI和标签页
-     *
-     * @param textArea   文本域
-     * @apiNote
-     * @since 2023/8/20 12:40
-     */
-
-    void updateUiWithNewTextArea(LineNumberTextArea textArea);
 }

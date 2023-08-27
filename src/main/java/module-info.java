@@ -18,13 +18,9 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.Interface;
     exports org.jcnc.jnotepad.controller.event.handler;
     exports org.jcnc.jnotepad.controller.manager;
-    exports org.jcnc.jnotepad.view.init;
     exports org.jcnc.jnotepad.view.manager;
     exports org.jcnc.jnotepad.constants;
     exports org.jcnc.jnotepad.ui;
-    exports org.jcnc.jnotepad.app.init;
-    // 导出 JSON 相关的包，以便 Jackson 库可以访问
-    exports org.jcnc.jnotepad.json;
-    // 打开 JSON 相关的包，以便 Jackson 库可以使用反射
-    opens org.jcnc.jnotepad.json;
+    exports org.jcnc.jnotepad.controller.i18n;
+    opens org.jcnc.jnotepad.app.config;
 }

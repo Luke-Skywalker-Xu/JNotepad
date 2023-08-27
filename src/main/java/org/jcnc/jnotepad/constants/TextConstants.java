@@ -1,15 +1,6 @@
 package org.jcnc.jnotepad.constants;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.json.DataGenerator;
-import org.jcnc.jnotepad.json.MyData;
-import org.jcnc.jnotepad.tool.JsonUtil;
-
 /**
  * 文本常量，被多处使用的常量放到此处。如果只有一个class使用，在class中使用private static final声明。
  *
@@ -50,38 +41,4 @@ public class TextConstants {
 
     public static final String CHINESE = "chinese";
 
-    public static final String LOWER_LANGUAGE = "language";
-
-    /// 配置文件文本常量
-    /**
-     * 内置配置文件
-     */
-    public static final String JNOTEPAD_CONFIG;
-
-    static {
-        try {
-            JNOTEPAD_CONFIG = createShortcutKeyJsonString();
-        } catch (JsonProcessingException e) {
-            throw new AppException(e);
-        }
-    }
-
-    private static String createShortcutKeyJsonString() throws JsonProcessingException {
-        return JsonUtil.toJsonString(createShortcutKeyJson());
-    }
-
-    public static ObjectNode createShortcutKeyJson() throws JsonProcessingException {
-        MyData myData = DataGenerator.generateMyData();
-
-        // 创建 ObjectMapper 和 ObjectWriter 来将对象转换为 JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
-
-        // 将 MyData 对象转换为 JSON 字符串
-        String json = writer.writeValueAsString(myData);
-
-        // 将 JSON 字符串转换为 ObjectNode 对象
-
-        return objectMapper.readValue(json, ObjectNode.class);
-    }
 }
