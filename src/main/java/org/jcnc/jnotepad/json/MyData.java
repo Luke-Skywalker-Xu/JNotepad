@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * 数据模型类，用于表示 MyData 对象的数据结构。
+ *
+ * @author 许轲
  */
 public class MyData {
     private String language;
@@ -15,8 +17,6 @@ public class MyData {
     public static class ShortcutKey {
         private String buttonName;
         private String shortcutKeyValue;
-
-        public ShortcutKey() {}
 
         public String getButtonName() {
             return buttonName;
@@ -34,8 +34,6 @@ public class MyData {
             this.shortcutKeyValue = shortcutKeyValue;
         }
     }
-
-    public MyData() {}
 
     public String getLanguage() {
         return language;

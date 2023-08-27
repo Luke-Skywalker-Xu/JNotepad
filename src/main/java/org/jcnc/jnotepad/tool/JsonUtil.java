@@ -11,9 +11,10 @@ import org.jcnc.jnotepad.exception.AppException;
  * @author songdragon
  */
 public class JsonUtil {
+    private JsonUtil() {
+    }
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    ;
 
     public static String toJsonString(Object o) {
         try {

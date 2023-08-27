@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.json.DataGenerator;
 import org.jcnc.jnotepad.json.MyData;
 import org.jcnc.jnotepad.tool.JsonUtil;
@@ -65,10 +66,6 @@ public class TextConstants {
     public static final String CHINESE = "chinese";
 
     public static final String LOWER_LANGUAGE = "language";
-
-    private static final String BUTTON_NAME = "buttonName";
-
-    private static final String SHORTCUT_KEY_VALUE = "shortcutKeyValue";
     /**
      * 语言映射
      */
@@ -86,7 +83,7 @@ public class TextConstants {
         try {
             JNOTEPAD_CONFIG = createShortcutKeyJsonString();
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new AppException(e);
         }
     }
 

@@ -5,9 +5,15 @@ import java.util.List;
 
 /**
  * 数据生成类，用于生成示例数据。
+ * @author 许轲
  */
 public class DataGenerator {
-    // 快捷键常量
+
+
+    private DataGenerator() {
+    }
+    /// 快捷键常量
+
     private static final String CTRL_N = "ctrl+n";
     private static final String CTRL_O = "ctrl+o";
     private static final String CTRL_S = "ctrl+s";
