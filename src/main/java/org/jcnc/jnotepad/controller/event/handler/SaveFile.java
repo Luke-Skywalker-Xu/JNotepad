@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
@@ -51,6 +52,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
                 // 重新加载语言包和快捷键
                 AppConfigController.getInstance().loadConfig();
                 JNotepadMenuBar.getMenuBar().initShortcutKeys();
+                LocalizationController.initLocal();
                 logger.info("已刷新语言包!");
                 logger.info("已刷新快捷键!");
             }
