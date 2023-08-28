@@ -42,7 +42,7 @@ public class LunchApp extends Application {
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
-        initUIComponents();
+        initUiComponents();
 
 
         UIResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
@@ -53,7 +53,7 @@ public class LunchApp extends Application {
         primaryStage.show();
     }
 
-    private void initUIComponents() {
+    private void initUiComponents() {
 
         //1. 加载语言
         LocalizationController.initLocal();

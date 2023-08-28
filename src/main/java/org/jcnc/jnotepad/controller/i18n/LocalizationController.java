@@ -13,8 +13,8 @@ import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
 import static org.jcnc.jnotepad.constants.TextConstants.ENGLISH;
 
 /**
- * 本地化配置文件<br>
- * 注意：该配置文件必须先于快捷键配置文件加载
+ * 本地化控制器<br>
+ * 注意：本地化配置加载应当优先于快捷键配置加载
  *
  * @author gewuyou
  * @see LunchApp

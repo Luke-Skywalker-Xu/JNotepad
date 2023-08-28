@@ -145,11 +145,8 @@ public class JNotepadMenuBar extends MenuBar {
         for (AppConfig.ShortcutKey shortcutKey : shortcutKeyConfigs) {
             // 保证json的key必须和变量名一致
             MenuItem menuItem = this.itemMap.get(shortcutKey.getButtonName());
-            if (Objects.isNull(menuItem)) {
-                continue;
-            }
             String shortKeyValue = shortcutKey.getShortcutKeyValue();
-            if ("".equals(shortKeyValue)) {
+            if (Objects.isNull(menuItem) || "".equals(shortKeyValue)) {
                 continue;
             }
             logger.info("功能名称：{}->快捷键:{}", menuItem.getText(), shortKeyValue);
@@ -290,6 +287,7 @@ public class JNotepadMenuBar extends MenuBar {
 
     /**
      * 切换语言
+     *
      * @param actionEvent 点击事件
      */
     private void toggleLanguage(ActionEvent actionEvent) {
