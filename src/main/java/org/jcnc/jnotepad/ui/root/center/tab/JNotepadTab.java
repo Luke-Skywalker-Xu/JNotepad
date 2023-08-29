@@ -1,8 +1,8 @@
-package org.jcnc.jnotepad.ui.tab;
+package org.jcnc.jnotepad.ui.root.center.tab;
 
 import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 
 import java.nio.charset.Charset;
 

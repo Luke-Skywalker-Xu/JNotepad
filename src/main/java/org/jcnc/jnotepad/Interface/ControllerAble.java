@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author 许轲
  */
-public interface ControllerInterface {
+public interface ControllerAble {
 
     /**
      * 打开关联文件并创建 TextArea

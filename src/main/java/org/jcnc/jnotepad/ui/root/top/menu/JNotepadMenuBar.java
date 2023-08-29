@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.menu;
+package org.jcnc.jnotepad.ui.root.top.menu;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -10,8 +10,8 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.*;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -264,7 +264,7 @@ public class JNotepadMenuBar extends MenuBar {
         pluginMenu.getItems().addAll(addItem, countItem);
     }
 
-    public static JNotepadMenuBar getMenuBar() {
+    public static JNotepadMenuBar getInstance() {
         return MENU_BAR;
     }
 

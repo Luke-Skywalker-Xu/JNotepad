@@ -9,8 +9,8 @@ import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.controller.manager;
 
-import org.jcnc.jnotepad.Interface.ControllerInterface;
+import org.jcnc.jnotepad.Interface.ControllerAble;
 import org.jcnc.jnotepad.controller.event.handler.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.OpenFile;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author 许轲
  */
-public class Controller implements ControllerInterface {
+public class Controller implements ControllerAble {
 
     private static final Controller INSTANCE = new Controller();
 

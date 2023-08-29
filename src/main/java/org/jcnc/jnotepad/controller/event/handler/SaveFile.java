@@ -7,7 +7,7 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.slf4j.Logger;
 
 import java.io.File;
