@@ -7,11 +7,13 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.controller.event.handler.*;
+import org.jcnc.jnotepad.controller.event.handler.menuBar.*;
+import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.top.tools.JNotepadToolBar;
 import org.slf4j.Logger;
 
 import java.util.*;
@@ -109,6 +111,14 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private RadioMenuItem englishItem;
     private final Map<String, MenuItem> itemMap = new HashMap<>();
+
+    /**
+     * 工具栏
+     */
+    JNotepadToolBar toolBar = JNotepadToolBar.getInstance();
+
+    // 获取工具栏中的setButton
+    Button setButton = toolBar.getSetButton();
 
     /**
      * 设置当前语言选中状态
@@ -278,6 +288,7 @@ public class JNotepadMenuBar extends MenuBar {
         saveAsItem.setOnAction(new SaveAsFile());
         openConfigItem.setOnAction(new OpenConfig());
         renameItem.setOnAction(new RenameFile());
+        setButton.setOnAction(new SetBtn());
         lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 1. 更新全局配置
             AppConfigController.getInstance().setAutoLineConfig(after);

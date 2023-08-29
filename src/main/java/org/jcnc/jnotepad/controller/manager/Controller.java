@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.controller.manager;
 
 import org.jcnc.jnotepad.Interface.ControllerAble;
-import org.jcnc.jnotepad.controller.event.handler.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.OpenFile;
+import org.jcnc.jnotepad.controller.event.handler.menuBar.NewFile;
+import org.jcnc.jnotepad.controller.event.handler.menuBar.OpenFile;
 
 import java.io.File;
 import java.util.List;

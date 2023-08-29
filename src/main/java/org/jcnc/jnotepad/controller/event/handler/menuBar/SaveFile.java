@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller.event.handler;
+package org.jcnc.jnotepad.controller.event.handler.menuBar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

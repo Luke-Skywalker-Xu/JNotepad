@@ -7,6 +7,9 @@ import javafx.scene.image.ImageView;
 
 public class JNotepadToolBar extends ToolBar {
     private static final JNotepadToolBar INSTANCE = new JNotepadToolBar();
+
+    Button setButton = new Button();
+
     private JNotepadToolBar() {
         // 创建工具栏上的按钮
         Image image = new Image("tools.png"); // 替换为你的图片文件路径
@@ -16,12 +19,15 @@ public class JNotepadToolBar extends ToolBar {
         imageView.setScaleX(2.5); // 设置水平缩放比例
         imageView.setScaleY(2.5); // 设置垂直缩放比例
         // 设置缩放比例
-        Button setButton = new Button();
         setButton.setGraphic(imageView);
 
         // 将按钮添加到工具栏
         getItems().addAll(setButton);
 
+    }
+
+    public Button getSetButton() {
+        return setButton;
     }
 
     public static JNotepadToolBar getInstance() {

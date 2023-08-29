@@ -1,12 +1,12 @@
 package org.jcnc.jnotepad.ui.root.top.tools;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 public class ToolHBox extends HBox {
     private static final ToolHBox INSTANCE = new ToolHBox();
-
 
     private ToolHBox() {
 
@@ -18,5 +18,8 @@ public class ToolHBox extends HBox {
     public static ToolHBox getInstance() {
         return INSTANCE;
     }
+
+
+
 
 }
