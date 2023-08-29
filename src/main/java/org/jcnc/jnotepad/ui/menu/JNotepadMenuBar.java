@@ -76,6 +76,10 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private MenuItem saveItem;
     /**
+     * 重命名
+     */
+    private MenuItem renameItem;
+    /**
      * 增加
      */
     private MenuItem addItem;
@@ -207,7 +211,11 @@ public class JNotepadMenuBar extends MenuBar {
         UIResourceBundle.bindStringProperty(saveAsItem.textProperty(), SAVE_AS);
         itemMap.put("saveAsItem", saveAsItem);
 
-        fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem);
+        renameItem = new MenuItem();
+        UIResourceBundle.bindStringProperty(renameItem.textProperty(), RENAME);
+        itemMap.put("renameItem", renameItem);
+
+        fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem, renameItem);
     }
 
     /**
@@ -269,6 +277,7 @@ public class JNotepadMenuBar extends MenuBar {
         saveItem.setOnAction(new SaveFile());
         saveAsItem.setOnAction(new SaveAsFile());
         openConfigItem.setOnAction(new OpenConfig());
+        renameItem.setOnAction(new RenameFile());
         lineFeedItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 1. 更新全局配置
             AppConfigController.getInstance().setAutoLineConfig(after);

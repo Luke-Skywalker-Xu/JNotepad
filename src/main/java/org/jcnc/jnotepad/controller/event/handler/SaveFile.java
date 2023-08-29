@@ -7,7 +7,6 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.slf4j.Logger;
 
@@ -36,10 +35,8 @@ public class SaveFile implements EventHandler<ActionEvent> {
         if (selectedTab == null) {
             return;
         }
-        // 获取当前Tab页的文本编辑区
-        LineNumberTextArea textArea = (LineNumberTextArea) selectedTab.getContent();
         // 打开的是非关联文件，则调用另存为api
-        if (!textArea.isRelevance()) {
+        if (!selectedTab.isRelevance()) {
             logger.info("当前保存文件为非关联打开文件，调用另存为方法");
             saveTab(this.getClass());
         } else {
@@ -80,7 +77,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
                 LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
                 selectedTab.save();
                 // 将保存后的文件设置为已关联
-                selectedTab.getLineNumberTextArea().setRelevance(true);
+                selectedTab.setRelevance(true);
                 // 更新Tab页标签上的文件名
                 selectedTab.setText(file.getName());
                 // 将文件对象保存到Tab页的UserData中

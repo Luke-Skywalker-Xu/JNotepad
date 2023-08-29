@@ -20,6 +20,8 @@ public class TextConstants {
     public static final String NEW = "NEW";
     public static final String OPEN = "OPEN";
     public static final String SAVE_AS = "SAVE_AS";
+
+    public static final String RENAME = "RENAME";
     public static final String SET = "SET";
     public static final String WORD_WRAP = "WORD_WRAP";
     public static final String PLUGIN = "PLUGIN";
@@ -37,8 +39,14 @@ public class TextConstants {
     public static final String ENCODE = "ENCODE";
 
     /// Config 文本常量
+    /**
+     * 英文小写
+     */
     public static final String ENGLISH = "english";
 
+    /**
+     * 中文小写
+     */
     public static final String CHINESE = "chinese";
 
 }
