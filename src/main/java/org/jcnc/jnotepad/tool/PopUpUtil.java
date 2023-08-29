@@ -9,8 +9,6 @@ import javafx.scene.control.Alert;
  */
 public class PopUpUtil {
 
-    private static final ThreadLocal<Alert> ERROR_ALERTS = ThreadLocal.withInitial(() -> new Alert(Alert.AlertType.ERROR));
-
     private PopUpUtil() {
     }
 
@@ -22,11 +20,11 @@ public class PopUpUtil {
      * @param message    信息
      */
     public static void errorAlert(String title, String headerText, String message) {
-        Alert alert = ERROR_ALERTS.get();
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(headerText);
         alert.setContentText(message);
         alert.showAndWait();
-        ERROR_ALERTS.remove();
     }
+
 }

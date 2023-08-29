@@ -11,7 +11,6 @@ import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -85,8 +84,6 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     public void getText(File file) {
         LineNumberTextArea textArea = createNewTextArea();
-        // 设置当前标签页关联本地文件
-        textArea.setRelevance(true);
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
         try (BufferedReader reader = new BufferedReader(new FileReader(file, encoding))) {
@@ -100,10 +97,11 @@ public class OpenFile implements EventHandler<ActionEvent> {
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
                 JNotepadTab tab = createNewTab(file.getName(), textArea, encoding);
+                // 设置当前标签页关联本地文件
+                tab.setRelevance(true);
                 tab.setUserData(file);
-                JNotepadTabPane.getInstance().addNewTab(tab);
+                UiUtil.getJnotepadTabPane().addNewTab(tab);
             });
-
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }

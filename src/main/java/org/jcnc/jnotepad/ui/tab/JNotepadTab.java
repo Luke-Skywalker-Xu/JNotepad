@@ -18,8 +18,21 @@ public class JNotepadTab extends Tab {
      * 默认关闭自动换行
      */
     private boolean autoLine = false;
+    /**
+     * 是否与本地文件关联
+     */
+    private boolean isRelevance = false;
+
     private final LineNumberTextArea lineNumberTextArea;
     private Charset charset = Charset.defaultCharset();
+
+    public boolean isRelevance() {
+        return isRelevance;
+    }
+
+    public void setRelevance(boolean relevance) {
+        isRelevance = relevance;
+    }
 
     public JNotepadTab(String tabTitle) {
         this(tabTitle, new LineNumberTextArea());

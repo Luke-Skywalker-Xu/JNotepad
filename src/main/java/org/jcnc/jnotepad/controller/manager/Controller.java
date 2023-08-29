@@ -28,7 +28,6 @@ public class Controller implements ControllerInterface {
      * 打开关联文件并创建文本区域。
      *
      * @param rawParameters 原始参数列表
-     * @return 创建的文本区域
      */
     @Override
     public void openAssociatedFileAndCreateTextArea(List<String> rawParameters) {

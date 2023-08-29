@@ -18,10 +18,6 @@ import java.io.IOException;
  * @author 许轲
  */
 public class LineNumberTextArea extends BorderPane {
-    /**
-     * 是否与本地文件关联
-     */
-    private boolean isRelevance = false;
     private final TextArea mainTextArea;
     private final TextArea lineNumberArea;
 
@@ -91,15 +87,6 @@ public class LineNumberTextArea extends BorderPane {
             }
         }
     }
-
-    public boolean isRelevance() {
-        return isRelevance;
-    }
-
-    public void setRelevance(boolean relevance) {
-        isRelevance = relevance;
-    }
-
     private void updateLineNumberWidth() {
         int numOfLines = mainTextArea.getParagraphs().size();
         int count = 1;
