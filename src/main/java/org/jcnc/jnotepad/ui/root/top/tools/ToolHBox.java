@@ -9,7 +9,6 @@ public class ToolHBox extends HBox {
 
 
     private ToolHBox() {
-        setHgrow(this, Priority.ALWAYS);
 
         HBox.setHgrow(JNotepadToolBar.getInstance(), Priority.ALWAYS); // 设置子节点水平拉伸
 
