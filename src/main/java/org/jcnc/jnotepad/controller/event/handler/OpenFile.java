@@ -74,7 +74,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      *
      * @param file 文件对象
      */
-    protected void openFile(File file) {
+    public void openFile(File file) {
         ThreadPoolManager.getThreadPool().submit(createOpenFileTask(file));
     }
 
