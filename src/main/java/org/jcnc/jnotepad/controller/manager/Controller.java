@@ -49,7 +49,7 @@ public class Controller implements ControllerInterface {
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            new OpenFile().createOpenFileTask(file);
+            new OpenFile().openFile(file);
         }
     }
 }
