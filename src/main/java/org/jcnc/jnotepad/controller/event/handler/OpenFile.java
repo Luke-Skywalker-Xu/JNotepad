@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
@@ -39,7 +40,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
         // 创建文件选择器
         FileChooser fileChooser = new FileChooser();
         // 显示文件选择对话框，并获取选中的文件
-        File file = fileChooser.showOpenDialog(null);
+        File file = fileChooser.showOpenDialog(UiUtil.getAppWindow());
         if (file != null) {
             openFile(file);
         }

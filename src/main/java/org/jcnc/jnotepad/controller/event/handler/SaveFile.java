@@ -6,10 +6,9 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -33,7 +32,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前tab页
-        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = UiUtil.getJnotepadtab();
         if (selectedTab == null) {
             return;
         }
@@ -51,7 +50,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键
                 AppConfigController.getInstance().loadConfig();
-                JNotepadMenuBar.getMenuBar().initShortcutKeys();
+                UiUtil.getMenuBar().initShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包!");
                 logger.info("已刷新快捷键!");
@@ -67,7 +66,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
      * @see LogUtil
      */
     protected void saveTab(Class<?> currentClass) {
-        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = UiUtil.getJnotepadtab();
         if (selectedTab != null) {
             // 创建一个文件窗口
             FileChooser fileChooser = new FileChooser();
@@ -75,7 +74,8 @@ public class SaveFile implements EventHandler<ActionEvent> {
             fileChooser.setInitialFileName(selectedTab.getText());
             // 设置保存文件类型
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
-            File file = fileChooser.showSaveDialog(null);
+            // 获取应用窗口并绑定
+            File file = fileChooser.showSaveDialog(UiUtil.getAppWindow());
             if (file != null) {
                 LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
                 selectedTab.save();

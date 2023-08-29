@@ -22,5 +22,8 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.constants;
     exports org.jcnc.jnotepad.ui;
     exports org.jcnc.jnotepad.controller.i18n;
+    exports org.jcnc.jnotepad.ui.tab;
+    exports org.jcnc.jnotepad.ui.status;
+    exports org.jcnc.jnotepad.ui.menu;
     opens org.jcnc.jnotepad.app.config;
 }

@@ -15,6 +15,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * 应用程序配置控制器
+ *
+ * @author songdragon
+ */
 public class AppConfigController {
 
     private static final Logger logger = LogUtil.getLogger(AppConfigController.class);
@@ -104,7 +109,7 @@ public class AppConfigController {
     /**
      * 获取当前配置文件所在目录
      *
-     * @return
+     * @return 所在目录
      */
     public String getDir() {
         return dir;

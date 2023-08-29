@@ -4,8 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
+import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
@@ -37,13 +37,13 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 设置当前标签页与本地文件无关联
         textArea.setRelevance(false);
         // TODO: refactor：统一TextArea新建、绑定监听器入口
-        ViewManager viewManager = ViewManager.getInstance();
+        ViewManager viewManager = UiUtil.getViewManager();
         // 将Tab页添加到TabPane中
         JNotepadTabPane.getInstance().addNewTab(new JNotepadTab(UIResourceBundle.getContent(TextConstants.NEW_FILE)
                 + viewManager.selfIncreaseAndGetTabIndex(),
                 textArea));
 
         // 更新编码信息
-        JNotepadStatusBox.getInstance().updateEncodingLabel();
+        UiUtil.getStatusBox().updateEncodingLabel();
     }
 }

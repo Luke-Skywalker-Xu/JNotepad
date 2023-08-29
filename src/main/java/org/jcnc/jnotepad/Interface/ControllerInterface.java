@@ -1,8 +1,5 @@
 package org.jcnc.jnotepad.Interface;
 
-import org.jcnc.jnotepad.ui.LineNumberTextArea;
-
-import java.io.File;
 import java.util.List;
 
 /**
