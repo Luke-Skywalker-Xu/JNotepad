@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.root.center.main;
 
 import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.root.center.main.top.RootTopVBox;
+import org.jcnc.jnotepad.root.center.main.top.MainTopVBox;
 import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
 
 public class MainBorderPane extends AbstractBorderPane {
@@ -18,7 +18,7 @@ public class MainBorderPane extends AbstractBorderPane {
 
         this.setCenter(JNotepadTabPane.getInstance());
 
-        this.setTopComponent(RootTopVBox.getInstance());
+        this.setTopComponent(MainTopVBox.getInstance());
     }
 
     public static MainBorderPane getInstance() {

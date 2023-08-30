@@ -4,16 +4,16 @@ import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.root.center.main.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.root.center.main.top.tools.ToolHBox;
 
-public class RootTopVBox extends VBox {
-    private static final RootTopVBox INSTANCE = new RootTopVBox();
+public class MainTopVBox extends VBox {
+    private static final MainTopVBox INSTANCE = new MainTopVBox();
 
-    private RootTopVBox() {
+    private MainTopVBox() {
         // 在构造函数中初始化
         getChildren().add(JNotepadMenuBar.getInstance());
         getChildren().add(ToolHBox.getInstance());
     }
 
-    public static RootTopVBox getInstance() {
+    public static MainTopVBox getInstance() {
         return INSTANCE;
     }
 
