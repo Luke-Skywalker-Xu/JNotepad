@@ -45,6 +45,8 @@ public class RenameFile implements EventHandler<ActionEvent> {
             File newFile = fileChooser.showSaveDialog(UiUtil.getAppWindow());
             if (newFile != null) {
                 boolean rename = file.renameTo(newFile);
+                // 设置文件数据
+                jnotepadtab.setUserData(newFile);
                 if (rename) {
                     jnotepadtab.setText(newFile.getName());
                     logger.info("文件重命名成功");
