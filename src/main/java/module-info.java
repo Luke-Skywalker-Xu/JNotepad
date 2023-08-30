@@ -16,14 +16,16 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;
-    exports org.jcnc.jnotepad.controller.event.handler;
     exports org.jcnc.jnotepad.controller.manager;
     exports org.jcnc.jnotepad.view.manager;
     exports org.jcnc.jnotepad.constants;
-    exports org.jcnc.jnotepad.ui;
     exports org.jcnc.jnotepad.controller.i18n;
-    exports org.jcnc.jnotepad.ui.tab;
-    exports org.jcnc.jnotepad.ui.status;
-    exports org.jcnc.jnotepad.ui.menu;
+    exports org.jcnc.jnotepad.ui.root.center.tab;
+    exports org.jcnc.jnotepad.ui.root.bottom.status;
+    exports org.jcnc.jnotepad.ui.root.top.menu;
     opens org.jcnc.jnotepad.app.config;
+    exports org.jcnc.jnotepad.ui.module;
+    exports org.jcnc.jnotepad.ui.root.top.tools;
+    exports org.jcnc.jnotepad.controller.event.handler.tool;
+    exports org.jcnc.jnotepad.controller.event.handler.menuBar;
 }

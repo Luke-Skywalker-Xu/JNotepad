@@ -1,13 +1,13 @@
-package org.jcnc.jnotepad.ui.status;
+package org.jcnc.jnotepad.ui.root.bottom.status;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.module.AbstractHBox;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
 
@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
  *
  * @author songdragon
  */
-public class JNotepadStatusBox extends HBox {
+public class JNotepadStatusBox extends AbstractHBox {
 
     private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
     /**

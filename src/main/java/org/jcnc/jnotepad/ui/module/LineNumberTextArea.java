@@ -1,13 +1,13 @@
-package org.jcnc.jnotepad.ui;
+package org.jcnc.jnotepad.ui.module;
 
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 
 import java.io.BufferedWriter;
 import java.io.File;

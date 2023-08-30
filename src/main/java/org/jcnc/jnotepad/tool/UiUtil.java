@@ -1,10 +1,10 @@
 package org.jcnc.jnotepad.tool;
 
 import javafx.stage.Window;
-import org.jcnc.jnotepad.ui.menu.JNotepadMenuBar;
-import org.jcnc.jnotepad.ui.status.JNotepadStatusBox;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 /**
@@ -32,12 +32,12 @@ public class UiUtil {
     /**
      * 菜单栏组件
      */
-    private static final JNotepadMenuBar MENU_BAR = JNotepadMenuBar.getMenuBar();
+    private static final JNotepadMenuBar MENU_BAR = JNotepadMenuBar.getInstance();
 
     /**
      * 获取标签页布局组件
      *
-     * @return org.jcnc.jnotepad.ui.tab.JNotepadTabPane
+     * @return org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane
      * @apiNote JNotepadTabPane.getInstance()
      * @see JNotepadTabPane
      */
@@ -49,7 +49,7 @@ public class UiUtil {
     /**
      * 获取标签页组件
      *
-     * @return org.jcnc.jnotepad.ui.tab.JNotepadTab
+     * @return org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab
      * @apiNote JNotepadTabPane.getInstance().getSelected()<br>获取当前选中的标签页
      * @see JNotepadTabPane
      */
@@ -83,7 +83,7 @@ public class UiUtil {
     /**
      * 获取状态栏组件
      *
-     * @return org.jcnc.jnotepad.ui.status.JNotepadStatusBox
+     * @return org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox
      * @since 2023/8/29 14:14
      */
     public static JNotepadStatusBox getStatusBox() {
@@ -93,7 +93,7 @@ public class UiUtil {
     /**
      * 获取菜单栏组件
      *
-     * @return org.jcnc.jnotepad.ui.menu.JNotepadMenuBar
+     * @return org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar
      * @since 2023/8/29 14:15
      */
     public static JNotepadMenuBar getMenuBar() {

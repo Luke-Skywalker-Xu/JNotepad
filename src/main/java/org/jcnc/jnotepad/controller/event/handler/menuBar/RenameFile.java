@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller.event.handler;
+package org.jcnc.jnotepad.controller.event.handler.menuBar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,7 +7,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.tab.JNotepadTab;
+import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.slf4j.Logger;
 
 import java.io.File;
