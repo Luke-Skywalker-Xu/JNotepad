@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
  */
 public class JNotepadTab extends Tab {
 
+    private final LineNumberTextArea lineNumberTextArea;
     /**
      * 默认关闭自动换行
      */
@@ -22,17 +23,7 @@ public class JNotepadTab extends Tab {
      * 是否与本地文件关联
      */
     private boolean isRelevance = false;
-
-    private final LineNumberTextArea lineNumberTextArea;
     private Charset charset = Charset.defaultCharset();
-
-    public boolean isRelevance() {
-        return isRelevance;
-    }
-
-    public void setRelevance(boolean relevance) {
-        isRelevance = relevance;
-    }
 
     public JNotepadTab(String tabTitle) {
         this(tabTitle, new LineNumberTextArea());
@@ -48,6 +39,14 @@ public class JNotepadTab extends Tab {
         this.setContent(lineNumberTextArea);
         setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
+    }
+
+    public boolean isRelevance() {
+        return isRelevance;
+    }
+
+    public void setRelevance(boolean relevance) {
+        isRelevance = relevance;
     }
 
     public boolean isAutoLine() {

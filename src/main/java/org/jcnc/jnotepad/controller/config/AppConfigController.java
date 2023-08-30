@@ -22,25 +22,21 @@ import java.util.List;
  */
 public class AppConfigController {
 
-    private static final Logger logger = LogUtil.getLogger(AppConfigController.class);
-
-    private static final AppConfigController INSTANCE = new AppConfigController();
-
-    public static AppConfigController getInstance() {
-        return INSTANCE;
-    }
-
     /**
      * 配置文件名
      */
     public static final String CONFIG_NAME = "jnotepadConfig.json";
-
+    private static final Logger logger = LogUtil.getLogger(AppConfigController.class);
+    private static final AppConfigController INSTANCE = new AppConfigController();
     private AppConfig appConfig;
     private String dir;
-
     private AppConfigController() {
         setDir(Paths.get(System.getProperty("user.home"), ".jnotepad").toString());
         loadConfig();
+    }
+
+    public static AppConfigController getInstance() {
+        return INSTANCE;
     }
 
     /**

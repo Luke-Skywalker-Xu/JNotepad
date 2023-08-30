@@ -3,9 +3,9 @@ package org.jcnc.jnotepad.controller.event.handler.menuBar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             // 如果该文件是配置文件则刷新快捷键
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键
-                AppConfigController.getInstance().loadConfig();
+                SingletonUtil.getAppConfigController().loadConfig();
                 UiUtil.getMenuBar().initShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包!");

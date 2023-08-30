@@ -17,6 +17,10 @@ public class JNotepadTabPane extends TabPane {
         initListeners();
     }
 
+    public static JNotepadTabPane getInstance() {
+        return TAB_PANE;
+    }
+
     /**
      * 初始化监听器
      */
@@ -32,10 +36,6 @@ public class JNotepadTabPane extends TabPane {
                     UiUtil.getStatusBox().updateWhenTabSelected();
                 }
         );
-    }
-
-    public static JNotepadTabPane getInstance() {
-        return TAB_PANE;
     }
 
     /**

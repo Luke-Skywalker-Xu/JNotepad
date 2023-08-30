@@ -8,5 +8,6 @@ public interface HBoxAble {
     void addChild(Node node);
 
     void addChild(Node... nodes);
+
     HBox getHBox();
 }

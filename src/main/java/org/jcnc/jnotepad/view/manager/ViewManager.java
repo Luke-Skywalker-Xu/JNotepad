@@ -3,9 +3,9 @@ package org.jcnc.jnotepad.view.manager;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.ui.root.top.RootTopVBox;
 import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.top.RootTopVBox;
 
 
 /**
@@ -15,27 +15,26 @@ import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
  */
 public class ViewManager {
 
-    private int tabIndex = 0;
+    private static ViewManager instance = null;
 
     // 主界面布局
+    private int tabIndex = 0;
     /**
      * 主布局
      */
     private BorderPane root;
 
-    private static ViewManager instance = null;
-
 
     /**
-     * 自增并获取标签页索引
+     * 构造函数。设置场景和根布局。
      *
-     * @return int 标签页索引
-     * @apiNote ++tabIndex
+     * @param scene 与视图相关联的JavaFX场景。
      */
-    public int selfIncreaseAndGetTabIndex() {
-        return ++tabIndex;
-    }
+    private ViewManager(Scene scene) {
+        root = new BorderPane();
+        scene.setRoot(root);
 
+    }
 
     /**
      * 获取ViewManager的实例。如果实例不存在，则创建一个新实例。
@@ -59,14 +58,13 @@ public class ViewManager {
     }
 
     /**
-     * 构造函数。设置场景和根布局。
+     * 自增并获取标签页索引
      *
-     * @param scene 与视图相关联的JavaFX场景。
+     * @return int 标签页索引
+     * @apiNote ++tabIndex
      */
-    private ViewManager(Scene scene) {
-        root = new BorderPane();
-        scene.setRoot(root);
-
+    public int selfIncreaseAndGetTabIndex() {
+        return ++tabIndex;
     }
 
     /**

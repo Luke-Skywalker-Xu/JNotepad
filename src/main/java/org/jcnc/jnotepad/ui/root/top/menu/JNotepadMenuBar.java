@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.AppConfig;
-import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menuBar.*;
 import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
@@ -27,20 +27,20 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
  */
 public class JNotepadMenuBar extends MenuBar {
 
+    private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
+    private final Map<String, MenuItem> itemMap = new HashMap<>();
     /**
      * 标签页布局组件封装。
      */
     JNotepadTabPane jNotepadTabPane = JNotepadTabPane.getInstance();
-
-    private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
-
     AppConfigController appConfigController = AppConfigController.getInstance();
     Logger logger = LogUtil.getLogger(this.getClass());
-
-    private JNotepadMenuBar() {
-        initMenuBar();
-    }
-
+    /**
+     * 工具栏
+     */
+    JNotepadToolBar toolBar = JNotepadToolBar.getInstance();
+    // 获取工具栏中的setButton
+    Button setButton = toolBar.getSetButton();
     /**
      * 文件菜单
      */
@@ -49,18 +49,16 @@ public class JNotepadMenuBar extends MenuBar {
      * 设置菜单
      */
     private Menu setMenu;
+
+    ///  菜单按钮
     /**
      * 插件菜单
      */
     private Menu pluginMenu;
-
     /**
      * 语言菜单
      */
     private Menu languageMenu;
-
-    ///  菜单按钮
-
     /**
      * 新建
      */
@@ -101,7 +99,6 @@ public class JNotepadMenuBar extends MenuBar {
      * 置顶按钮
      */
     private CheckMenuItem topItem;
-
     /**
      * 中文选项
      */
@@ -110,15 +107,14 @@ public class JNotepadMenuBar extends MenuBar {
      * 英文选项
      */
     private RadioMenuItem englishItem;
-    private final Map<String, MenuItem> itemMap = new HashMap<>();
 
-    /**
-     * 工具栏
-     */
-    JNotepadToolBar toolBar = JNotepadToolBar.getInstance();
+    private JNotepadMenuBar() {
+        initMenuBar();
+    }
 
-    // 获取工具栏中的setButton
-    Button setButton = toolBar.getSetButton();
+    public static JNotepadMenuBar getInstance() {
+        return MENU_BAR;
+    }
 
     /**
      * 设置当前语言选中状态
@@ -176,17 +172,17 @@ public class JNotepadMenuBar extends MenuBar {
         logger.info("初始化语言菜单!");
         // 语言菜单
         languageMenu = new Menu();
-        UIResourceBundle.bindStringProperty(languageMenu.textProperty(), LANGUAGE);
+        UiResourceBundle.bindStringProperty(languageMenu.textProperty(), LANGUAGE);
         ToggleGroup languageToggleGroup = new ToggleGroup();
 
         chineseItem = new RadioMenuItem();
-        UIResourceBundle.bindStringProperty(chineseItem.textProperty(), UPPER_CHINESE);
+        UiResourceBundle.bindStringProperty(chineseItem.textProperty(), UPPER_CHINESE);
         chineseItem.setUserData(Locale.CHINESE);
         itemMap.put("chineseItem", chineseItem);
         languageToggleGroup.getToggles().add(chineseItem);
 
         englishItem = new RadioMenuItem();
-        UIResourceBundle.bindStringProperty(englishItem.textProperty(), UPPER_ENGLISH);
+        UiResourceBundle.bindStringProperty(englishItem.textProperty(), UPPER_ENGLISH);
         englishItem.setUserData(Locale.ENGLISH);
         itemMap.put("englishItem", englishItem);
         languageToggleGroup.getToggles().add(englishItem);
@@ -202,27 +198,27 @@ public class JNotepadMenuBar extends MenuBar {
         logger.info("初始化文件菜单!");
         // 文件菜单
         fileMenu = new Menu();
-        UIResourceBundle.bindStringProperty(fileMenu.textProperty(), FILE);
+        UiResourceBundle.bindStringProperty(fileMenu.textProperty(), FILE);
 
         newItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(newItem.textProperty(), NEW);
+        UiResourceBundle.bindStringProperty(newItem.textProperty(), NEW);
 
         itemMap.put("newItem", newItem);
 
         openItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(openItem.textProperty(), OPEN);
+        UiResourceBundle.bindStringProperty(openItem.textProperty(), OPEN);
         itemMap.put("openItem", openItem);
 
         saveItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(saveItem.textProperty(), SAVE);
+        UiResourceBundle.bindStringProperty(saveItem.textProperty(), SAVE);
         itemMap.put("saveItem", saveItem);
 
         saveAsItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(saveAsItem.textProperty(), SAVE_AS);
+        UiResourceBundle.bindStringProperty(saveAsItem.textProperty(), SAVE_AS);
         itemMap.put("saveAsItem", saveAsItem);
 
         renameItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(renameItem.textProperty(), RENAME);
+        UiResourceBundle.bindStringProperty(renameItem.textProperty(), RENAME);
         itemMap.put("renameItem", renameItem);
 
         fileMenu.getItems().addAll(newItem, openItem, saveItem, saveAsItem, renameItem);
@@ -235,19 +231,19 @@ public class JNotepadMenuBar extends MenuBar {
         logger.info("初始化设置菜单");
         // 设置菜单
         setMenu = new Menu();
-        UIResourceBundle.bindStringProperty(setMenu.textProperty(), SET);
+        UiResourceBundle.bindStringProperty(setMenu.textProperty(), SET);
 
         lineFeedItem = new CheckMenuItem();
-        UIResourceBundle.bindStringProperty(lineFeedItem.textProperty(), WORD_WRAP);
+        UiResourceBundle.bindStringProperty(lineFeedItem.textProperty(), WORD_WRAP);
         itemMap.put("lineFeedItem", lineFeedItem);
         lineFeedItem.selectedProperty().set(true);
 
         topItem = new CheckMenuItem();
-        UIResourceBundle.bindStringProperty(topItem.textProperty(), TOP);
+        UiResourceBundle.bindStringProperty(topItem.textProperty(), TOP);
         itemMap.put("topItem", topItem);
 
         openConfigItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(openConfigItem.textProperty(), OPEN_CONFIGURATION_FILE);
+        UiResourceBundle.bindStringProperty(openConfigItem.textProperty(), OPEN_CONFIGURATION_FILE);
         itemMap.put("openConfigItem", openConfigItem);
 
         itemMap.put("languageMenu", languageMenu);
@@ -261,21 +257,17 @@ public class JNotepadMenuBar extends MenuBar {
         logger.info("初始化插件菜单!");
         // 插件菜单
         pluginMenu = new Menu();
-        UIResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
+        UiResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
 
         addItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(addItem.textProperty(), ADD_PLUGIN);
+        UiResourceBundle.bindStringProperty(addItem.textProperty(), ADD_PLUGIN);
         itemMap.put("addItem", addItem);
 
         countItem = new MenuItem();
-        UIResourceBundle.bindStringProperty(countItem.textProperty(), STATISTICS);
+        UiResourceBundle.bindStringProperty(countItem.textProperty(), STATISTICS);
         itemMap.put("countItem", countItem);
 
         pluginMenu.getItems().addAll(addItem, countItem);
-    }
-
-    public static JNotepadMenuBar getInstance() {
-        return MENU_BAR;
     }
 
     /**

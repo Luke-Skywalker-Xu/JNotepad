@@ -15,9 +15,6 @@ import static com.fasterxml.jackson.core.util.DefaultIndenter.SYS_LF;
  * @author songdragon
  */
 public class JsonUtil {
-    private JsonUtil() {
-    }
-
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static {
@@ -27,6 +24,9 @@ public class JsonUtil {
         prettyPrinter.indentArraysWith(di);
         prettyPrinter.indentObjectsWith(di);
         OBJECT_MAPPER.setDefaultPrettyPrinter(prettyPrinter);
+    }
+
+    private JsonUtil() {
     }
 
     public static String toJsonString(Object o) {

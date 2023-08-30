@@ -7,9 +7,6 @@ package org.jcnc.jnotepad.constants;
  */
 
 public class AppConstants {
-    private AppConstants() {
-    }
-
     /**
      * 初始宽度
      */
@@ -22,5 +19,8 @@ public class AppConstants {
      * logo地址
      */
     public static final String APP_ICON = "/img/icon.png";
+
+    private AppConstants() {
+    }
 
 }

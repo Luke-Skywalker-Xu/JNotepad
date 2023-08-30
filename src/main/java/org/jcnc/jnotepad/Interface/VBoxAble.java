@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.Interface;
 
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public interface VBoxAble {

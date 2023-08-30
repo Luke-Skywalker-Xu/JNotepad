@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.ui.root.bottom.status;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.ui.module.AbstractHBox;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
@@ -21,13 +21,11 @@ import java.nio.charset.Charset;
 public class JNotepadStatusBox extends AbstractHBox {
 
     private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
+    private static final String STATUS_LABEL_FORMAT = "%s : %d \t%s: %d \t%s: %d \t";
     /**
      * 字数统计及光标
      */
     private Label statusLabel;
-    private static final String STATUS_LABEL_FORMAT = "%s : %d \t%s: %d \t%s: %d \t";
-
-
     /**
      * 显示文本编码
      */
@@ -36,6 +34,10 @@ public class JNotepadStatusBox extends AbstractHBox {
 
     private JNotepadStatusBox() {
         initStatusBox();
+    }
+
+    public static JNotepadStatusBox getInstance() {
+        return STATUS_BOX;
     }
 
     /**
@@ -56,12 +58,8 @@ public class JNotepadStatusBox extends AbstractHBox {
         this.getChildren().add(encodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));
 
-        UIResourceBundle.getInstance().addListener((observable, oldValue, newValue) -> updateWhenTabSelected());
+        UiResourceBundle.getInstance().addListener((observable, oldValue, newValue) -> updateWhenTabSelected());
 
-    }
-
-    public static JNotepadStatusBox getInstance() {
-        return STATUS_BOX;
     }
 
     public void updateEncodingLabel() {
@@ -143,9 +141,9 @@ public class JNotepadStatusBox extends AbstractHBox {
     }
 
     protected String getStatusBarFormattedText(int row, int column, int wordCount) {
-        String rowText = UIResourceBundle.getContent(TextConstants.ROW);
-        String columnText = UIResourceBundle.getContent(TextConstants.COLUMN);
-        String wordCountText = UIResourceBundle.getContent(TextConstants.WORD_COUNT);
+        String rowText = UiResourceBundle.getContent(TextConstants.ROW);
+        String columnText = UiResourceBundle.getContent(TextConstants.COLUMN);
+        String wordCountText = UiResourceBundle.getContent(TextConstants.WORD_COUNT);
         return String.format(STATUS_LABEL_FORMAT,
                 rowText,
                 row,
@@ -158,6 +156,6 @@ public class JNotepadStatusBox extends AbstractHBox {
 
     protected String getEncodingFormattedText(String encoding) {
         String encodingLabelFormat = "\t%s : %s";
-        return String.format(encodingLabelFormat, UIResourceBundle.getContent(TextConstants.ENCODE), encoding);
+        return String.format(encodingLabelFormat, UiResourceBundle.getContent(TextConstants.ENCODE), encoding);
     }
 }
