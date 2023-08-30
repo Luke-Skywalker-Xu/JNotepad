@@ -75,13 +75,11 @@ public class SaveFile implements EventHandler<ActionEvent> {
             File file = fileChooser.showSaveDialog(UiUtil.getAppWindow());
             if (file != null) {
                 LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
-                selectedTab.save();
+                selectedTab.save(file);
                 // 将保存后的文件设置为已关联
                 selectedTab.setRelevance(true);
                 // 更新Tab页标签上的文件名
                 selectedTab.setText(file.getName());
-                // 将文件对象保存到Tab页的UserData中
-                selectedTab.setUserData(file);
             }
         }
     }

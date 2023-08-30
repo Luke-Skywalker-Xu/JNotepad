@@ -7,6 +7,7 @@ import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
+import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +18,8 @@ import java.io.IOException;
  * @author 许轲
  */
 public class LineNumberTextArea extends BorderPane {
+
+    private static final Logger logger=LogUtil.getLogger(LineNumberTextArea.class);
     static final int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
     private static final int MIN_LINE_NUMBER_WIDTH = 30;
@@ -72,17 +75,21 @@ public class LineNumberTextArea extends BorderPane {
      */
     public void save() {
         JNotepadTab tab = UiUtil.getJnotepadtab();
-        if (tab != null) {
-            File file = (File) tab.getUserData();
-            String newValue = this.mainTextArea.getText();
-            if (file != null) {
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, tab.getCharset()))) {
-                    writer.write(newValue);
-                    LogUtil.getLogger(this.getClass()).info("正在自动保存---");
-                } catch (IOException ignored) {
-                    LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
-                }
-            }
+        if (tab == null) {
+            return;
+        }
+        File file = (File) tab.getUserData();
+        String newValue = this.mainTextArea.getText();
+        if (file == null) {
+            // 文件对象不存在
+            logger.warn("Tab上没有关联文件信息");
+            return;
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, tab.getCharset()))) {
+            writer.write(newValue);
+            LogUtil.getLogger(this.getClass()).info("正在自动保存---");
+        } catch (IOException ignored) {
+            LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
     }
 
