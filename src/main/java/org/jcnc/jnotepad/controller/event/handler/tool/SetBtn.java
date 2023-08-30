@@ -21,7 +21,7 @@ public class SetBtn implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        SetStage.getInstance();
+        SetStage.getInstance().openSetStage();
     }
 
 
