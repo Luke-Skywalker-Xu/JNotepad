@@ -4,6 +4,7 @@ import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 
+import java.io.File;
 import java.nio.charset.Charset;
 
 /**
@@ -70,7 +71,22 @@ public class JNotepadTab extends Tab {
         this.charset = charset;
     }
 
+    /**
+     * 保存文件内容
+     */
     public void save() {
         this.lineNumberTextArea.save();
+    }
+
+    /**
+     * 保存为指定文件
+     * @param file 新文件
+     */
+    public void save(File file) {
+        if (file == null) {
+            return;
+        }
+        this.setUserData(file);
+        save();
     }
 }
