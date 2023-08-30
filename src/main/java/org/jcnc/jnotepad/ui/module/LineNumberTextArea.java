@@ -3,10 +3,10 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;

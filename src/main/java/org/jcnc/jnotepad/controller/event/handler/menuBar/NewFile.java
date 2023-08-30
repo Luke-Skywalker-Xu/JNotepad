@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 

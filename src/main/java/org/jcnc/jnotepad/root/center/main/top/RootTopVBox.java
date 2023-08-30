@@ -1,8 +1,8 @@
-package org.jcnc.jnotepad.ui.root.top;
+package org.jcnc.jnotepad.root.center.main.top;
 
 import javafx.scene.layout.VBox;
-import org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar;
-import org.jcnc.jnotepad.ui.root.top.tools.ToolHBox;
+import org.jcnc.jnotepad.root.center.main.top.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.root.center.main.top.tools.ToolHBox;
 
 public class RootTopVBox extends VBox {
     private static final RootTopVBox INSTANCE = new RootTopVBox();

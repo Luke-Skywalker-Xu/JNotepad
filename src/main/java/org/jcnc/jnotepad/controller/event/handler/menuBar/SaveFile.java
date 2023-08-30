@@ -4,10 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.slf4j.Logger;
 
 import java.io.File;

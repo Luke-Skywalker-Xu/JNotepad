@@ -1,13 +1,13 @@
-package org.jcnc.jnotepad.ui.root.bottom.status;
+package org.jcnc.jnotepad.root.center.main.bottom.status;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.ui.module.AbstractHBox;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 
 import java.nio.charset.Charset;
 

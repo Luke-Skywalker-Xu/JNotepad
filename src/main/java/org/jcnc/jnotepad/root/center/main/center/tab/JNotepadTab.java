@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.root.center.tab;
+package org.jcnc.jnotepad.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
