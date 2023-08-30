@@ -56,8 +56,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
         // 如果当前不是关联文件则重命名标签页
         else {
             TextField textField = new TextField(jnotepadtab.getText());
-            // 设置文本框尺寸
-            textField.setPrefSize(120, 12);
+            textField.getStyleClass().add("tab-title-editable");
             // 清空标签页名称
             jnotepadtab.setText("");
             // 监听 Enter 键，完成编辑
@@ -83,6 +82,9 @@ public class RenameFile implements EventHandler<ActionEvent> {
             jnotepadtab.setClosable(false);
             // 设置 TextField 作为标签页的图形
             jnotepadtab.setGraphic(textField);
+            // 默认获取焦点并选中所有文字
+            textField.requestFocus();
+            textField.selectAll();
 
         }
     }

@@ -25,3 +25,12 @@
     -fx-border-color: white;
     -fx-background-color: white;
 }
+
+/* tab修改标签样式 */
+.tab-title-editable {
+    -fx-fx-border-width: 0;
+    -fx-max-width: 80px;
+    -fx-max-height: 30px;
+    -fx-font-size: 14px;
+    -fx-padding: 2px 2px 2px 2px;
+}
