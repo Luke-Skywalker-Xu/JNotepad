@@ -24,7 +24,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         // 获取当前标签页
         JNotepadTab jnotepadtab = UiUtil.getJnotepadtab();
-        if (jnotepadtab == null) {
+        if (jnotepadtab == null || jnotepadtab.getText().isEmpty()) {
             return;
         }
         // 判断当前是否为关联文件
