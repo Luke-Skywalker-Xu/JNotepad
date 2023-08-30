@@ -1,6 +1,5 @@
 package org.jcnc.jnotepad.root.right;
 
-import javafx.geometry.Insets;
 import org.jcnc.jnotepad.ui.module.AbstractVBox;
 
 public class RootRightSideBarVBox extends AbstractVBox {
@@ -12,8 +11,7 @@ public class RootRightSideBarVBox extends AbstractVBox {
     }
 
     private void initSidebarVBox() {
-        setPadding(new Insets(10));
-        setSpacing(10);
+
     }
 
     public static RootRightSideBarVBox getInstance() {

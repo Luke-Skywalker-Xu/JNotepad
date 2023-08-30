@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.root.center.main.bottom.status;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
@@ -46,6 +47,7 @@ public class JNotepadStatusBox extends AbstractHBox {
      * @since 2023/8/27 9:33
      */
     public void initStatusBox() {
+
         this.getChildren().clear();
         // 创建状态栏
         statusLabel = new Label();
@@ -57,9 +59,16 @@ public class JNotepadStatusBox extends AbstractHBox {
         this.getChildren().add(statusLabel);
         this.getChildren().add(encodingLabel);
         this.getProperties().put("borderpane-margin", new Insets(5, 10, 5, 10));
-
+        this.setAlignment(Pos.BASELINE_RIGHT);
         UiResourceBundle.getInstance().addListener((observable, oldValue, newValue) -> updateWhenTabSelected());
 
+        /*
+          第一个参数 10 表示上边距。
+          第二个参数 10 表示右边距。
+          第三个参数 10 表示下边距。
+          第四个参数 10 表示左边距。
+         */
+        setMargin(statusLabel, new Insets(5, 10, 5, 10));
     }
 
     public void updateEncodingLabel() {
@@ -75,7 +84,7 @@ public class JNotepadStatusBox extends AbstractHBox {
         if (encoding == null) {
             encoding = Charset.defaultCharset().name();
         }
-        this.encodingLabel.setText(getEncodingFormattedText(encoding));
+        this.encodingLabel.setText(getEncodingFormattedText(encoding) + "\t");
     }
 
     /**
@@ -155,7 +164,7 @@ public class JNotepadStatusBox extends AbstractHBox {
     }
 
     protected String getEncodingFormattedText(String encoding) {
-        String encodingLabelFormat = "\t%s : %s";
+        String encodingLabelFormat = "%s : %s";
         return String.format(encodingLabelFormat, UiResourceBundle.getContent(TextConstants.ENCODE), encoding);
     }
 }

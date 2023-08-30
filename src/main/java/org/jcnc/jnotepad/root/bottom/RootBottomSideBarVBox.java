@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.root.bottom;
 
-import javafx.geometry.Insets;
+import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.module.AbstractVBox;
 
 public class RootBottomSideBarVBox extends AbstractVBox {
@@ -12,8 +12,7 @@ public class RootBottomSideBarVBox extends AbstractVBox {
     }
 
     private void initSidebarVBox() {
-        setPadding(new Insets(10));
-        setSpacing(10);
+        getChildren().addAll(JNotepadStatusBox.getInstance());
     }
 
     public static RootBottomSideBarVBox getInstance() {
