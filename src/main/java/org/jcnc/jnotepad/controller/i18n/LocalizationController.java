@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.controller.i18n;
 
 import org.jcnc.jnotepad.LunchApp;
-import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.tool.SingletonUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -36,15 +36,14 @@ public class LocalizationController {
         SUPPORT_LANGUAGES.put(Locale.ENGLISH, ENGLISH);
     }
 
-    public static Locale getCurrentLocal() {
-        return Locale.getDefault();
+    private final AppConfigController appConfigController;
+
+    private LocalizationController() {
+        this.appConfigController = SingletonUtil.getAppConfigController();
     }
 
-    /**
-     * 初始化语言配置
-     */
-    public static void initLocal() {
-        setCurrentLocal(null);
+    public static Locale getCurrentLocal() {
+        return Locale.getDefault();
     }
 
     /**
@@ -65,19 +64,15 @@ public class LocalizationController {
         }
         Locale.setDefault(locale);
 
-        UIResourceBundle.getInstance().resetLocal(getCurrentLocal());
+        SingletonUtil.getUiResourceBundle().resetLocal(getCurrentLocal());
         LOCALIZATION_CONFIG.setLanguage(SUPPORT_LANGUAGES.get(locale));
     }
 
-    private LocalizationController() {
-        this.appConfigController = AppConfigController.getInstance();
-    }
-
-    private final AppConfigController appConfigController;
-
-
-    private void setLanguage(String language) {
-        appConfigController.updateLanguage(language);
+    /**
+     * 初始化语言配置
+     */
+    public static void initLocal() {
+        setCurrentLocal(null);
     }
 
     /**
@@ -87,5 +82,9 @@ public class LocalizationController {
      */
     public String getLanguage() {
         return appConfigController.getLanguage();
+    }
+
+    private void setLanguage(String language) {
+        appConfigController.updateLanguage(language);
     }
 }

@@ -15,31 +15,52 @@ import java.util.ResourceBundle;
  *
  * @author songdragon
  */
-public class UIResourceBundle {
+public class UiResourceBundle {
 
-    private static final UIResourceBundle INSTANCE = new UIResourceBundle();
+    private static final UiResourceBundle INSTANCE = new UiResourceBundle();
     /**
      * resource目录下的i18n/i18nXXX.properties
      */
     private static final String BASENAME = "i18n/i18n";
-
+    /**
+     * 资源文件的观察者绑定。
+     */
+    private final ObjectProperty<ResourceBundle> resources = new SimpleObjectProperty<>();
     /**
      * 当前语言
      */
     private Locale currentLocale;
 
-    public static UIResourceBundle getInstance() {
+    private UiResourceBundle() {
+
+    }
+
+    public static UiResourceBundle getInstance() {
         return INSTANCE;
     }
 
-    private UIResourceBundle() {
-
+    /**
+     * 工具方法：绑定StringProperty和Key对应的内容
+     *
+     * @param stringProperty 字符串属性
+     * @param key            键值
+     */
+    public static void bindStringProperty(StringProperty stringProperty, String key) {
+        if (stringProperty == null) {
+            return;
+        }
+        stringProperty.bind(getInstance().getStringBinding(key));
     }
 
     /**
-     * 资源文件的观察者绑定。
+     * 获取当前资源中的key值
+     *
+     * @param key 资源所对应键
+     * @return 当前键所对应的值
      */
-    private final ObjectProperty<ResourceBundle> resources = new SimpleObjectProperty<>();
+    public static String getContent(String key) {
+        return INSTANCE.getResources().getString(key);
+    }
 
     /**
      * 获取当前资源文件
@@ -79,29 +100,6 @@ public class UIResourceBundle {
      */
     public StringBinding getStringBinding(String key) {
         return Bindings.createStringBinding(() -> getResources().getString(key), resourcesProperty());
-    }
-
-    /**
-     * 工具方法：绑定StringProperty和Key对应的内容
-     *
-     * @param stringProperty 字符串属性
-     * @param key            键值
-     */
-    public static void bindStringProperty(StringProperty stringProperty, String key) {
-        if (stringProperty == null) {
-            return;
-        }
-        stringProperty.bind(getInstance().getStringBinding(key));
-    }
-
-    /**
-     * 获取当前资源中的key值
-     *
-     * @param key 资源所对应键
-     * @return 当前键所对应的值
-     */
-    public static String getContent(String key) {
-        return INSTANCE.getResources().getString(key);
     }
 
     /**

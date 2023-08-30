@@ -8,19 +8,15 @@ package org.jcnc.jnotepad.constants;
  */
 public class TextConstants {
 
-    private TextConstants() {
-    }
+    public static final String TITLE = "title";
 
 
     /// GlobalConfig文本常量
-
-    public static final String TITLE = "title";
     public static final String SAVE = "SAVE";
     public static final String FILE = "FILE";
     public static final String NEW = "NEW";
     public static final String OPEN = "OPEN";
     public static final String SAVE_AS = "SAVE_AS";
-
     public static final String RENAME = "RENAME";
     public static final String SET = "SET";
     public static final String WORD_WRAP = "WORD_WRAP";
@@ -37,16 +33,18 @@ public class TextConstants {
     public static final String COLUMN = "COLUMN";
     public static final String WORD_COUNT = "WORD_COUNT";
     public static final String ENCODE = "ENCODE";
-
-    /// Config 文本常量
     /**
      * 英文小写
      */
     public static final String ENGLISH = "english";
 
+    /// Config 文本常量
     /**
      * 中文小写
      */
     public static final String CHINESE = "chinese";
+
+    private TextConstants() {
+    }
 
 }

@@ -17,11 +17,11 @@ import java.nio.charset.Charset;
  * @author 许轲
  */
 public class EncodingDetector {
-    private static final Logger LOG = LogUtil.getLogger(EncodingDetector.class);
     /**
      * 编码侦测概率，阈值：50%
      */
     public static final int THRESHOLD_CONFIDENCE = 50;
+    private static final Logger LOG = LogUtil.getLogger(EncodingDetector.class);
 
 
     private EncodingDetector() {

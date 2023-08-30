@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler.menuBar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
@@ -36,7 +36,7 @@ public class NewFile implements EventHandler<ActionEvent> {
         ViewManager viewManager = UiUtil.getViewManager();
         // 创建标签页
         JNotepadTab jNotepadTab = new JNotepadTab(
-                UIResourceBundle.getContent(TextConstants.NEW_FILE)
+                UiResourceBundle.getContent(TextConstants.NEW_FILE)
                         + viewManager.selfIncreaseAndGetTabIndex(),
                 textArea);
         // 设置当前标签页与本地文件无关联

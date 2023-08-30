@@ -3,11 +3,10 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.tool.SingletonUtil;
+import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,16 +17,15 @@ import java.io.IOException;
  * @author 许轲
  */
 public class LineNumberTextArea extends BorderPane {
-    private final TextArea mainTextArea;
-    private final TextArea lineNumberArea;
-
     static final int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
     private static final int MIN_LINE_NUMBER_WIDTH = 30;
+    private final TextArea mainTextArea;
+    private final TextArea lineNumberArea;
 
     public LineNumberTextArea() {
         mainTextArea = new TextArea();
-        mainTextArea.setWrapText(AppConfigController.getInstance().getAutoLineConfig());
+        mainTextArea.setWrapText(SingletonUtil.getAppConfigController().getAutoLineConfig());
 
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
@@ -58,12 +56,12 @@ public class LineNumberTextArea extends BorderPane {
 
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
 
-        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> JNotepadStatusBox.getInstance().updateWordCountStatusLabel());
+        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> UiUtil.getStatusBox().updateWordCountStatusLabel());
         this.textProperty().addListener((observable, oldValue, newValue) -> {
             // 更新行号
             updateLineNumberArea();
             // 更新状态栏
-            JNotepadStatusBox.getInstance().updateWordCountStatusLabel();
+            UiUtil.getStatusBox().updateWordCountStatusLabel();
             // 自动保存
             save();
         });
@@ -73,7 +71,7 @@ public class LineNumberTextArea extends BorderPane {
      * 以原文件编码格式写回文件
      */
     public void save() {
-        JNotepadTab tab = JNotepadTabPane.getInstance().getSelected();
+        JNotepadTab tab = UiUtil.getJnotepadtab();
         if (tab != null) {
             File file = (File) tab.getUserData();
             String newValue = this.mainTextArea.getText();
@@ -87,6 +85,7 @@ public class LineNumberTextArea extends BorderPane {
             }
         }
     }
+
     private void updateLineNumberWidth() {
         int numOfLines = mainTextArea.getParagraphs().size();
         int count = 1;

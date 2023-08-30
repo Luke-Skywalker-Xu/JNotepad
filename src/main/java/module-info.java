@@ -12,20 +12,24 @@ module org.jcnc.jnotepad {
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
     requires com.ibm.icu;
-    exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad;
+    exports org.jcnc.jnotepad.app.config;
+    exports org.jcnc.jnotepad.app.i18n;
+    exports org.jcnc.jnotepad.constants;
+    exports org.jcnc.jnotepad.controller.config;
+    exports org.jcnc.jnotepad.controller.manager;
+    exports org.jcnc.jnotepad.controller.i18n;
+    exports org.jcnc.jnotepad.controller.event.handler.tool;
+    exports org.jcnc.jnotepad.controller.event.handler.menuBar;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.Interface;
-    exports org.jcnc.jnotepad.controller.manager;
-    exports org.jcnc.jnotepad.view.manager;
-    exports org.jcnc.jnotepad.constants;
-    exports org.jcnc.jnotepad.controller.i18n;
     exports org.jcnc.jnotepad.ui.root.center.tab;
     exports org.jcnc.jnotepad.ui.root.bottom.status;
     exports org.jcnc.jnotepad.ui.root.top.menu;
-    opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.ui.module;
+    exports org.jcnc.jnotepad.ui.setStage;
     exports org.jcnc.jnotepad.ui.root.top.tools;
-    exports org.jcnc.jnotepad.controller.event.handler.tool;
-    exports org.jcnc.jnotepad.controller.event.handler.menuBar;
+    exports org.jcnc.jnotepad.view.manager;
+    opens org.jcnc.jnotepad.app.config;
+
 }

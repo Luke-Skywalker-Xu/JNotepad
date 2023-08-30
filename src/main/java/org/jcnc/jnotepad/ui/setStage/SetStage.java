@@ -4,10 +4,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.tool.UiUtil;
 
 /**
  * 设置窗口管理类，实现了单例模式。
@@ -16,13 +17,19 @@ import javafx.stage.Stage;
  */
 public class SetStage {
 
-    // 唯一的 SetStage 实例，使用单例模式
+    /**
+     * 唯一的 SetStage 实例，使用单例模式
+     */
     private static final SetStage SET_STAGE = new SetStage();
     private StackPane contentDisplay;
 
     private ListView<String> generalListView;
     private ListView<String> appearanceListView;
     private ListView<String> securityListView;
+
+    private SetStage() {
+        // 私有构造方法以实现单例模式
+    }
 
     /**
      * 获取 SetStage 的唯一实例。
@@ -31,10 +38,6 @@ public class SetStage {
      */
     public static SetStage getInstance() {
         return SET_STAGE;
-    }
-
-    private SetStage() {
-        // 私有构造方法以实现单例模式
     }
 
     /**
@@ -65,7 +68,8 @@ public class SetStage {
 
         // 创建一个分割面板，左侧是设置列表，右侧是内容显示区域
         SplitPane splitPane = new SplitPane(titledPaneContainer, contentDisplay);
-        splitPane.setDividerPositions(0.3); // 设置分割位置
+        // 设置分割位置
+        splitPane.setDividerPositions(0.3);
 
         // 创建设置窗口的场景
         Scene scene = new Scene(splitPane, 800, 600);
@@ -74,6 +78,7 @@ public class SetStage {
         Stage setStage = new Stage();
         setStage.setScene(scene);
         setStage.setTitle("设置窗口");
+        setStage.getIcons().add(UiUtil.getIcon());
         setStage.show();
     }
 
@@ -101,7 +106,4 @@ public class SetStage {
             contentDisplay.getChildren().setAll(new Label(selectedItem + " 的设置内容"));
         }
     }
-
-
-
 }

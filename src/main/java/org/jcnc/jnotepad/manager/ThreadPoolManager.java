@@ -13,9 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author gewuyou
  */
 public class ThreadPoolManager {
-    private ThreadPoolManager() {
-    }
-
     private static final Logger logger = LogUtil.getLogger(ThreadPoolManager.class);
     /**
      * 核心线程数
@@ -45,18 +42,6 @@ public class ThreadPoolManager {
      * 当前运行线程数
      */
     private static final AtomicInteger THREAD_COUNT = new AtomicInteger(1);
-
-    /**
-     * 当前运行线程数自减
-     *
-     * @apiNote 当你创建任务时，务必在最后执行一次该方法
-     * @see ThreadPoolManager
-     * @since 2023/8/26 22:00
-     */
-    public static void threadContSelfSubtracting() {
-        THREAD_COUNT.decrementAndGet();
-    }
-
     /**
      * 线程工厂
      */
@@ -77,6 +62,20 @@ public class ThreadPoolManager {
      */
     private static final ThreadPoolExecutor THREAD_POOL = new ThreadPoolExecutor(
             CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_TIME, TIME_UNIT, BLOCKING_QUEUE, THREAD_FACTORY, HANDLER);
+
+    private ThreadPoolManager() {
+    }
+
+    /**
+     * 当前运行线程数自减
+     *
+     * @apiNote 当你创建任务时，务必在最后执行一次该方法
+     * @see ThreadPoolManager
+     * @since 2023/8/26 22:00
+     */
+    public static void threadContSelfSubtracting() {
+        THREAD_COUNT.decrementAndGet();
+    }
 
     public static ExecutorService getThreadPool() {
         return THREAD_POOL;

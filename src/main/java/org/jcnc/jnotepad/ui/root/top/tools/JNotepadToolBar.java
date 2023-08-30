@@ -26,11 +26,11 @@ public class JNotepadToolBar extends ToolBar {
 
     }
 
-    public Button getSetButton() {
-        return setButton;
-    }
-
     public static JNotepadToolBar getInstance() {
         return INSTANCE;
+    }
+
+    public Button getSetButton() {
+        return setButton;
     }
 }

@@ -7,6 +7,7 @@ import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.ui.setStage.SetStage;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.util.Objects;
@@ -18,9 +19,6 @@ import java.util.Objects;
  * @author gewuyou
  */
 public class UiUtil {
-    private UiUtil() {
-    }
-
     /**
      * 标签页布局组件
      */
@@ -41,6 +39,23 @@ public class UiUtil {
      * 应用程序图标
      */
     private static final Image ICON = new Image(Objects.requireNonNull(UiUtil.class.getResource(AppConstants.APP_ICON)).toString());
+    /**
+     * 设置窗口
+     */
+    private static final SetStage SET_STAGE = SetStage.getInstance();
+
+    private UiUtil() {
+    }
+
+    /**
+     * 获取设置窗口
+     *
+     * @return org.jcnc.jnotepad.ui.setStage.SetStage
+     * @since 2023/8/30 12:39
+     */
+    public static SetStage getSetStage() {
+        return SET_STAGE;
+    }
 
     /**
      * 获取应用程序图标
