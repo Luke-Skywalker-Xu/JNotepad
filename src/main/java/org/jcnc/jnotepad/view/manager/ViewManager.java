@@ -3,9 +3,9 @@ package org.jcnc.jnotepad.view.manager;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.ui.root.top.RootTopVBox;
 import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.top.RootTopVBox;
 
 
 /**

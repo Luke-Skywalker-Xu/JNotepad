@@ -1,18 +1,25 @@
 package org.jcnc.jnotepad.ui.setStage;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.tool.UiUtil;
 
+/**
+ * @author 许轲
+ */
 public class SetStage {
 
     private static final SetStage SET_STAGE = new SetStage();
-    private StackPane contentDisplay; // Declare contentDisplay as a class member
+    /**
+     * Declare contentDisplay as a class member
+     */
+    private StackPane contentDisplay;
 
     public static SetStage getInstance() {
         return SET_STAGE;
@@ -57,16 +64,17 @@ public class SetStage {
         titledPaneContainer.getChildren().addAll(generalPane, appearancePane, securityPane);
 
         // 创建一个占位符，用于显示右侧内容区域
-        StackPane contentDisplay = new StackPane(new Label("从左侧选择设置以显示内容"));
+        StackPane stackPane = new StackPane(new Label("从左侧选择设置以显示内容"));
 
         // 设置 TitledPanes 的点击事件监听器
-        generalPane.setOnMouseClicked(event -> contentDisplay.getChildren().setAll(new Label("常规设置内容")));
-        appearancePane.setOnMouseClicked(event -> contentDisplay.getChildren().setAll(new Label("外观设置内容")));
-        securityPane.setOnMouseClicked(event -> contentDisplay.getChildren().setAll(new Label("安全设置内容")));
+        generalPane.setOnMouseClicked(event -> stackPane.getChildren().setAll(new Label("常规设置内容")));
+        appearancePane.setOnMouseClicked(event -> stackPane.getChildren().setAll(new Label("外观设置内容")));
+        securityPane.setOnMouseClicked(event -> stackPane.getChildren().setAll(new Label("安全设置内容")));
 
         // 创建一个水平分割面板来容纳整个布局
-        SplitPane splitPane = new SplitPane(titledPaneContainer, contentDisplay);
-        splitPane.setDividerPositions(0.3); // 设置分隔条位置
+        SplitPane splitPane = new SplitPane(titledPaneContainer, stackPane);
+        // 设置分隔条位置
+        splitPane.setDividerPositions(0.3);
 
         // 创建场景
         Scene scene = new Scene(splitPane, 800, 600);
@@ -74,6 +82,7 @@ public class SetStage {
         // 设置场景并显示窗口
         setStage.setScene(scene);
         setStage.setTitle("设置窗口");
+        setStage.getIcons().add(UiUtil.getIcon());
         setStage.show();
     }
 
@@ -87,10 +96,8 @@ public class SetStage {
                 contentDisplay.getChildren().setAll(new Label(selectedItem + " 的设置内容"));
             }
         });
-
         return listView;
     }
-
 
 
 }

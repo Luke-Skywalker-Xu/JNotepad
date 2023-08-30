@@ -4,7 +4,6 @@ package org.jcnc.jnotepad;
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.i18n.UIResourceBundle;
@@ -13,6 +12,7 @@ import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
 import java.util.List;
@@ -38,7 +38,6 @@ public class LunchApp extends Application {
         Pane root = new Pane();
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
-        String icon = AppConstants.APP_ICON;
         scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
@@ -47,7 +46,7 @@ public class LunchApp extends Application {
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(icon)).toString()));
+        primaryStage.getIcons().add(UiUtil.getIcon());
         primaryStage.show();
     }
 

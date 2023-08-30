@@ -1,11 +1,15 @@
 package org.jcnc.jnotepad.tool;
 
+import javafx.scene.image.Image;
 import javafx.stage.Window;
-import org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.ui.root.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.view.manager.ViewManager;
+
+import java.util.Objects;
 
 /**
  * UI工具<br>
@@ -33,6 +37,20 @@ public class UiUtil {
      * 菜单栏组件
      */
     private static final JNotepadMenuBar MENU_BAR = JNotepadMenuBar.getInstance();
+    /**
+     * 应用程序图标
+     */
+    private static final Image ICON = new Image(Objects.requireNonNull(UiUtil.class.getResource(AppConstants.APP_ICON)).toString());
+
+    /**
+     * 获取应用程序图标
+     *
+     * @return javafx.scene.image.Image
+     * @since 2023/8/30 11:03
+     */
+    public static Image getIcon() {
+        return ICON;
+    }
 
     /**
      * 获取标签页布局组件
