@@ -74,6 +74,7 @@ public class ViewManager {
 
         // 创建主界面布局
         root = new BorderPane();
+        //root.setTop(CustomTitleBar.getInstance());
         root.setCenter(RootBorderPane.getInstance());
 
         scene.setRoot(root);

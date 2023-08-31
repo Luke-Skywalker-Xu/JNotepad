@@ -38,6 +38,7 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         Pane root = new Pane();
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
@@ -46,6 +47,14 @@ public class LunchApp extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         initUiComponents();
         UiResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
+
+/*        // 获取自定义标题栏的实例并添加到BorderPane的顶部
+        CustomTitleBar customTitleBar = CustomTitleBar.getInstance();
+        // 使自定义标题栏可拖动
+        customTitleBar.makeDraggable(primaryStage);*/
+//        primaryStage.initStyle(StageStyle.UNDECORATED); // 移除默认窗口装饰
+
+        primaryStage.setScene(scene);
         primaryStage.setWidth(width);
         primaryStage.setHeight(length);
         primaryStage.setScene(scene);

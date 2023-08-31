@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.view.manager;
 
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+/*
+ * 自定义的标题栏,没有完善好,暂时搁置
+ * */
+
 
 public class CustomTitleBar extends HBox {
     private static CustomTitleBar instance;
@@ -30,6 +37,7 @@ public class CustomTitleBar extends HBox {
         Button minimizeButton = new Button("-");
         minimizeButton.setStyle("-fx-background-color: transparent; ");
         minimizeButton.setOnAction(event -> {
+
             Stage stage = (Stage) this.getScene().getWindow();
             stage.setIconified(true); // 最小化窗口
         });
@@ -61,6 +69,11 @@ public class CustomTitleBar extends HBox {
     }
 
     public void makeDraggable(Stage stage) {
+
+        // 创建一个平移动画，设置持续时间和目标位置
+        TranslateTransition minimizeAnimation = new TranslateTransition(Duration.seconds(0.3), stage.getScene().getRoot());
+        minimizeAnimation.setToY(stage.getHeight()); // 将根节点向下平移，使窗口消失
+
         final Delta dragDelta = new Delta();
 
         // 当鼠标按下时记录初始偏移量
