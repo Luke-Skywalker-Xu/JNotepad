@@ -12,6 +12,8 @@ public class TextConstants {
 
 
     /// GlobalConfig文本常量
+
+
     public static final String SAVE = "SAVE";
     public static final String FILE = "FILE";
     public static final String NEW = "NEW";

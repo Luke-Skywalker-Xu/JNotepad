@@ -5,11 +5,15 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.ui.dialog.factory.FileChooserFactory;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 
 import java.io.BufferedReader;
@@ -36,10 +40,14 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        // 创建文件选择器
-        FileChooser fileChooser = new FileChooser();
+        FileChooserFactory factory = new TextFileChooserFactory();
         // 显示文件选择对话框，并获取选中的文件
-        File file = fileChooser.showOpenDialog(UiUtil.getAppWindow());
+        File file = factory.createFileChooser(
+                        UiResourceBundle.getContent(TextConstants.OPEN),
+                        null,
+                        null,
+                        new FileChooser.ExtensionFilter("All types", "*.*"))
+                .showOpenDialog(UiUtil.getAppWindow());
         if (file != null) {
             openFile(file);
         }
