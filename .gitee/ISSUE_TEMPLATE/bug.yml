@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         感谢对项目的支持与关注。在提出问题之前，请确保你已查看相关开发或使用文档：
-        - https://gitee.com/jcnc-org/docs
+        - https://gitee.com/jcnc-org/docs/blob/master/zh-cn/doc/doc-jnotepad/doc-jnotepad.md
   - type: checkboxes
     attributes:
       label: 这个问题是否已经存在？
@@ -19,6 +19,8 @@ body:
       label: 如何复现
       description: 请详细告诉我们如何复现你遇到的问题，如涉及代码，可提供一个最小代码示例，并使用反引号```附上它
       placeholder: |
+        操作系统：
+        复现步骤：
         1. ...
         2. ...
         3. ...
@@ -48,7 +50,10 @@ body:
       label: 版本
       description: 你当前正在使用我们软件的哪个版本/分支？
       options:
-        - (默认)
-        - (最新)
+        - V1.1.11(默认)
+        - V1.1.12(最新)
+        - V1.1.10
+        - V1.1.9
+        - V1.1.8
     validations:
       required: true

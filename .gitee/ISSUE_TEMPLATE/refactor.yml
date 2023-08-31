@@ -1,0 +1,12 @@
+name: 功能建议
+description: 对本项目提出一个功能建议
+title: "[重构]: "
+labels: ["refactor"]
+body:
+  - type: textarea
+    id: related-problem
+    attributes:
+      label: 重构目的是什么？
+      description: 清晰并简洁地描述重构是什么，例如，减少文件选择器重复创建代码。
+    validations:
+      required: false
