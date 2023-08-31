@@ -6,7 +6,7 @@ import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.root.center.main.top.menu.JNotepadMenuBar;
+import org.jcnc.jnotepad.root.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.setStage.SetStage;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 

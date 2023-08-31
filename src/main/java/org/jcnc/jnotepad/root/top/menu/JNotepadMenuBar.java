@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.root.center.main.top.menu;
+package org.jcnc.jnotepad.root.top.menu;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -12,7 +12,7 @@ import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.root.center.main.top.tools.JNotepadToolBar;
+import org.jcnc.jnotepad.root.left.sidebar.tools.JNotepadToolBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.slf4j.Logger;
 
