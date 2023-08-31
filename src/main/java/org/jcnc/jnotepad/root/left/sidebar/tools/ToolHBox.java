@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.root.center.main.top.tools;
+package org.jcnc.jnotepad.root.left.sidebar.tools;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
