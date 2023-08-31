@@ -3,11 +3,15 @@ package org.jcnc.jnotepad.controller.event.handler.menuBar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.ui.dialog.factory.FileChooserFactory;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -64,23 +68,22 @@ public class SaveFile implements EventHandler<ActionEvent> {
      */
     protected void saveTab(Class<?> currentClass) {
         JNotepadTab selectedTab = UiUtil.getJnotepadtab();
-        if (selectedTab != null) {
-            // 创建一个文件窗口
-            FileChooser fileChooser = new FileChooser();
-            // 设置保存文件名称
-            fileChooser.setInitialFileName(selectedTab.getText());
-            // 设置保存文件类型
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文本文档", "*.txt"));
-            // 获取应用窗口并绑定
-            File file = fileChooser.showSaveDialog(UiUtil.getAppWindow());
-            if (file != null) {
-                LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
-                selectedTab.save(file);
-                // 将保存后的文件设置为已关联
-                selectedTab.setRelevance(true);
-                // 更新Tab页标签上的文件名
-                selectedTab.setText(file.getName());
-            }
+        if (selectedTab == null) {
+            return;
+        }
+        File file = TextFileChooserFactory.getInstance().createFileChooser(
+                        UiResourceBundle.getContent(TextConstants.SAVE_AS),
+                        selectedTab.getText(),
+                        null,
+                        new FileChooser.ExtensionFilter("All types", "*.*"))
+                .showSaveDialog(UiUtil.getAppWindow());
+        if (file != null) {
+            LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
+            selectedTab.save(file);
+            // 将保存后的文件设置为已关联
+            selectedTab.setRelevance(true);
+            // 更新Tab页标签上的文件名
+            selectedTab.setText(file.getName());
         }
     }
 }
