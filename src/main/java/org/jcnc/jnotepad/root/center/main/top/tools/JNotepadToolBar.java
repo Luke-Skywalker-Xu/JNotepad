@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.root.top.tools;
+package org.jcnc.jnotepad.root.center.main.top.tools;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;

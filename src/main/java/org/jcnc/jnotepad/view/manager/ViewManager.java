@@ -3,9 +3,7 @@ package org.jcnc.jnotepad.view.manager;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.ui.root.bottom.status.JNotepadStatusBox;
-import org.jcnc.jnotepad.ui.root.center.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.ui.root.top.RootTopVBox;
+import org.jcnc.jnotepad.root.RootBorderPane;
 
 
 /**
@@ -76,12 +74,7 @@ public class ViewManager {
 
         // 创建主界面布局
         root = new BorderPane();
-
-        root.setTop(RootTopVBox.getInstance());
-
-        // 创建标签页和文本编辑区域
-        root.setCenter(JNotepadTabPane.getInstance());
-        root.setBottom(JNotepadStatusBox.getInstance());
+        root.setCenter(RootBorderPane.getInstance());
 
         scene.setRoot(root);
     }
