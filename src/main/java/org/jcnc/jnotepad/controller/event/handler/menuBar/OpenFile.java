@@ -40,9 +40,8 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        FileChooserFactory factory = new TextFileChooserFactory();
         // 显示文件选择对话框，并获取选中的文件
-        File file = factory.createFileChooser(
+        File file = TextFileChooserFactory.getInstance().createFileChooser(
                         UiResourceBundle.getContent(TextConstants.OPEN),
                         null,
                         null,

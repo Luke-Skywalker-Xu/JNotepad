@@ -13,6 +13,16 @@ import java.io.File;
  */
 public class TextFileChooserFactory implements FileChooserFactory {
 
+    private TextFileChooserFactory() {
+
+    }
+
+    private static final TextFileChooserFactory INSTANCE = new TextFileChooserFactory();
+
+    public static TextFileChooserFactory getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * 创建原始文件选择对话框
      *
