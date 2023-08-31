@@ -67,23 +67,23 @@ public class SaveFile implements EventHandler<ActionEvent> {
      * @see LogUtil
      */
     protected void saveTab(Class<?> currentClass) {
-        FileChooserFactory factory = new TextFileChooserFactory();
         JNotepadTab selectedTab = UiUtil.getJnotepadtab();
-        if (selectedTab != null) {
-            File file = factory.createFileChooser(
-                            UiResourceBundle.getContent(TextConstants.SAVE_AS),
-                            selectedTab.getText(),
-                            null,
-                            new FileChooser.ExtensionFilter("All types", "*.*"))
-                    .showSaveDialog(UiUtil.getAppWindow());
-            if (file != null) {
-                LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
-                selectedTab.save(file);
-                // 将保存后的文件设置为已关联
-                selectedTab.setRelevance(true);
-                // 更新Tab页标签上的文件名
-                selectedTab.setText(file.getName());
-            }
+        if (selectedTab == null) {
+            return;
+        }
+        File file = TextFileChooserFactory.getInstance().createFileChooser(
+                        UiResourceBundle.getContent(TextConstants.SAVE_AS),
+                        selectedTab.getText(),
+                        null,
+                        new FileChooser.ExtensionFilter("All types", "*.*"))
+                .showSaveDialog(UiUtil.getAppWindow());
+        if (file != null) {
+            LogUtil.getLogger(currentClass).info("正在保存文件:{}", file.getName());
+            selectedTab.save(file);
+            // 将保存后的文件设置为已关联
+            selectedTab.setRelevance(true);
+            // 更新Tab页标签上的文件名
+            selectedTab.setText(file.getName());
         }
     }
 }

@@ -88,12 +88,10 @@ public class RenameFile implements EventHandler<ActionEvent> {
      * @since 2023/8/31 21:47
      */
     private void handleRenameRelevanceFile(JNotepadTab jnotepadtab) {
-        // 创建文件选择器对话框工厂，选择文本文件对话框工厂
-        FileChooserFactory factory = new TextFileChooserFactory();
         // 获取原始文件对象
         File file = (File) jnotepadtab.getUserData();
         // 获取应用窗口并绑定
-        File newFile = factory
+        File newFile =  TextFileChooserFactory.getInstance()
                 .createFileChooser(
                         UiResourceBundle.getContent(TextConstants.RENAME),
                         jnotepadtab.getText(),
