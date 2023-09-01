@@ -7,8 +7,9 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 线程池管理类<br>
- * 项目中所有异步操作建议使用该类进行获取线程执行异步操作
+ * 线程池管理类
+ *
+ * <p>该类用于管理应用程序中的线程池，提供了异步操作的执行环境。</p>
  *
  * @author gewuyou
  */
@@ -71,12 +72,16 @@ public class ThreadPoolManager {
      *
      * @apiNote 当你创建任务时，务必在最后执行一次该方法
      * @see ThreadPoolManager
-     * @since 2023/8/26 22:00
      */
     public static void threadContSelfSubtracting() {
         THREAD_COUNT.decrementAndGet();
     }
 
+    /**
+     * 获取线程池实例。
+     *
+     * @return 线程池实例
+     */
     public static ExecutorService getThreadPool() {
         return THREAD_POOL;
     }

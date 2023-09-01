@@ -27,7 +27,6 @@ public class TextFileChooserFactory implements FileChooserFactory {
      * 创建原始文件选择对话框
      *
      * @return javafx.stage.FileChooser
-     * @since 2023/8/31 20:29
      */
     @Override
     public FileChooser createFileChooser() {
@@ -43,7 +42,6 @@ public class TextFileChooserFactory implements FileChooserFactory {
      * @param extensionFilter 文件类型数组
      * @return javafx.stage.FileChooser
      * @apiNote
-     * @since 2023/8/31 20:35
      */
     @Override
     public FileChooser createFileChooser(String title, String filename, File directory, FileChooser.ExtensionFilter extensionFilter) {

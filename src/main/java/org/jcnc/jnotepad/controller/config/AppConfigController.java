@@ -18,6 +18,8 @@ import java.util.List;
 /**
  * 应用程序配置控制器
  *
+ * <p>该类负责管理应用程序的配置文件，包括加载、持久化和更新配置信息等操作。</p>
+ *
  * @author songdragon
  */
 public class AppConfigController {
@@ -30,17 +32,23 @@ public class AppConfigController {
     private static final AppConfigController INSTANCE = new AppConfigController();
     private AppConfig appConfig;
     private String dir;
+
     private AppConfigController() {
         setDir(Paths.get(System.getProperty("user.home"), ".jnotepad").toString());
         loadConfig();
     }
 
+    /**
+     * 获取 AppConfigController 的实例。
+     *
+     * @return AppConfigController 的实例
+     */
     public static AppConfigController getInstance() {
         return INSTANCE;
     }
 
     /**
-     * 加载配置文件内容
+     * 加载配置文件内容。
      */
     public void loadConfig() {
         createConfigIfNotExists();
@@ -58,7 +66,7 @@ public class AppConfigController {
     }
 
     /**
-     * 配置文件持久化
+     * 配置文件持久化。
      */
     public void writeAppConfig() {
         createConfigIfNotExists();
@@ -66,7 +74,7 @@ public class AppConfigController {
     }
 
     /**
-     * 将appConfig对象持久化到配置文件中
+     * 将 appConfig 对象持久化到配置文件中。
      *
      * @param appConfig 应用配置对象
      */
@@ -82,6 +90,9 @@ public class AppConfigController {
         }
     }
 
+    /**
+     * 创建配置文件如果不存在。
+     */
     public void createConfigIfNotExists() {
         Path configPath = getConfigPath();
         if (configPath.toFile().exists()) {
@@ -94,6 +105,11 @@ public class AppConfigController {
         writeAppConfig(null);
     }
 
+    /**
+     * 获取配置文件的路径。
+     *
+     * @return 配置文件的路径
+     */
     public Path getConfigPath() {
         return Paths.get(getDir(), CONFIG_NAME);
     }
@@ -103,7 +119,7 @@ public class AppConfigController {
     }
 
     /**
-     * 获取当前配置文件所在目录
+     * 获取当前配置文件所在目录。
      *
      * @return 所在目录
      */
@@ -120,9 +136,9 @@ public class AppConfigController {
     }
 
     /**
-     * 获取自动换行设置，默认自动换行
+     * 获取自动换行设置，默认自动换行。
      *
-     * @return true, 自动换行；false，不自动换行
+     * @return true，自动换行；false，不自动换行
      */
     public boolean getAutoLineConfig() {
         return getAppConfig().isTextWrap();
@@ -133,7 +149,7 @@ public class AppConfigController {
     }
 
     /**
-     * 更新配置文件中的语言设置
+     * 更新配置文件中的语言设置。
      *
      * @param language 更新后的语言设置
      */
@@ -145,10 +161,20 @@ public class AppConfigController {
         writeAppConfig();
     }
 
+    /**
+     * 获取当前的语言设置。
+     *
+     * @return 语言设置
+     */
     public String getLanguage() {
         return this.appConfig.getLanguage();
     }
 
+    /**
+     * 获取快捷键设置。
+     *
+     * @return 快捷键设置列表
+     */
     public List<AppConfig.ShortcutKey> getShortcutKey() {
         return this.appConfig.getShortcutKey();
     }

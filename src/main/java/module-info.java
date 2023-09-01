@@ -20,11 +20,11 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.controller.manager;
     exports org.jcnc.jnotepad.controller.i18n;
     exports org.jcnc.jnotepad.controller.event.handler.tool;
-    exports org.jcnc.jnotepad.controller.event.handler.menuBar;
+    exports org.jcnc.jnotepad.controller.event.handler.menubar;
     exports org.jcnc.jnotepad.tool;
-    exports org.jcnc.jnotepad.Interface;
+    exports org.jcnc.jnotepad.interfaces;
     exports org.jcnc.jnotepad.ui.module;
-    exports org.jcnc.jnotepad.ui.setStage;
+    exports org.jcnc.jnotepad.ui.setstage;
     exports org.jcnc.jnotepad.root.center.main.center.tab;
     exports org.jcnc.jnotepad.root.top.menu;
     exports org.jcnc.jnotepad.view.manager;

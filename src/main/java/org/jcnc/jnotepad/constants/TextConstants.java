@@ -9,11 +9,6 @@ package org.jcnc.jnotepad.constants;
 public class TextConstants {
 
     public static final String TITLE = "title";
-
-
-    /// GlobalConfig文本常量
-
-
     public static final String SAVE = "SAVE";
     public static final String FILE = "FILE";
     public static final String NEW = "NEW";

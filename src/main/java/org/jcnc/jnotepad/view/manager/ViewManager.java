@@ -5,9 +5,10 @@ import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.root.RootBorderPane;
 
-
 /**
- * 该类管理记事本应用程序的视图组件。
+ * 视图管理器类，用于管理记事本应用程序的视图组件。
+ *
+ * <p>该类负责管理应用程序的视图组件，包括主界面布局和标签页索引等。</p>
  *
  * @author 许轲
  */
@@ -15,30 +16,27 @@ public class ViewManager {
 
     private static ViewManager instance = null;
 
-    // 主界面布局
     private int tabIndex = 0;
     /**
      * 主布局
      */
     private BorderPane root;
 
-
     /**
-     * 构造函数。设置场景和根布局。
+     * 私有构造函数。设置场景和根布局。
      *
-     * @param scene 与视图相关联的JavaFX场景。
+     * @param scene 与视图相关联的 JavaFX 场景。
      */
     private ViewManager(Scene scene) {
         root = new BorderPane();
         scene.setRoot(root);
-
     }
 
     /**
-     * 获取ViewManager的实例。如果实例不存在，则创建一个新实例。
+     * 获取 ViewManager 的实例。如果实例不存在，则创建一个新实例。
      *
-     * @param scene 与视图相关联的JavaFX场景。
-     * @return ViewManager的实例。
+     * @param scene 与视图相关联的 JavaFX 场景。
+     * @return ViewManager 的实例。
      */
     public static ViewManager getInstance(Scene scene) {
         if (instance == null) {
@@ -47,18 +45,24 @@ public class ViewManager {
         return instance;
     }
 
+    /**
+     * 获取 ViewManager 的实例。
+     *
+     * @return ViewManager 的实例。
+     * @throws AppException 如果实例未初始化。
+     */
     public static ViewManager getInstance() {
         if (instance != null) {
             return instance;
         } else {
-            throw new AppException("ViewManager的实例未初始化!");
+            throw new AppException("ViewManager 的实例未初始化!");
         }
     }
 
     /**
-     * 自增并获取标签页索引
+     * 自增并获取标签页索引。
      *
-     * @return int 标签页索引
+     * @return 自增后的标签页索引。
      * @apiNote ++tabIndex
      */
     public int selfIncreaseAndGetTabIndex() {
@@ -68,13 +72,13 @@ public class ViewManager {
     /**
      * 初始化屏幕组件。
      *
-     * @param scene 与视图相关联的JavaFX场景。
+     * @param scene 与视图相关联的 JavaFX 场景。
      */
     public void initScreen(Scene scene) {
 
         // 创建主界面布局
         root = new BorderPane();
-        //root.setTop(CustomTitleBar.getInstance());
+        /*root.setTop(CustomTitleBar.getInstance());*/
         root.setCenter(RootBorderPane.getInstance());
 
         scene.setRoot(root);

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.setStage;
+package org.jcnc.jnotepad.ui.setstage;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,6 +12,8 @@ import org.jcnc.jnotepad.tool.UiUtil;
 /**
  * 设置窗口管理类，实现了单例模式。
  *
+ * <p>该类用于管理设置窗口的显示和内容。</p>
+ *
  * @author 许轲
  */
 public class SetStage {
@@ -21,8 +23,6 @@ public class SetStage {
      */
     private static final SetStage SET_STAGE = new SetStage();
     private StackPane contentDisplay;
-
-    private TreeView<String> settingsTreeView;
 
     private SetStage() {
         // 私有构造方法以实现单例模式
@@ -45,7 +45,7 @@ public class SetStage {
         contentDisplay = new StackPane(new Label("从左侧选择设置以显示内容"));
 
         // 创建 TreeView，并初始化设置项
-        settingsTreeView = createTreeView();
+        TreeView<String> settingsTreeView = createTreeView();
 
         // 创建一个分割面板，左侧是设置树，右侧是内容显示区域
         SplitPane splitPane = new SplitPane(settingsTreeView, contentDisplay);
@@ -81,7 +81,6 @@ public class SetStage {
 
         appearanceItem.getChildren().add(new TreeItem<>("外观设置项1"));
         appearanceItem.getChildren().add(new TreeItem<>("外观设置项2"));
-
 
         securityItem.getChildren().add(new TreeItem<>("安全设置项1"));
         securityItem.getChildren().add(new TreeItem<>("安全设置项2"));

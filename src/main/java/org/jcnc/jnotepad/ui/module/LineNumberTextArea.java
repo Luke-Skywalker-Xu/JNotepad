@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
@@ -15,11 +15,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * @author 许轲
+ * 行号文本区域
+ *
+ * <p>这个类继承自JavaFX的BorderPane类，用于显示带有行号的文本区域。它包括主要文本区域和行号文本区域。</p>
+ *
+ * @author luke
  */
 public class LineNumberTextArea extends BorderPane {
 
-    private static final Logger logger=LogUtil.getLogger(LineNumberTextArea.class);
+    private static final Logger logger = LogUtil.getLogger(LineNumberTextArea.class);
     static final int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
     private static final int MIN_LINE_NUMBER_WIDTH = 30;
@@ -46,8 +50,6 @@ public class LineNumberTextArea extends BorderPane {
 
         setCenter(mainTextArea);
         setLeft(lineNumberArea);
-
-
     }
 
     private void initListeners() {
@@ -74,7 +76,7 @@ public class LineNumberTextArea extends BorderPane {
      * 以原文件编码格式写回文件
      */
     public void save() {
-        JNotepadTab tab = UiUtil.getJnotepadtab();
+        MainTab tab = UiUtil.getJnotepadtab();
         if (tab == null) {
             return;
         }
@@ -113,7 +115,6 @@ public class LineNumberTextArea extends BorderPane {
         return mainTextArea.textProperty();
     }
 
-
     private void updateLineNumberArea() {
         // 保存当前的滚动位置
         /*
@@ -137,6 +138,4 @@ public class LineNumberTextArea extends BorderPane {
     public TextArea getMainTextArea() {
         return mainTextArea;
     }
-
 }
-

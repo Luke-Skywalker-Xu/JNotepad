@@ -13,11 +13,13 @@ public class PopUpUtil {
     }
 
     /**
-     * 获取错误弹窗
+     * 获取错误弹窗。
      *
      * @param title      弹窗标题
      * @param headerText 头文本
      * @param message    信息
+     *
+     * <p>用于创建一个错误类型的弹窗，显示给用户以指示发生了错误。</p>
      */
     public static void errorAlert(String title, String headerText, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -26,5 +28,4 @@ public class PopUpUtil {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

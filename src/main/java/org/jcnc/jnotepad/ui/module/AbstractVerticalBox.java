@@ -2,13 +2,20 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import org.jcnc.jnotepad.Interface.VBoxAble;
+import org.jcnc.jnotepad.interfaces.VerticalBoxAble;
 
-public abstract class AbstractVBox extends VBox implements VBoxAble {
+/**
+ * 抽象垂直盒子类
+ *
+ * <p>这个抽象类继承自JavaFX的VBox类，实现了VBoxAble接口，用于管理垂直排列的UI组件。</p>
+ *
+ * @author luke
+ */
+public abstract class AbstractVerticalBox extends VBox implements VerticalBoxAble {
 
     private final VBox vBox;
 
-    public AbstractVBox() {
+    public AbstractVerticalBox() {
         vBox = new VBox();
     }
 
@@ -23,7 +30,7 @@ public abstract class AbstractVBox extends VBox implements VBoxAble {
     }
 
     @Override
-    public VBox getVBox() {
+    public VBox getVerticalBox() {
         return vBox;
     }
 }

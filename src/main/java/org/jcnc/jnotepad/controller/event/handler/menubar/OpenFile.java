@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller.event.handler.menuBar;
+package org.jcnc.jnotepad.controller.event.handler.menubar;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -9,8 +9,8 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static org.jcnc.jnotepad.manager.ThreadPoolManager.threadContSelfSubtracting;
-
 
 /**
  * 打开文件的事件处理程序。
@@ -84,9 +83,9 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     public void openFile(File file) {
         // 获取标签页集合
-        JNotepadTabPane jnotepadTabPane = UiUtil.getJnotepadTabPane();
+        MainTabPane jnotepadMainTabPane = UiUtil.getJnotepadTabPane();
         // 遍历标签页，查找匹配的标签页
-        for (Tab tab : jnotepadTabPane.getTabs()) {
+        for (Tab tab : jnotepadMainTabPane.getTabs()) {
             // 获取绑定的文件
             File tabFile = (File) tab.getUserData();
             if (tabFile == null) {
@@ -94,7 +93,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
             }
             if (file.getPath().equals((tabFile).getPath())) {
                 // 找到匹配的标签页，设置为选中状态并跳转
-                jnotepadTabPane.getSelectionModel().select(tab);
+                jnotepadMainTabPane.getSelectionModel().select(tab);
                 return;
             }
         }
@@ -120,7 +119,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
             LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
-                JNotepadTab tab = createNewTab(file.getName(), textArea, encoding);
+                MainTab tab = createNewTab(file.getName(), textArea, encoding);
                 // 设置当前标签页关联本地文件
                 tab.setRelevance(true);
                 tab.setUserData(file);
@@ -147,7 +146,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private JNotepadTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
-        return new JNotepadTab(tabName, textArea, charset);
+    private MainTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
+        return new MainTab(tabName, textArea, charset);
     }
 }

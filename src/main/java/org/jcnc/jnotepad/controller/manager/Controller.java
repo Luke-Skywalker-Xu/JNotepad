@@ -1,15 +1,14 @@
 package org.jcnc.jnotepad.controller.manager;
 
-import org.jcnc.jnotepad.Interface.ControllerAble;
-import org.jcnc.jnotepad.controller.event.handler.menuBar.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.menuBar.OpenFile;
+import org.jcnc.jnotepad.controller.event.handler.menubar.NewFile;
+import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
+import org.jcnc.jnotepad.interfaces.ControllerAble;
 
 import java.io.File;
 import java.util.List;
 
 /**
- * 控制器类，实现ControllerInterface接口，用于管理文本编辑器的各种操作和事件处理。
- * 包括打开关联文件、创建文本区域、处理行分隔、新建文件、打开文件、自动保存等功能。
+ * 控制器类，实现 ControllerAble 接口，用于管理文本编辑器的各种操作和事件处理。
  *
  * @author 许轲
  */
@@ -20,6 +19,11 @@ public class Controller implements ControllerAble {
     private Controller() {
     }
 
+    /**
+     * 获取 Controller 的唯一实例。
+     *
+     * @return Controller 的实例
+     */
     public static Controller getInstance() {
         return INSTANCE;
     }
