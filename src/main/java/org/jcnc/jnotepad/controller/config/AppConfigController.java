@@ -30,6 +30,7 @@ public class AppConfigController {
     private static final AppConfigController INSTANCE = new AppConfigController();
     private AppConfig appConfig;
     private String dir;
+
     private AppConfigController() {
         setDir(Paths.get(System.getProperty("user.home"), ".jnotepad").toString());
         loadConfig();

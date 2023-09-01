@@ -84,7 +84,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     public void openFile(File file) {
         // 获取标签页集合
-        JNotepadTabPane jnotepadTabPane = UiUtil.getJnotepadTabPane();
+        JNotepadTabPane jnotepadTabPane = JNotepadTabPane.getInstance();
         // 遍历标签页，查找匹配的标签页
         for (Tab tab : jnotepadTabPane.getTabs()) {
             // 获取绑定的文件
@@ -124,7 +124,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                 // 设置当前标签页关联本地文件
                 tab.setRelevance(true);
                 tab.setUserData(file);
-                UiUtil.getJnotepadTabPane().addNewTab(tab);
+                JNotepadTabPane.getInstance().addNewTab(tab);
             });
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");

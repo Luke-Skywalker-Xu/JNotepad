@@ -17,13 +17,13 @@ public class RootTopBorderPane extends AbstractBorderPane {
         initRootBorderPane();
     }
 
+    public static RootTopBorderPane getInstance() {
+        return INSTANCE;
+    }
+
     private void initRootBorderPane() {
         //文本框上面
         setTopComponent(JNotepadMenuBar.getInstance());
-    }
-
-    public static RootTopBorderPane getInstance() {
-        return INSTANCE;
     }
 }
 

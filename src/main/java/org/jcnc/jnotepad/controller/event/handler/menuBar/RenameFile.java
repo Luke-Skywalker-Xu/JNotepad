@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
@@ -26,7 +27,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前标签页
-        JNotepadTab jnotepadtab = UiUtil.getJnotepadtab();
+        JNotepadTab jnotepadtab = JNotepadTabPane.getInstance().getSelected();
         if (jnotepadtab == null || jnotepadtab.getText().isEmpty()) {
             return;
         }
@@ -90,7 +91,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
         // 获取原始文件对象
         File file = (File) jnotepadtab.getUserData();
         // 获取应用窗口并绑定
-        File newFile =  TextFileChooserFactory.getInstance()
+        File newFile = TextFileChooserFactory.getInstance()
                 .createFileChooser(
                         UiResourceBundle.getContent(TextConstants.RENAME),
                         jnotepadtab.getText(),

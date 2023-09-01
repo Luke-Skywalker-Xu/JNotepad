@@ -16,14 +16,14 @@ public class MainBorderPane extends AbstractBorderPane {
         initRootBorderPane();
     }
 
+    public static MainBorderPane getInstance() {
+        return INSTANCE;
+    }
+
     private void initRootBorderPane() {
         //文本框
         setCenterComponent(JNotepadTabPane.getInstance());
 
-    }
-
-    public static MainBorderPane getInstance() {
-        return INSTANCE;
     }
 }
 

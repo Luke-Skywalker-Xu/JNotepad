@@ -9,6 +9,7 @@ import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
 
 /**
  * 根舞台下的Root主布局
+ *
  * @author 许轲
  */
 public class RootBorderPane extends AbstractBorderPane {
@@ -17,6 +18,10 @@ public class RootBorderPane extends AbstractBorderPane {
 
     private RootBorderPane() {
         initRootBorderPane();
+    }
+
+    public static RootBorderPane getInstance() {
+        return INSTANCE;
     }
 
     private void initRootBorderPane() {
@@ -30,10 +35,6 @@ public class RootBorderPane extends AbstractBorderPane {
         setTopComponent(RootTopBorderPane.getInstance());
         //主布局的下面
         setBottomComponent(RootBottomSideBarVBox.getInstance());
-    }
-
-    public static RootBorderPane getInstance() {
-        return INSTANCE;
     }
 }
 

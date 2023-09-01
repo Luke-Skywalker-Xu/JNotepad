@@ -7,6 +7,8 @@ import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.root.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
@@ -34,7 +36,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前tab页
-        JNotepadTab selectedTab = UiUtil.getJnotepadtab();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }
@@ -50,7 +52,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键
                 SingletonUtil.getAppConfigController().loadConfig();
-                UiUtil.getMenuBar().initShortcutKeys();
+                JNotepadMenuBar.getInstance().initShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包!");
                 logger.info("已刷新快捷键!");
@@ -66,7 +68,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
      * @see LogUtil
      */
     protected void saveTab(Class<?> currentClass) {
-        JNotepadTab selectedTab = UiUtil.getJnotepadtab();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }

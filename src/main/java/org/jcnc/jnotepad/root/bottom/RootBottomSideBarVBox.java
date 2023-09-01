@@ -11,11 +11,11 @@ public class RootBottomSideBarVBox extends AbstractVBox {
         initSidebarVBox();
     }
 
-    private void initSidebarVBox() {
-        getChildren().addAll(JNotepadStatusBox.getInstance());
-    }
-
     public static RootBottomSideBarVBox getInstance() {
         return INSTANCE;
+    }
+
+    private void initSidebarVBox() {
+        getChildren().addAll(JNotepadStatusBox.getInstance());
     }
 }

@@ -3,10 +3,11 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -19,9 +20,9 @@ import java.io.IOException;
  */
 public class LineNumberTextArea extends BorderPane {
 
-    private static final Logger logger=LogUtil.getLogger(LineNumberTextArea.class);
     static final int[] SIZE_TABLE = {9, 99, 999, 9999, 99999, 999999, 9999999,
             99999999, 999999999, Integer.MAX_VALUE};
+    private static final Logger logger = LogUtil.getLogger(LineNumberTextArea.class);
     private static final int MIN_LINE_NUMBER_WIDTH = 30;
     private final TextArea mainTextArea;
     private final TextArea lineNumberArea;
@@ -59,12 +60,12 @@ public class LineNumberTextArea extends BorderPane {
 
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
 
-        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> UiUtil.getStatusBox().updateWordCountStatusLabel());
+        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> JNotepadStatusBox.getInstance().updateWordCountStatusLabel());
         this.textProperty().addListener((observable, oldValue, newValue) -> {
             // 更新行号
             updateLineNumberArea();
             // 更新状态栏
-            UiUtil.getStatusBox().updateWordCountStatusLabel();
+            JNotepadStatusBox.getInstance().updateWordCountStatusLabel();
             // 自动保存
             save();
         });
@@ -74,7 +75,7 @@ public class LineNumberTextArea extends BorderPane {
      * 以原文件编码格式写回文件
      */
     public void save() {
-        JNotepadTab tab = UiUtil.getJnotepadtab();
+        JNotepadTab tab = JNotepadTabPane.getInstance().getSelected();
         if (tab == null) {
             return;
         }
