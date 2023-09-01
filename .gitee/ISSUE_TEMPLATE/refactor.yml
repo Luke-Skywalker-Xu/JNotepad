@@ -1,7 +1,7 @@
 name: 重构
 description: 对本项目提出一个功能建议
 title: "[重构]: "
-labels: ["refactor"]
+labels: [ "refactor" ]
 body:
   - type: textarea
     id: related-problem
