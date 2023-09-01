@@ -25,6 +25,8 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.Interface;
     exports org.jcnc.jnotepad.ui.module;
     exports org.jcnc.jnotepad.ui.setStage;
+    exports org.jcnc.jnotepad.root.center.main.center.tab;
+    exports org.jcnc.jnotepad.root.top.menu;
     exports org.jcnc.jnotepad.view.manager;
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.root.center.main.bottom.status;

@@ -10,7 +10,6 @@ import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.dialog.factory.FileChooserFactory;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
 import org.slf4j.Logger;
 

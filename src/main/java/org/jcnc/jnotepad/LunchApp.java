@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.constants.TextConstants;
@@ -30,21 +31,27 @@ public class LunchApp extends Application {
      * 线程池
      */
     private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
-    Scene scene;
+    private static final Pane ROOT = new Pane();
+    private static final Scene SCENE;
+
+    static {
+        double width = AppConstants.SCREEN_WIDTH;
+        double length = AppConstants.SCREEN_LENGTH;
+        SCENE = new Scene(ROOT, width, length);
+    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
 
+    public static Window getWindow() {
+        return SCENE.getWindow();
+    }
     @Override
     public void start(Stage primaryStage) {
-
-        Pane root = new Pane();
-        double width = AppConstants.SCREEN_WIDTH;
-        double length = AppConstants.SCREEN_LENGTH;
-        scene = new Scene(root, width, length);
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+        SCENE.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         initUiComponents();
         UiResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
 
@@ -53,11 +60,10 @@ public class LunchApp extends Application {
         // 使自定义标题栏可拖动
         customTitleBar.makeDraggable(primaryStage);*/
 //        primaryStage.initStyle(StageStyle.UNDECORATED); // 移除默认窗口装饰
-
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(width);
-        primaryStage.setHeight(length);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(SCENE);
+        primaryStage.setWidth(SCENE.getWidth());
+        primaryStage.setHeight(SCENE.getHeight());
+        primaryStage.setScene(SCENE);
         primaryStage.getIcons().add(UiUtil.getIcon());
         primaryStage.show();
     }
@@ -68,8 +74,8 @@ public class LunchApp extends Application {
         LocalizationController.initLocal();
 
         //2. 加载组件
-        ViewManager viewManager = ViewManager.getInstance(scene);
-        viewManager.initScreen(scene);
+        ViewManager viewManager = ViewManager.getInstance(SCENE);
+        viewManager.initScreen(SCENE);
 
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();

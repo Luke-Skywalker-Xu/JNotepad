@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.root.center.main.center.tab;
 
 import javafx.scene.control.TabPane;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 
 /**
@@ -47,8 +47,11 @@ public class JNotepadTabPane extends TabPane {
         if (tab == null) {
             return;
         }
+        // 将标签页加入标签页列表
         this.getTabs().add(tab);
+        // 设置索引
         this.getSelectionModel().select(tab);
+        // 将标签页设置为选中状态
         fireTabSelected();
     }
 
@@ -67,7 +70,7 @@ public class JNotepadTabPane extends TabPane {
      */
     public void fireTabSelected() {
         JNotepadTab selectedTab = getSelected();
-        selectedTab.setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
+        selectedTab.setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
         UiUtil.getStatusBox().updateWhenTabSelected();
     }
 }
