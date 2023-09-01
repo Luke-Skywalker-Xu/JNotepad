@@ -3,9 +3,12 @@ package org.jcnc.jnotepad.root.top;
 import org.jcnc.jnotepad.root.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
 
-/*
- *  MainBorderPane区域,用于显示文本框以及文本框周边
- * */
+
+/**
+ * MainBorderPane区域,用于显示文本框以及文本框周边
+ *
+ * @author 许轲
+ */
 public class RootTopBorderPane extends AbstractBorderPane {
 
     private static final RootTopBorderPane INSTANCE = new RootTopBorderPane();
@@ -15,7 +18,8 @@ public class RootTopBorderPane extends AbstractBorderPane {
     }
 
     private void initRootBorderPane() {
-        setTopComponent(JNotepadMenuBar.getInstance());     //文本框上面
+        //文本框上面
+        setTopComponent(JNotepadMenuBar.getInstance());
     }
 
     public static RootTopBorderPane getInstance() {

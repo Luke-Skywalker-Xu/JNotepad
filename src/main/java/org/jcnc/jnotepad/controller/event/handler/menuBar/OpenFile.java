@@ -4,15 +4,16 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.dialog.factory.FileChooserFactory;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 
@@ -47,9 +48,10 @@ public class OpenFile implements EventHandler<ActionEvent> {
                         null,
                         new FileChooser.ExtensionFilter("All types", "*.*"))
                 .showOpenDialog(UiUtil.getAppWindow());
-        if (file != null) {
-            openFile(file);
+        if (file == null) {
+            return;
         }
+        openFile(file);
     }
 
     /**
@@ -81,6 +83,21 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param file 文件对象
      */
     public void openFile(File file) {
+        // 获取标签页集合
+        JNotepadTabPane jnotepadTabPane = UiUtil.getJnotepadTabPane();
+        // 遍历标签页，查找匹配的标签页
+        for (Tab tab : jnotepadTabPane.getTabs()) {
+            // 获取绑定的文件
+            File tabFile = (File) tab.getUserData();
+            if (tabFile == null) {
+                continue;
+            }
+            if (file.getPath().equals((tabFile).getPath())) {
+                // 找到匹配的标签页，设置为选中状态并跳转
+                jnotepadTabPane.getSelectionModel().select(tab);
+                return;
+            }
+        }
         ThreadPoolManager.getThreadPool().submit(createOpenFileTask(file));
     }
 

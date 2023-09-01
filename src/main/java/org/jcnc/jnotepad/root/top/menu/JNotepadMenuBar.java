@@ -28,6 +28,9 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
 public class JNotepadMenuBar extends MenuBar {
 
     private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
+    /**
+     * 按钮集合
+     */
     private final Map<String, MenuItem> itemMap = new HashMap<>();
     /**
      * 标签页布局组件封装。
@@ -39,7 +42,9 @@ public class JNotepadMenuBar extends MenuBar {
      * 工具栏
      */
     JNotepadToolBar toolBar = JNotepadToolBar.getInstance();
-    // 获取工具栏中的setButton
+    /**
+     * 获取工具栏中的setButton
+     */
     Button setButton = toolBar.getSetButton();
     /**
      * 文件菜单
