@@ -1,8 +1,9 @@
 package org.jcnc.jnotepad.root.center.main.center.tab;
 
 import javafx.scene.control.TabPane;
+import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.root.top.menu.JNotepadMenuBar;
 import org.jcnc.jnotepad.tool.SingletonUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
 
 /**
  * 标签页布局组件封装。
@@ -30,10 +31,10 @@ public class JNotepadTabPane extends TabPane {
                 (ov, from, to) -> {
                     if (to != null) {
                         // 更新菜单栏中与tab相关设置
-                        UiUtil.getMenuBar().updateMenuStatusBySelectedTab();
+                        JNotepadMenuBar.getInstance().updateMenuStatusBySelectedTab();
                     }
                     // 更新状态标签
-                    UiUtil.getStatusBox().updateWhenTabSelected();
+                    JNotepadStatusBox.getInstance().updateWhenTabSelected();
                 }
         );
     }
@@ -71,6 +72,6 @@ public class JNotepadTabPane extends TabPane {
     public void fireTabSelected() {
         JNotepadTab selectedTab = getSelected();
         selectedTab.setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
-        UiUtil.getStatusBox().updateWhenTabSelected();
+        JNotepadStatusBox.getInstance().updateWhenTabSelected();
     }
 }

@@ -80,6 +80,7 @@ public class JNotepadTab extends Tab {
 
     /**
      * 保存为指定文件
+     *
      * @param file 新文件
      */
     public void save(File file) {

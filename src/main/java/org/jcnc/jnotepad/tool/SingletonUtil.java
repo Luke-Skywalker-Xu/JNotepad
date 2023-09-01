@@ -52,7 +52,7 @@ public class SingletonUtil {
     }
 
     /**
-     * 获取UI资源绑定组件I
+     * 获取UI资源绑定组件
      *
      * @return org.jcnc.jnotepad.app.i18n.UiResourceBundle
      * @since 2023/8/30 12:45

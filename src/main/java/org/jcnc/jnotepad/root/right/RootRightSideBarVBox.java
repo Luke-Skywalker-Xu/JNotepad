@@ -10,11 +10,11 @@ public class RootRightSideBarVBox extends AbstractVBox {
         initSidebarVBox();
     }
 
-    private void initSidebarVBox() {
-
-    }
-
     public static RootRightSideBarVBox getInstance() {
         return INSTANCE;
+    }
+
+    private void initSidebarVBox() {
+
     }
 }

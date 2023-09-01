@@ -27,10 +27,6 @@ import java.util.concurrent.ExecutorService;
  * @author 许轲
  */
 public class LunchApp extends Application {
-    /**
-     * 线程池
-     */
-    private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
     private static final Pane ROOT = new Pane();
     private static final Scene SCENE;
 
@@ -40,6 +36,10 @@ public class LunchApp extends Application {
         SCENE = new Scene(ROOT, width, length);
     }
 
+    /**
+     * 线程池
+     */
+    private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
 
     public static void main(String[] args) {
         launch(args);
@@ -48,6 +48,7 @@ public class LunchApp extends Application {
     public static Window getWindow() {
         return SCENE.getWindow();
     }
+
     @Override
     public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
