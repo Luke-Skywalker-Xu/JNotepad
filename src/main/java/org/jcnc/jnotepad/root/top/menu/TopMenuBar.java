@@ -10,8 +10,8 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.root.left.sidebar.tools.ToolBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class TopMenuBar extends MenuBar {
     /**
      * 标签页布局组件封装。
      */
-    JNotepadTabPane JNotepadTabPane = org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane.getInstance();
+    CenterTabPane centerTabPane = CenterTabPane.getInstance();
     AppConfigController appConfigController = AppConfigController.getInstance();
     Logger logger = LogUtil.getLogger(this.getClass());
     /**
@@ -289,7 +289,7 @@ public class TopMenuBar extends MenuBar {
             // 1. 更新全局配置
             AppConfigController.getInstance().setAutoLineConfig(after);
             // 2. 对当前tab生效配置
-            JNotepadTabPane.fireTabSelected();
+            centerTabPane.fireTabSelected();
         });
         topItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 获取窗口容器
@@ -322,7 +322,7 @@ public class TopMenuBar extends MenuBar {
      * 根据当前选中tab，更新菜单选项
      */
     public void updateMenuStatusBySelectedTab() {
-        JNotepadTab selectedTab = JNotepadTabPane.getSelected();
+        CenterTab selectedTab = centerTabPane.getSelected();
         lineFeedItem.selectedProperty().setValue(selectedTab.isAutoLine());
     }
 }

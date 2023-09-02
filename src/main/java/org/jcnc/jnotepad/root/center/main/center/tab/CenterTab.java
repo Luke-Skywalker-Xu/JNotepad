@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
  *
  * @author songdragon
  */
-public class JNotepadTab extends Tab {
+public class CenterTab extends Tab {
 
     private final LineNumberTextArea lineNumberTextArea;
     /**
@@ -26,15 +26,15 @@ public class JNotepadTab extends Tab {
     private boolean isRelevance = false;
     private Charset charset = Charset.defaultCharset();
 
-    public JNotepadTab(String tabTitle) {
+    public CenterTab(String tabTitle) {
         this(tabTitle, new LineNumberTextArea());
     }
 
-    public JNotepadTab(String tabTitle, LineNumberTextArea textArea) {
+    public CenterTab(String tabTitle, LineNumberTextArea textArea) {
         this(tabTitle, textArea, Charset.defaultCharset());
     }
 
-    public JNotepadTab(String tabTitle, LineNumberTextArea textArea, Charset charset) {
+    public CenterTab(String tabTitle, LineNumberTextArea textArea, Charset charset) {
         super(tabTitle);
         lineNumberTextArea = textArea;
         this.setContent(lineNumberTextArea);

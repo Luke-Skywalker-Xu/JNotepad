@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.root.center.main.center.tab;
 
 import javafx.scene.control.TabPane;
-import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.root.center.main.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.root.top.menu.TopMenuBar;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 
@@ -10,15 +10,15 @@ import org.jcnc.jnotepad.tool.SingletonUtil;
  *
  * @author songdragon
  */
-public class JNotepadTabPane extends TabPane {
+public class CenterTabPane extends TabPane {
 
-    private static final JNotepadTabPane TAB_PANE = new JNotepadTabPane();
+    private static final CenterTabPane TAB_PANE = new CenterTabPane();
 
-    private JNotepadTabPane() {
+    private CenterTabPane() {
         initListeners();
     }
 
-    public static JNotepadTabPane getInstance() {
+    public static CenterTabPane getInstance() {
         return TAB_PANE;
     }
 
@@ -34,7 +34,7 @@ public class JNotepadTabPane extends TabPane {
                         TopMenuBar.getInstance().updateMenuStatusBySelectedTab();
                     }
                     // 更新状态标签
-                    JNotepadStatusBox.getInstance().updateWhenTabSelected();
+                    BottomStatusBox.getInstance().updateWhenTabSelected();
                 }
         );
     }
@@ -44,7 +44,7 @@ public class JNotepadTabPane extends TabPane {
      *
      * @param tab 新标签页
      */
-    public void addNewTab(JNotepadTab tab) {
+    public void addNewTab(CenterTab tab) {
         if (tab == null) {
             return;
         }
@@ -61,8 +61,8 @@ public class JNotepadTabPane extends TabPane {
      *
      * @return 当前选中的标签页
      */
-    public JNotepadTab getSelected() {
-        return (JNotepadTab) this.getSelectionModel().getSelectedItem();
+    public CenterTab getSelected() {
+        return (CenterTab) this.getSelectionModel().getSelectedItem();
     }
 
     /**
@@ -70,8 +70,8 @@ public class JNotepadTabPane extends TabPane {
      * 应用当前菜单上选中的自动换行设置。
      */
     public void fireTabSelected() {
-        JNotepadTab selectedTab = getSelected();
+        CenterTab selectedTab = getSelected();
         selectedTab.setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
-        JNotepadStatusBox.getInstance().updateWhenTabSelected();
+        BottomStatusBox.getInstance().updateWhenTabSelected();
     }
 }

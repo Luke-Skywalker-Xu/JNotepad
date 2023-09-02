@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
-import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.root.center.main.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.view.manager.ViewManager;
 
@@ -38,15 +38,15 @@ public class NewFile implements EventHandler<ActionEvent> {
         // TODO: refactor：统一TextArea新建、绑定监听器入口
         ViewManager viewManager = ViewManager.getInstance();
         // 创建标签页
-        JNotepadTab JNotepadTab = new JNotepadTab(
+        CenterTab centerTab = new CenterTab(
                 UiResourceBundle.getContent(TextConstants.NEW_FILE)
                         + viewManager.selfIncreaseAndGetTabIndex(),
                 textArea);
         // 设置当前标签页与本地文件无关联
-        JNotepadTab.setRelevance(false);
+        centerTab.setRelevance(false);
         // 将Tab页添加到TabPane中
-        JNotepadTabPane.getInstance().addNewTab(JNotepadTab);
+        CenterTabPane.getInstance().addNewTab(centerTab);
         // 更新编码信息
-        JNotepadStatusBox.getInstance().updateEncodingLabel();
+        BottomStatusBox.getInstance().updateEncodingLabel();
     }
 }
