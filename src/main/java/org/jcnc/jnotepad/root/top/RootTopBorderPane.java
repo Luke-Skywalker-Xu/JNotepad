@@ -21,6 +21,15 @@ public class RootTopBorderPane extends AbstractBorderPane {
     }
 
     /**
+     * 获取 RootTopBorderPane 的单例实例。
+     *
+     * @return RootTopBorderPane 的单例实例
+     */
+    public static RootTopBorderPane getInstance() {
+        return INSTANCE;
+    }
+
+    /**
      * 初始化 RootTopBorderPane。
      *
      * <p>在顶部区域添加了 TopMenuBar 的单例实例。</p>
@@ -28,14 +37,5 @@ public class RootTopBorderPane extends AbstractBorderPane {
     private void initRootBorderPane() {
         // 在顶部区域添加菜单栏
         setTopComponent(TopMenuBar.getInstance());
-    }
-
-    /**
-     * 获取 RootTopBorderPane 的单例实例。
-     *
-     * @return RootTopBorderPane 的单例实例
-     */
-    public static RootTopBorderPane getInstance() {
-        return INSTANCE;
     }
 }

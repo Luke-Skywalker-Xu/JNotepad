@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.ui.setstage.SetStage;
 
-
 /**
  * 设置按钮事件的事件处理程序。
  *

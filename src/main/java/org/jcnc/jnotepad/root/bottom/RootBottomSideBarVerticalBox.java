@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.root.bottom;
 
-import org.jcnc.jnotepad.root.center.main.bottom.status.StatusHorizontalBox;
+import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
 
 /**
@@ -18,10 +18,6 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         initSidebarVerticalBox();
     }
 
-    private void initSidebarVerticalBox() {
-        getChildren().addAll(StatusHorizontalBox.getInstance());
-    }
-
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
      *
@@ -29,5 +25,9 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
      */
     public static RootBottomSideBarVerticalBox getInstance() {
         return INSTANCE;
+    }
+
+    private void initSidebarVerticalBox() {
+        getChildren().addAll(JNotepadStatusBox.getInstance());
     }
 }

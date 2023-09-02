@@ -27,10 +27,7 @@ import java.util.concurrent.ExecutorService;
  * @author 许轲
  */
 public class LunchApp extends Application {
-    /**
-     * 线程池
-     */
-    private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
+
     private static final Pane ROOT = new Pane();
     private static final Scene SCENE;
 
@@ -39,6 +36,11 @@ public class LunchApp extends Application {
         double length = AppConstants.SCREEN_LENGTH;
         SCENE = new Scene(ROOT, width, length);
     }
+
+    /**
+     * 线程池
+     */
+    private final ExecutorService threadPool = ThreadPoolManager.getThreadPool();
 
     /**
      * 应用程序的入口点，启动 JavaFX 应用程序。

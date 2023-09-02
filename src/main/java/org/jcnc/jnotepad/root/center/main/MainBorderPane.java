@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.root.center.main;
 
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
 
 /**
@@ -18,11 +18,6 @@ public class MainBorderPane extends AbstractBorderPane {
         initRootBorderPane();
     }
 
-    private void initRootBorderPane() {
-        // 文本框
-        setCenterComponent(MainTabPane.getInstance());
-    }
-
     /**
      * 获取 MainBorderPane 的唯一实例。
      *
@@ -31,4 +26,10 @@ public class MainBorderPane extends AbstractBorderPane {
     public static MainBorderPane getInstance() {
         return INSTANCE;
     }
+
+    private void initRootBorderPane() {
+        // 文本框
+        setCenterComponent(JNotepadTabPane.getInstance());
+    }
+
 }

@@ -6,8 +6,8 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.root.top.menu.TopMenuBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
@@ -40,7 +40,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前tab页
-        MainTab selectedTab = MainTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }
@@ -72,7 +72,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
      * @see LogUtil
      */
     protected void saveTab(Class<?> currentClass) {
-        MainTab selectedTab = MainTabPane.getInstance().getSelected();
+        JNotepadTab selectedTab = JNotepadTabPane.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }

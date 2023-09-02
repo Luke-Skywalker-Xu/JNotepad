@@ -23,6 +23,7 @@ public class UiUtil {
     private UiUtil() {
     }
 
+
     /**
      * 获取应用程序图标。
      *
