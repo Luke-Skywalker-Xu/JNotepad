@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler.tool;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.ui.setStage.SetStage;
 
 /**
  * 设置按钮事件的事件处理程序。
@@ -20,6 +20,6 @@ public class SetBtn implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        UiUtil.getSetStage().openSetStage();
+        SetStage.getInstance().openSetStage();
     }
 }

@@ -13,11 +13,11 @@ import java.io.File;
  */
 public class TextFileChooserFactory implements FileChooserFactory {
 
+    private static final TextFileChooserFactory INSTANCE = new TextFileChooserFactory();
+
     private TextFileChooserFactory() {
 
     }
-
-    private static final TextFileChooserFactory INSTANCE = new TextFileChooserFactory();
 
     public static TextFileChooserFactory getInstance() {
         return INSTANCE;
