@@ -25,9 +25,9 @@ import static org.jcnc.jnotepad.constants.TextConstants.*;
  *
  * @author songdragon
  */
-public class JNotepadMenuBar extends MenuBar {
+public class TopMenuBar extends MenuBar {
 
-    private static final JNotepadMenuBar MENU_BAR = new JNotepadMenuBar();
+    private static final TopMenuBar MENU_BAR = new TopMenuBar();
     /**
      * 按钮集合
      */
@@ -113,11 +113,11 @@ public class JNotepadMenuBar extends MenuBar {
      */
     private RadioMenuItem englishItem;
 
-    private JNotepadMenuBar() {
+    private TopMenuBar() {
         initMenuBar();
     }
 
-    public static JNotepadMenuBar getInstance() {
+    public static TopMenuBar getInstance() {
         return MENU_BAR;
     }
 
