@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.root.center.main.center.tab;
 
 import javafx.scene.control.TabPane;
-import org.jcnc.jnotepad.root.center.main.bottom.status.StatusHorizontalBox;
+import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
 import org.jcnc.jnotepad.root.top.menu.TopMenuBar;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 
@@ -34,7 +34,7 @@ public class JNotepadTabPane extends TabPane {
                         TopMenuBar.getInstance().updateMenuStatusBySelectedTab();
                     }
                     // 更新状态标签
-                    StatusHorizontalBox.getInstance().updateWhenTabSelected();
+                    JNotepadStatusBox.getInstance().updateWhenTabSelected();
                 }
         );
     }
@@ -72,6 +72,6 @@ public class JNotepadTabPane extends TabPane {
     public void fireTabSelected() {
         JNotepadTab selectedTab = getSelected();
         selectedTab.setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
-        StatusHorizontalBox.getInstance().updateWhenTabSelected();
+        JNotepadStatusBox.getInstance().updateWhenTabSelected();
     }
 }

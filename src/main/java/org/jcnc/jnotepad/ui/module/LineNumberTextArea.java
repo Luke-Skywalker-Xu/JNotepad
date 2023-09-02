@@ -8,7 +8,6 @@ import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
