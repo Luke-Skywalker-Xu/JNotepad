@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
@@ -29,7 +30,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前标签页
-        MainTab jnotepadtab = UiUtil.getJnotepadtab();
+        MainTab jnotepadtab = MainTabPane.getInstance().getSelected();
         if (jnotepadtab == null || jnotepadtab.getText().isEmpty()) {
             return;
         }

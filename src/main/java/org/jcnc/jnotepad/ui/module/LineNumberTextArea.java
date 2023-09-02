@@ -3,10 +3,11 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.root.center.main.bottom.status.StatusHorizontalBox;
 import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -61,12 +62,12 @@ public class LineNumberTextArea extends BorderPane {
 
         lineNumberArea.textProperty().addListener((observable, oldValue, newValue) -> updateLineNumberWidth());
 
-        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> UiUtil.getStatusBox().updateWordCountStatusLabel());
+        this.mainTextArea.caretPositionProperty().addListener((caretObservable, oldPosition, newPosition) -> StatusHorizontalBox.getInstance().updateWordCountStatusLabel());
         this.textProperty().addListener((observable, oldValue, newValue) -> {
             // 更新行号
             updateLineNumberArea();
             // 更新状态栏
-            UiUtil.getStatusBox().updateWordCountStatusLabel();
+            StatusHorizontalBox.getInstance().updateWordCountStatusLabel();
             // 自动保存
             save();
         });
@@ -76,7 +77,7 @@ public class LineNumberTextArea extends BorderPane {
      * 以原文件编码格式写回文件
      */
     public void save() {
-        MainTab tab = UiUtil.getJnotepadtab();
+        MainTab tab = MainTabPane.getInstance().getSelected();
         if (tab == null) {
             return;
         }

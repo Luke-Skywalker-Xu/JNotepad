@@ -2,7 +2,8 @@ package org.jcnc.jnotepad.controller.event.handler.tool;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.ui.setStage.SetStage;
+import org.jcnc.jnotepad.ui.setstage.SetStage;
+
 
 /**
  * 设置按钮事件的事件处理程序。
