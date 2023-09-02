@@ -23,11 +23,6 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.controller.event.handler.menubar;
     exports org.jcnc.jnotepad.tool;
     exports org.jcnc.jnotepad.interfaces;
-    exports org.jcnc.jnotepad.ui.module;
-    exports org.jcnc.jnotepad.ui.setstage;
-    exports org.jcnc.jnotepad.root.center.main.center.tab;
-    exports org.jcnc.jnotepad.root.top.menu;
-    exports org.jcnc.jnotepad.view.manager;
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.root.center.main.bottom.status;
 

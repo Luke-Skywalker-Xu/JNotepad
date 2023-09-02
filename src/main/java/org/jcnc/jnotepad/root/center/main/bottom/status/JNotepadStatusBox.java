@@ -6,8 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.ui.module.AbstractHorizontalBox;
 
 import java.nio.charset.Charset;
@@ -19,9 +19,9 @@ import java.nio.charset.Charset;
  *
  * @author songdragon
  */
-public class StatusHorizontalBox extends AbstractHorizontalBox {
+public class JNotepadStatusBox extends AbstractHorizontalBox {
 
-    private static final StatusHorizontalBox STATUS_BOX = new StatusHorizontalBox();
+    private static final JNotepadStatusBox STATUS_BOX = new JNotepadStatusBox();
     private static final String STATUS_LABEL_FORMAT = "%s : %d \t%s: %d \t%s: %d \t";
     /**
      * 字数统计及光标
@@ -33,11 +33,11 @@ public class StatusHorizontalBox extends AbstractHorizontalBox {
     private Label encodingLabel;
 
 
-    private StatusHorizontalBox() {
+    private JNotepadStatusBox() {
         initStatusBox();
     }
 
-    public static StatusHorizontalBox getInstance() {
+    public static JNotepadStatusBox getInstance() {
         return STATUS_BOX;
     }
 
@@ -89,7 +89,7 @@ public class StatusHorizontalBox extends AbstractHorizontalBox {
      * 更新字数统计
      */
     public void updateWordCountStatusLabel() {
-        MainTabPane instance = MainTabPane.getInstance();
+        JNotepadTabPane instance = JNotepadTabPane.getInstance();
         if (instance.getSelected() == null) {
             return;
         }
@@ -107,12 +107,12 @@ public class StatusHorizontalBox extends AbstractHorizontalBox {
      * <br>2. 状态栏更新当前选中tab的字符编码
      */
     public void updateWhenTabSelected() {
-        MainTabPane instance = MainTabPane.getInstance();
+        JNotepadTabPane instance = JNotepadTabPane.getInstance();
         if (instance.getSelected() != null) {
             updateWordCountStatusLabel();
-            MainTab mainTab = instance.getSelected();
-            if (mainTab != null) {
-                updateEncodingLabel(mainTab.getCharset().name());
+            JNotepadTab JNotepadTab = instance.getSelected();
+            if (JNotepadTab != null) {
+                updateEncodingLabel(JNotepadTab.getCharset().name());
             }
         }
     }

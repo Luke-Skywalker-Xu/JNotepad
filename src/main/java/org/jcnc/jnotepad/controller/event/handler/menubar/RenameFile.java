@@ -7,7 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
-import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
@@ -29,7 +30,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前标签页
-        MainTab jnotepadtab = UiUtil.getJnotepadtab();
+        JNotepadTab jnotepadtab = JNotepadTabPane.getInstance().getSelected();
         if (jnotepadtab == null || jnotepadtab.getText().isEmpty()) {
             return;
         }
@@ -49,7 +50,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
      *
      * @param jnotepadtab 标签页组件
      */
-    private void handleRenameTab(MainTab jnotepadtab) {
+    private void handleRenameTab(JNotepadTab jnotepadtab) {
         TextField textField = new TextField(jnotepadtab.getText());
         textField.getStyleClass().add("tab-title-editable");
         // 清空标签页名称
@@ -87,7 +88,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
      *
      * @param jnotepadtab 标签页组件
      */
-    private void handleRenameRelevanceFile(MainTab jnotepadtab) {
+    private void handleRenameRelevanceFile(JNotepadTab jnotepadtab) {
         // 获取原始文件对象
         File file = (File) jnotepadtab.getUserData();
         // 获取应用窗口并绑定

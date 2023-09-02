@@ -25,6 +25,15 @@ public class RootBorderPane extends AbstractBorderPane {
     }
 
     /**
+     * 获取 RootBorderPane 的单例实例。
+     *
+     * @return RootBorderPane 的单例实例
+     */
+    public static RootBorderPane getInstance() {
+        return INSTANCE;
+    }
+
+    /**
      * 初始化 RootBorderPane。
      *
      * <p>设置主界面(MainBorderPane)、工具栏(ToolHBox)、侧边栏(RootRightSideBarVBox)、
@@ -43,12 +52,5 @@ public class RootBorderPane extends AbstractBorderPane {
         setBottomComponent(RootBottomSideBarVerticalBox.getInstance());
     }
 
-    /**
-     * 获取 RootBorderPane 的单例实例。
-     *
-     * @return RootBorderPane 的单例实例
-     */
-    public static RootBorderPane getInstance() {
-        return INSTANCE;
-    }
+
 }
