@@ -9,8 +9,8 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
@@ -83,7 +83,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     public void openFile(File file) {
         // 获取标签页集合
-        JNotepadTabPane jnotepadTabPane = JNotepadTabPane.getInstance();
+        CenterTabPane jnotepadTabPane = CenterTabPane.getInstance();
         // 遍历标签页，查找匹配的标签页
         for (Tab tab : jnotepadTabPane.getTabs()) {
             // 获取绑定的文件
@@ -119,11 +119,11 @@ public class OpenFile implements EventHandler<ActionEvent> {
             LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
             Platform.runLater(() -> {
                 textArea.getMainTextArea().setText(text);
-                JNotepadTab tab = createNewTab(file.getName(), textArea, encoding);
+                CenterTab tab = createNewTab(file.getName(), textArea, encoding);
                 // 设置当前标签页关联本地文件
                 tab.setRelevance(true);
                 tab.setUserData(file);
-                JNotepadTabPane.getInstance().addNewTab(tab);
+                CenterTabPane.getInstance().addNewTab(tab);
             });
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
@@ -146,7 +146,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private JNotepadTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
-        return new JNotepadTab(tabName, textArea, charset);
+    private CenterTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
+        return new CenterTab(tabName, textArea, charset);
     }
 }

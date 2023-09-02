@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.root.bottom;
 
-import org.jcnc.jnotepad.root.center.main.bottom.status.JNotepadStatusBox;
+import org.jcnc.jnotepad.root.center.main.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
 
 /**
@@ -28,6 +28,6 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
     }
 
     private void initSidebarVerticalBox() {
-        getChildren().addAll(JNotepadStatusBox.getInstance());
+        getChildren().addAll(BottomStatusBox.getInstance());
     }
 }

@@ -37,7 +37,7 @@ public class UiUtil {
      * 获取应用窗口。
      *
      * @return javafx.stage.Window 应用窗口对象
-     * @apiNote JNotepadTabPane.getInstance().getSelected().getTabPane().getScene().getWindow()
+     * @apiNote LunchApp.getWindow()
      */
     public static Window getAppWindow() {
         return LunchApp.getWindow();
