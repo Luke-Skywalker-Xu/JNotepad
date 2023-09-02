@@ -10,7 +10,9 @@ import org.jcnc.jnotepad.exception.AppException;
 import static com.fasterxml.jackson.core.util.DefaultIndenter.SYS_LF;
 
 /**
- * jackson解析器的facade类，主要提供objectMapper对象
+ * Jackson 解析器的外观类，主要提供 ObjectMapper 对象。
+ *
+ * <p>该类用于封装 Jackson 对象映射工具的配置和操作。</p>
  *
  * @author songdragon
  */
@@ -29,6 +31,13 @@ public class JsonUtil {
     private JsonUtil() {
     }
 
+    /**
+     * 将对象转换为 JSON 字符串。
+     *
+     * @param o 要转换的对象
+     * @return 对象的 JSON 表示，如果转换失败则抛出 AppException 异常
+     * @throws AppException 如果转换失败
+     */
     public static String toJsonString(Object o) {
         try {
             return OBJECT_MAPPER.writeValueAsString(o);

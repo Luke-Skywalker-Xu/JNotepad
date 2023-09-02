@@ -2,8 +2,15 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import org.jcnc.jnotepad.Interface.BorderPaneAble;
+import org.jcnc.jnotepad.interfaces.BorderPaneAble;
 
+/**
+ * 抽象边界面板类
+ *
+ * <p>这个抽象类继承自JavaFX的BorderPane类，实现了BorderPaneAble接口，用于管理UI组件的布局。</p>
+ *
+ * @author luke
+ */
 public abstract class AbstractBorderPane extends BorderPane implements BorderPaneAble {
 
     @Override
@@ -30,5 +37,4 @@ public abstract class AbstractBorderPane extends BorderPane implements BorderPan
     public void setCenterComponent(Node node) {
         setCenter(node);
     }
-
 }

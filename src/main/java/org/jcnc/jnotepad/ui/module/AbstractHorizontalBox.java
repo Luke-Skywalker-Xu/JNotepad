@@ -2,12 +2,19 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import org.jcnc.jnotepad.Interface.HBoxAble;
+import org.jcnc.jnotepad.interfaces.HorizontalBoxAble;
 
-public abstract class AbstractHBox extends HBox implements HBoxAble {
+/**
+ * 抽象水平盒子类
+ *
+ * <p>这个抽象类继承自JavaFX的HBox类，实现了HBoxAble接口，用于管理水平排列的UI组件。</p>
+ *
+ * @author luke
+ */
+public abstract class AbstractHorizontalBox extends HBox implements HorizontalBoxAble {
     private final HBox hBox;
 
-    public AbstractHBox() {
+    public AbstractHorizontalBox() {
         hBox = new HBox();
     }
 
@@ -22,7 +29,7 @@ public abstract class AbstractHBox extends HBox implements HBoxAble {
     }
 
     @Override
-    public HBox getHBox() {
+    public HBox getHorizontalBox() {
         return hBox;
     }
 }

@@ -10,11 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/*
- * 自定义的标题栏,没有完善好,暂时搁置
- * */
-
-
+/**
+ * 自定义标题栏组件，用于自定义窗口标题栏的显示和交互。
+ * 该类提供了窗口图标、标题文本以及最小化、最大化和关闭按钮的功能。
+ *
+ * @author 许轲
+ */
 public class CustomTitleBar extends HBox {
     private static CustomTitleBar instance;
 
@@ -23,9 +24,9 @@ public class CustomTitleBar extends HBox {
         this.setAlignment(Pos.CENTER);
 
         // 左侧图标
-        ImageView iconView = new ImageView(new Image("icon.png"));
-        iconView.setFitWidth(30);
-        iconView.setFitHeight(30);
+        ImageView iconImageView = new ImageView(new Image("icon.png"));
+        iconImageView.setFitWidth(30);
+        iconImageView.setFitHeight(30);
 
         Label titleLabel = new Label("自定义标题栏");
         titleLabel.setStyle("-fx-font-size: 18px;");
@@ -34,14 +35,15 @@ public class CustomTitleBar extends HBox {
         HBox buttonBox = new HBox(5);
         buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
+        // 最小化按钮
         Button minimizeButton = new Button("-");
         minimizeButton.setStyle("-fx-background-color: transparent; ");
         minimizeButton.setOnAction(event -> {
-
             Stage stage = (Stage) this.getScene().getWindow();
             stage.setIconified(true); // 最小化窗口
         });
 
+        // 最大化/还原按钮
         Button maximizeButton = new Button("□");
         maximizeButton.setStyle("-fx-background-color: transparent;");
         maximizeButton.setOnAction(event -> {
@@ -49,6 +51,7 @@ public class CustomTitleBar extends HBox {
             stage.setMaximized(!stage.isMaximized()); // 最大化/还原窗口
         });
 
+        // 关闭按钮
         Button closeButton = new Button("X");
         closeButton.setStyle("-fx-background-color: transparent;");
         closeButton.setOnAction(event -> {
@@ -58,9 +61,14 @@ public class CustomTitleBar extends HBox {
 
         buttonBox.getChildren().addAll(minimizeButton, maximizeButton, closeButton);
 
-        this.getChildren().addAll(iconView, titleLabel, buttonBox);
+        this.getChildren().addAll(iconImageView, titleLabel, buttonBox);
     }
 
+    /**
+     * 获取标题栏的单例实例
+     *
+     * @return CustomTitleBar的单例实例
+     */
     public static CustomTitleBar getInstance() {
         if (instance == null) {
             instance = new CustomTitleBar();
@@ -68,11 +76,16 @@ public class CustomTitleBar extends HBox {
         return instance;
     }
 
+    /**
+     * 使窗口可拖动
+     *
+     * @param stage 要拖动的窗口的Stage对象
+     */
     public void makeDraggable(Stage stage) {
-
         // 创建一个平移动画，设置持续时间和目标位置
         TranslateTransition minimizeAnimation = new TranslateTransition(Duration.seconds(0.3), stage.getScene().getRoot());
-        minimizeAnimation.setToY(stage.getHeight()); // 将根节点向下平移，使窗口消失
+        // 将根节点向下平移，使窗口消失
+        minimizeAnimation.setToY(stage.getHeight());
 
         final Delta dragDelta = new Delta();
 

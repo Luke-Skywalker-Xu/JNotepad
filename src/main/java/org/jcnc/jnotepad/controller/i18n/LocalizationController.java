@@ -13,8 +13,9 @@ import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
 import static org.jcnc.jnotepad.constants.TextConstants.ENGLISH;
 
 /**
- * 本地化控制器<br>
- * 注意：本地化配置加载应当优先于快捷键配置加载
+ * 本地化控制器
+ *
+ * <p>该类负责处理应用程序的本地化配置，包括语言和区域设置。</p>
  *
  * @author gewuyou
  * @see LunchApp
@@ -42,6 +43,11 @@ public class LocalizationController {
         this.appConfigController = SingletonUtil.getAppConfigController();
     }
 
+    /**
+     * 获取当前语言配置
+     *
+     * @return 当前语言的Locale对象
+     */
     public static Locale getCurrentLocal() {
         return Locale.getDefault();
     }
@@ -49,7 +55,7 @@ public class LocalizationController {
     /**
      * 设置当前语言配置
      *
-     * @param locale 当前语言Local对象
+     * @param locale 当前语言的Locale对象
      */
     public static void setCurrentLocal(Locale locale) {
         if (locale != null && locale.equals(getCurrentLocal())) {

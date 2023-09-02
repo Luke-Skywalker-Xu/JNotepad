@@ -7,12 +7,12 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.controller.event.handler.menuBar.*;
+import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.JNotepadTabPane;
-import org.jcnc.jnotepad.root.left.sidebar.tools.JNotepadToolBar;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTab;
+import org.jcnc.jnotepad.root.center.main.center.tab.MainTabPane;
+import org.jcnc.jnotepad.root.left.sidebar.tools.ToolBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.slf4j.Logger;
 
@@ -35,13 +35,13 @@ public class JNotepadMenuBar extends MenuBar {
     /**
      * 标签页布局组件封装。
      */
-    JNotepadTabPane jNotepadTabPane = JNotepadTabPane.getInstance();
+    MainTabPane mainTabPane = MainTabPane.getInstance();
     AppConfigController appConfigController = AppConfigController.getInstance();
     Logger logger = LogUtil.getLogger(this.getClass());
     /**
      * 工具栏
      */
-    JNotepadToolBar toolBar = JNotepadToolBar.getInstance();
+    ToolBar toolBar = ToolBar.getInstance();
     /**
      * 获取工具栏中的setButton
      */
@@ -125,7 +125,6 @@ public class JNotepadMenuBar extends MenuBar {
      * 设置当前语言选中状态
      *
      * @param language 语言
-     * @since 2023/8/25 22:49
      */
     public void toggleLanguageCheck(String language) {
         switch (language) {
@@ -290,7 +289,7 @@ public class JNotepadMenuBar extends MenuBar {
             // 1. 更新全局配置
             AppConfigController.getInstance().setAutoLineConfig(after);
             // 2. 对当前tab生效配置
-            jNotepadTabPane.fireTabSelected();
+            mainTabPane.fireTabSelected();
         });
         topItem.selectedProperty().addListener((observableValue, before, after) -> {
             // 获取窗口容器
@@ -323,7 +322,7 @@ public class JNotepadMenuBar extends MenuBar {
      * 根据当前选中tab，更新菜单选项
      */
     public void updateMenuStatusBySelectedTab() {
-        JNotepadTab selectedTab = jNotepadTabPane.getSelected();
+        MainTab selectedTab = mainTabPane.getSelected();
         lineFeedItem.selectedProperty().setValue(selectedTab.isAutoLine());
     }
 }

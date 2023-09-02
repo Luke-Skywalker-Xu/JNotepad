@@ -1,11 +1,10 @@
 package org.jcnc.jnotepad.constants;
 
 /**
- * 应用常量
+ * 应用常量类，用于存放应用程序中的常量值。
  *
  * @author 许轲
  */
-
 public class AppConstants {
     /**
      * 初始宽度
@@ -20,6 +19,9 @@ public class AppConstants {
      */
     public static final String APP_ICON = "/img/icon.png";
 
+    /**
+     * 私有构造函数，防止该类被实例化。
+     */
     private AppConstants() {
     }
 

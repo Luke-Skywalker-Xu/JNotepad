@@ -10,15 +10,15 @@ import org.jcnc.jnotepad.tool.SingletonUtil;
  *
  * @author songdragon
  */
-public class JNotepadTabPane extends TabPane {
+public class MainTabPane extends TabPane {
 
-    private static final JNotepadTabPane TAB_PANE = new JNotepadTabPane();
+    private static final MainTabPane TAB_PANE = new MainTabPane();
 
-    private JNotepadTabPane() {
+    private MainTabPane() {
         initListeners();
     }
 
-    public static JNotepadTabPane getInstance() {
+    public static MainTabPane getInstance() {
         return TAB_PANE;
     }
 
@@ -44,7 +44,7 @@ public class JNotepadTabPane extends TabPane {
      *
      * @param tab 新标签页
      */
-    public void addNewTab(JNotepadTab tab) {
+    public void addNewTab(MainTab tab) {
         if (tab == null) {
             return;
         }
@@ -61,8 +61,8 @@ public class JNotepadTabPane extends TabPane {
      *
      * @return 当前选中的标签页
      */
-    public JNotepadTab getSelected() {
-        return (JNotepadTab) this.getSelectionModel().getSelectedItem();
+    public MainTab getSelected() {
+        return (MainTab) this.getSelectionModel().getSelectedItem();
     }
 
     /**
@@ -70,7 +70,7 @@ public class JNotepadTabPane extends TabPane {
      * 应用当前菜单上选中的自动换行设置。
      */
     public void fireTabSelected() {
-        JNotepadTab selectedTab = getSelected();
+        MainTab selectedTab = getSelected();
         selectedTab.setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
         JNotepadStatusBox.getInstance().updateWhenTabSelected();
     }
