@@ -21,10 +21,10 @@ public class ToolHorizontalBox extends AbstractHorizontalBox {
 
     private ToolHorizontalBox() {
         // 设置子节点水平拉伸
-        HBox.setHgrow(ToolBar.getInstance(), Priority.ALWAYS);
+        HBox.setHgrow(SidebarToolBar.getInstance(), Priority.ALWAYS);
 
         // 将 JNotepadToolBar 添加为子节点
-        getChildren().add(ToolBar.getInstance());
+        getChildren().add(SidebarToolBar.getInstance());
     }
 
     /**

@@ -5,26 +5,26 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * JNotepadToolBar 是 JNotepad 应用程序的工具栏类。
+ * SidebarToolBar 是 JNotepad 应用程序的工具栏类。
  *
- * <p>该类继承自 JavaFX 的 ToolBar 类，并提供了一个单例实例，用于管理工具栏上的按钮。</p>
+ * <p>该类继承自 JavaFX 的 SidebarToolBar 类，并提供了一个单例实例，用于管理工具栏上的按钮。</p>
  *
  * <p>工具栏上的按钮用于执行不同的操作，比如设置操作。</p>
  *
  * @author luke
  */
-public class ToolBar extends javafx.scene.control.ToolBar {
+public class SidebarToolBar extends javafx.scene.control.ToolBar {
     /**
      * 单例模式，保证只有一个 JNotepadToolBar实例
      */
-    private static final ToolBar INSTANCE = new ToolBar();
+    private static final SidebarToolBar INSTANCE = new SidebarToolBar();
 
     /**
      * 工具栏上的设置按钮
      */
     Button setButton = new Button();
 
-    private ToolBar() {
+    private SidebarToolBar() {
         // 创建工具栏上的按钮
         Image image = new Image("tools.png");
         ImageView imageView = new ImageView(image);
@@ -46,7 +46,7 @@ public class ToolBar extends javafx.scene.control.ToolBar {
      *
      * @return JNotepadToolBar 的单例实例
      */
-    public static ToolBar getInstance() {
+    public static SidebarToolBar getInstance() {
         return INSTANCE;
     }
 

@@ -12,7 +12,7 @@ import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
-import org.jcnc.jnotepad.root.left.sidebar.tools.ToolBar;
+import org.jcnc.jnotepad.root.left.sidebar.tools.SidebarToolBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.slf4j.Logger;
 
@@ -41,11 +41,11 @@ public class TopMenuBar extends MenuBar {
     /**
      * 工具栏
      */
-    ToolBar toolBar = ToolBar.getInstance();
+    SidebarToolBar sidebarToolBar = SidebarToolBar.getInstance();
     /**
      * 获取工具栏中的setButton
      */
-    Button setButton = toolBar.getSetButton();
+    Button setButton = sidebarToolBar.getSetButton();
     /**
      * 文件菜单
      */
