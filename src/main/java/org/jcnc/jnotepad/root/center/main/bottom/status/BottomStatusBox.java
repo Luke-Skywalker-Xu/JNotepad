@@ -45,6 +45,7 @@ public class BottomStatusBox extends AbstractHorizontalBox {
      * 初始化状态栏组件
      */
     public void initStatusBox() {
+        this.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
 
         this.getChildren().clear();
         // 创建状态栏
@@ -110,9 +111,9 @@ public class BottomStatusBox extends AbstractHorizontalBox {
         CenterTabPane instance = CenterTabPane.getInstance();
         if (instance.getSelected() != null) {
             updateWordCountStatusLabel();
-            CenterTab CenterTab = instance.getSelected();
-            if (CenterTab != null) {
-                updateEncodingLabel(CenterTab.getCharset().name());
+            CenterTab centerTab = instance.getSelected();
+            if (centerTab != null) {
+                updateEncodingLabel(centerTab.getCharset().name());
             }
         }
     }
