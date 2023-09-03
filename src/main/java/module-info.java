@@ -12,7 +12,11 @@ module org.jcnc.jnotepad {
     requires ch.qos.logback.core;
     requires ch.qos.logback.classic;
     requires com.ibm.icu;
+    requires org.kordamp.ikonli.core;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.ikonli.antdesignicons;
     exports org.jcnc.jnotepad;
+    exports org.jcnc.jnotepad.ui.dialog.alert;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.app.i18n;
     exports org.jcnc.jnotepad.constants;

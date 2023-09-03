@@ -34,7 +34,6 @@ public class LineNumberTextArea extends BorderPane {
     public LineNumberTextArea() {
         mainTextArea = new TextArea();
         mainTextArea.setWrapText(SingletonUtil.getAppConfigController().getAutoLineConfig());
-
         lineNumberArea = new TextArea();
         lineNumberArea.setEditable(false);
         lineNumberArea.setPrefWidth(MIN_LINE_NUMBER_WIDTH);

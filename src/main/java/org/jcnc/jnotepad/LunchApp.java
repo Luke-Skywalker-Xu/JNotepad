@@ -32,6 +32,7 @@ public class LunchApp extends Application {
     private static final Scene SCENE;
 
     static {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         SCENE = new Scene(ROOT, width, length);
@@ -62,7 +63,7 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+
         SCENE.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         initUiComponents();
         UiResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
@@ -70,7 +71,7 @@ public class LunchApp extends Application {
         primaryStage.setScene(SCENE);
         primaryStage.setWidth(SCENE.getWidth());
         primaryStage.setHeight(SCENE.getHeight());
-        primaryStage.getIcons().add(UiUtil.getIcon());
+        primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.show();
     }
 
