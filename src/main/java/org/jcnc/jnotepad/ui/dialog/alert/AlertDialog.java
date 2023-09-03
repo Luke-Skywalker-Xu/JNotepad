@@ -1,18 +1,17 @@
-package org.jcnc.jnotepad.ui.module.alert;
+package org.jcnc.jnotepad.ui.dialog.alert;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.interfaces.CustomDialogAble;
+import org.jcnc.jnotepad.tool.UiUtil;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 /**
  * 自定义提示框的抽象基类
@@ -21,50 +20,65 @@ import org.jcnc.jnotepad.interfaces.CustomDialogAble;
  *
  * @author luke
  */
-public abstract class AbstractDialog extends Stage implements CustomDialogAble {
-
-    private ImageView iconImageView;
-    private final String customText;
+public class AlertDialog extends Stage {
 
     /**
      * 构造一个自定义提示框。
      *
+     * @param title      提示框的标题
      * @param message    提示框中显示的消息文本
      * @param customText 自定义的文本
      * @param width      提示框的宽度
      * @param height     提示框的高度
+     * @param type       提示框的类型
+     * @param action     按钮的事件类
      */
-    protected AbstractDialog(String message, String customText, double width, double height) {
+    public AlertDialog(String title, String message, String customText, double width, double height, DialogType type, AlertDialogButtonAction action) {
+        // 设置窗口图标
+        this.getIcons().add(UiUtil.getAppIcon());
         this.customText = customText;
-        setTitle(getAlertType());
+        setTitle(title);
         setResizable(false);
         initModality(Modality.APPLICATION_MODAL);
 
-        BorderPane borderPane = createLayout(message);
+        FontIcon icon = switch (type) {
+            case INFO -> UiUtil.getInfoIcon();
+            case WARNING -> UiUtil.getWarningIcon();
+            case ERROR -> UiUtil.getErrorIcon();
+            default -> UiUtil.getQuestionIcon();
+        };
+        BorderPane borderPane = createLayout(message, icon, action);
         Scene scene = new Scene(borderPane, width, height);
 
         setScene(scene);
     }
 
+    private final String customText;
+
     /**
-     * 处理取消按钮的操作。
+     * 构造一个自定义提示框，使用默认大小。
+     *
+     * @param title      提示框的标题
+     * @param message    提示框中显示的消息文本
+     * @param customText 自定义的文本
+     * @param type       提示框的类型
+     * @param action     按钮的事件类
      */
-    @Override
-    public void handleCancelAction() {
-        close();
+    public AlertDialog(String title, String message, String customText, DialogType type, AlertDialogButtonAction action) {
+        // 使用默认的宽度和高度
+        this(title, message, customText, 350, 150, type, action);
     }
 
     /**
      * 创建提示框的布局。
      *
      * @param message 提示框中显示的消息文本
+     * @param icon    提示框中显示的图标
      * @return BorderPane 布局容器
      */
-    private BorderPane createLayout(String message) {
+    private BorderPane createLayout(String message, FontIcon icon, AlertDialogButtonAction action) {
         BorderPane borderPane = new BorderPane();
-        iconImageView = new ImageView();
-
-        HBox iconBox = new HBox(iconImageView);
+        HBox iconBox = new HBox(icon);
         iconBox.setPadding(new Insets(10, 10, 10, 10));
         VBox vbox = new VBox(10);
         vbox.setAlignment(Pos.CENTER);
@@ -74,8 +88,8 @@ public abstract class AbstractDialog extends Stage implements CustomDialogAble {
         // 自定义文本
         Label customTextLabel = new Label(customText);
 
-        Button confirmButton = createButton("确认", this::handleConfirmAction);
-        Button cancelButton = createButton("取消", this::handleCancelAction);
+        Button confirmButton = createButton("确认", action::handleConfirmAction);
+        Button cancelButton = createButton("取消", action::handleCancelAction);
 
         HBox hBox = new HBox(10, confirmButton, cancelButton);
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -89,15 +103,29 @@ public abstract class AbstractDialog extends Stage implements CustomDialogAble {
         return borderPane;
     }
 
+
     /**
-     * 设置提示框的图标。
-     *
-     * @param iconImage 图标图像
+     * 对话框枚举
      */
-    @Override
-    public void setIconImage(Image iconImage) {
-        iconImageView.setImage(iconImage);
+    public enum DialogType {
+        /**
+         * 信息
+         */
+        INFO,
+        /**
+         * 警告
+         */
+        WARNING,
+        /**
+         * 错误
+         */
+        ERROR,
+        /**
+         * 疑问
+         */
+        QUESTION
     }
+
 
     /**
      * 创建按钮。
@@ -112,28 +140,5 @@ public abstract class AbstractDialog extends Stage implements CustomDialogAble {
         return button;
     }
 
-    /**
-     * 获取提示框类型的抽象方法，子类应该实现该方法以返回具体的提示框类型。
-     *
-     * @return 提示框类型
-     */
-    @Override
-    public abstract String getAlertType();
 
-    /**
-     * 处理确认按钮的操作，子类必须实现。
-     */
-    @Override
-    public abstract void handleConfirmAction();
-
-    /**
-     * 构造一个自定义提示框，使用默认大小。
-     *
-     * @param message    提示框中显示的消息文本
-     * @param customText 自定义的文本
-     */
-    protected AbstractDialog(String message, String customText) {
-        // 使用默认的宽度和高度
-        this(message, customText, 350, 150);
-    }
 }

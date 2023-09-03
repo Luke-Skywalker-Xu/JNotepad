@@ -4,7 +4,6 @@ import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.tool.JsonUtil;
 import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.tool.PopUpUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -86,7 +85,7 @@ public class AppConfigController {
             writer.write(JsonUtil.toJsonString(appConfig));
         } catch (Exception e) {
             logger.error("", e);
-            PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");
+//            PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!");
         }
     }
 

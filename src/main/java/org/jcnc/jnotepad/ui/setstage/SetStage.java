@@ -59,7 +59,7 @@ public class SetStage {
         Stage setStage = new Stage();
         setStage.setScene(scene);
         setStage.setTitle("设置窗口");
-        setStage.getIcons().add(UiUtil.getIcon());
+        setStage.getIcons().add(UiUtil.getAppIcon());
         setStage.show();
     }
 
