@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.ui.setstage;
 
+import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -9,14 +10,29 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.ui.module.CustomSetButton;
+import org.jcnc.jnotepad.ui.module.SettingsComponent;
+
+import static org.jcnc.jnotepad.constants.AppConstants.SCREEN_LENGTH;
+import static org.jcnc.jnotepad.constants.AppConstants.SCREEN_WIDTH;
 
 /**
  * SetStage类表示设置窗口的单例对象。此窗口用于显示不同的设置选项和其对应的布局。
  * 通过调用getInstance方法获取SetStage的实例，并使用openSetStage方法打开设置窗口。
+ *
+ * @author luke
  */
 public class SetStage extends Stage {
 
+    public static final String GENERAL_SETTING_1 = "常规设置项1";
+    public static final String GENERAL_SETTING_2 = "常规设置项2";
+    public static final String APPEARANCE_SETTING_1 = "外观设置项1";
+    public static final String APPEARANCE_SETTING_2 = "外观设置项2";
+    public static final String SECURITY_SETTING_1 = "安全设置项1";
+    public static final String SECURITY_SETTING_2 = "安全设置项2";
     private static SetStage instance;
     private StackPane contentDisplay;
 
@@ -46,7 +62,6 @@ public class SetStage extends Stage {
         primaryStage.setTitle("设置窗口");
 
 
-
         contentDisplay = new StackPane();
 
         TreeView<String> treeView = createTreeView();
@@ -54,21 +69,34 @@ public class SetStage extends Stage {
         SplitPane splitPane = new SplitPane(treeView, contentDisplay);
         splitPane.setDividerPositions(0.3);
 
-        HBox bottomBox= new HBox(10);
+        HBox bottomBox = new HBox(10);
         bottomBox.setAlignment(Pos.CENTER_RIGHT);
         bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
-        bottomBox.setPadding(new Insets(10,10,10,10));
-        Button confirmButton=new Button(" 确认 ");
-        Button cancelButton =new Button(" 取消 ");
-        Button applicationButton =new Button(" 应用 ");
-        bottomBox.getChildren().addAll(confirmButton,cancelButton,applicationButton);
+        bottomBox.setPadding(new Insets(5, 15, 5, 0));
+        Button confirmButton = new Button(" 确认 ");
+        confirmButton.setTextFill(Color.WHITE);
+
+        confirmButton.getStyleClass().addAll(Styles.SMALL);
+        confirmButton.setStyle("-fx-background-color: rgb(54,88,128);");
+        CustomSetButton cancelButton = new CustomSetButton(" 取消 ");
+        cancelButton.setOnAction(event -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+
+        });
+        cancelButton.getStyleClass().addAll(Styles.SMALL);
+        Button applicationButton = new Button(" 应用 ");
+        applicationButton.getStyleClass().addAll(Styles.SMALL);
+        bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
 
 
         BorderPane root = new BorderPane();
         root.setCenter(splitPane);
         root.setBottom(bottomBox);
 
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, SCREEN_WIDTH - 100, SCREEN_LENGTH - 80);
+
+        primaryStage.getIcons().add(UiUtil.getAppIcon());
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -124,14 +152,15 @@ public class SetStage extends Stage {
 
         return treeView;
     }
+
     private Node createLayoutForSelectedItem(String selectedItem) {
         return switch (selectedItem) {
-            case "常规设置项1" -> createGeneralSettingsLayout1();
-            case "常规设置项2" -> createGeneralSettingsLayout2();
-            case "外观设置项1" -> createAppearanceSettingsLayout1();
-            case "外观设置项2" -> createAppearanceSettingsLayout2();
-            case "安全设置项1" -> createSecuritySettingsLayout1();
-            case "安全设置项2" -> createSecuritySettingsLayout2();
+            case GENERAL_SETTING_1 -> createGeneralSettingsLayout1();
+            case GENERAL_SETTING_2 -> createGeneralSettingsLayout2();
+            case APPEARANCE_SETTING_1 -> createAppearanceSettingsLayout1();
+            case APPEARANCE_SETTING_2 -> createAppearanceSettingsLayout2();
+            case SECURITY_SETTING_1 -> createSecuritySettingsLayout1();
+            case SECURITY_SETTING_2 -> createSecuritySettingsLayout2();
             default -> null;
         };
     }
@@ -142,23 +171,18 @@ public class SetStage extends Stage {
      * @return 常规设置项1的布局节点
      */
     private Node createGeneralSettingsLayout1() {
-        VBox generalLayout = new VBox();
+        VBox generalLayout = new VBox(10);
+        generalLayout.setPadding(new Insets(25));
 
-        // 添加一个Label作为设置项的标题
-        Label titleLabel = new Label("常规设置项1");
+        SettingsComponent devBox = new SettingsComponent("打开开发者调试页面","开发者调试页面");
+        devBox.setButtonAction(event -> {
+            // 创建并启动DeveloperDebugPage
+            DeveloperDebugStage debugPage = new DeveloperDebugStage();
+            debugPage.start(new Stage());
+        });
 
-        // 添加一个TextField用于输入
-        TextField textField = new TextField();
-        textField.setPromptText("输入设置项1的值");
 
-        // 添加一个CheckBox用于开关
-        CheckBox checkBox = new CheckBox("启用设置项1");
-
-        // 添加一个Button用于保存设置
-        Button saveButton = new Button("保存设置");
-
-        // 将所有节点添加到VBox布局中
-        generalLayout.getChildren().addAll(titleLabel, textField, checkBox, saveButton);
+        generalLayout.getChildren().addAll(devBox);
 
         return generalLayout;
     }
