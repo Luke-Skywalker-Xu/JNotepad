@@ -10,6 +10,7 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.tool.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
+import org.jcnc.jnotepad.plugin.PluginDemo;
 import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.root.left.sidebar.tools.SidebarToolBar;
@@ -264,6 +265,10 @@ public class TopMenuBar extends MenuBar {
         UiResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
 
         addItem = new MenuItem();
+        addItem.setOnAction(event -> {
+            PluginDemo pluginDemo = new PluginDemo();
+            pluginDemo.start(new Stage());
+        });
         UiResourceBundle.bindStringProperty(addItem.textProperty(), ADD_PLUGIN);
         itemMap.put("addItem", addItem);
 
