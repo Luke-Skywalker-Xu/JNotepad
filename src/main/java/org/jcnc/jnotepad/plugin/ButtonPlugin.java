@@ -1,9 +1,12 @@
-package org.jcnc.jnotepad.plgin;
+package org.jcnc.jnotepad.plugin;
 
 /**
+ * 新按钮插件
+ *
  * @author luke
  */
 public class ButtonPlugin implements Plugin {
+
     @Override
     public String getCategoryName() {
         return "新按钮插件";

@@ -1,6 +1,5 @@
-package org.jcnc.jnotepad.plgin;
+package org.jcnc.jnotepad.plugin;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,10 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 插件演示类
+ * <p>
+ * 用于演示插件加载和执行的界面。
+ *
  * @author luke
  */
-public class PluginDemo  {
+public class PluginDemo {
 
+    /**
+     * 启动插件演示界面
+     *
+     * @param primaryStage JavaFX的主舞台
+     */
     public void start(Stage primaryStage) {
         PluginManager pluginManager = new PluginManager();
 
@@ -25,17 +33,7 @@ public class PluginDemo  {
                 new FileChooser.ExtensionFilter("JAR Files", "*.jar")
         );
 
-        Button loadButton = new Button("加载插件");
-        loadButton.setOnAction(event -> {
-            File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if (selectedFile != null) {
-                String pluginFilePath = selectedFile.getAbsolutePath();
-                pluginManager.loadPlugins(pluginFilePath);
-
-                // 更新插件信息显示
-                displayPluginInfo(primaryStage, pluginManager);
-            }
-        });
+        Button loadButton = createLoadButton(primaryStage, fileChooser, pluginManager);
 
         Button executeButton = new Button("执行插件");
         executeButton.setOnAction(event -> pluginManager.executePlugins());
@@ -47,6 +45,38 @@ public class PluginDemo  {
         primaryStage.show();
     }
 
+    /**
+     * 创建加载插件的按钮
+     *
+     * @param primaryStage JavaFX的主舞台
+     * @param fileChooser  文件选择器
+     * @param pluginManager 插件管理器
+     * @return 加载插件的按钮
+     */
+    private Button createLoadButton(Stage primaryStage, FileChooser fileChooser, PluginManager pluginManager) {
+        Button loadButton = new Button("加载插件");
+        loadButton.setOnAction(event -> {
+            try {
+                File selectedFile = fileChooser.showOpenDialog(primaryStage);
+                if (selectedFile != null) {
+                    String pluginFilePath = selectedFile.getAbsolutePath();
+                    pluginManager.loadPlugins(pluginFilePath);
+
+                    // 更新插件信息显示
+                    displayPluginInfo(primaryStage, pluginManager);
+                }
+            } catch (Exception ignored) {
+            }
+        });
+        return loadButton;
+    }
+
+    /**
+     * 显示已加载插件的信息
+     *
+     * @param primaryStage  JavaFX的主舞台
+     * @param pluginManager 插件管理器
+     */
     private void displayPluginInfo(Stage primaryStage, PluginManager pluginManager) {
         Map<String, List<String>> loadedPluginsByCategory = pluginManager.getLoadedPluginsByCategory();
         VBox infoBox = new VBox();
