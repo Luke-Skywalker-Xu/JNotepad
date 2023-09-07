@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 
 import java.io.File;
 import java.util.List;
@@ -28,11 +31,12 @@ public class PluginDemo {
     public void start(Stage primaryStage) {
         PluginManager pluginManager = new PluginManager();
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
+        FileChooser fileChooser = BasicFileChooserFactory.getInstance().createFileChooser(
+                "选择插件",
+                null,
+                null,
                 new FileChooser.ExtensionFilter("JAR Files", "*.jar")
         );
-
         Button loadButton = createLoadButton(primaryStage, fileChooser, pluginManager);
 
         Button executeButton = new Button("执行插件");
@@ -40,6 +44,7 @@ public class PluginDemo {
 
         VBox root = new VBox(10, loadButton, executeButton);
         Scene scene = new Scene(root, 300, 200);
+        primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.setScene(scene);
         primaryStage.setTitle("插件演示");
         primaryStage.show();
@@ -66,6 +71,7 @@ public class PluginDemo {
                     displayPluginInfo(primaryStage, pluginManager);
                 }
             } catch (Exception ignored) {
+                LogUtil.getLogger(this.getClass()).info("未加载插件!");
             }
         });
         return loadButton;
@@ -81,17 +87,15 @@ public class PluginDemo {
         Map<String, List<String>> loadedPluginsByCategory = pluginManager.getLoadedPluginsByCategory();
         VBox infoBox = new VBox();
 
-        for (String category : loadedPluginsByCategory.keySet()) {
-            Label categoryLabel = new Label("类别: " + category);
+        loadedPluginsByCategory.forEach((key, pluginNames) -> {
+            Label categoryLabel = new Label("类别: " + key);
             VBox categoryInfoBox = new VBox();
-            List<String> pluginNames = loadedPluginsByCategory.get(category);
             for (String pluginName : pluginNames) {
                 Label pluginLabel = new Label("插件名称: " + pluginName);
                 categoryInfoBox.getChildren().add(pluginLabel);
             }
             infoBox.getChildren().addAll(categoryLabel, categoryInfoBox);
-        }
-
+        });
         Scene infoScene = new Scene(infoBox, 400, 300);
         Stage infoStage = new Stage();
         infoStage.setScene(infoScene);

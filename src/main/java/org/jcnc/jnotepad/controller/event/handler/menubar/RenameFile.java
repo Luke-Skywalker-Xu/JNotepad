@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -92,7 +92,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
         // 获取原始文件对象
         File file = (File) centerTab.getUserData();
         // 获取应用窗口并绑定
-        File newFile = TextFileChooserFactory.getInstance()
+        File newFile = BasicFileChooserFactory.getInstance()
                 .createFileChooser(
                         UiResourceBundle.getContent(TextConstants.RENAME),
                         centerTab.getText(),

@@ -11,7 +11,6 @@ import org.jcnc.jnotepad.constants.AppConstants;
 import org.jcnc.jnotepad.constants.TextConstants;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.tool.PopUpUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.view.manager.ViewManager;
@@ -73,7 +72,6 @@ public class LunchApp extends Application {
         primaryStage.setWidth(SCENE.getWidth());
         primaryStage.setHeight(SCENE.getHeight());
         primaryStage.getIcons().add(UiUtil.getAppIcon());
-    //    PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!", null, null);
 
         primaryStage.show();
     }

@@ -1,5 +1,7 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.tool.LogUtil;
+
 /**
  * 新按钮插件
  *
@@ -20,6 +22,6 @@ public class ButtonPlugin implements Plugin {
     @Override
     public void execute() {
         // 在这里实现新按钮插件的逻辑
-        System.out.println("新按钮插件执行了！");
+        LogUtil.getLogger(this.getClass()).info("新按钮插件执行了!");
     }
 }
