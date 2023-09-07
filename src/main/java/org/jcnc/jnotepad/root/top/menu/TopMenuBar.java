@@ -135,6 +135,7 @@ public class TopMenuBar extends MenuBar {
         }
     }
 
+
     /**
      * 初始化菜单栏
      */
