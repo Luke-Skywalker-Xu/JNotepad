@@ -122,7 +122,6 @@ public class LineNumberTextArea extends BorderPane {
          */
         double mainTextAreaScrollTop = mainTextArea.getScrollTop();
         double lineNumberAreaScrollTop = lineNumberArea.getScrollTop();
-
         int numOfLines = mainTextArea.getParagraphs().size();
         StringBuilder lineNumberText = new StringBuilder();
         for (int i = 1; i <= numOfLines; i++) {

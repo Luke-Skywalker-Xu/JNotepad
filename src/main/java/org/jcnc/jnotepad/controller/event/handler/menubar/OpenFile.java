@@ -113,7 +113,10 @@ public class OpenFile implements EventHandler<ActionEvent> {
             StringBuilder textBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                textBuilder.append(line).append("\n");
+                if (!textBuilder.isEmpty()) {
+                    textBuilder.append("\n");
+                }
+                textBuilder.append(line);
             }
             String text = textBuilder.toString();
             LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
