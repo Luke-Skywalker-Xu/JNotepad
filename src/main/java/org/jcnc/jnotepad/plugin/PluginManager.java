@@ -1,6 +1,11 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.tool.LogUtil;
+import org.slf4j.Logger;
+
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -17,6 +22,7 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManager {
+    Logger logger = LogUtil.getLogger(this.getClass());
     private final List<Plugin> plugins;
     private final Map<String, List<String>> categories;
 
@@ -32,16 +38,34 @@ public class PluginManager {
      * 加载插件
      *
      * @param pluginFilePath 插件文件的路径
-     * @throws Exception 如果加载插件时发生异常
      */
-    public void loadPlugins(String pluginFilePath) throws Exception {
+    public void loadPlugins(String pluginFilePath) {
         File file = new File(pluginFilePath);
 
         if (file.exists() && file.isFile()) {
             // 创建URLClassLoader以加载Jar文件中的类
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()});
-            Class<?> pluginClass = classLoader.loadClass("org.jcnc.jnotepad.plugin.ButtonPlugin");
-            Plugin plugin = (Plugin) pluginClass.getDeclaredConstructor().newInstance();
+            Class<?> pluginClass = null;
+            try (URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()})) {
+                pluginClass = classLoader.loadClass("org.jcnc.jnotepad.plugin.ButtonPlugin");
+            } catch (ClassNotFoundException e) {
+                logger.error("无法找到对应的插件类!", e);
+            } catch (MalformedURLException e) {
+                logger.error("无法创建URL格式错误!", e);
+            } catch (IOException e) {
+                logger.error("IO异常!", e);
+            }
+            if (pluginClass == null) {
+                return;
+            }
+            Plugin plugin = null;
+            try {
+                plugin = (Plugin) pluginClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                logger.error("发生异常!", e);
+            }
+            if (plugin == null) {
+                return;
+            }
             plugins.add(plugin);
 
             // 添加插件到类别中
@@ -49,7 +73,7 @@ public class PluginManager {
             String displayName = plugin.getDisplayName();
             categories.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(displayName);
         } else {
-            System.err.println("Plugin file not found: " + pluginFilePath);
+            LogUtil.getLogger(this.getClass()).info("Plugin file not found: {}", pluginFilePath);
         }
     }
 

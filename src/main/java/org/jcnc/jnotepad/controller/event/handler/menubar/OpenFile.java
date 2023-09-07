@@ -14,7 +14,7 @@ import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.tool.EncodingDetector;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 
 import java.io.BufferedReader;
@@ -41,7 +41,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         // 显示文件选择对话框，并获取选中的文件
-        File file = TextFileChooserFactory.getInstance().createFileChooser(
+        File file = BasicFileChooserFactory.getInstance().createFileChooser(
                         UiResourceBundle.getContent(TextConstants.OPEN),
                         null,
                         null,

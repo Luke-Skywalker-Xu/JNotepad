@@ -12,7 +12,7 @@ import org.jcnc.jnotepad.root.top.menu.TopMenuBar;
 import org.jcnc.jnotepad.tool.LogUtil;
 import org.jcnc.jnotepad.tool.SingletonUtil;
 import org.jcnc.jnotepad.tool.UiUtil;
-import org.jcnc.jnotepad.ui.dialog.factory.impl.TextFileChooserFactory;
+import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -76,7 +76,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
         if (selectedTab == null) {
             return;
         }
-        File file = TextFileChooserFactory.getInstance().createFileChooser(
+        File file = BasicFileChooserFactory.getInstance().createFileChooser(
                         UiResourceBundle.getContent(TextConstants.SAVE_AS),
                         selectedTab.getText(),
                         null,

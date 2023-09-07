@@ -25,9 +25,9 @@ public interface FileChooserFactory {
      * @param title           对话框标题
      * @param filename        默认选中的文件名
      * @param directory       初始目录
-     * @param extensionFilter 文件类型过滤器
+     * @param extensionFilters 文件类型过滤器
      * @return javafx.stage.FileChooser 详细文件选择对话框对象
      * @apiNote 该方法用于创建一个带有标题、默认文件名、初始目录和文件类型过滤器的详细文件选择对话框。
      */
-    FileChooser createFileChooser(String title, String filename, File directory, FileChooser.ExtensionFilter extensionFilter);
+    FileChooser createFileChooser(String title, String filename, File directory, FileChooser.ExtensionFilter... extensionFilters);
 }
