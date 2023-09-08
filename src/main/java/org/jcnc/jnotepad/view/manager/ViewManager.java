@@ -16,7 +16,6 @@ public class ViewManager {
 
     private static ViewManager instance = null;
 
-    private int tabIndex = 0;
     /**
      * 主布局
      */
@@ -59,15 +58,6 @@ public class ViewManager {
         }
     }
 
-    /**
-     * 自增并获取标签页索引。
-     *
-     * @return 自增后的标签页索引。
-     * @apiNote ++tabIndex
-     */
-    public int selfIncreaseAndGetTabIndex() {
-        return ++tabIndex;
-    }
 
     /**
      * 初始化屏幕组件。
