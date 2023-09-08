@@ -62,11 +62,15 @@ public class RenameFile implements EventHandler<ActionEvent> {
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 String newTabName = textField.getText();
-
                 // 检查是否存在相同名称的标签页
                 if (isTabNameExists(newTabName)) {
+
                     // 显示弹窗并提示用户更换名称
                     showDuplicateNameAlert(newTabName);
+
+                    // 恢复原始名称
+                    centerTab.setText(centerTab.getUserData().toString());
+
                 } else {
                     centerTab.setText(newTabName);
                     // 可选：移除 TextField 的图形
@@ -79,8 +83,14 @@ public class RenameFile implements EventHandler<ActionEvent> {
 
         // 监听失去焦点事件，完成编辑
         textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            String newTabName = textField.getText();
+            // 检查是否存在相同名称的标签页
+            if (isTabNameExists(newTabName)) {
+                // 恢复原始名称
+                centerTab.setText(centerTab.getUserData().toString());
+
+            }
             if (Boolean.FALSE.equals(newValue)) {
-                String newTabName = textField.getText();
                 centerTab.setText(newTabName);
                 // 可选：移除 TextField 的图形
                 centerTab.setGraphic(null);
