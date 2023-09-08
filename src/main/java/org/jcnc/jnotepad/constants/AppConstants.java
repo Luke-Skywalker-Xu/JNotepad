@@ -1,5 +1,9 @@
 package org.jcnc.jnotepad.constants;
 
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+
+import java.util.regex.Pattern;
+
 /**
  * 应用常量类，用于存放应用程序中的常量值。
  *
@@ -18,6 +22,11 @@ public class AppConstants {
      * logo地址
      */
     public static final String APP_ICON = "/img/icon.png";
+
+    /**
+     * 默认标签页的正则
+     */
+    public static final Pattern TABNAME_PATTERN = Pattern.compile("^" + Pattern.quote(UiResourceBundle.getContent(TextConstants.NEW_FILE)) + "\\d+$");
 
     /**
      * 私有构造函数，防止该类被实例化。

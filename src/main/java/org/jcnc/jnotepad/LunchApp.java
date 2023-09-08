@@ -63,7 +63,6 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
         SCENE.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         initUiComponents();
         UiResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
