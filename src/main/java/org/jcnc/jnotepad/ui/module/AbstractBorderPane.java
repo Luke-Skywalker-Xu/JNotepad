@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import org.jcnc.jnotepad.interfaces.BorderPaneAble;
+import org.jcnc.jnotepad.common.interfaces.BorderPaneAble;
 
 /**
  * 抽象边界面板类

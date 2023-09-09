@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import org.jcnc.jnotepad.interfaces.VerticalBoxAble;
+import org.jcnc.jnotepad.common.interfaces.VerticalBoxAble;
 
 /**
  * 抽象垂直盒子类

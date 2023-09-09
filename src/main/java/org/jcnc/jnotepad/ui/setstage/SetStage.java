@@ -12,12 +12,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.ui.module.SettingsComponent;
+import org.jcnc.jnotepad.util.UiUtil;
 
-import static org.jcnc.jnotepad.constants.AppConstants.SCREEN_LENGTH;
-import static org.jcnc.jnotepad.constants.AppConstants.SCREEN_WIDTH;
+import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_LENGTH;
+import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_WIDTH;
 
 /**
  * SetStage类表示设置窗口的单例对象。此窗口用于显示不同的设置选项和其对应的布局。

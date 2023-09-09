@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
-import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.io.File;

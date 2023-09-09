@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
+import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
 
 /**
  * 数据模型类，用于表示 MyData 对象的数据结构。

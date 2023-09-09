@@ -2,15 +2,15 @@ package org.jcnc.jnotepad.controller.i18n;
 
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.tool.SingletonUtil;
+import org.jcnc.jnotepad.util.SingletonUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.jcnc.jnotepad.constants.TextConstants.CHINESE;
-import static org.jcnc.jnotepad.constants.TextConstants.ENGLISH;
+import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
+import static org.jcnc.jnotepad.common.constants.TextConstants.ENGLISH;
 
 /**
  * 本地化控制器

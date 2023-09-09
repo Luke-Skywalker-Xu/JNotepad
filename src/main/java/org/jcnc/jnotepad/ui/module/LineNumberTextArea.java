@@ -3,11 +3,11 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-import org.jcnc.jnotepad.root.center.main.bottom.status.BottomStatusBox;
-import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.tool.SingletonUtil;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.SingletonUtil;
+import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;

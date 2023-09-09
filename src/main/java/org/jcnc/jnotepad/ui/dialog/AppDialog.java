@@ -11,7 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 /**

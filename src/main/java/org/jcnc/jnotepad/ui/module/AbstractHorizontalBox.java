@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.ui.module;
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import org.jcnc.jnotepad.interfaces.HorizontalBoxAble;
+import org.jcnc.jnotepad.common.interfaces.HorizontalBoxAble;
 
 /**
  * 抽象水平盒子类

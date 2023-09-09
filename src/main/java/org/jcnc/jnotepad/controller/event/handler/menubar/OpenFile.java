@@ -7,15 +7,15 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.constants.TextConstants;
-import org.jcnc.jnotepad.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.root.center.main.center.tab.CenterTab;
-import org.jcnc.jnotepad.root.center.main.center.tab.CenterTabPane;
-import org.jcnc.jnotepad.tool.EncodingDetector;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
+import org.jcnc.jnotepad.common.constants.TextConstants;
+import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.util.EncodingDetector;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,7 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import static org.jcnc.jnotepad.manager.ThreadPoolManager.threadContSelfSubtracting;
+import static org.jcnc.jnotepad.common.manager.ThreadPoolManager.threadContSelfSubtracting;
 
 /**
  * 打开文件的事件处理程序。
