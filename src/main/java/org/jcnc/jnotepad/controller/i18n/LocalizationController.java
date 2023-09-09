@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.controller.i18n;
 
 import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.util.SingletonUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -40,7 +40,7 @@ public class LocalizationController {
     private final AppConfigController appConfigController;
 
     private LocalizationController() {
-        this.appConfigController = SingletonUtil.getAppConfigController();
+        this.appConfigController = AppConfigController.getInstance();
     }
 
     /**
@@ -70,7 +70,7 @@ public class LocalizationController {
         }
         Locale.setDefault(locale);
 
-        SingletonUtil.getUiResourceBundle().resetLocal(getCurrentLocal());
+        UiResourceBundle.getInstance().resetLocal(getCurrentLocal());
         LOCALIZATION_CONFIG.setLanguage(SUPPORT_LANGUAGES.get(locale));
     }
 

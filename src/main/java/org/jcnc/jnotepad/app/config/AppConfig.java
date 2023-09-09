@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.app.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jcnc.jnotepad.model.ShortcutKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class AppConfig {
         myData.setLanguage(CHINESE);
         myData.setTextWrap(false);
 
-        List<AppConfig.ShortcutKey> shortcutKeys = new ArrayList<>();
+        List<ShortcutKey> shortcutKeys = new ArrayList<>();
         shortcutKeys.add(createShortcutKey("newItem", CTRL_N));
         shortcutKeys.add(createShortcutKey("openItem", CTRL_O));
         shortcutKeys.add(createShortcutKey("saveItem", CTRL_S));
@@ -54,8 +55,8 @@ public class AppConfig {
      * @param shortcutKeyValue 快捷键值
      * @return ShortcutKey 对象
      */
-    private static AppConfig.ShortcutKey createShortcutKey(String buttonName, String shortcutKeyValue) {
-        AppConfig.ShortcutKey shortcutKey = new AppConfig.ShortcutKey();
+    private static ShortcutKey createShortcutKey(String buttonName, String shortcutKeyValue) {
+        ShortcutKey shortcutKey = new ShortcutKey();
         shortcutKey.setButtonName(buttonName);
         shortcutKey.setShortcutKeyValue(shortcutKeyValue);
         return shortcutKey;
@@ -85,27 +86,4 @@ public class AppConfig {
         this.textWrap = textWrap;
     }
 
-    /**
-     * ShortcutKey 类，用于表示快捷键信息。
-     */
-    public static class ShortcutKey {
-        private String buttonName;
-        private String shortcutKeyValue;
-
-        public String getButtonName() {
-            return buttonName;
-        }
-
-        public void setButtonName(String buttonName) {
-            this.buttonName = buttonName;
-        }
-
-        public String getShortcutKeyValue() {
-            return shortcutKeyValue;
-        }
-
-        public void setShortcutKeyValue(String shortcutKeyValue) {
-            this.shortcutKeyValue = shortcutKeyValue;
-        }
-    }
 }

@@ -3,8 +3,8 @@ package org.jcnc.jnotepad.ui.module;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.SingletonUtil;
 import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
@@ -58,7 +58,7 @@ public class LineNumberTextArea extends BorderPane {
      */
     public LineNumberTextArea() {
         // 设置主文本区域是否自动换行，根据应用配置决定
-        mainTextArea.setWrapText(SingletonUtil.getAppConfigController().getAutoLineConfig());
+        mainTextArea.setWrapText(AppConfigController.getInstance().getAutoLineConfig());
 
         // 设置行号区域不可编辑
         lineNumberArea.setEditable(false);

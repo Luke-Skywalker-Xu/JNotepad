@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.util.SingletonUtil;
+import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.ViewManager;
 
@@ -86,7 +86,7 @@ public class LunchApp extends Application {
 
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();
-        SingletonUtil.getController().openAssociatedFileAndCreateTextArea(rawParameters);
+        Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
     }
 
     @Override

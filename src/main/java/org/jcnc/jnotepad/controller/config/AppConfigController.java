@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.controller.config;
 
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.exception.AppException;
+import org.jcnc.jnotepad.model.ShortcutKey;
 import org.jcnc.jnotepad.util.JsonUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
@@ -175,7 +176,7 @@ public class AppConfigController {
      *
      * @return 快捷键设置列表
      */
-    public List<AppConfig.ShortcutKey> getShortcutKey() {
+    public List<ShortcutKey> getShortcutKey() {
         return this.appConfig.getShortcutKey();
     }
 }

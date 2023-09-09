@@ -4,12 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.util.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
+import org.jcnc.jnotepad.model.ShortcutKey;
 import org.jcnc.jnotepad.plugin.PluginDemo;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
@@ -156,9 +156,9 @@ public class TopMenuBar extends MenuBar {
      * 初始化快捷键。
      */
     public void initShortcutKeys() {
-        List<AppConfig.ShortcutKey> shortcutKeyConfigs = appConfigController.getShortcutKey();
+        List<ShortcutKey> shortcutKeyConfigs = appConfigController.getShortcutKey();
         //FIXME: 如果shortcutKey不存在，需要解绑已绑定的快捷键
-        for (AppConfig.ShortcutKey shortcutKey : shortcutKeyConfigs) {
+        for (ShortcutKey shortcutKey : shortcutKeyConfigs) {
             // 保证json的key必须和变量名一致
             MenuItem menuItem = this.itemMap.get(shortcutKey.getButtonName());
             String shortKeyValue = shortcutKey.getShortcutKeyValue();

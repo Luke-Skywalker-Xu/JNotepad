@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.util.SingletonUtil;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -38,7 +38,7 @@ public class CenterTab extends Tab {
         super(tabTitle);
         lineNumberTextArea = textArea;
         this.setContent(lineNumberTextArea);
-        setAutoLine(SingletonUtil.getAppConfigController().getAutoLineConfig());
+        setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
     }
 
