@@ -54,7 +54,8 @@ public class RenameFile implements EventHandler<ActionEvent> {
     private void handleRenameTab(CenterTab centerTab) {
         TextField textField = new TextField(centerTab.getText());
         textField.getStyleClass().add("tab-title-editable");
-
+        // 临时记录标签页名称
+        String tempName = centerTab.getText();
         // 清空标签页名称
         centerTab.setText("");
 
@@ -69,7 +70,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
                     showDuplicateNameAlert(newTabName);
 
                     // 恢复原始名称
-                    centerTab.setText(centerTab.getUserData().toString());
+                    centerTab.setText(tempName);
 
                 } else {
                     centerTab.setText(newTabName);
@@ -87,7 +88,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
             // 检查是否存在相同名称的标签页
             if (isTabNameExists(newTabName)) {
                 // 恢复原始名称
-                centerTab.setText(centerTab.getUserData().toString());
+                centerTab.setText(tempName);
 
             }
             if (Boolean.FALSE.equals(newValue)) {
