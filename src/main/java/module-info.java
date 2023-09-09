@@ -16,6 +16,7 @@ module org.jcnc.jnotepad {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.antdesignicons;
     exports org.jcnc.jnotepad;
+    exports org.jcnc.jnotepad.model;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.app.i18n;
     exports org.jcnc.jnotepad.common.constants;
