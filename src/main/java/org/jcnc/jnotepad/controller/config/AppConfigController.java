@@ -2,9 +2,9 @@ package org.jcnc.jnotepad.controller.config;
 
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.tool.JsonUtil;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.tool.PopUpUtil;
+import org.jcnc.jnotepad.util.JsonUtil;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;

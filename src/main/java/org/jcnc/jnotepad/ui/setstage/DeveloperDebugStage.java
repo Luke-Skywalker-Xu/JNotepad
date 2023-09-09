@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.tool.PopUpUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 
 /**
  * @author luke

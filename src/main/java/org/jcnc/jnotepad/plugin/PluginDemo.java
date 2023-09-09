@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.tool.LogUtil;
-import org.jcnc.jnotepad.tool.UiUtil;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 
 import java.io.File;
 import java.util.List;

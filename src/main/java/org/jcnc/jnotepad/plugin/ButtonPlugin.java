@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
-import org.jcnc.jnotepad.tool.LogUtil;
+import org.jcnc.jnotepad.util.LogUtil;
 
 /**
  * 新按钮插件
