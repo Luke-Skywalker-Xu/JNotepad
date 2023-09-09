@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.util;
 
+import atlantafx.base.theme.Styles;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Window;
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.common.constants.AppConstants;
@@ -14,7 +14,7 @@ import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.*;
 /**
  * UI工具
  *
- * <p>封装了项目中所有的UI组件，以减少组件单例模式造成的代码复杂性。</p>
+ * <p>封装了项目中需要引入的UI组件</p>
  *
  * @author gewuyou
  */
@@ -27,24 +27,34 @@ public class UiUtil {
     /**
      * 错误图标
      */
-    private static final FontIcon ERROR_ICON = FontIcon.of(EXCLAMATION_CIRCLE, 64, Color.RED);
+    private static final FontIcon ERROR_ICON = FontIcon.of(EXCLAMATION_CIRCLE);
 
     /**
      * 信息图标
      */
-    private static final FontIcon INFO_ICON = FontIcon.of(INFO_CIRCLE, 64, Color.BLUE);
+    private static final FontIcon INFO_ICON = FontIcon.of(INFO_CIRCLE);
     /**
      * 警告图标
      */
-    private static final FontIcon WARNING_ICON = FontIcon.of(WARNING, 64, Color.ORANGE);
+    private static final FontIcon WARNING_ICON = FontIcon.of(WARNING);
     /**
      * 问题图标
      */
-    private static final FontIcon QUESTION_ICON = FontIcon.of(QUESTION_CIRCLE, 64, Color.YELLOW);
+    private static final FontIcon QUESTION_ICON = FontIcon.of(QUESTION_CIRCLE);
+
+    private static final FontIcon SUCCEED_ICON = FontIcon.of(CHECK_CIRCLE);
 
     private UiUtil() {
     }
 
+    static {
+        // 暂时设置颜色
+        ERROR_ICON.getStyleClass().addAll(Styles.DANGER);
+        INFO_ICON.getStyleClass().addAll(Styles.ACCENT);
+        QUESTION_ICON.getStyleClass().addAll(Styles.ACCENT);
+        WARNING_ICON.getStyleClass().addAll(Styles.WARNING);
+        SUCCEED_ICON.getStyleClass().addAll(Styles.SUCCESS);
+    }
 
     /**
      * 获取应用程序图标。
