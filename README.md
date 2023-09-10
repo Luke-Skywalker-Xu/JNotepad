@@ -56,6 +56,9 @@ JNotepad使用Java语言编写，并基于JavaFX框架开发，具有良好的�
 
 [qq-url]: http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=zOfwWb1lcle68cbEdJCjSIp3Itx0nEC0&authKey=bOsZFT9OVYZpZQbS6IYO4onBQoeBorF5nanMEi1G%2FgPbzmUkOweXBo9qB0G34R5K&noverify=0&group_code=386279455
 
+[docs-url]: https://gitee.com/jcnc-org/docs
+
+
 - [下载][gitee-download]
 
 2. Linux/MacOS 平台，查看入门指南
@@ -123,9 +126,7 @@ POM文件中的全部依赖项：
 
 ### 参与贡献
 
-1. Fork 本仓库 
 1. 加入JCNC社区
+1. [阅读JCNC开发者文档] [docs-url]
 1. [加入QQ群:386279455][qq-url]
-1. 新建分支
-1. 提交代码
-1. 新建 Pull Request
+1. 联系微信:xuxiaolankaka 加入群聊
