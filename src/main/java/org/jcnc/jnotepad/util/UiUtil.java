@@ -42,7 +42,7 @@ public class UiUtil {
      */
     private static final FontIcon QUESTION_ICON = FontIcon.of(QUESTION_CIRCLE);
 
-    private static final FontIcon SUCCEED_ICON = FontIcon.of(CHECK_CIRCLE);
+    private static final FontIcon SUCCESS_ICON = FontIcon.of(CHECK_CIRCLE);
 
     private UiUtil() {
     }
@@ -53,7 +53,7 @@ public class UiUtil {
         INFO_ICON.getStyleClass().addAll(Styles.ACCENT);
         QUESTION_ICON.getStyleClass().addAll(Styles.ACCENT);
         WARNING_ICON.getStyleClass().addAll(Styles.WARNING);
-        SUCCEED_ICON.getStyleClass().addAll(Styles.SUCCESS);
+        SUCCESS_ICON.getStyleClass().addAll(Styles.SUCCESS);
     }
 
     /**
@@ -100,6 +100,15 @@ public class UiUtil {
      */
     public static FontIcon getQuestionIcon() {
         return QUESTION_ICON;
+    }
+
+    /**
+     * Retrieves the success icon.
+     *
+     * @return the success icon as a FontIcon object
+     */
+    public static FontIcon getSuccessIcon() {
+        return SUCCESS_ICON;
     }
 
     /**
