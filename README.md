@@ -1,22 +1,23 @@
-<h1 style="text-align: center; margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
+<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可</h4>
 
-<h4 style="text-align: center; margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可能</h4>
-
-<div style="text-align: center;">
+<p align="center">
     <a href='https://gitee.com/jcnc-org/JNotepad/stargazers'><img
             src='https://gitee.com/jcnc-org/JNotepad/badge/star.svg?theme=dark' alt='star'>
     </a>
     <a href='https://gitee.com/jcnc-org/JNotepad/members'><img 
             src='https://gitee.com/jcnc-org/JNotepad/badge/fork.svg?theme=dark' alt='fork'>
     </a>
-<br>
+</p>
+<p align="center">
     <a href="https://gitee.com/jcnc-org/JNotepad/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/%20license-GPL--3.0%20-blue" alt="">
     </a>
     <a href="https://gitee.com/jcnc-org/JNotepad/blob/master/LICENSE">
         <img src="https://img.shields.io/badge/version-v1.1.12-blue" alt="">
     </a>
-<br>
+</p>
+<p align="center">
     <a href="https://gitee.com/jcnc-org/JNotepad/releases">
         <img src="https://img.shields.io/badge/Windows-Passing-49%2C198%2C84.svg?style=falt&logo=Windows" alt="">
     </a>
@@ -26,11 +27,13 @@
     <a href="https://gitee.com/jcnc-org/JNotepad/releases">
         <img src="https://img.shields.io/badge/MacOS-Passing-49%2C198%2C84.svg?style=falt&logo=Apple" alt="">
     </a>
-<br>
+</p>
+<p align="center">
     <a href="https://www.murphysec.com/console/report/1700407807803260928/1700436320488914944">
         <img src="https://www.murphysec.com/platform3/v31/badge/1700436320488914944.svg" alt="安全状态">
     </a>
-</div>
+</p>
+
 
 JNotepad(Java Notepad)
 是一款简约而强大的跨平台文本编辑器，旨在提供用户友好的界面和丰富的功能以及插件化使用。无论你是在Linux、Windows还是macOS系统上使用，JNotepad都能满足你对文本编辑和查看的需求。
@@ -127,6 +130,6 @@ POM文件中的全部依赖项：
 ### 参与贡献
 
 1. 加入JCNC社区
-1. [阅读JCNC开发者文档] [docs-url]
+1. [阅读JCNC开发者文档][docs-url]
 1. [加入QQ群:386279455][qq-url]
 1. 联系微信:xuxiaolankaka 加入群聊
