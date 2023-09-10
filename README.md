@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="https://gitee.com/jcnc-org/JNotepad/blob/release-v1.1.13/src/main/resources/img/icon.svg" alt="JNotepad Icon">
-</p>
+  <img src="src/main/resources/img/icon.svg" alt="JNotepad Icon">
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
 <h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可</h4>
 
