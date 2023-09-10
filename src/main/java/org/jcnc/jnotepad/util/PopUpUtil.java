@@ -108,6 +108,20 @@ public class PopUpUtil {
                 .build().showAndWait();
     }
 
+    public static void successAlert(
+            String title, String headerText, String message,
+            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+        getCustomDialog()
+                .setDialogType(AppDialog.DialogType.SUCCESS)
+                .setTitle(title)
+                .setHeaderText(headerText)
+                .setCustomText(message)
+                .setLeftBtnAction(leftBtnAction)
+                .setRightBtnAction(rightBtnAction)
+                .build().showAndWait();
+
+    }
+
     /**
      * 获取自定义弹窗
      *

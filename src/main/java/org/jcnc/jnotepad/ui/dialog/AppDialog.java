@@ -101,6 +101,10 @@ public class AppDialog extends Stage {
          */
         ERROR,
         /**
+         * 成功
+         */
+        SUCCESS,
+        /**
          * 疑问
          */
         QUESTION
@@ -177,6 +181,12 @@ public class AppDialog extends Stage {
                 {
                     return setTitle("问题").
                             setIcon(UiUtil.getQuestionIcon());
+                }
+                case SUCCESS ->
+                // 设置默认的对话框配置
+                {
+                    return setTitle("成功").
+                            setIcon(UiUtil.getSuccessIcon());
                 }
                 default -> {
                     return this;

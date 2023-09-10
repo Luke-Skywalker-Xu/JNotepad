@@ -33,6 +33,8 @@ public class SetStage extends Stage {
     public static final String APPEARANCE_SETTING_2 = "外观设置项2";
     public static final String SECURITY_SETTING_1 = "安全设置项1";
     public static final String SECURITY_SETTING_2 = "安全设置项2";
+
+    public static final String DEVELOPER_DEBUG_PAGE = "开发者调试页面";
     private static SetStage instance;
     private StackPane contentDisplay;
 
@@ -59,6 +61,7 @@ public class SetStage extends Stage {
      */
     public void openSetStage() {
         Stage primaryStage = new Stage();
+        primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.setTitle("设置窗口");
 
 
@@ -112,7 +115,7 @@ public class SetStage extends Stage {
         root.setExpanded(true);
 
         //常规设置树
-        TreeItem<String> generalItem = new TreeItem<>("常规设置");
+        TreeItem<String> generalItem = new TreeItem<>("常规");
 
         TreeItem<String> generalItem1 = new TreeItem<>("常规设置项1");
         TreeItem<String> generalItem2 = new TreeItem<>("常规设置项2");
@@ -121,7 +124,7 @@ public class SetStage extends Stage {
 
 
         //外观设置树
-        TreeItem<String> appearanceItem = new TreeItem<>("外观设置");
+        TreeItem<String> appearanceItem = new TreeItem<>("外观");
 
         TreeItem<String> appearanceItem1 = new TreeItem<>("外观设置项1");
         TreeItem<String> appearanceItem2 = new TreeItem<>("外观设置项2");
@@ -129,16 +132,21 @@ public class SetStage extends Stage {
         appearanceItem.getChildren().add(appearanceItem2);
 
         //安全设置树
-        TreeItem<String> securityItem = new TreeItem<>("安全设置");
+        TreeItem<String> securityItem = new TreeItem<>("安全");
 
         TreeItem<String> securityItem1 = new TreeItem<>("安全设置项1");
         TreeItem<String> securityItem2 = new TreeItem<>("安全设置项2");
         securityItem.getChildren().add(securityItem1);
         securityItem.getChildren().add(securityItem2);
 
+        // 开发者调试页面
+        TreeItem<String> developerItem = new TreeItem<>(DEVELOPER_DEBUG_PAGE);
+
+
         root.getChildren().add(generalItem);
         root.getChildren().add(appearanceItem);
         root.getChildren().add(securityItem);
+        root.getChildren().add(developerItem);
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
 
@@ -161,20 +169,16 @@ public class SetStage extends Stage {
             case APPEARANCE_SETTING_2 -> createAppearanceSettingsLayout2();
             case SECURITY_SETTING_1 -> createSecuritySettingsLayout1();
             case SECURITY_SETTING_2 -> createSecuritySettingsLayout2();
+            case DEVELOPER_DEBUG_PAGE -> createDevelopersDebugPageLayouts();
             default -> null;
         };
     }
 
-    /**
-     * 创建常规设置项1的布局。
-     *
-     * @return 常规设置项1的布局节点
-     */
-    private Node createGeneralSettingsLayout1() {
+    private Node createDevelopersDebugPageLayouts() {
         VBox generalLayout = new VBox(10);
         generalLayout.setPadding(new Insets(25));
 
-        SettingsComponent devBox = new SettingsComponent("打开开发者调试页面","开发者调试页面");
+        SettingsComponent devBox = new SettingsComponent("打开开发者调试页面", DEVELOPER_DEBUG_PAGE);
         devBox.setButtonAction(event -> {
             // 创建并启动DeveloperDebugPage
             DeveloperDebugStage debugPage = new DeveloperDebugStage();
@@ -183,6 +187,18 @@ public class SetStage extends Stage {
 
 
         generalLayout.getChildren().addAll(devBox);
+
+        return generalLayout;
+    }
+
+    /**
+     * 创建常规设置项1的布局。
+     *
+     * @return 常规设置项1的布局节点
+     */
+    private Node createGeneralSettingsLayout1() {
+        VBox generalLayout = new VBox();
+        generalLayout.getChildren().add(new Label("常规设置项1的布局"));
 
         return generalLayout;
     }
