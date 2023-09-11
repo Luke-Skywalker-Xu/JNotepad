@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.plugin.interfaces.Plugin;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -22,16 +23,17 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManager {
+    private static final PluginManager INSTANCE = new PluginManager();
     Logger logger = LogUtil.getLogger(this.getClass());
-    private final List<Plugin> plugins;
-    private final Map<String, List<String>> categories;
+    private final List<Plugin> plugins = new ArrayList<>();
+    private final Map<String, List<String>> categories = new HashMap<>();
 
-    /**
-     * 构造方法，初始化插件列表和类别映射
-     */
-    public PluginManager() {
-        plugins = new ArrayList<>();
-        categories = new HashMap<>();
+    private PluginManager() {
+
+    }
+
+    public static PluginManager getInstance() {
+        return INSTANCE;
     }
 
     /**
@@ -41,7 +43,6 @@ public class PluginManager {
      */
     public void loadPlugins(String pluginFilePath) {
         File file = new File(pluginFilePath);
-
         if (file.exists() && file.isFile()) {
             // 创建URLClassLoader以加载Jar文件中的类
             Class<?> pluginClass = null;
@@ -73,8 +74,29 @@ public class PluginManager {
             String displayName = plugin.getDisplayName();
             categories.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(displayName);
         } else {
-            LogUtil.getLogger(this.getClass()).info("Plugin file not found: {}", pluginFilePath);
+            LogUtil.getLogger(this.getClass()).info("PluginInfo file not found: {}", pluginFilePath);
         }
+    }
+
+    /**
+     * 卸载插件
+     *
+     * @param pluginClassName 插件类名
+     * @since 2023/9/11 12:28
+     */
+    public void unloadPlugin(String pluginClassName) {
+        //todo Unload the plugin and remove it from the list
+    }
+
+    /**
+     * 禁用插件
+     *
+     * @param pluginClassName 禁用某个插件
+     * @apiNote
+     * @since 2023/9/11 12:34
+     */
+    public void disablePlugIn(String pluginClassName) {
+        //todo Disable the plugin
     }
 
     /**

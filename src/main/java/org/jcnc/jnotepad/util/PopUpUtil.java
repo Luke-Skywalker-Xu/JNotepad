@@ -1,6 +1,8 @@
 package org.jcnc.jnotepad.util;
 
-import org.jcnc.jnotepad.ui.dialog.AppDialog;
+import org.jcnc.jnotepad.model.enums.DialogType;
+import org.jcnc.jnotepad.ui.dialog.AppDialogBuilder;
+import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 
 /**
  * 弹窗工具类
@@ -25,9 +27,9 @@ public class PopUpUtil {
      */
     public static void errorAlert(
             String title, String headerText, String message,
-            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+            DialogButtonAction leftBtnAction, DialogButtonAction rightBtnAction) {
         getCustomDialog()
-                .setDialogType(AppDialog.DialogType.ERROR)
+                .setDialogType(DialogType.ERROR)
                 .setTitle(title)
                 .setHeaderText(headerText)
                 .setCustomText(message)
@@ -49,9 +51,9 @@ public class PopUpUtil {
      */
     public static void infoAlert(
             String title, String headerText, String message,
-            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+            DialogButtonAction leftBtnAction, DialogButtonAction rightBtnAction) {
         getCustomDialog()
-                .setDialogType(AppDialog.DialogType.INFO)
+                .setDialogType(DialogType.INFO)
                 .setTitle(title)
                 .setHeaderText(headerText)
                 .setCustomText(message)
@@ -73,9 +75,9 @@ public class PopUpUtil {
      */
     public static void warningAlert(
             String title, String headerText, String message,
-            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+            DialogButtonAction leftBtnAction, DialogButtonAction rightBtnAction) {
         getCustomDialog()
-                .setDialogType(AppDialog.DialogType.WARNING)
+                .setDialogType(DialogType.WARNING)
                 .setTitle(title)
                 .setHeaderText(headerText)
                 .setCustomText(message)
@@ -97,9 +99,9 @@ public class PopUpUtil {
      */
     public static void questionAlert(
             String title, String headerText, String message,
-            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+            DialogButtonAction leftBtnAction, DialogButtonAction rightBtnAction) {
         getCustomDialog()
-                .setDialogType(AppDialog.DialogType.QUESTION)
+                .setDialogType(DialogType.QUESTION)
                 .setTitle(title)
                 .setHeaderText(headerText)
                 .setCustomText(message)
@@ -110,9 +112,9 @@ public class PopUpUtil {
 
     public static void successAlert(
             String title, String headerText, String message,
-            AppDialog.ButtonAction leftBtnAction, AppDialog.ButtonAction rightBtnAction) {
+            DialogButtonAction leftBtnAction, DialogButtonAction rightBtnAction) {
         getCustomDialog()
-                .setDialogType(AppDialog.DialogType.SUCCESS)
+                .setDialogType(DialogType.SUCCESS)
                 .setTitle(title)
                 .setHeaderText(headerText)
                 .setCustomText(message)
@@ -128,7 +130,7 @@ public class PopUpUtil {
      * @apiNote 使用此方法会返回原始的应用对话框建造者类，以实现自定义弹窗
      * @since 2023/9/3 11:54
      */
-    public static AppDialog.AppDialogBuilder getCustomDialog() {
-        return new AppDialog.AppDialogBuilder();
+    public static AppDialogBuilder getCustomDialog() {
+        return new AppDialogBuilder();
     }
 }

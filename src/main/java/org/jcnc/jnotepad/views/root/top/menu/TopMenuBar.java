@@ -9,7 +9,7 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.util.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.model.ShortcutKey;
+import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.plugin.PluginDemo;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;

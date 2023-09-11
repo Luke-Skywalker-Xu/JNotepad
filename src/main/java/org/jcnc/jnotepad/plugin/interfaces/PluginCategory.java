@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.plugin;
+package org.jcnc.jnotepad.plugin.interfaces;
 
 /**
  * 插件类别接口

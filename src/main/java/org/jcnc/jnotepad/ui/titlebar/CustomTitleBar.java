@@ -103,6 +103,7 @@ public class CustomTitleBar extends HBox {
     }
 
     private static class Delta {
-        double x, y;
+        double x;
+        double y;
     }
 }

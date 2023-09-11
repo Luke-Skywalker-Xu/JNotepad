@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.app.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.jcnc.jnotepad.model.ShortcutKey;
+import org.jcnc.jnotepad.model.entity.ShortcutKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,5 +85,4 @@ public class AppConfig {
     public void setTextWrap(boolean textWrap) {
         this.textWrap = textWrap;
     }
-
 }

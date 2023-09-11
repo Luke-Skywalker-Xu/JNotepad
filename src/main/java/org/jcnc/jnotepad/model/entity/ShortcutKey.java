@@ -1,4 +1,5 @@
-package org.jcnc.jnotepad.model;
+package org.jcnc.jnotepad.model.entity;
+
 
 /**
  * 快捷键信息类
@@ -6,7 +7,13 @@ package org.jcnc.jnotepad.model;
  * @author gewuyou
  */
 public class ShortcutKey {
+    /**
+     * 按钮名称
+     */
     private String buttonName;
+    /**
+     * 快捷键值
+     */
     private String shortcutKeyValue;
 
     public String getButtonName() {

@@ -7,7 +7,7 @@ import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
  *
  * <p>该类用于管理右侧边栏的布局和内容。</p>
  *
- * @Author 许轲
+ * @author 许轲
  */
 public class RootRightSideBarVerticalBox extends AbstractVerticalBox {
 
