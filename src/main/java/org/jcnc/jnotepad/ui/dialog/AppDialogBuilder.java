@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
-import lombok.Data;
 import org.jcnc.jnotepad.model.enums.DialogType;
 import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -15,7 +14,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
  *
  * @author gewuyou
  */
-@Data
 public class AppDialogBuilder {
     private AppDialog appDialog;
     private Image appIcon = UiUtil.getAppIcon();
@@ -96,6 +94,10 @@ public class AppDialogBuilder {
         return this;
     }
 
+    public AppDialog build() {
+        appDialog = new AppDialog(this);
+        return appDialog;
+    }
 
     /**
      * 设置对话框标题
@@ -238,9 +240,75 @@ public class AppDialogBuilder {
         return this;
     }
 
+    public Image getAppIcon() {
+        return appIcon;
+    }
 
-    public AppDialog build() {
-        appDialog = new AppDialog(this);
-        return appDialog;
+    public String getTitle() {
+        return title;
+    }
+
+    public String getHeaderText() {
+        return headerText;
+    }
+
+    public String getCustomText() {
+        return customText;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public FontIcon getIcon() {
+        return icon;
+    }
+
+    public DialogButtonAction getLeftBtnAction() {
+        return leftBtnAction;
+    }
+
+    public DialogButtonAction getRightBtnAction() {
+        return rightBtnAction;
+    }
+
+    public String getLeftBtnText() {
+        return leftBtnText;
+    }
+
+    public String getRightBtnText() {
+        return rightBtnText;
+    }
+
+    public Insets getIconCoxPaddingInsets() {
+        return iconCoxPaddingInsets;
+    }
+
+    public Insets gethBoxPaddingInsets() {
+        return hBoxPaddingInsets;
+    }
+
+    public boolean isResizable() {
+        return isResizable;
+    }
+
+    public double getHBoxSpacing() {
+        return hBoxSpacing;
+    }
+
+    public Pos getVboxPos() {
+        return vboxPos;
+    }
+
+    public Pos getHboxPos() {
+        return hboxPos;
+    }
+
+    public Modality getModality() {
+        return modality;
     }
 }

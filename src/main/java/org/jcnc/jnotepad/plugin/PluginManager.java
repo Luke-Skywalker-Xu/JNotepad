@@ -74,7 +74,7 @@ public class PluginManager {
             String displayName = plugin.getDisplayName();
             categories.computeIfAbsent(categoryName, k -> new ArrayList<>()).add(displayName);
         } else {
-            LogUtil.getLogger(this.getClass()).info("Plugins file not found: {}", pluginFilePath);
+            LogUtil.getLogger(this.getClass()).info("PluginInfo file not found: {}", pluginFilePath);
         }
     }
 

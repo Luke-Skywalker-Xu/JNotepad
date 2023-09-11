@@ -1,13 +1,11 @@
 package org.jcnc.jnotepad.model.entity;
 
-import lombok.Data;
 
 /**
  * 快捷键信息类
  *
  * @author gewuyou
  */
-@Data
 public class ShortcutKey {
     /**
      * 按钮名称
@@ -17,4 +15,20 @@ public class ShortcutKey {
      * 快捷键值
      */
     private String shortcutKeyValue;
+
+    public String getButtonName() {
+        return buttonName;
+    }
+
+    public void setButtonName(String buttonName) {
+        this.buttonName = buttonName;
+    }
+
+    public String getShortcutKeyValue() {
+        return shortcutKeyValue;
+    }
+
+    public void setShortcutKeyValue(String shortcutKeyValue) {
+        this.shortcutKeyValue = shortcutKeyValue;
+    }
 }

@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.app.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
  *
  * @author 许轲
  */
-@Data
 public class AppConfig {
     private static final String CTRL_N = "ctrl+n";
     private static final String CTRL_O = "ctrl+o";
@@ -62,5 +60,29 @@ public class AppConfig {
         shortcutKey.setButtonName(buttonName);
         shortcutKey.setShortcutKeyValue(shortcutKeyValue);
         return shortcutKey;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public List<ShortcutKey> getShortcutKey() {
+        return shortcutKey;
+    }
+
+    public void setShortcutKey(List<ShortcutKey> shortcutKey) {
+        this.shortcutKey = shortcutKey;
+    }
+
+    public boolean isTextWrap() {
+        return textWrap;
+    }
+
+    public void setTextWrap(boolean textWrap) {
+        this.textWrap = textWrap;
     }
 }

@@ -58,7 +58,7 @@ public class AppDialog extends Stage {
 
         HBox hBox = new HBox(builder.getHBoxSpacing(), confirmButton, cancelButton);
         hBox.setAlignment(builder.getHboxPos());
-        hBox.setPadding(builder.getHBoxPaddingInsets());
+        hBox.setPadding(builder.gethBoxPaddingInsets());
         vbox.getChildren().addAll(label, customTextLabel, hBox);
 
         borderPane.setLeft(iconBox);
