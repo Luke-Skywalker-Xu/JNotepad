@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.plugin;
+package org.jcnc.jnotepad.plugin.interfaces;
 
 /**
  * 插件接口
@@ -15,6 +15,11 @@ public interface Plugin extends PluginCategory {
      * @return 插件的显示名称
      */
     String getDisplayName();
+
+    /**
+     * 初始化插件
+     */
+    void initialize();
 
     /**
      * 执行插件的逻辑

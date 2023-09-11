@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.plugin.interfaces.Plugin;
 import org.jcnc.jnotepad.util.LogUtil;
 
 /**
@@ -17,6 +18,14 @@ public class ButtonPlugin implements Plugin {
     @Override
     public String getDisplayName() {
         return "新按钮";
+    }
+
+    /**
+     * 初始化插件
+     */
+    @Override
+    public void initialize() {
+        LogUtil.getLogger(this.getClass()).info("新按钮插件初始化了!");
     }
 
     @Override

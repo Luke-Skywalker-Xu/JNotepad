@@ -1,8 +1,9 @@
 package org.jcnc.jnotepad.controller.config;
 
+import lombok.Data;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.exception.AppException;
-import org.jcnc.jnotepad.model.ShortcutKey;
+import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.util.JsonUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
@@ -23,6 +24,7 @@ import java.util.List;
  *
  * @author songdragon
  */
+@Data
 public class AppConfigController {
 
     /**
@@ -119,22 +121,6 @@ public class AppConfigController {
         return AppConfig.generateDefaultAppConfig();
     }
 
-    /**
-     * 获取当前配置文件所在目录。
-     *
-     * @return 所在目录
-     */
-    public String getDir() {
-        return dir;
-    }
-
-    public void setDir(String dir) {
-        this.dir = dir;
-    }
-
-    private AppConfig getAppConfig() {
-        return appConfig;
-    }
 
     /**
      * 获取自动换行设置，默认自动换行。

@@ -29,7 +29,7 @@ public class PluginDemo {
      * @param primaryStage JavaFX的主舞台
      */
     public void start(Stage primaryStage) {
-        PluginManager pluginManager = new PluginManager();
+        PluginManager pluginManager = PluginManager.getInstance();
 
         FileChooser fileChooser = BasicFileChooserFactory.getInstance().createFileChooser(
                 "选择插件",
