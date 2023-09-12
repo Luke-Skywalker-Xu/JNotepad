@@ -36,7 +36,10 @@
     </a>
 </p>
 
-
+[jnotepad-official-plugins][https://gitee.com/jcnc-org/jnotepad-official-plugins]
+---
+- [官网插件仓库][jnotepad-official-plugins]
+---
 JNotepad(Java Notepad)
 是一款简约而强大的跨平台文本编辑器，旨在提供用户友好的界面和丰富的功能以及插件化使用。无论你是在Linux、Windows还是macOS系统上使用，JNotepad都能满足你对文本编辑和查看的需求。
 JNotepad使用Java语言编写，并基于JavaFX框架开发，具有良好的可扩展性和稳定性。
