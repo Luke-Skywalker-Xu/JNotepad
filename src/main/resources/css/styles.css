@@ -4,19 +4,21 @@
     -fx-vbar-policy: as-needed;
 }
 
-/* 不显示滚动条 */
+/*!* 不显示滚动条 *!*/
+/*.text-line-number .content {*/
+/*    -fx-cursor: text;*/
+/*    -fx-padding: 8px 1px 8px 5px;*/
+/*}*/
 .text-line-number .content {
-    -fx-cursor: text;
     -fx-padding: 8px 1px 8px 5px;
 }
-
 .text-line-number .scroll-bar:vertical {
     -fx-pref-width: 1;
     -fx-opacity: 0;
 }
 
 .text-line-number .scroll-bar:horizontal {
-    -fx-pref-height: 1;
+    -fx-pref-height: 10;
     -fx-opacity: 0;
 }
 
