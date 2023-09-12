@@ -25,7 +25,13 @@ import java.util.Map;
 public class PluginManager {
     private static final PluginManager INSTANCE = new PluginManager();
     Logger logger = LogUtil.getLogger(this.getClass());
+    /**
+     * 插件集合
+     */
     private final List<Plugin> plugins = new ArrayList<>();
+    /**
+     * 插件类别
+     */
     private final Map<String, List<String>> categories = new HashMap<>();
 
     private PluginManager() {

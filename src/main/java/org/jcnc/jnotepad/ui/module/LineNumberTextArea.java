@@ -79,7 +79,6 @@ public class LineNumberTextArea extends BorderPane {
 
         // 初始化监听器，用于处理事件
         initListeners();
-
         // 将主文本区域设置为中央内容，将行号区域设置为左侧内容
         setCenter(mainTextArea);
         setLeft(lineNumberArea);
@@ -202,10 +201,13 @@ public class LineNumberTextArea extends BorderPane {
         // 循环迭代，生成行号文本,
         for (int i = 1; i <= numOfLines; i++) {
             // 将行号和换行符添加到字符串中
-            lineNumberText.append(i).append("\n");
+            lineNumberText.append(i);
+            if (i != numOfLines) {
+                lineNumberText.append("\n");
+            }
         }
 
-        // 将生成的行号文本设置到行号区域
+        // 将生成的行号文本设置到 行号区域
         lineNumberArea.setText(lineNumberText.toString());
 
         // 恢复主文本区域的垂直滚动位置
