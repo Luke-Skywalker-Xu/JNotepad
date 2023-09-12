@@ -43,7 +43,7 @@
 | 序号  | 相关仓库          |  链接地址                              |
 |:---: | :---------------: |  :-----------------------------------:|
 |1     | JNotepad插件仓库   | [点击访问][jnotepad-official-plugins]  |
-|2     | JCNC文档窗口       | [点击访问][jcnc-docs]                  |
+|2     | JCNC文档仓库       | [点击访问][jcnc-docs]                  |
 
 JNotepad(Java Notepad)
 是一款简约而强大的跨平台文本编辑器，旨在提供用户友好的界面和丰富的功能以及插件化使用。无论你是在Linux、Windows还是macOS系统上使用，JNotepad都能满足你对文本编辑和查看的需求。
