@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.ui.module;
 
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.StyleClassedTextArea;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  * @author luke
  */
-public class LineNumberTextArea extends CodeArea {
+public class LineNumberTextArea extends StyleClassedTextArea {
 
 
     /**
@@ -35,10 +35,7 @@ public class LineNumberTextArea extends CodeArea {
      */
     public LineNumberTextArea() {
         // 设置 LineNumberTextArea 的样式，包括边框和背景颜色
-        this.setStyle(
-                "-fx-border-color:white;" +
-                        "-fx-background-color:white"
-        );
+        getStyleClass().add("line-number-text-area");
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
         initListeners();
 

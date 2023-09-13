@@ -4,29 +4,7 @@
     -fx-vbar-policy: as-needed;
 }
 
-/*!* 不显示滚动条 *!*/
-/*.text-line-number .content {*/
-/*    -fx-cursor: text;*/
-/*    -fx-padding: 8px 1px 8px 5px;*/
-/*}*/
-.text-line-number .content {
-    -fx-padding: 8px 1px 8px 5px;
-}
-.text-line-number .scroll-bar:vertical {
-    -fx-pref-width: 1;
-    -fx-opacity: 0;
-}
 
-.text-line-number .scroll-bar:horizontal {
-    -fx-pref-height: 10;
-    -fx-opacity: 0;
-}
-
-/* 主文本框区域样式 */
-.main-text-area {
-    -fx-border-color: white;
-    -fx-background-color: white;
-}
 
 /* tab修改标签样式 */
 .tab-title-editable {
@@ -35,4 +13,25 @@
     -fx-max-height: 20px;
     -fx-font-size: 14px;
     -fx-padding: 2px 2px 2px 2px;
+}
+
+/*左侧边栏*/
+.tool-horizontal-box {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: -color-border-default;
+}
+
+
+.paragraph-box .has-caret {
+    -fx-background-color: -color-neutral-muted
+}
+
+.line-number-text-area .paragraph-box .text {
+    /*-fx-fill: -color-fg-default;*/
+    /* -fx-font-size: 18px;*/
+}
+
+.lineno {
+    -fx-background-color: -color-bg-default;
+    /*-fx-padding: 0 10 0 0;*/
 }
