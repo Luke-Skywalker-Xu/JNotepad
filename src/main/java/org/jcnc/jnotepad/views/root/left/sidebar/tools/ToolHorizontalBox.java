@@ -25,6 +25,7 @@ public class ToolHorizontalBox extends AbstractHorizontalBox {
 
         // 将 JNotepadToolBar 添加为子节点
         getChildren().add(SidebarToolBar.getInstance());
+        getStyleClass().add("tool-horizontal-box");
     }
 
     /**
