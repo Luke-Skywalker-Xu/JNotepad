@@ -8,7 +8,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @author luke
  */
 public class PluginDemo {
+    Logger logger = LogUtil.getLogger(this.getClass());
 
     /**
      * 启动插件演示界面
@@ -53,8 +56,8 @@ public class PluginDemo {
     /**
      * 创建加载插件的按钮
      *
-     * @param primaryStage JavaFX的主舞台
-     * @param fileChooser  文件选择器
+     * @param primaryStage  JavaFX的主舞台
+     * @param fileChooser   文件选择器
      * @param pluginManager 插件管理器
      * @return 加载插件的按钮
      */
@@ -65,13 +68,16 @@ public class PluginDemo {
                 File selectedFile = fileChooser.showOpenDialog(primaryStage);
                 if (selectedFile != null) {
                     String pluginFilePath = selectedFile.getAbsolutePath();
-                    pluginManager.loadPlugins(pluginFilePath);
+                    PluginLoader.getInstance().loadPlugins(pluginFilePath);
 
                     // 更新插件信息显示
                     displayPluginInfo(primaryStage, pluginManager);
+                } else {
+                    PopUpUtil.infoAlert(null, null, "未找到插件!", null, null);
+                    logger.info("未找到插件!");
                 }
-            } catch (Exception ignored) {
-                LogUtil.getLogger(this.getClass()).info("未加载插件!");
+            } catch (Exception e) {
+                logger.error("加载插件失败!", e);
             }
         });
         return loadButton;

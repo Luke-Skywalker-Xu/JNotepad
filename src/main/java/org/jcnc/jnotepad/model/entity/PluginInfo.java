@@ -9,7 +9,7 @@ public class PluginInfo {
     /**
      * 插件名称
      */
-    private String pluginName;
+    private String name;
     /**
      * 插件版本
      */
@@ -19,12 +19,17 @@ public class PluginInfo {
      */
     private boolean enabled;
 
-    public String getPluginName() {
-        return pluginName;
+    /**
+     * 主类名称
+     */
+    private String mainClass;
+
+    public String getName() {
+        return name;
     }
 
-    public void setPluginName(String pluginName) {
-        this.pluginName = pluginName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getVersion() {
@@ -41,5 +46,13 @@ public class PluginInfo {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getMainClass() {
+        return mainClass;
+    }
+
+    public void setMainClass(String mainClass) {
+        this.mainClass = mainClass;
     }
 }
