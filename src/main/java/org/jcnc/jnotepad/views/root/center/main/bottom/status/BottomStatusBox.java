@@ -3,10 +3,10 @@ package org.jcnc.jnotepad.views.root.center.main.bottom.status;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.ui.module.AbstractHorizontalBox;
+import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
@@ -94,7 +94,7 @@ public class BottomStatusBox extends AbstractHorizontalBox {
         if (instance.getSelected() == null) {
             return;
         }
-        TextArea textArea = instance.getSelected().getLineNumberTextArea().getMainTextArea();
+        LineNumberTextArea textArea = instance.getSelected().getLineNumberTextArea();
         int caretPosition = textArea.getCaretPosition();
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());

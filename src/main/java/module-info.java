@@ -15,6 +15,7 @@ module org.jcnc.jnotepad {
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.antdesignicons;
+    requires org.fxmisc.richtext;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.model.enums;
     exports org.jcnc.jnotepad.app.config;
@@ -29,6 +30,7 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.common.interfaces;
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.views.root.center.main.bottom.status;
+    exports org.jcnc.jnotepad.plugin.interfaces;
     exports org.jcnc.jnotepad.ui.dialog;
     exports org.jcnc.jnotepad.ui.dialog.interfaces;
     exports org.jcnc.jnotepad.model.entity;

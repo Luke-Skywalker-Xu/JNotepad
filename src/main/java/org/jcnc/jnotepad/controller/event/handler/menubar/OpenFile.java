@@ -121,7 +121,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
             String text = textBuilder.toString();
             LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
             Platform.runLater(() -> {
-                textArea.getMainTextArea().setText(text);
+                textArea.appendText(text);
                 CenterTab tab = createNewTab(file.getName(), textArea, encoding);
                 // 设置当前标签页关联本地文件
                 tab.setRelevance(true);

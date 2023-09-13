@@ -56,7 +56,7 @@ public class CenterTab extends Tab {
 
     public void setAutoLine(boolean autoLine) {
         this.autoLine = autoLine;
-        lineNumberTextArea.getMainTextArea().setWrapText(autoLine);
+        lineNumberTextArea.setWrapText(autoLine);
     }
 
     public LineNumberTextArea getLineNumberTextArea() {
