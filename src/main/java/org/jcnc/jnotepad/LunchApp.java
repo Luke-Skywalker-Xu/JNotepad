@@ -10,8 +10,11 @@ import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.controller.ResourceController;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.controller.manager.Controller;
+import org.jcnc.jnotepad.plugin.PluginManager;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.ViewManager;
 
@@ -64,6 +67,7 @@ public class LunchApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         SCENE.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+        // 初始化UI组件
         initUiComponents();
         UiResourceBundle.bindStringProperty(primaryStage.titleProperty(), TextConstants.TITLE);
 
@@ -83,7 +87,8 @@ public class LunchApp extends Application {
         // 2. 加载组件
         ViewManager viewManager = ViewManager.getInstance(SCENE);
         viewManager.initScreen(SCENE);
-
+        // 3. 加载资源
+        ResourceController.getInstance().loadResources();
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
@@ -91,6 +96,10 @@ public class LunchApp extends Application {
 
     @Override
     public void stop() {
+        AppConfigController instance = AppConfigController.getInstance();
+        // 刷新插件配置文件
+        instance.getAppConfig().setPlugins(PluginManager.getInstance().getPluginInfos());
+        instance.writeAppConfig();
         // 关闭线程池
         threadPool.shutdownNow();
     }

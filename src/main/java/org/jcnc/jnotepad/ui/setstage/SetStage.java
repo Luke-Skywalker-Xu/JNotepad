@@ -12,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.plugin.PluginManagerInterface;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.ui.module.SettingsComponent;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -31,6 +32,7 @@ public class SetStage extends Stage {
     public static final String GENERAL_SETTING_2 = "常规设置项2";
     public static final String APPEARANCE_SETTING_1 = "外观设置项1";
     public static final String APPEARANCE_SETTING_2 = "外观设置项2";
+    public static final String PLUGINS = "插件";
     public static final String SECURITY_SETTING_1 = "安全设置项1";
     public static final String SECURITY_SETTING_2 = "安全设置项2";
 
@@ -92,7 +94,6 @@ public class SetStage extends Stage {
         applicationButton.getStyleClass().addAll(Styles.SMALL);
         bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
 
-
         BorderPane root = new BorderPane();
         root.setCenter(splitPane);
         root.setBottom(bottomBox);
@@ -136,6 +137,9 @@ public class SetStage extends Stage {
 
         TreeItem<String> securityItem1 = new TreeItem<>("安全设置项1");
         TreeItem<String> securityItem2 = new TreeItem<>("安全设置项2");
+
+        TreeItem<String> pluginsItem = new TreeItem<>(PLUGINS);
+
         securityItem.getChildren().add(securityItem1);
         securityItem.getChildren().add(securityItem2);
 
@@ -147,6 +151,7 @@ public class SetStage extends Stage {
         root.getChildren().add(appearanceItem);
         root.getChildren().add(securityItem);
         root.getChildren().add(developerItem);
+        root.getChildren().add(pluginsItem);
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
 
@@ -170,8 +175,19 @@ public class SetStage extends Stage {
             case SECURITY_SETTING_1 -> createSecuritySettingsLayout1();
             case SECURITY_SETTING_2 -> createSecuritySettingsLayout2();
             case DEVELOPER_DEBUG_PAGE -> createDevelopersDebugPageLayouts();
+            case PLUGINS -> createPluginsLayout();
             default -> null;
         };
+    }
+
+    private Node createPluginsLayout() {
+        VBox generalLayout = new VBox(10);
+        generalLayout.setPadding(new Insets(25));
+        PluginManagerInterface pluginManagerInterface = new PluginManagerInterface();
+        Stage stage = new Stage();
+        stage.getIcons().add(UiUtil.getAppIcon());
+        pluginManagerInterface.start(stage);
+        return generalLayout;
     }
 
     private Node createDevelopersDebugPageLayouts() {
