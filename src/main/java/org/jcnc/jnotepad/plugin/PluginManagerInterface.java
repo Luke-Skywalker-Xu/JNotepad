@@ -17,13 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 插件演示类
+ * 插件管理界面
  * <p>
  * 用于演示插件加载和执行的界面。
  *
- * @author luke
+ * @author luke gewuyou
  */
-public class PluginDemo {
+public class PluginManagerInterface {
+    private static final PluginManagerInterface INSTANCE = new PluginManagerInterface();
     Logger logger = LogUtil.getLogger(this.getClass());
 
     /**
@@ -53,34 +54,8 @@ public class PluginDemo {
         primaryStage.show();
     }
 
-    /**
-     * 创建加载插件的按钮
-     *
-     * @param primaryStage  JavaFX的主舞台
-     * @param fileChooser   文件选择器
-     * @param pluginManager 插件管理器
-     * @return 加载插件的按钮
-     */
-    private Button createLoadButton(Stage primaryStage, FileChooser fileChooser, PluginManager pluginManager) {
-        Button loadButton = new Button("加载插件");
-        loadButton.setOnAction(event -> {
-            try {
-                File selectedFile = fileChooser.showOpenDialog(primaryStage);
-                if (selectedFile != null) {
-                    String pluginFilePath = selectedFile.getAbsolutePath();
-                    PluginLoader.getInstance().loadPlugins(pluginFilePath);
-
-                    // 更新插件信息显示
-                    displayPluginInfo(primaryStage, pluginManager);
-                } else {
-                    PopUpUtil.infoAlert(null, null, "未找到插件!", null, null);
-                    logger.info("未找到插件!");
-                }
-            } catch (Exception e) {
-                logger.error("加载插件失败!", e);
-            }
-        });
-        return loadButton;
+    public static PluginManagerInterface getInstance() {
+        return INSTANCE;
     }
 
     /**
@@ -108,5 +83,35 @@ public class PluginDemo {
         infoStage.setTitle("已加载的插件");
         infoStage.initOwner(primaryStage);
         infoStage.show();
+    }
+
+    /**
+     * 创建加载插件的按钮
+     *
+     * @param primaryStage  JavaFX的主舞台
+     * @param fileChooser   文件选择器
+     * @param pluginManager 插件管理器
+     * @return 加载插件的按钮
+     */
+    private Button createLoadButton(Stage primaryStage, FileChooser fileChooser, PluginManager pluginManager) {
+        Button loadButton = new Button("加载插件");
+        loadButton.setOnAction(event -> {
+            try {
+                File selectedFile = fileChooser.showOpenDialog(primaryStage);
+                if (selectedFile != null) {
+                    String pluginFilePath = selectedFile.getAbsolutePath();
+                    PluginLoader.getInstance().loadPluginByPath(pluginFilePath);
+
+                    // 更新插件信息显示
+                    displayPluginInfo(primaryStage, pluginManager);
+                } else {
+                    PopUpUtil.infoAlert(null, null, "未找到插件!", null, null);
+                    logger.info("未找到插件!");
+                }
+            } catch (Exception e) {
+                logger.error("加载插件失败!", e);
+            }
+        });
+        return loadButton;
     }
 }

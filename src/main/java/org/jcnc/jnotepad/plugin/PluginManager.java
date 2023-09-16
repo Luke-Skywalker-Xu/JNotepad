@@ -1,14 +1,22 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.model.entity.PluginInfo;
-import org.jcnc.jnotepad.plugin.interfaces.Plugin;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
+
+import static org.jcnc.jnotepad.plugin.PluginLoader.readPlugin;
 
 /**
  * 插件管理器
@@ -22,18 +30,13 @@ public class PluginManager {
     private static final PluginManager INSTANCE = new PluginManager();
     Logger logger = LogUtil.getLogger(this.getClass());
     /**
-     * 插件集合
-     */
-    private final List<Plugin> plugins = new ArrayList<>();
-    /**
      * 插件类别
      */
     private final Map<String, List<String>> categories = new HashMap<>();
     /**
      * 插件信息
      */
-
-    private final Map<String, PluginInfo> pluginInfos = new HashMap<>();
+    private final List<PluginInfo> pluginInfos = new ArrayList<>();
 
     private PluginManager() {
 
@@ -47,30 +50,89 @@ public class PluginManager {
     /**
      * 卸载插件
      *
-     * @param pluginClassName 插件类名
+     * @param pluginInfo 插件信息类
      * @since 2023/9/11 12:28
      */
-    public void unloadPlugin(String pluginClassName) {
-        //todo Unload the plugin and remove it from the list
+    public void unloadPlugin(PluginInfo pluginInfo) {
+        // 删除集合中的插件信息
+        pluginInfos.remove(pluginInfo);
+        AppConfigController instance = AppConfigController.getInstance();
+        instance.getAppConfig().getPlugins().remove(pluginInfo);
+        // 刷新配置
+        instance.writeAppConfig();
+        // 删除本地插件jar包
+        Path plungsPath = instance.getPlungsPath();
+        try (Stream<Path> pathStream = Files.walk(plungsPath)) {
+            pathStream.filter(path -> path.toString().endsWith(".jar")).forEach(path -> {
+                try {
+                    File pluginJar = new File(path.toString());
+                    PluginInfo temp = readPlugin(pluginJar);
+                    if ((temp.getName() + temp.getAuthor()).equals(pluginInfo.getName() + pluginInfo.getAuthor())) {
+                        Files.delete(pluginJar.toPath());
+                    }
+                } catch (IOException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            });
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        ThreadPoolManager.threadContSelfSubtracting();
     }
 
     /**
      * 禁用插件
      *
-     * @param pluginClassName 禁用某个插件
+     * @param pluginInfo 需要禁用的某个插件的插件类
      * @apiNote
      * @since 2023/9/11 12:34
      */
-    public void disablePlugIn(String pluginClassName) {
-        //todo Disable the plugin
+    public void disablePlugIn(PluginInfo pluginInfo) {
+        pluginInfo.setEnabled(false);
+        pluginInfo.setPlugin(null);
+        ThreadPoolManager.getThreadPool().submit(() -> {
+            AppConfigController instance = AppConfigController.getInstance();
+            instance.getAppConfig().getPlugins().forEach(plugin -> {
+                if ((pluginInfo.getName() + pluginInfo.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
+                    plugin.setEnabled(false);
+                }
+            });
+            instance.writeAppConfig();
+            ThreadPoolManager.threadContSelfSubtracting();
+        });
+    }
+
+    /**
+     * 初始化所有启用的插件
+     */
+    public void initializePlugins() {
+        for (PluginInfo pluginInfo : pluginInfos) {
+            if (pluginInfo.isEnabled()) {
+                pluginInfo.getPlugin().initialize();
+            }
+        }
+    }
+
+    /**
+     * 执行插件
+     *
+     * @param pluginInfo 需要执行的插件的信息类
+     * @apiNote
+     * @since 2023/9/16 14:58
+     */
+    public void executePlugin(PluginInfo pluginInfo) {
+        pluginInfo.getPlugin().execute();
     }
 
     /**
      * 执行加载的插件
+     * todo 待移除
      */
     public void executePlugins() {
-        for (Plugin plugin : plugins) {
-            plugin.execute();
+        for (PluginInfo pluginInfo : pluginInfos) {
+            if (pluginInfo.isEnabled()) {
+                pluginInfo.getPlugin().execute();
+            }
         }
     }
 
@@ -83,11 +145,7 @@ public class PluginManager {
         return categories;
     }
 
-    public List<Plugin> getPlugins() {
-        return plugins;
-    }
-
-    public Map<String, PluginInfo> getPluginInfos() {
+    public List<PluginInfo> getPluginInfos() {
         return pluginInfos;
     }
 }

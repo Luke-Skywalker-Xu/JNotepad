@@ -32,10 +32,13 @@ public class AppConfigController {
     private static final Logger logger = LogUtil.getLogger(AppConfigController.class);
     private static final AppConfigController INSTANCE = new AppConfigController();
     private AppConfig appConfig;
-    private String dir;
+    private static final String DEFAULT_PROPERTY = "user.home";
+    private String appConfigDir;
+    private String pluginsDir;
 
     private AppConfigController() {
-        setDir(Paths.get(System.getProperty("user.home"), ".jnotepad").toString());
+        setAppConfigDir(Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad").toString());
+        setPluginsDir(Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad", "plugins").toString());
         loadConfig();
     }
 
@@ -54,7 +57,6 @@ public class AppConfigController {
     public void loadConfig() {
         createConfigIfNotExists();
         Path configPath = getConfigPath();
-
         try {
             logger.info("正在加载配置文件...");
             // 存在则加载
@@ -82,7 +84,7 @@ public class AppConfigController {
     private void writeAppConfig(AppConfig appConfig) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getConfigPath().toString()))) {
             if (appConfig == null) {
-                appConfig = createShortcutKeyJson();
+                appConfig = createConfigJson();
             }
             writer.write(JsonUtil.toJsonString(appConfig));
         } catch (Exception e) {
@@ -99,7 +101,7 @@ public class AppConfigController {
         if (configPath.toFile().exists()) {
             return;
         }
-        File directory = new File(dir);
+        File directory = new File(appConfigDir);
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -112,10 +114,14 @@ public class AppConfigController {
      * @return 配置文件的路径
      */
     public Path getConfigPath() {
-        return Paths.get(getDir(), CONFIG_NAME);
+        return Paths.get(getAppConfigDir(), CONFIG_NAME);
     }
 
-    private AppConfig createShortcutKeyJson() {
+    public Path getPlungsPath() {
+        return Paths.get(getPluginsDir());
+    }
+
+    private AppConfig createConfigJson() {
         return AppConfig.generateDefaultAppConfig();
     }
 
@@ -169,15 +175,23 @@ public class AppConfigController {
      *
      * @return 所在目录
      */
-    public String getDir() {
-        return dir;
+    public String getAppConfigDir() {
+        return appConfigDir;
     }
 
-    public void setDir(String dir) {
-        this.dir = dir;
+    public void setAppConfigDir(String appConfigDir) {
+        this.appConfigDir = appConfigDir;
     }
 
-    private AppConfig getAppConfig() {
+    public String getPluginsDir() {
+        return pluginsDir;
+    }
+
+    public void setPluginsDir(String pluginsDir) {
+        this.pluginsDir = pluginsDir;
+    }
+
+    public AppConfig getAppConfig() {
         return appConfig;
     }
 }

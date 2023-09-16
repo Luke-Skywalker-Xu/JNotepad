@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.app.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jcnc.jnotepad.model.entity.PluginInfo;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class AppConfig {
     private boolean textWrap;
     private List<ShortcutKey> shortcutKey;
 
+    private List<PluginInfo> plugins;
+
     /**
      * 生成默认应用配置对象。
      *
@@ -43,9 +46,17 @@ public class AppConfig {
         shortcutKeys.add(createShortcutKey("openConfigItem", ALT_S));
         shortcutKeys.add(createShortcutKey("addItem", ""));
         shortcutKeys.add(createShortcutKey("countItem", ""));
-
         myData.setShortcutKey(shortcutKeys);
+        myData.setPlugins(new ArrayList<>());
         return myData;
+    }
+
+    public List<PluginInfo> getPlugins() {
+        return plugins;
+    }
+
+    public void setPlugins(List<PluginInfo> plugins) {
+        this.plugins = plugins;
     }
 
     /**
