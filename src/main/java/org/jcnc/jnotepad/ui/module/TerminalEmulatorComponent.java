@@ -12,16 +12,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * @author luke
+ */
 public class TerminalEmulatorComponent extends VBox {
 
     private CodeArea terminalOutput;
     private Process process;
 
     public TerminalEmulatorComponent() {
-        initializeUI();
+        init();
     }
 
-    private void initializeUI() {
+    private void init() {
         terminalOutput = new CodeArea();
         TextField commandInput = new TextField();
 
@@ -41,7 +44,6 @@ public class TerminalEmulatorComponent extends VBox {
 
         // 设置布局样式和大小
         setSpacing(10);
-        setMinSize(800, 600);
     }
 
     private void executeCommand(String command) {

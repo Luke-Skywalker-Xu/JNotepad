@@ -1,12 +1,10 @@
 package org.jcnc.jnotepad.views.root.bottom;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
+import org.jcnc.jnotepad.ui.module.TerminalEmulatorComponent;
 import org.jcnc.jnotepad.views.root.bottom.cmd.CmdStatusBox;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
-import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
 
 /**
  * 底部根侧边栏垂直布局
@@ -17,6 +15,8 @@ import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
  */
 public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
+    VBox bottomSideBarVerticalBox;
+
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
      *
@@ -26,10 +26,13 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         return INSTANCE;
     }
 
-    private void initSidebarVerticalBox() {
-        VBox bottomSideBarVerticalBox = new VBox();
+    public void initSidebarVerticalBox() {
+        bottomSideBarVerticalBox = new VBox();
 
-        bottomSideBarVerticalBox.getChildren().addAll(CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
+        TerminalEmulatorComponent terminal = new TerminalEmulatorComponent();
+
+
+        bottomSideBarVerticalBox.getChildren().addAll(terminal,CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
 
 
         getChildren().addAll(bottomSideBarVerticalBox);
@@ -38,8 +41,17 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
     private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
 
-    private RootBottomSideBarVerticalBox() {
+    public RootBottomSideBarVerticalBox() {
         initSidebarVerticalBox();
+    }
+
+    /**
+     * 获取 bottomSideBarVerticalBox 实例。
+     *
+     * @return bottomSideBarVerticalBox 的实例
+     */
+    public VBox getBottomSideBarVerticalBox() {
+        return bottomSideBarVerticalBox;
     }
 
 }
