@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.ui.module;
 
+import javafx.geometry.Insets;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.StyleClassedTextArea;
 import org.jcnc.jnotepad.util.LogUtil;
@@ -34,6 +35,9 @@ public class LineNumberTextArea extends StyleClassedTextArea {
      * 用于创建 LineNumberTextArea 对象
      */
     public LineNumberTextArea() {
+        //上、右、下、左
+        setPadding(new Insets(8, 0, 0, 0));
+        setStyle("-fx-font-family: 'Courier New';");
         // 设置 LineNumberTextArea 的样式，包括边框和背景颜色
         getStyleClass().add("line-number-text-area");
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));

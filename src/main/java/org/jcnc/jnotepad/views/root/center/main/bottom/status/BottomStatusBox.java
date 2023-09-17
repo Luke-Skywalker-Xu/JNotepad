@@ -1,5 +1,7 @@
 package org.jcnc.jnotepad.views.root.center.main.bottom.status;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -114,9 +116,30 @@ public class BottomStatusBox extends AbstractHorizontalBox {
             CenterTab centerTab = instance.getSelected();
             if (centerTab != null) {
                 updateEncodingLabel(centerTab.getCharset().name());
+
+                // 添加光标位置变化监听器
+                LineNumberTextArea textArea = centerTab.getLineNumberTextArea();
+                textArea.caretPositionProperty().addListener(new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                        updateRowColumnLabel(textArea.getCaretPosition(), textArea.getText());
+                    }
+                });
             }
         }
     }
+
+    /**
+     * 更新行列信息
+     * @param caretPosition 光标位置
+     * @param text 文本内容
+     */
+    private void updateRowColumnLabel(int caretPosition, String text) {
+        int row = getRow(caretPosition, text);
+        int column = getColumn(caretPosition, text);
+        statusLabel.setText(getStatusBarFormattedText(row, column, text.length()));
+    }
+
 
     /**
      * 获取光标所在行号。

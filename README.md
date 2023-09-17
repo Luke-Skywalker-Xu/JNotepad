@@ -1,7 +1,7 @@
 <p align="center">
   <img src="src/main/resources/img/icon.svg" alt="JNotepad Icon">
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
-<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可</h4>
+<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可能</h4>
 
 <p align="center">
     <a href='https://gitee.com/jcnc-org/JNotepad/stargazers'><img
@@ -36,6 +36,14 @@
     </a>
 </p>
 
+[jnotepad-official-plugins]:https://gitee.com/jcnc-org/jnotepad-official-plugins
+[jcnc-docs]:https://gitee.com/jcnc-org/docs
+
+
+| 序号  | 相关仓库          |  链接地址                              |
+|:---: | :---------------: |  :-----------------------------------:|
+|1     | JNotepad插件仓库   | [点击访问][jnotepad-official-plugins]  |
+|2     | JCNC文档仓库       | [点击访问][jcnc-docs]                  |
 
 JNotepad(Java Notepad)
 是一款简约而强大的跨平台文本编辑器，旨在提供用户友好的界面和丰富的功能以及插件化使用。无论你是在Linux、Windows还是macOS系统上使用，JNotepad都能满足你对文本编辑和查看的需求。

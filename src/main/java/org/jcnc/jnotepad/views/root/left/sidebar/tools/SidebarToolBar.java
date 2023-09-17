@@ -30,12 +30,18 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(10);
         imageView.setFitHeight(10);
+
+        imageView.setPreserveRatio(true);
+
         // 设置水平缩放比例
         imageView.setScaleX(2.5);
         // 设置垂直缩放比例
         imageView.setScaleY(2.5);
+
         // 设置缩放比例
         setButton.setGraphic(imageView);
+        setButton.setPrefWidth(imageView.getFitWidth() + 20);
+        setButton.setPrefHeight(imageView.getFitHeight() + 20);
 
         // 将按钮添加到工具栏
         getItems().addAll(setButton);
