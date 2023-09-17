@@ -2,7 +2,6 @@ package org.jcnc.jnotepad.views.root.bottom;
 
 import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
-import org.jcnc.jnotepad.ui.module.TerminalEmulatorComponent;
 import org.jcnc.jnotepad.views.root.bottom.cmd.CmdStatusBox;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 
@@ -29,10 +28,7 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
     public void initSidebarVerticalBox() {
         bottomSideBarVerticalBox = new VBox();
 
-        TerminalEmulatorComponent terminal = new TerminalEmulatorComponent();
-
-
-        bottomSideBarVerticalBox.getChildren().addAll(terminal,CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
+        bottomSideBarVerticalBox.getChildren().addAll(CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
 
 
         getChildren().addAll(bottomSideBarVerticalBox);
@@ -43,15 +39,6 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
     public RootBottomSideBarVerticalBox() {
         initSidebarVerticalBox();
-    }
-
-    /**
-     * 获取 bottomSideBarVerticalBox 实例。
-     *
-     * @return bottomSideBarVerticalBox 的实例
-     */
-    public VBox getBottomSideBarVerticalBox() {
-        return bottomSideBarVerticalBox;
     }
 
 }

@@ -1,10 +1,9 @@
 package org.jcnc.jnotepad.ui.module;
 
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 
@@ -13,13 +12,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * 终端仿真器组件，用于执行命令并显示输出。
+ * <p>
+ * 该组件包括一个用于输入命令的文本字段和一个显示命令输出的CodeArea。
+ * 用户可以在文本字段中输入命令，按回车键执行，并在CodeArea中查看输出。
+ *
  * @author luke
  */
-public class TerminalEmulatorComponent extends VBox {
+public class TerminalEmulatorComponent extends BorderPane {
 
     private CodeArea terminalOutput;
-    private Process process;
 
+    /**
+     * 创建一个新的终端仿真器组件。
+     */
     public TerminalEmulatorComponent() {
         init();
     }
@@ -39,18 +45,15 @@ public class TerminalEmulatorComponent extends VBox {
             }
         });
 
-        getChildren().addAll(terminalOutput, commandInput);
-        setAlignment(Pos.CENTER);
-
-        // 设置布局样式和大小
-        setSpacing(10);
+        setCenter(terminalOutput);
+        setBottom(commandInput);
     }
 
     private void executeCommand(String command) {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
             processBuilder.redirectErrorStream(true);
-            process = processBuilder.start();
+            Process process = processBuilder.start();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "GBK"));
             String line;
