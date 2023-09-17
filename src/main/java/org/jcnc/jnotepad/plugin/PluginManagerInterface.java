@@ -27,6 +27,10 @@ public class PluginManagerInterface {
     private static final PluginManagerInterface INSTANCE = new PluginManagerInterface();
     Logger logger = LogUtil.getLogger(this.getClass());
 
+    public static PluginManagerInterface getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * 启动插件演示界面
      *
@@ -52,10 +56,6 @@ public class PluginManagerInterface {
         primaryStage.setScene(scene);
         primaryStage.setTitle("插件演示");
         primaryStage.show();
-    }
-
-    public static PluginManagerInterface getInstance() {
-        return INSTANCE;
     }
 
     /**

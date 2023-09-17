@@ -44,9 +44,6 @@ public class UiUtil {
 
     private static final FontIcon SUCCESS_ICON = FontIcon.of(CHECK_CIRCLE);
 
-    private UiUtil() {
-    }
-
     static {
         // 暂时设置颜色
         ERROR_ICON.getStyleClass().addAll(Styles.DANGER);
@@ -54,6 +51,9 @@ public class UiUtil {
         QUESTION_ICON.getStyleClass().addAll(Styles.ACCENT);
         WARNING_ICON.getStyleClass().addAll(Styles.WARNING);
         SUCCESS_ICON.getStyleClass().addAll(Styles.SUCCESS);
+    }
+
+    private UiUtil() {
     }
 
     /**

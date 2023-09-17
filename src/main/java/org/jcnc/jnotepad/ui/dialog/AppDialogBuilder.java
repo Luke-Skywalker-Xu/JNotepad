@@ -86,110 +86,9 @@ public class AppDialogBuilder {
         }
     }
 
-    /**
-     * 设置应用图标
-     */
-    public AppDialogBuilder setAppIcon(Image appIcon) {
-        this.appIcon = appIcon;
-        return this;
-    }
-
     public AppDialog build() {
         appDialog = new AppDialog(this);
         return appDialog;
-    }
-
-    /**
-     * 设置对话框标题
-     */
-    public AppDialogBuilder setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-
-    /**
-     * 设置对话框头部文本
-     */
-    public AppDialogBuilder setHeaderText(String headerText) {
-        this.headerText = headerText;
-        return this;
-    }
-
-    /**
-     * 设置自定义文本
-     */
-    public AppDialogBuilder setCustomText(String customText) {
-        this.customText = customText;
-        return this;
-    }
-
-    /**
-     * 设置对话框宽度
-     */
-    public AppDialogBuilder setWidth(double width) {
-        this.width = width;
-        return this;
-    }
-
-    /**
-     * 设置对话框高度
-     */
-    public AppDialogBuilder setHeight(double height) {
-        this.height = height;
-        return this;
-    }
-
-    /**
-     * 设置对话框左侧图标
-     */
-    public AppDialogBuilder setIcon(FontIcon icon) {
-        this.icon = icon;
-        return this;
-    }
-
-    /**
-     * 设置左按钮操作
-     */
-    public AppDialogBuilder setLeftBtnAction(DialogButtonAction leftBtnAction) {
-        if (leftBtnAction != null) {
-            this.leftBtnAction = leftBtnAction;
-        }
-        return this;
-    }
-
-    /**
-     * 设置右按钮操作
-     */
-    public AppDialogBuilder setRightBtnAction(DialogButtonAction rightBtnAction) {
-        if (rightBtnAction != null) {
-            this.rightBtnAction = rightBtnAction;
-        }
-        return this;
-    }
-
-    /**
-     * 设置左按钮文本
-     */
-    public AppDialogBuilder setLeftBtnText(String leftBtnText) {
-        this.leftBtnText = leftBtnText;
-        return this;
-    }
-
-    /**
-     * 设置右按钮文本
-     */
-    public AppDialogBuilder setRightBtnText(String rightBtnText) {
-        this.rightBtnText = rightBtnText;
-        return this;
-    }
-
-    /**
-     * 设置图标边距
-     */
-    public AppDialogBuilder setIconCoxPaddingInsets(Insets iconCoxPaddingInsets) {
-        this.iconCoxPaddingInsets = iconCoxPaddingInsets;
-        return this;
     }
 
     /**
@@ -197,14 +96,6 @@ public class AppDialogBuilder {
      */
     public AppDialogBuilder setHorizontalBoxPaddingInsets(Insets hBoxPaddingInsets) {
         this.hBoxPaddingInsets = hBoxPaddingInsets;
-        return this;
-    }
-
-    /**
-     * 设置是否可调整大小
-     */
-    public AppDialogBuilder setResizable(boolean resizable) {
-        isResizable = resizable;
         return this;
     }
 
@@ -217,14 +108,6 @@ public class AppDialogBuilder {
     }
 
     /**
-     * 设置垂直盒子位置
-     */
-    public AppDialogBuilder setVboxPos(Pos vboxPos) {
-        this.vboxPos = vboxPos;
-        return this;
-    }
-
-    /**
      * 设置水平盒子位置
      */
     public AppDialogBuilder setHorizontalBoxPos(Pos hboxPos) {
@@ -232,60 +115,152 @@ public class AppDialogBuilder {
         return this;
     }
 
-    /**
-     * 设置模态性
-     */
-    public AppDialogBuilder setModality(Modality modality) {
-        this.modality = modality;
-        return this;
-    }
-
     public Image getAppIcon() {
         return appIcon;
+    }
+
+    /**
+     * 设置应用图标
+     */
+    public AppDialogBuilder setAppIcon(Image appIcon) {
+        this.appIcon = appIcon;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
+    /**
+     * 设置对话框标题
+     */
+    public AppDialogBuilder setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
     public String getHeaderText() {
         return headerText;
+    }
+
+    /**
+     * 设置对话框头部文本
+     */
+    public AppDialogBuilder setHeaderText(String headerText) {
+        this.headerText = headerText;
+        return this;
     }
 
     public String getCustomText() {
         return customText;
     }
 
+    /**
+     * 设置自定义文本
+     */
+    public AppDialogBuilder setCustomText(String customText) {
+        this.customText = customText;
+        return this;
+    }
+
     public double getWidth() {
         return width;
+    }
+
+    /**
+     * 设置对话框宽度
+     */
+    public AppDialogBuilder setWidth(double width) {
+        this.width = width;
+        return this;
     }
 
     public double getHeight() {
         return height;
     }
 
+    /**
+     * 设置对话框高度
+     */
+    public AppDialogBuilder setHeight(double height) {
+        this.height = height;
+        return this;
+    }
+
     public FontIcon getIcon() {
         return icon;
+    }
+
+    /**
+     * 设置对话框左侧图标
+     */
+    public AppDialogBuilder setIcon(FontIcon icon) {
+        this.icon = icon;
+        return this;
     }
 
     public DialogButtonAction getLeftBtnAction() {
         return leftBtnAction;
     }
 
+    /**
+     * 设置左按钮操作
+     */
+    public AppDialogBuilder setLeftBtnAction(DialogButtonAction leftBtnAction) {
+        if (leftBtnAction != null) {
+            this.leftBtnAction = leftBtnAction;
+        }
+        return this;
+    }
+
     public DialogButtonAction getRightBtnAction() {
         return rightBtnAction;
+    }
+
+    /**
+     * 设置右按钮操作
+     */
+    public AppDialogBuilder setRightBtnAction(DialogButtonAction rightBtnAction) {
+        if (rightBtnAction != null) {
+            this.rightBtnAction = rightBtnAction;
+        }
+        return this;
     }
 
     public String getLeftBtnText() {
         return leftBtnText;
     }
 
+    /**
+     * 设置左按钮文本
+     */
+    public AppDialogBuilder setLeftBtnText(String leftBtnText) {
+        this.leftBtnText = leftBtnText;
+        return this;
+    }
+
     public String getRightBtnText() {
         return rightBtnText;
     }
 
+    /**
+     * 设置右按钮文本
+     */
+    public AppDialogBuilder setRightBtnText(String rightBtnText) {
+        this.rightBtnText = rightBtnText;
+        return this;
+    }
+
     public Insets getIconCoxPaddingInsets() {
         return iconCoxPaddingInsets;
+    }
+
+    /**
+     * 设置图标边距
+     */
+    public AppDialogBuilder setIconCoxPaddingInsets(Insets iconCoxPaddingInsets) {
+        this.iconCoxPaddingInsets = iconCoxPaddingInsets;
+        return this;
     }
 
     public Insets gethBoxPaddingInsets() {
@@ -296,6 +271,14 @@ public class AppDialogBuilder {
         return isResizable;
     }
 
+    /**
+     * 设置是否可调整大小
+     */
+    public AppDialogBuilder setResizable(boolean resizable) {
+        isResizable = resizable;
+        return this;
+    }
+
     public double getHBoxSpacing() {
         return hBoxSpacing;
     }
@@ -304,11 +287,27 @@ public class AppDialogBuilder {
         return vboxPos;
     }
 
+    /**
+     * 设置垂直盒子位置
+     */
+    public AppDialogBuilder setVboxPos(Pos vboxPos) {
+        this.vboxPos = vboxPos;
+        return this;
+    }
+
     public Pos getHboxPos() {
         return hboxPos;
     }
 
     public Modality getModality() {
         return modality;
+    }
+
+    /**
+     * 设置模态性
+     */
+    public AppDialogBuilder setModality(Modality modality) {
+        this.modality = modality;
+        return this;
     }
 }

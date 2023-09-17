@@ -28,7 +28,6 @@ import static org.jcnc.jnotepad.plugin.PluginLoader.readPlugin;
  */
 public class PluginManager {
     private static final PluginManager INSTANCE = new PluginManager();
-    Logger logger = LogUtil.getLogger(this.getClass());
     /**
      * 插件类别
      */
@@ -37,6 +36,7 @@ public class PluginManager {
      * 插件信息
      */
     private final List<PluginInfo> pluginInfos = new ArrayList<>();
+    Logger logger = LogUtil.getLogger(this.getClass());
 
     private PluginManager() {
 
