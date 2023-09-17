@@ -50,10 +50,9 @@ body:
       label: 版本
       description: 你当前正在使用我们软件的哪个版本/分支？
       options:
-        - V1.1.11(默认)
-        - V1.1.12(最新)
+        - V1.1.13(最新开发版)
+        - V1.1.12(最新发行版)
+        - V1.1.11
         - V1.1.10
-        - V1.1.9
-        - V1.1.8
     validations:
       required: true
