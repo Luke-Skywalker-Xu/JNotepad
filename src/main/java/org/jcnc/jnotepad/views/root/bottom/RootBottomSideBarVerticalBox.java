@@ -1,7 +1,9 @@
 package org.jcnc.jnotepad.views.root.bottom;
 
+import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
-import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.root.bottom.cmd.CmdStatusBox;
+import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 
 /**
  * 底部根侧边栏垂直布局
@@ -12,11 +14,7 @@ import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
  */
 public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
-    private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
-
-    private RootBottomSideBarVerticalBox() {
-        initSidebarVerticalBox();
-    }
+    VBox bottomSideBarVerticalBox;
 
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
@@ -27,7 +25,20 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         return INSTANCE;
     }
 
-    private void initSidebarVerticalBox() {
-        getChildren().addAll(BottomStatusBox.getInstance());
+    public void initSidebarVerticalBox() {
+        bottomSideBarVerticalBox = new VBox();
+
+        bottomSideBarVerticalBox.getChildren().addAll(CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
+
+
+        getChildren().addAll(bottomSideBarVerticalBox);
+
     }
+
+    private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
+
+    public RootBottomSideBarVerticalBox() {
+        initSidebarVerticalBox();
+    }
+
 }

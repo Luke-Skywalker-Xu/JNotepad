@@ -7,7 +7,7 @@ import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
