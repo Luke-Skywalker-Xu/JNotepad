@@ -1,7 +1,7 @@
 <p align="center">
   <img src="src/main/resources/img/icon.svg" alt="JNotepad Icon">
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
-<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可</h4>
+<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可能</h4>
 
 <p align="center">
     <a href='https://gitee.com/jcnc-org/JNotepad/stargazers'><img
