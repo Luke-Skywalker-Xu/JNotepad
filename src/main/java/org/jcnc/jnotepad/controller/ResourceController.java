@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.controller;
 
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.plugin.PluginLoader;
 import org.jcnc.jnotepad.util.LogUtil;
@@ -39,7 +39,7 @@ public class ResourceController {
      */
     public void loadPlugins() {
         // 扫描并装载插件
-        scanLoadPlugins(AppConfigController.getInstance().getPlungsPath());
+        scanLoadPlugins(PluginConfigController.getInstance().getPlungsPath());
     }
 
 

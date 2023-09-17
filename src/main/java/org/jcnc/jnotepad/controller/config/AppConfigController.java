@@ -1,20 +1,12 @@
 package org.jcnc.jnotepad.controller.config;
 
 import org.jcnc.jnotepad.app.config.AppConfig;
-import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
-import org.jcnc.jnotepad.util.JsonUtil;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.PopUpUtil;
-import org.slf4j.Logger;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+
+import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
 
 /**
  * 应用程序配置控制器
@@ -23,22 +15,17 @@ import java.util.List;
  *
  * @author songdragon
  */
-public class AppConfigController {
+public class AppConfigController extends BaseConfigController<AppConfig> {
 
     /**
      * 配置文件名
      */
     public static final String CONFIG_NAME = "jnotepadConfig.json";
-    private static final Logger logger = LogUtil.getLogger(AppConfigController.class);
     private static final AppConfigController INSTANCE = new AppConfigController();
-    private AppConfig appConfig;
-    private static final String DEFAULT_PROPERTY = "user.home";
-    private String appConfigDir;
-    private String pluginsDir;
+    private String configDir;
 
     private AppConfigController() {
-        setAppConfigDir(Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad").toString());
-        setPluginsDir(Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad", "plugins").toString());
+        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad").toString();
         loadConfig();
     }
 
@@ -52,79 +39,48 @@ public class AppConfigController {
     }
 
     /**
-     * 加载配置文件内容。
-     */
-    public void loadConfig() {
-        createConfigIfNotExists();
-        Path configPath = getConfigPath();
-        try {
-            logger.info("正在加载配置文件...");
-            // 存在则加载
-            String configContent = Files.readString(configPath);
-            appConfig = JsonUtil.OBJECT_MAPPER.readValue(configContent, AppConfig.class);
-        } catch (Exception e) {
-            logger.error("加载配置文件错误", e);
-            throw new AppException(e);
-        }
-    }
-
-    /**
-     * 配置文件持久化。
-     */
-    public void writeAppConfig() {
-        createConfigIfNotExists();
-        writeAppConfig(this.appConfig);
-    }
-
-    /**
-     * 将 appConfig 对象持久化到配置文件中。
+     * 获取配置文件Class类
      *
-     * @param appConfig 应用配置对象
+     * @return 配置文件Class类
      */
-    private void writeAppConfig(AppConfig appConfig) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getConfigPath().toString()))) {
-            if (appConfig == null) {
-                appConfig = createConfigJson();
-            }
-            writer.write(JsonUtil.toJsonString(appConfig));
-        } catch (Exception e) {
-            logger.error("", e);
-            PopUpUtil.errorAlert("错误", "读写错误", "配置文件读写错误!", null, null);
-        }
+    @Override
+    protected Class<AppConfig> getConfigClass() {
+        return AppConfig.class;
     }
 
     /**
-     * 创建配置文件如果不存在。
-     */
-    public void createConfigIfNotExists() {
-        Path configPath = getConfigPath();
-        if (configPath.toFile().exists()) {
-            return;
-        }
-        File directory = new File(appConfigDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-        writeAppConfig(null);
-    }
-
-    /**
-     * 获取配置文件的路径。
+     * 生成默认的配置文件
      *
-     * @return 配置文件的路径
+     * @return 默认的配置文件
      */
-    public Path getConfigPath() {
-        return Paths.get(getAppConfigDir(), CONFIG_NAME);
-    }
-
-    public Path getPlungsPath() {
-        return Paths.get(getPluginsDir());
-    }
-
-    private AppConfig createConfigJson() {
+    @Override
+    protected AppConfig generateDefaultConfig() {
         return AppConfig.generateDefaultAppConfig();
     }
 
+    /**
+     * 获取配置文件名称
+     *
+     * @return 配置文件名称
+     */
+    @Override
+    protected String getConfigName() {
+        return CONFIG_NAME;
+    }
+
+    /**
+     * 获取配置文件文件夹路径
+     *
+     * @return 配置文件夹路径
+     */
+    @Override
+    protected String getConfigDir() {
+        return configDir;
+    }
+
+    public void setConfigDir(String configDir) {
+        this.configDir = configDir;
+    }
 
     /**
      * 获取自动换行设置，默认自动换行。
@@ -132,11 +88,11 @@ public class AppConfigController {
      * @return true，自动换行；false，不自动换行
      */
     public boolean getAutoLineConfig() {
-        return getAppConfig().isTextWrap();
+        return getConfig().isTextWrap();
     }
 
     public void setAutoLineConfig(boolean isAutoLine) {
-        getAppConfig().setTextWrap(isAutoLine);
+        getConfig().setTextWrap(isAutoLine);
     }
 
     /**
@@ -148,8 +104,8 @@ public class AppConfigController {
         if (getLanguage().equals(language)) {
             return;
         }
-        this.appConfig.setLanguage(language);
-        writeAppConfig();
+        getConfig().setLanguage(language);
+        writeConfig();
     }
 
     /**
@@ -158,7 +114,7 @@ public class AppConfigController {
      * @return 语言设置
      */
     public String getLanguage() {
-        return this.appConfig.getLanguage();
+        return getConfig().getLanguage();
     }
 
     /**
@@ -167,31 +123,6 @@ public class AppConfigController {
      * @return 快捷键设置列表
      */
     public List<ShortcutKey> getShortcutKey() {
-        return this.appConfig.getShortcutKey();
-    }
-
-    /**
-     * 获取当前配置文件所在目录。
-     *
-     * @return 所在目录
-     */
-    public String getAppConfigDir() {
-        return appConfigDir;
-    }
-
-    public void setAppConfigDir(String appConfigDir) {
-        this.appConfigDir = appConfigDir;
-    }
-
-    public String getPluginsDir() {
-        return pluginsDir;
-    }
-
-    public void setPluginsDir(String pluginsDir) {
-        this.pluginsDir = pluginsDir;
-    }
-
-    public AppConfig getAppConfig() {
-        return appConfig;
+        return getConfig().getShortcutKey();
     }
 }

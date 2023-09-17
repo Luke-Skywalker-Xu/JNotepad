@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.ResourceController;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.PluginManager;
@@ -96,10 +96,10 @@ public class LunchApp extends Application {
 
     @Override
     public void stop() {
-        AppConfigController instance = AppConfigController.getInstance();
+        PluginConfigController instance = PluginConfigController.getInstance();
         // 刷新插件配置文件
-        instance.getAppConfig().setPlugins(PluginManager.getInstance().getPluginInfos());
-        instance.writeAppConfig();
+        instance.getConfig().setPlugins(PluginManager.getInstance().getPluginInfos());
+        instance.writeConfig();
         // 关闭线程池
         threadPool.shutdownNow();
     }

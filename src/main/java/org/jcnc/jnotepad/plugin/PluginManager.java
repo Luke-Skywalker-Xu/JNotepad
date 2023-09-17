@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.plugin;
 
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.model.entity.PluginInfo;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
@@ -56,10 +56,10 @@ public class PluginManager {
     public void unloadPlugin(PluginInfo pluginInfo) {
         // 删除集合中的插件信息
         pluginInfos.remove(pluginInfo);
-        AppConfigController instance = AppConfigController.getInstance();
-        instance.getAppConfig().getPlugins().remove(pluginInfo);
+        PluginConfigController instance = PluginConfigController.getInstance();
+        instance.getConfig().getPlugins().remove(pluginInfo);
         // 刷新配置
-        instance.writeAppConfig();
+        instance.writeConfig();
         // 删除本地插件jar包
         Path plungsPath = instance.getPlungsPath();
         try (Stream<Path> pathStream = Files.walk(plungsPath)) {
@@ -91,13 +91,13 @@ public class PluginManager {
         pluginInfo.setEnabled(false);
         pluginInfo.setPlugin(null);
         ThreadPoolManager.getThreadPool().submit(() -> {
-            AppConfigController instance = AppConfigController.getInstance();
-            instance.getAppConfig().getPlugins().forEach(plugin -> {
+            PluginConfigController instance = PluginConfigController.getInstance();
+            instance.getConfig().getPlugins().forEach(plugin -> {
                 if ((pluginInfo.getName() + pluginInfo.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
                     plugin.setEnabled(false);
                 }
             });
-            instance.writeAppConfig();
+            instance.writeConfig();
             ThreadPoolManager.threadContSelfSubtracting();
         });
     }

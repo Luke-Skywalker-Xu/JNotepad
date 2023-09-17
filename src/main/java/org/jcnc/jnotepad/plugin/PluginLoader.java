@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.PluginInfo;
 import org.jcnc.jnotepad.plugin.interfaces.Plugin;
@@ -113,7 +113,7 @@ public class PluginLoader {
         pluginInfo.setEnabled(false);
         pluginInfos.add(pluginInfo);
         configPluginInfos.add(pluginInfo);
-        AppConfigController.getInstance().writeAppConfig();
+        PluginConfigController.getInstance().writeConfig();
         return true;
     }
 
@@ -124,7 +124,7 @@ public class PluginLoader {
      */
     public void loadPluginByPath(String pluginFilePath) {
         File file = new File(pluginFilePath);
-        loadPluginByFile(file, AppConfigController.getInstance().getAppConfig().getPlugins());
+        loadPluginByFile(file, PluginConfigController.getInstance().getConfig().getPlugins());
     }
 
     /**

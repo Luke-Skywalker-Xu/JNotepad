@@ -29,6 +29,12 @@ public class AppConstants {
     public static final Pattern TABNAME_PATTERN = Pattern.compile("^" + Pattern.quote(UiResourceBundle.getContent(TextConstants.NEW_FILE)) + "\\d+$");
 
     /**
+     * 默认属性
+     */
+    public static final String DEFAULT_PROPERTY = "user.home";
+
+
+    /**
      * 私有构造函数，防止该类被实例化。
      */
     private AppConstants() {
