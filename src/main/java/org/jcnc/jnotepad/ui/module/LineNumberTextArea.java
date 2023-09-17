@@ -37,7 +37,7 @@ public class LineNumberTextArea extends StyleClassedTextArea {
     public LineNumberTextArea() {
         //上、右、下、左
         setPadding(new Insets(8, 0, 0, 0));
-
+        setStyle("-fx-font-family: 'Courier New';");
         // 设置 LineNumberTextArea 的样式，包括边框和背景颜色
         getStyleClass().add("line-number-text-area");
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
