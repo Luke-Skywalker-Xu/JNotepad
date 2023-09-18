@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.views.root.center.main.bottom.status;
+package org.jcnc.jnotepad.views.root.bottom.status;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -131,8 +131,9 @@ public class BottomStatusBox extends AbstractHorizontalBox {
 
     /**
      * 更新行列信息
+     *
      * @param caretPosition 光标位置
-     * @param text 文本内容
+     * @param text          文本内容
      */
     private void updateRowColumnLabel(int caretPosition, String text) {
         int row = getRow(caretPosition, text);

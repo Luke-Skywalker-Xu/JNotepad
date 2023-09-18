@@ -30,10 +30,12 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.util;
     exports org.jcnc.jnotepad.common.interfaces;
     opens org.jcnc.jnotepad.app.config;
-    exports org.jcnc.jnotepad.views.root.center.main.bottom.status;
     exports org.jcnc.jnotepad.plugin.interfaces;
     exports org.jcnc.jnotepad.ui.dialog;
     exports org.jcnc.jnotepad.ui.dialog.interfaces;
     exports org.jcnc.jnotepad.model.entity;
+    exports org.jcnc.jnotepad.views.root.bottom;
+    exports org.jcnc.jnotepad.views.root.bottom.status;
+    exports org.jcnc.jnotepad.views.root.bottom.cmd;
 
 }

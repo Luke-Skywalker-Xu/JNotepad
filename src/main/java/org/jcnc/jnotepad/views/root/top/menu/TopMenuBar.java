@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.views.root.top.menu;
 
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -141,6 +142,7 @@ public class TopMenuBar extends MenuBar {
      * 初始化菜单栏
      */
     public void initMenuBar() {
+        setPadding(new Insets(-3,0,-3,0));
         initFileMenu();
         initLanguageMenu();
         initSettingMenu();

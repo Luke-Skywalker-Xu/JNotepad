@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.TabPane;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.views.root.center.main.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
 
 /**
