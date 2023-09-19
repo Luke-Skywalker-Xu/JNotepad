@@ -30,11 +30,7 @@
         <img src="https://img.shields.io/badge/MacOS-Passing-49%2C198%2C84.svg?style=falt&logo=Apple" alt="">
     </a>
 </p>
-<p align="center">
-    <a href="https://www.murphysec.com/console/report/1700407807803260928/1700436320488914944">
-        <img src="https://www.murphysec.com/platform3/v31/badge/1700436320488914944.svg" alt="安全状态">
-    </a>
-</p>
+
 
 [jnotepad-official-plugins]:https://gitee.com/jcnc-org/jnotepad-official-plugins
 [jcnc-docs]:https://gitee.com/jcnc-org/docs
