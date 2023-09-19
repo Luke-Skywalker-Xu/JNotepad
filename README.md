@@ -71,7 +71,6 @@ JNotepad使用Java语言编写，并基于JavaFX框架开发，具有良好的�
 
 [docs-url]: https://gitee.com/jcnc-org/docs
 
-
 - [下载][gitee-download]
 
 2. Linux/MacOS 平台，查看入门指南
@@ -111,24 +110,22 @@ JNotepad使用Java语言编写，并基于JavaFX框架开发，具有良好的�
 
 - `插件 > 增加插件`：(管理插件系统,待完善)。
 
-
 ## 依赖项
 
 POM文件中的全部依赖项：
 
-| 组ID                        | 工件ID                   | 版本     | 功能描述                                       |
-|--------------------------------|------------------------------|--------|------------------------------------------------|
-| org.kordamp.ikonli             | ikonli-javafx                | 12.3.1 | 提供JavaFX应用程序中的图标集成。              |
-| org.kordamp.ikonli             | ikonli-antdesignicons-pack   | 12.3.1 | 包含Ant Design图标集的Ikonli图标包。          |
-| io.github.mkpaz               | atlantafx-base               | 2.0.1  | 提供Atlantafx库的基本功能。                   |
-| org.openjfx                    | javafx-fxml                  | 20.0.2 | JavaFX的FXML模块，用于构建用户界面。         |
-| org.junit.jupiter             | junit-jupiter-api            | 5.9.2  | 用于JUnit 5测试框架的API。                    |
-| com.fasterxml.jackson.core     | jackson-databind             | 2.15.2 | 用于JSON数据的序列化和反序列化。              |
-| org.slf4j                      | slf4j-api                    | 2.0.7  | 简单日志门面，用于处理日志记录。              |
-| ch.qos.logback                 | logback-core                 | 1.4.11 | Logback的核心组件，用于日志记录。            |
-| ch.qos.logback                 | logback-classic              | 1.4.11 | Logback的经典模块，提供日志记录功能。        |
-| com.ibm.icu                    | icu4j                        | 73.2   | ICU（International Components for Unicode）库，用于处理Unicode字符和文本。|
-
+| 组ID                        | 工件ID                       | 版本     | 功能描述                                                         |
+|----------------------------|----------------------------|--------|--------------------------------------------------------------|
+| org.kordamp.ikonli         | ikonli-javafx              | 12.3.1 | 提供JavaFX应用程序中的图标集成。                                          |
+| org.kordamp.ikonli         | ikonli-antdesignicons-pack | 12.3.1 | 包含Ant Design图标集的Ikonli图标包。                                   |
+| io.github.mkpaz            | atlantafx-base             | 2.0.1  | 提供Atlantafx库的基本功能。                                           |
+| org.openjfx                | javafx-fxml                | 20.0.2 | JavaFX的FXML模块，用于构建用户界面。                                      |
+| org.junit.jupiter          | junit-jupiter-api          | 5.9.2  | 用于JUnit 5测试框架的API。                                           |
+| com.fasterxml.jackson.core | jackson-databind           | 2.15.2 | 用于JSON数据的序列化和反序列化。                                           |
+| org.slf4j                  | slf4j-api                  | 2.0.7  | 简单日志门面，用于处理日志记录。                                             |
+| ch.qos.logback             | logback-core               | 1.4.11 | Logback的核心组件，用于日志记录。                                         |
+| ch.qos.logback             | logback-classic            | 1.4.11 | Logback的经典模块，提供日志记录功能。                                       |
+| com.ibm.icu                | icu4j                      | 73.2   | ICU（International Components for Unicode）库，用于处理Unicode字符和文本。 |
 
 ## 软件运行截图
 

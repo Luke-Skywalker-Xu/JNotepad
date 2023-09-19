@@ -8,7 +8,7 @@ import org.jcnc.jnotepad.plugin.interfaces.Plugin;
  *
  * @author gewuyou
  */
-public class PluginInfo {
+public class PluginDescriptor {
     /**
      * 插件名称
      */

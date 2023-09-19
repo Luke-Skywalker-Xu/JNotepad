@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.app.config;
 
-import org.jcnc.jnotepad.model.entity.PluginInfo;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author gewuyou
  */
 public class PluginConfig {
-    private List<PluginInfo> plugins;
+    private List<PluginDescriptor> plugins;
 
     /**
      * 生成默认的插件配置文件
@@ -26,11 +26,11 @@ public class PluginConfig {
         return pluginConfig;
     }
 
-    public List<PluginInfo> getPlugins() {
+    public List<PluginDescriptor> getPlugins() {
         return plugins;
     }
 
-    public void setPlugins(List<PluginInfo> plugins) {
+    public void setPlugins(List<PluginDescriptor> plugins) {
         this.plugins = plugins;
     }
 }

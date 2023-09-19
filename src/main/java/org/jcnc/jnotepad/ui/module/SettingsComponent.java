@@ -33,8 +33,8 @@ public class SettingsComponent extends VBox {
     /**
      * 创建一个设置组件实例。
      *
-     * @param labelText    标签文本
-     * @param buttonText   按钮文本
+     * @param labelText  标签文本
+     * @param buttonText 按钮文本
      */
     public SettingsComponent(String labelText, String buttonText) {
         setSpacing(10);

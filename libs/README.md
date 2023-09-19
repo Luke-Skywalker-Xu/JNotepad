@@ -40,4 +40,5 @@ jar uf libs/icu4j-73.2.jar -C libs/tmpOut/com.ibm.icu module-info.class
 ```
 
 ## Reference
+
 1. [java_jlink_automatic_module_cannot_be_used_with_jlink](https://tacosteemers.com/articles/java_jlink_automatic_module_cannot_be_used_with_jlink.html)

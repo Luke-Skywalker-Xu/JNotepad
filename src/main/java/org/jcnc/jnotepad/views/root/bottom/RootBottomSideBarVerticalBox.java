@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.views.root.bottom;
 
 import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
-import org.jcnc.jnotepad.views.root.bottom.cmd.CmdStatusBox;
+import org.jcnc.jnotepad.views.root.bottom.function.FunctionBox;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 
 /**
@@ -14,7 +14,10 @@ import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
  */
 public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
-    VBox bottomSideBarVerticalBox;
+    /**
+     * VBox实例
+     */
+    private static final VBox V_BOX_INSTANCE = new VBox();
 
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
@@ -25,20 +28,30 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         return INSTANCE;
     }
 
-    public void initSidebarVerticalBox() {
-        bottomSideBarVerticalBox = new VBox();
+    public RootBottomSideBarVerticalBox() {
 
-        bottomSideBarVerticalBox.getChildren().addAll(CmdStatusBox.getInstance(), BottomStatusBox.getInstance());
+    }
 
-
-        getChildren().addAll(bottomSideBarVerticalBox);
-
+    /**
+     * 获取vbox实例
+     *
+     * @return VBox
+     */
+    public static VBox getVboxInstance() {
+        return V_BOX_INSTANCE;
     }
 
     private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
 
-    public RootBottomSideBarVerticalBox() {
-        initSidebarVerticalBox();
+    public static void initSidebarVerticalBox() {
+        FunctionBox functionBox = FunctionBox.getInstance();
+        if (!FunctionBox.getMenuBar().getMenus().isEmpty()) {
+            functionBox.getChildren().add(FunctionBox.getMenuBar());
+            V_BOX_INSTANCE.getChildren().addAll(functionBox);
+        }
+        V_BOX_INSTANCE.getChildren().addAll(BottomStatusBox.getInstance());
+        INSTANCE.getChildren().addAll(V_BOX_INSTANCE);
+
     }
 
 }
