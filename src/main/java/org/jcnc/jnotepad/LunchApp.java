@@ -102,6 +102,8 @@ public class LunchApp extends Application {
         // 刷新插件配置文件
         instance.getConfig().setPlugins(PluginManager.getInstance().getPluginInfos());
         instance.writeConfig();
+        // 销毁插件可能申请的资源
+        PluginManager.getInstance().destroyPlugins();
         // 关闭线程池
         threadPool.shutdownNow();
     }

@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.plugin;
 
+import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
@@ -13,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
@@ -24,6 +26,8 @@ import java.util.zip.ZipEntry;
  */
 public class PluginLoader {
     private static final PluginLoader INSTANCE = new PluginLoader();
+
+    private static final ExecutorService THREAD_POOL = ThreadPoolManager.getThreadPool();
     Logger logger = LogUtil.getLogger(this.getClass());
 
     /**
@@ -64,9 +68,14 @@ public class PluginLoader {
      * @since 2023/9/16 14:04
      */
     private static boolean checkPlugin(List<PluginDescriptor> configPluginDescriptors, PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors) {
-        // 如果应用程序配置文件为空则默认插件被禁用
-        if (configPluginDescriptors.isEmpty()) {
-            return disabledByDefault(configPluginDescriptors, pluginDescriptor, pluginDescriptors);
+        // 如果应用程序配置文件中没有该插件则默认禁用
+        if (pluginDoesNotExist(pluginDescriptor, configPluginDescriptors)) {
+            disabledByDefault(configPluginDescriptors, pluginDescriptor, pluginDescriptors);
+            THREAD_POOL.submit(() -> {
+                PluginConfigController.getInstance().writeConfig();
+                ThreadPoolManager.threadContSelfSubtracting();
+            });
+            return true;
         }
         // 如果应用程序配置文件中该插件禁用则不加载
         for (PluginDescriptor configPluginDescriptor : configPluginDescriptors) {
@@ -76,6 +85,24 @@ public class PluginLoader {
         }
         // 判断该插件是否已经加载
         return loaded(pluginDescriptor, pluginDescriptors);
+    }
+
+    /**
+     * 插件不存在
+     *
+     * @param pluginDescriptor        插件描述类
+     * @param configPluginDescriptors 配置文件插件信息集合
+     * @return boolean 插件不存在
+     * @apiNote
+     * @since 2023/9/19 19:16
+     */
+    private static boolean pluginDoesNotExist(PluginDescriptor pluginDescriptor, List<PluginDescriptor> configPluginDescriptors) {
+        for (PluginDescriptor configPluginDescriptor : configPluginDescriptors) {
+            if ((configPluginDescriptor.getName() + configPluginDescriptor.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean loaded(PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors) {
@@ -98,6 +125,16 @@ public class PluginLoader {
         return false;
     }
 
+    /**
+     * 如果插件被禁用则不加载
+     *
+     * @param pluginDescriptor       插件描述类
+     * @param pluginDescriptors      插件描述类集合
+     * @param configPluginDescriptor 配置文件插件信息
+     * @return boolean
+     * @apiNote
+     * @since 2023/9/19 18:45
+     */
     private static boolean disableDoNotLoad(PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors, PluginDescriptor configPluginDescriptor) {
         if ((configPluginDescriptor.getName() + configPluginDescriptor.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor()) && !configPluginDescriptor.isEnabled()) {
             pluginDescriptor.setEnabled(false);
@@ -107,12 +144,19 @@ public class PluginLoader {
         return false;
     }
 
-    private static boolean disabledByDefault(List<PluginDescriptor> configPluginDescriptors, PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors) {
+    /**
+     * 默认禁用
+     *
+     * @param configPluginDescriptors 配置文件插件信息
+     * @param pluginDescriptor        插件描述类
+     * @param pluginDescriptors       插件描述类集合
+     * @apiNote
+     * @since 2023/9/19 18:48
+     */
+    private static void disabledByDefault(List<PluginDescriptor> configPluginDescriptors, PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors) {
         pluginDescriptor.setEnabled(false);
         pluginDescriptors.add(pluginDescriptor);
         configPluginDescriptors.add(pluginDescriptor);
-        PluginConfigController.getInstance().writeConfig();
-        return true;
     }
 
     /**
@@ -128,7 +172,7 @@ public class PluginLoader {
     /**
      * 根据文件加载插件
      *
-     * @param pluginJar         插件jar包
+     * @param pluginJar               插件jar包
      * @param configPluginDescriptors 配置文件插件信息集合
      * @apiNote
      * @since 2023/9/16 14:05

@@ -137,6 +137,17 @@ public class PluginManager {
     }
 
     /**
+     * 销毁插件可能申请的资源
+     */
+    public void destroyPlugins() {
+        for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
+            if (pluginDescriptor.isEnabled()) {
+                pluginDescriptor.getPlugin().destroyed();
+            }
+        }
+    }
+
+    /**
      * 获取按类别分类的已加载插件
      *
      * @return 插件类别映射
