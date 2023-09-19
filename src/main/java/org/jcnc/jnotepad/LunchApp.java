@@ -83,12 +83,14 @@ public class LunchApp extends Application {
 
         // 1. 加载语言
         LocalizationController.initLocal();
-
-        // 2. 加载组件
+        // 2. 加载资源
+        ResourceController.getInstance().loadResources();
+        // 3. 初始化插件
+        PluginManager.getInstance().initializePlugins();
+        // 3. 加载组件
         ViewManager viewManager = ViewManager.getInstance(SCENE);
         viewManager.initScreen(SCENE);
-        // 3. 加载资源
-        ResourceController.getInstance().loadResources();
+
         // 使用线程池加载关联文件并创建文本区域
         List<String> rawParameters = getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);

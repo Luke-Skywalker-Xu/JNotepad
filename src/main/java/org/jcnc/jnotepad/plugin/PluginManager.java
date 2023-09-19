@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.plugin;
 
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
-import org.jcnc.jnotepad.model.entity.PluginInfo;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -35,7 +35,7 @@ public class PluginManager {
     /**
      * 插件信息
      */
-    private final List<PluginInfo> pluginInfos = new ArrayList<>();
+    private final List<PluginDescriptor> pluginDescriptors = new ArrayList<>();
     Logger logger = LogUtil.getLogger(this.getClass());
 
     private PluginManager() {
@@ -50,14 +50,14 @@ public class PluginManager {
     /**
      * 卸载插件
      *
-     * @param pluginInfo 插件信息类
+     * @param pluginDescriptor 插件信息类
      * @since 2023/9/11 12:28
      */
-    public void unloadPlugin(PluginInfo pluginInfo) {
+    public void unloadPlugin(PluginDescriptor pluginDescriptor) {
         // 删除集合中的插件信息
-        pluginInfos.remove(pluginInfo);
+        pluginDescriptors.remove(pluginDescriptor);
         PluginConfigController instance = PluginConfigController.getInstance();
-        instance.getConfig().getPlugins().remove(pluginInfo);
+        instance.getConfig().getPlugins().remove(pluginDescriptor);
         // 刷新配置
         instance.writeConfig();
         // 删除本地插件jar包
@@ -66,8 +66,8 @@ public class PluginManager {
             pathStream.filter(path -> path.toString().endsWith(".jar")).forEach(path -> {
                 try {
                     File pluginJar = new File(path.toString());
-                    PluginInfo temp = readPlugin(pluginJar);
-                    if ((temp.getName() + temp.getAuthor()).equals(pluginInfo.getName() + pluginInfo.getAuthor())) {
+                    PluginDescriptor temp = readPlugin(pluginJar);
+                    if ((temp.getName() + temp.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
                         Files.delete(pluginJar.toPath());
                     }
                 } catch (IOException e) {
@@ -83,17 +83,17 @@ public class PluginManager {
     /**
      * 禁用插件
      *
-     * @param pluginInfo 需要禁用的某个插件的插件类
+     * @param pluginDescriptor 需要禁用的某个插件的插件类
      * @apiNote
      * @since 2023/9/11 12:34
      */
-    public void disablePlugIn(PluginInfo pluginInfo) {
-        pluginInfo.setEnabled(false);
-        pluginInfo.setPlugin(null);
+    public void disablePlugIn(PluginDescriptor pluginDescriptor) {
+        pluginDescriptor.setEnabled(false);
+        pluginDescriptor.setPlugin(null);
         ThreadPoolManager.getThreadPool().submit(() -> {
             PluginConfigController instance = PluginConfigController.getInstance();
             instance.getConfig().getPlugins().forEach(plugin -> {
-                if ((pluginInfo.getName() + pluginInfo.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
+                if ((pluginDescriptor.getName() + pluginDescriptor.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
                     plugin.setEnabled(false);
                 }
             });
@@ -106,9 +106,9 @@ public class PluginManager {
      * 初始化所有启用的插件
      */
     public void initializePlugins() {
-        for (PluginInfo pluginInfo : pluginInfos) {
-            if (pluginInfo.isEnabled()) {
-                pluginInfo.getPlugin().initialize();
+        for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
+            if (pluginDescriptor.isEnabled()) {
+                pluginDescriptor.getPlugin().initialize();
             }
         }
     }
@@ -116,12 +116,12 @@ public class PluginManager {
     /**
      * 执行插件
      *
-     * @param pluginInfo 需要执行的插件的信息类
+     * @param pluginDescriptor 需要执行的插件的信息类
      * @apiNote
      * @since 2023/9/16 14:58
      */
-    public void executePlugin(PluginInfo pluginInfo) {
-        pluginInfo.getPlugin().execute();
+    public void executePlugin(PluginDescriptor pluginDescriptor) {
+        pluginDescriptor.getPlugin().execute();
     }
 
     /**
@@ -129,9 +129,9 @@ public class PluginManager {
      * todo 待移除
      */
     public void executePlugins() {
-        for (PluginInfo pluginInfo : pluginInfos) {
-            if (pluginInfo.isEnabled()) {
-                pluginInfo.getPlugin().execute();
+        for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
+            if (pluginDescriptor.isEnabled()) {
+                pluginDescriptor.getPlugin().execute();
             }
         }
     }
@@ -145,7 +145,7 @@ public class PluginManager {
         return categories;
     }
 
-    public List<PluginInfo> getPluginInfos() {
-        return pluginInfos;
+    public List<PluginDescriptor> getPluginInfos() {
+        return pluginDescriptors;
     }
 }
