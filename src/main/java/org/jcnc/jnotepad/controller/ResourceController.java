@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.controller;
 
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
+import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.plugin.PluginLoader;
 import org.jcnc.jnotepad.util.LogUtil;
@@ -29,6 +30,9 @@ public class ResourceController {
     }
 
     public void loadResources() {
+        // 1. 加载语言
+        LocalizationController.initLocal();
+        // 2. 加载插件
         loadPlugins();
     }
 

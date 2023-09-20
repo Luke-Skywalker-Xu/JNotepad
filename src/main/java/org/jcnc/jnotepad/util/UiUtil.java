@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.util;
 import atlantafx.base.theme.Styles;
 import javafx.scene.image.Image;
 import javafx.stage.Window;
-import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -118,7 +118,7 @@ public class UiUtil {
      * @apiNote LunchApp.getWindow()
      */
     public static Window getAppWindow() {
-        return LunchApp.getWindow();
+        return ApplicationManager.getInstance().getWindow();
     }
 
 
