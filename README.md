@@ -128,7 +128,7 @@ POM文件中的全部依赖项：
 - MacOS 平台   
   ![MacOS](screenshot/Mac0S-1.png)
 
-### 参与贡献
+# 参与贡献
 
 1. 加入JCNC社区
 1. [阅读JCNC开发者文档][docs-url]
