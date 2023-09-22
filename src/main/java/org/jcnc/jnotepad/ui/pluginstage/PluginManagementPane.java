@@ -11,6 +11,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +25,9 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
+
+    Logger logger = LogUtil.getLogger(this.getClass());
+
 
     private CustomSplitPane customSplitPane;
     private final Map<Tile, Node> tileContentMap = new HashMap<>();
@@ -38,9 +43,6 @@ public class PluginManagementPane extends BorderPane {
      * 初始化插件管理面板。
      */
     private void init() {
-        // 设置用户代理样式表
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
-
         // 创建选项卡面板
         TabPane tabPane = new TabPane();
 
@@ -115,11 +117,13 @@ public class PluginManagementPane extends BorderPane {
         tile.setAction(tgl);
         tile.setActionHandler(() -> {
             customSplitPane.setRightContent(tileContentMap.get(tile));
-            System.out.println("点击了" + title);
+            logger.info("点击了" + tile);
+
         });
 
         // 创建专属的customSplitPane内容
         var content = createCustomSplitPaneContent(title);
+
 
         // 将内容与Tile关联起来
         tileContentMap.put(tile, content);
@@ -134,8 +138,8 @@ public class PluginManagementPane extends BorderPane {
      * @return 创建的CustomSplitPane内容
      */
     private Node createCustomSplitPaneContent(String title) {
-
         // TODO: 2023/9/23 未完成
         return new Label("详情" + title);
+
     }
 }

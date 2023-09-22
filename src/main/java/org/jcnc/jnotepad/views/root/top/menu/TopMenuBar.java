@@ -14,6 +14,7 @@ import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.ui.pluginstage.PluginManagementPane;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
@@ -270,7 +271,8 @@ public class TopMenuBar extends MenuBar {
 
         pluginManagerItem = new MenuItem();
         pluginManagerItem.setOnAction(event -> {
-            Stage newStage = new Stage(); // 创建一个新的Stage对象
+            Stage newStage = new Stage();
+            newStage.getIcons().add(UiUtil.getAppIcon());
             newStage.setTitle("插件管理");
 
             PluginManagementPane pluginManagementPane = new PluginManagementPane();
