@@ -90,7 +90,7 @@ public class PluginManagementPane extends BorderPane {
      */
     private VBox getBox() {
         // 创建示例插件列表项
-        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t\t\t");
+        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t\t    ");
         var tile2 = createTile("终端插件", "这是一个终端插件");
         var tile3 = createTile("构建插件", "这是一个构建插件");
 
