@@ -208,7 +208,7 @@ public class PluginLoader {
             }
 
         } else {
-            LogUtil.getLogger(this.getClass()).info("PluginDescriptor file not found");
+            logger.info("PluginDescriptor file not found");
         }
     }
 
@@ -227,7 +227,6 @@ public class PluginLoader {
                 URLClassLoader classLoader = new URLClassLoader(new URL[]{pluginJar.toURI().toURL()});
                 JarFile jar = new JarFile(pluginJar)
         ) {
-            logger.info("{}", pluginDescriptor.getMainClass());
             // 加载插件所需的依赖类
             Enumeration<JarEntry> entries = jar.entries();
             while (entries.hasMoreElements()) {
@@ -241,6 +240,7 @@ public class PluginLoader {
             }
             pluginClass = classLoader.loadClass(pluginDescriptor.getMainClass());
         }
+        logger.info("已加载插件：{}", pluginDescriptor.getName());
         return pluginClass;
     }
 }

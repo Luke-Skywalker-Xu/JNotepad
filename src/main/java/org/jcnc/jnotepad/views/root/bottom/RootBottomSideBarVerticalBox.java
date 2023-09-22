@@ -28,7 +28,7 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         return INSTANCE;
     }
 
-    public RootBottomSideBarVerticalBox() {
+    private RootBottomSideBarVerticalBox() {
 
     }
 
