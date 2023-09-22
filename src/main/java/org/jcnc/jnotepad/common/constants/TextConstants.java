@@ -18,7 +18,7 @@ public class TextConstants {
     public static final String SET = "SET";
     public static final String WORD_WRAP = "WORD_WRAP";
     public static final String PLUGIN = "PLUGIN";
-    public static final String ADD_PLUGIN = "ADD_PLUGIN";
+    public static final String MANAGER_PLUGIN = "MANAGER_PLUGIN";
     public static final String STATISTICS = "STATISTICS";
     public static final String OPEN_CONFIGURATION_FILE = "OPEN_CONFIGURATION_FILE";
     public static final String TOP = "TOP";

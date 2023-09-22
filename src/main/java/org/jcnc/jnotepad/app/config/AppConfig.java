@@ -41,7 +41,7 @@ public class AppConfig {
         shortcutKeys.add(createShortcutKey("saveAsItem", CTRL_ALT_S));
         shortcutKeys.add(createShortcutKey("lineFeedItem", ""));
         shortcutKeys.add(createShortcutKey("openConfigItem", ALT_S));
-        shortcutKeys.add(createShortcutKey("addItem", ""));
+        shortcutKeys.add(createShortcutKey("pluginManager", ""));
         shortcutKeys.add(createShortcutKey("countItem", ""));
         myData.setShortcutKey(shortcutKeys);
         return myData;
