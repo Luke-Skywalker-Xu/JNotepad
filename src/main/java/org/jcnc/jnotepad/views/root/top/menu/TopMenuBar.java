@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.views.root.top.menu;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -11,9 +12,8 @@ import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.event.handler.util.SetBtn;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
-import org.jcnc.jnotepad.plugin.PluginManagerInterface;
+import org.jcnc.jnotepad.ui.pluginstage.PluginManagementPane;
 import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
@@ -90,7 +90,7 @@ public class TopMenuBar extends MenuBar {
     /**
      * 增加
      */
-    private MenuItem addItem;
+    private MenuItem pluginManagerItem;
     /**
      * 查看
      */
@@ -268,21 +268,26 @@ public class TopMenuBar extends MenuBar {
         pluginMenu = new Menu();
         UiResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
 
-        addItem = new MenuItem();
-        addItem.setOnAction(event -> {
-            PluginManagerInterface pluginManagerInterface = PluginManagerInterface.getInstance();
-            Stage stage = new Stage();
-            stage.getIcons().add(UiUtil.getAppIcon());
-            pluginManagerInterface.start(stage);
+        pluginManagerItem = new MenuItem();
+        pluginManagerItem.setOnAction(event -> {
+            Stage newStage = new Stage(); // 创建一个新的Stage对象
+            newStage.setTitle("插件管理");
+
+            PluginManagementPane pluginManagementPane = new PluginManagementPane();
+
+            Scene scene = new Scene(pluginManagementPane, 900, 500);
+            newStage.setScene(scene);
+            newStage.show();
         });
-        UiResourceBundle.bindStringProperty(addItem.textProperty(), ADD_PLUGIN);
-        itemMap.put("addItem", addItem);
+
+        UiResourceBundle.bindStringProperty(pluginManagerItem.textProperty(), MANAGER_PLUGIN);
+        itemMap.put("pluginManager", pluginManagerItem);
 
         countItem = new MenuItem();
         UiResourceBundle.bindStringProperty(countItem.textProperty(), STATISTICS);
         itemMap.put("countItem", countItem);
 
-        pluginMenu.getItems().addAll(addItem, countItem);
+        pluginMenu.getItems().addAll(pluginManagerItem, countItem);
     }
 
     /**
