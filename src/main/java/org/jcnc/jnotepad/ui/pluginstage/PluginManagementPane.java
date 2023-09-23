@@ -73,13 +73,13 @@ public class PluginManagementPane extends BorderPane {
         TabPane rootTabPane = new TabPane();
 
         // 创建市场、已安装和设置选项卡
-        Tab marketTab = new Tab("市场");
         Tab installedTab = new Tab("已安装");
+        Tab marketTab = new Tab("市场");
         Tab myTab = new Tab("设置");
 
         // 禁用选项卡关闭按钮
-        marketTab.setClosable(false);
         installedTab.setClosable(false);
+        marketTab.setClosable(false);
         myTab.setClosable(false);
 
         // 创建选项卡内容面板
@@ -89,22 +89,22 @@ public class PluginManagementPane extends BorderPane {
 
         // 创建自定义分割面板
         customSplitPane = new CustomSplitPane("", "");
-        marketTabContent.setCenter(customSplitPane);
+        installedTabContent.setCenter(customSplitPane);
 
         // 获取插件列表
         customSplitPane.setLeftContent(getScrollPane());
 
         // 创建示例按钮并添加到已安装和设置选项卡中
-        installedTabContent.setCenter(new Button("已安装"));
+        marketTabContent.setCenter(new Button("市场"));
         myTabContent.setCenter(new Button("设置"));
 
         // 将选项卡内容设置到选项卡中
-        marketTab.setContent(marketTabContent);
         installedTab.setContent(installedTabContent);
+        marketTab.setContent(marketTabContent);
         myTab.setContent(myTabContent);
 
         // 将选项卡添加到选项卡面板中
-        rootTabPane.getTabs().addAll(marketTab, installedTab, myTab);
+        rootTabPane.getTabs().addAll(installedTab, marketTab, myTab);
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
