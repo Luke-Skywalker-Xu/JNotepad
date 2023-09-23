@@ -6,6 +6,8 @@ import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.commonmark.parser.Parser;
@@ -22,6 +24,7 @@ import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
+import java.awt.MenuBar;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -118,7 +121,9 @@ public class PluginManagementPane extends BorderPane {
     private ScrollPane getScrollPane() {
         // 创建示例插件列表项
         var image1 = new Image("plug.png");
-        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t", image1);
+        var tile1 = createTile("运行插件", "这是一个运行插件", image1);
+        //注意,第一个tile必须要设置宽度
+        tile1.setPrefWidth(1000);
 
         var image2 = new Image("plug.png");
         var tile2 = createTile("终端插件", "这是一个终端插件", image2);
@@ -212,8 +217,12 @@ public class PluginManagementPane extends BorderPane {
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
-        var state = new Text("未启用");
 
+        var uninstall =new MenuItem("卸载");
+        var state = new SplitMenuButton(uninstall);
+        state.setText("禁用");
+        state.getStyleClass().addAll(Styles.ACCENT);
+        state.setPrefWidth(80);
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
