@@ -5,12 +5,14 @@ import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -26,6 +28,7 @@ import java.util.Map;
  */
 public class PluginManagementPane extends BorderPane {
 
+    public static int ICON_SIZE = 40;
     Logger logger = LogUtil.getLogger(this.getClass());
 
 
@@ -66,8 +69,7 @@ public class PluginManagementPane extends BorderPane {
         marketTabContent.setCenter(customSplitPane);
 
         // 获取插件列表
-        var box = getBox();
-        customSplitPane.setLeftContent(box);
+        customSplitPane.setLeftContent(getScrollPane());
 
         // 创建示例按钮并添加到已安装和设置选项卡中
         installedTabContent.setCenter(new Button("2"));
@@ -86,20 +88,46 @@ public class PluginManagementPane extends BorderPane {
     }
 
     /**
-     * 创建包含插件列表的VBox。
+     * 创建包含插件列表的VBox，并将其包装在滚动面板中。
      *
-     * @return 包含插件列表的VBox
+     * @return 包含插件列表的滚动面板
      */
-    private VBox getBox() {
+    private ScrollPane getScrollPane() {
         // 创建示例插件列表项
-        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t\t    ");
-        var tile2 = createTile("终端插件", "这是一个终端插件");
-        var tile3 = createTile("构建插件", "这是一个构建插件");
+        var image1 = new Image("icon.png");
+        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t", image1);
+
+        var image2 = new Image("icon.png");
+        var tile2 = createTile("终端插件", "这是一个终端插件", image2);
+
+        var image3 = new Image("icon.png");
+        var tile3 = createTile("构建插件", "这是一个构建插件", image3);
+
+        var image4 = new Image("icon.png");
+        var tile4 = createTile("1", "这是一个构建插件", image4);
+
+        var image5 = new Image("icon.png");
+        var tile5 = createTile("2", "这是一个构建插件", image5);
+
+        var image6 = new Image("icon.png");
+        var tile6 = createTile("4", "这是一个构建插件", image6);
+
+        var image7 = new Image("icon.png");
+        var tile7 = createTile("5", "这是一个构建插件", image7);
 
         // 创建VBox并将插件列表项添加到其中
-        var box = new VBox(tile1, tile2, tile3);
+        var box = new VBox(tile1, tile2, tile3, tile4, tile5, tile6, tile7);
 
-        return box;
+        // 创建滚动面板并将VBox设置为其内容
+        var scrollPane = new ScrollPane(box);
+
+        // 设置滚动面板的宽度适应父容器
+        scrollPane.setFitToWidth(true);
+        // 隐藏滚动条
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        return scrollPane;
     }
 
     /**
@@ -107,23 +135,36 @@ public class PluginManagementPane extends BorderPane {
      *
      * @param title       插件标题
      * @param description 插件描述
+     * @param image       插件图标
      * @return 创建的插件列表项Tile
      */
-    private Tile createTile(String title, String description) {
+    private Tile createTile(String title, String description, Image image) {
+        // 创建一个title
         var tile = new Tile(title, description);
+        // 创建一个按钮
         var tgl = new ToggleSwitch();
+
+        // 创建一个图标
+        ImageView icon = new ImageView(image);
+        // 指定要缩放的固定像素大小
+        double iconSize = ICON_SIZE;
+
+        // 设置图像视图的宽度和高度，以便等比例缩放到指定像素大小
+        icon.setFitWidth(iconSize);
+        icon.setFitHeight(iconSize);
+
+        // 设置Tile的图标
+        tile.setGraphic(icon);
 
         // 设置Tile的操作和操作处理程序
         tile.setAction(tgl);
         tile.setActionHandler(() -> {
             customSplitPane.setRightContent(tileContentMap.get(tile));
             logger.info("点击了" + tile);
-
         });
 
         // 创建专属的customSplitPane内容
         var content = createCustomSplitPaneContent(title);
-
 
         // 将内容与Tile关联起来
         tileContentMap.put(tile, content);
@@ -131,15 +172,22 @@ public class PluginManagementPane extends BorderPane {
         return tile;
     }
 
+
     /**
      * 创建专属于每个插件的CustomSplitPane内容。
      *
-     * @param title 插件标题
+     * @param titleName 插件标题
      * @return 创建的CustomSplitPane内容
      */
-    private Node createCustomSplitPaneContent(String title) {
-        // TODO: 2023/9/23 未完成
-        return new Label("详情" + title);
+    private Node createCustomSplitPaneContent(String titleName) {
+        VBox content = new VBox();
 
+        Label titleLabel = new Label(titleName);
+        Label descriptionLabel = new Label("插件描述插件描述插件描述");
+
+
+        content.getChildren().addAll(titleLabel, descriptionLabel);
+
+        return content;
     }
 }
