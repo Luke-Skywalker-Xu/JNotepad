@@ -3,12 +3,14 @@ package org.jcnc.jnotepad.ui.pluginstage;
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -44,6 +46,9 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
+
+    boolean isInstall = false;
+
 
     /**
      * 图标大小常量
@@ -199,6 +204,11 @@ public class PluginManagementPane extends BorderPane {
         // 创建一个按钮
         var tgl = new ToggleSwitch();
 
+        tgl.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            // 在这里编写单击 ToggleSwitch 后执行的代码
+            isInstall = true;
+
+        });
         // 创建一个图标
         ImageView icon = new ImageView(image);
         // 指定要缩放的固定像素大小
@@ -245,9 +255,38 @@ public class PluginManagementPane extends BorderPane {
         authorBox.getChildren().addAll(author, authorLink);
 
 
-        var uninstall = new MenuItem("卸载");
-        var state = new SplitMenuButton(uninstall);
-        state.setText("禁用");
+        var isInstallItem = new MenuItem();
+        var state = new SplitMenuButton(isInstallItem);
+
+        state.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            // 切换isInstall的值
+            isInstall = !isInstall;
+            if (!isInstall) {
+                isInstallItem.setText("安装");
+                isInstallItem.setOnAction(event1 -> {
+                    /// TODO: 2023/9/23 插件安装的操作
+
+                });
+                state.setText("启用");
+                state.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件启动的操作
+
+                });
+
+            } else {
+                isInstallItem.setText("卸载");
+                isInstallItem.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件卸载的操作
+
+                });
+                state.setText("停用");
+                state.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件停用的操作
+
+                });
+            }
+        });
+
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);
         var main = new VBox(10);
