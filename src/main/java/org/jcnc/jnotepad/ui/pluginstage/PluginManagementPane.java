@@ -205,8 +205,8 @@ public class PluginManagementPane extends BorderPane {
         var tgl = new ToggleSwitch();
 
         tgl.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // 在这里编写单击 ToggleSwitch 后执行的代码
-            isInstall = true;
+            // 单击 ToggleSwitch 后执行的代码
+            isInstall = !isInstall;
 
         });
         // 创建一个图标
@@ -264,7 +264,7 @@ public class PluginManagementPane extends BorderPane {
             if (!isInstall) {
                 isInstallItem.setText("安装");
                 isInstallItem.setOnAction(event1 -> {
-                    /// TODO: 2023/9/23 插件安装的操作
+                    // TODO: 2023/9/23 插件安装的操作
 
                 });
                 state.setText("启用");
