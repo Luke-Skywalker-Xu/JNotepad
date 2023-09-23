@@ -9,15 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -39,7 +31,6 @@ import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
-import java.awt.MenuBar;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -59,9 +50,6 @@ import java.util.Map;
  */
 public class PluginManagementPane extends BorderPane {
     PluginManager pluginManager = PluginManager.getInstance();
-
-    boolean isInstall = false;
-
 
     /**
      * 图标大小常量
@@ -215,12 +203,6 @@ public class PluginManagementPane extends BorderPane {
         var tile = new Tile(pluginDescriptor.getName(), pluginDescriptor.getDescription());
         // 创建一个按钮
         var toggleSwitch = new ToggleSwitch();
-
-        tgl.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // 单击 ToggleSwitch 后执行的代码
-            isInstall = !isInstall;
-
-        });
         // 创建一个图标
         ImageView icon = new ImageView(new Image(pluginDescriptor.getIcon() == null ? "plug.png" : pluginDescriptor.getIcon()));
         // 指定要缩放的固定像素大小
@@ -266,52 +248,44 @@ public class PluginManagementPane extends BorderPane {
         authorBox.getChildren().addAll(author, authorLink);
 
 
-        var isInstallItem = new MenuItem();
-        var state = new SplitMenuButton(isInstallItem);
-
-        state.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // 切换isInstall的值
-            isInstall = !isInstall;
-            if (!isInstall) {
-                isInstallItem.setText("安装");
-                isInstallItem.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件安装的操作
-
-                });
-                state.setText("启用");
-                state.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件启动的操作
-
-                });
-
-            } else {
-                isInstallItem.setText("卸载");
-                isInstallItem.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件卸载的操作
-
-                });
-                state.setText("停用");
-                state.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件停用的操作
-
-                });
-            }
-        });
-
+        var uninstallItem = new MenuItem("卸载");
+        var state = new SplitMenuButton(uninstallItem);
+        toggleSwitch.setSelected(pluginDescriptor.isEnabled());
+        BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
+        state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);
+        toggleSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                pluginManager.enablePlugIn(pluginDescriptor);
+            } else {
+                pluginManager.disablePlugIn(pluginDescriptor);
+            }
+        });
+        state.setOnAction(event -> {
+            toggleSwitch.setSelected(!toggleSwitch.isSelected());
+            if (toggleSwitch.isSelected()) {
+                pluginManager.enablePlugIn(pluginDescriptor);
+            } else {
+                pluginManager.disablePlugIn(pluginDescriptor);
+            }
+
+        });
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
         TabPane tabPane = new TabPane();
 
-        Tab detailsTab = new Tab("细节");
+        Tab detailsTab = new Tab("简介");
         detailsTab.setClosable(false);
-        Tab featuresTab = new Tab("实现功能");
+        Tab featuresTab = new Tab("详细信息");
         featuresTab.setClosable(false);
         Tab changelogTab = new Tab("更新日志");
         changelogTab.setClosable(false);
-
+        Tab readMeTab = new Tab("README");
+        readMeTab.setClosable(false);
+        Tab othersTab = new Tab("其它信息");
+        othersTab.setClosable(false);
         // 在标签页中添加内容
         VBox detailsContent = new VBox(10);
 
@@ -327,15 +301,14 @@ public class PluginManagementPane extends BorderPane {
         engine.loadContent(htmlContent);
         // 将WebView添加到detailsContent
         detailsContent.getChildren().addAll(webView);
-
         VBox featuresContent = new VBox(10);
         VBox changelogContent = new VBox(10);
-
+        VBox readMeContent = new VBox(10);
         detailsTab.setContent(detailsContent);
         featuresTab.setContent(featuresContent);
         changelogTab.setContent(changelogContent);
-
-        tabPane.getTabs().addAll(detailsTab, featuresTab, changelogTab);
+        readMeTab.setContent(readMeContent);
+        tabPane.getTabs().addAll(detailsTab, featuresTab, changelogTab, readMeTab, othersTab);
 
         main.getChildren().addAll(tabPane);
 
