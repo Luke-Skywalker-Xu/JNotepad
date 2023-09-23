@@ -2,20 +2,23 @@ package org.jcnc.jnotepad.ui.pluginstage;
 
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
-import atlantafx.base.theme.PrimerLight;
-import javafx.application.Application;
+import atlantafx.base.theme.Styles;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+
+import java.awt.Desktop;
+
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Text;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +53,7 @@ public class PluginManagementPane extends BorderPane {
         TabPane tabPane = new TabPane();
 
         // 创建市场、已安装和设置选项卡
-        Tab marketTab = new Tab("市场");
+        Tab marketTab = new Tab("发现");
         Tab installedTab = new Tab("已安装");
         Tab myTab = new Tab("设置");
 
@@ -94,25 +97,25 @@ public class PluginManagementPane extends BorderPane {
      */
     private ScrollPane getScrollPane() {
         // 创建示例插件列表项
-        var image1 = new Image("icon.png");
+        var image1 = new Image("plug.png");
         var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t", image1);
 
-        var image2 = new Image("icon.png");
+        var image2 = new Image("plug.png");
         var tile2 = createTile("终端插件", "这是一个终端插件", image2);
 
-        var image3 = new Image("icon.png");
+        var image3 = new Image("plug.png");
         var tile3 = createTile("构建插件", "这是一个构建插件", image3);
 
-        var image4 = new Image("icon.png");
+        var image4 = new Image("plug.png");
         var tile4 = createTile("1", "这是一个构建插件", image4);
 
-        var image5 = new Image("icon.png");
+        var image5 = new Image("plug.png");
         var tile5 = createTile("2", "这是一个构建插件", image5);
 
-        var image6 = new Image("icon.png");
+        var image6 = new Image("plug.png");
         var tile6 = createTile("4", "这是一个构建插件", image6);
 
-        var image7 = new Image("icon.png");
+        var image7 = new Image("plug.png");
         var tile7 = createTile("5", "这是一个构建插件", image7);
 
         // 创建VBox并将插件列表项添加到其中
@@ -180,13 +183,51 @@ public class PluginManagementPane extends BorderPane {
      * @return 创建的CustomSplitPane内容
      */
     private Node createCustomSplitPaneContent(String titleName) {
-        VBox content = new VBox();
+        VBox content = new VBox(8);
+        content.setPadding(new Insets(10));
+        var titleLabel = new Text(titleName);
+        titleLabel.getStyleClass().addAll(Styles.TITLE_1);
 
-        Label titleLabel = new Label(titleName);
-        Label descriptionLabel = new Label("插件描述插件描述插件描述");
+        var authorBox = new HBox(10);
+        var author = new Text("JCNC团队");
+        var authorLink = new Hyperlink("插件仓库地址");
+        authorLink.setVisited(true);
+        authorLink.setStyle("-fx-text-fill: blue; -fx-visited-link-color: blue;");
+        authorLink.setOnAction(event -> {
+            // 定义要打开的链接
+            String url = "https://gitee.com/jcnc-org/JNotepad";
+
+            try {
+                // 创建URI对象
+                URI uri = new URI(url);
+
+                // 检查系统是否支持Desktop类
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+
+                    // 检查是否支持浏览器启动
+                    if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                        // 打开默认浏览器并访问链接
+                        desktop.browse(uri);
+                    } else {
+                        logger.info("系统不支持浏览器启动操作!");
+                    }
+                } else {
+                    logger.info("系统不支持Desktop类!");
+                }
+            } catch (Exception e) {
+                logger.info("启动" + authorLink + "失败!");
+            }
+        });
+
+        authorBox.getChildren().addAll(author, authorLink);
 
 
-        content.getChildren().addAll(titleLabel, descriptionLabel);
+
+        var descriptionLabel = new Text("插件描述插件描述插件描述");
+
+
+        content.getChildren().addAll(titleLabel, authorBox, descriptionLabel);
 
         return content;
     }

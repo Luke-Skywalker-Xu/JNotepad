@@ -16,6 +16,7 @@ module org.jcnc.jnotepad {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.antdesignicons;
     requires richtextfx.fat;
+    requires java.desktop;
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.model.enums;
     exports org.jcnc.jnotepad.app.config;
