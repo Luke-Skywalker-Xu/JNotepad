@@ -112,8 +112,7 @@ public class TopMenuBarManager {
         registerSetMenuItem(topMenuBar.getLanguageMenu(), LANGUAGE, "languageMenu", actionEvent -> {
         });
 
-//        //插件菜单
-
+        //插件菜单
         registerPluginMenuItem(topMenuBar.getPluginManagerItem(), MANAGER_PLUGIN, "pluginManagerItem", event -> {
             Stage newStage = new Stage();
             newStage.getIcons().add(UiUtil.getAppIcon());
@@ -121,7 +120,7 @@ public class TopMenuBarManager {
 
             PluginManagementPane pluginManagementPane = new PluginManagementPane();
 
-            Scene scene = new Scene(pluginManagementPane, 900, 500);
+            Scene scene = new Scene(pluginManagementPane, 900, 600);
             newStage.setScene(scene);
             newStage.show();
         });
