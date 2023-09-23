@@ -3,13 +3,13 @@ package org.jcnc.jnotepad.ui.pluginstage;
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -17,7 +17,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
+import org.jcnc.jnotepad.plugin.PluginManager;
+import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -26,7 +35,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +48,7 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
+    PluginManager pluginManager = PluginManager.getInstance();
 
     /**
      * 图标大小常量
@@ -214,14 +226,17 @@ public class PluginManagementPane extends BorderPane {
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
-        toggleSwitch.setSelected(pluginDescriptor.isEnabled());
-        var state = new Button(pluginDescriptor.isEnabled() ? "禁用" : "启用");
-
+        BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
+        booleanProperty.setValue(pluginDescriptor.isEnabled());
         var uninstall = new MenuItem("卸载");
         var state = new SplitMenuButton(uninstall);
-        state.setText("禁用");
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);
+        state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
+        state.setOnAction(event -> {
+            toggleSwitch.setSelected(!toggleSwitch.isSelected());
+        });
+
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
