@@ -22,7 +22,6 @@ import java.util.List;
  * @author 许轲
  */
 public class NewFile implements EventHandler<ActionEvent> {
-
     /**
      * 处理新建文件事件。
      *

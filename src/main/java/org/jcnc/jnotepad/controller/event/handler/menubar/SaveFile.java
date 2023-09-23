@@ -10,9 +10,9 @@ import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.views.manager.TopMenuBarManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
-import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键
                 AppConfigController.getInstance().loadConfig();
-                TopMenuBar.getInstance().initShortcutKeys();
+                TopMenuBarManager.getInstance().initShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包！");
                 logger.info("已刷新快捷键！");
