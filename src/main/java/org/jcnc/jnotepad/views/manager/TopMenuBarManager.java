@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
@@ -13,7 +14,7 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
-import org.jcnc.jnotepad.plugin.PluginManagerInterface;
+import org.jcnc.jnotepad.ui.pluginstage.PluginManagementPane;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
@@ -111,12 +112,18 @@ public class TopMenuBarManager {
         registerSetMenuItem(topMenuBar.getLanguageMenu(), LANGUAGE, "languageMenu", actionEvent -> {
         });
 
-        //插件菜单
-        registerPluginMenuItem(topMenuBar.getAddItem(), ADD_PLUGIN, "addItem", event -> {
-            PluginManagerInterface pluginManagerInterface = PluginManagerInterface.getInstance();
-            Stage stage = new Stage();
-            stage.getIcons().add(UiUtil.getAppIcon());
-            pluginManagerInterface.start(stage);
+//        //插件菜单
+
+        registerPluginMenuItem(topMenuBar.getPluginManagerItem(), MANAGER_PLUGIN, "pluginManagerItem", event -> {
+            Stage newStage = new Stage();
+            newStage.getIcons().add(UiUtil.getAppIcon());
+            newStage.setTitle("插件管理");
+
+            PluginManagementPane pluginManagementPane = new PluginManagementPane();
+
+            Scene scene = new Scene(pluginManagementPane, 900, 500);
+            newStage.setScene(scene);
+            newStage.show();
         });
         registerPluginMenuItem(topMenuBar.getCountItem(), STATISTICS, "countItem", event -> {
         });
@@ -260,7 +267,10 @@ public class TopMenuBarManager {
             // 保证json的key必须和变量名一致
             MenuItem menuItem = topMenuBar.getItemMap().get(shortcutKey.getButtonName());
             String shortKeyValue = shortcutKey.getShortcutKeyValue();
-            if (Objects.isNull(menuItem) || "".equals(shortKeyValue)) {
+            if (Objects.isNull(menuItem)) {
+                continue;
+            }
+            if ("".equals(shortKeyValue)) {
                 itemsToUnbind.add(menuItem);
                 continue;
             }

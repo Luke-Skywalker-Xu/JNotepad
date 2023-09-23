@@ -61,11 +61,7 @@ public class TopMenuBar extends MenuBar {
      * 重命名
      */
     private final MenuItem renameItem = new MenuItem();
-    /**
-     * 增加
-     */
-    private final MenuItem addItem = new MenuItem();
-    private MenuItem pluginManagerItem;
+
     /**
      * 查看
      */
@@ -90,6 +86,11 @@ public class TopMenuBar extends MenuBar {
      * 英文选项
      */
     private final RadioMenuItem englishItem = new RadioMenuItem();
+
+    /**
+     * 插件管理菜单项
+     */
+    private final MenuItem pluginManagerItem = new MenuItem();
 
     private TopMenuBar() {
     }
@@ -147,9 +148,6 @@ public class TopMenuBar extends MenuBar {
         return renameItem;
     }
 
-    public MenuItem getAddItem() {
-        return addItem;
-    }
 
     public MenuItem getCountItem() {
         return countItem;
@@ -173,5 +171,9 @@ public class TopMenuBar extends MenuBar {
 
     public RadioMenuItem getEnglishItem() {
         return englishItem;
+    }
+
+    public MenuItem getPluginManagerItem() {
+        return pluginManagerItem;
     }
 }
