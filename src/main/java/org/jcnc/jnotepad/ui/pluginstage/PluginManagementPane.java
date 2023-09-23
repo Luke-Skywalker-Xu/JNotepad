@@ -9,7 +9,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -31,6 +39,8 @@ import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
+import java.awt.MenuBar;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -49,6 +59,9 @@ import java.util.Map;
  */
 public class PluginManagementPane extends BorderPane {
     PluginManager pluginManager = PluginManager.getInstance();
+
+    boolean isInstall = false;
+
 
     /**
      * 图标大小常量
@@ -108,7 +121,28 @@ public class PluginManagementPane extends BorderPane {
 
         // 创建示例按钮并添加到已安装和设置选项卡中
         marketTabContent.setCenter(new Button("市场"));
-        myTabContent.setCenter(new Button("设置"));
+
+        var myTabPane = new BorderPane();
+        var mainMyTabPane = new VBox();
+        var manageStorage = new Button("管理插件仓库");
+        manageStorage.setOnAction(event -> {
+            try {
+                // 获取当前软件运行根目录
+                String rootPath = System.getProperty("user.dir");
+                File rootDir = new File(rootPath);
+
+                // 打开文件资源管理器并选中运行根目录
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(rootDir);
+            } catch (Exception e) {
+                logger.info("打开了" + System.getProperty("user.dir") + "文件夹");
+
+            }
+        });
+        mainMyTabPane.getChildren().addAll(manageStorage);
+        myTabPane.setCenter(mainMyTabPane);
+        myTabContent.setCenter(myTabPane);
+
 
         // 将选项卡内容设置到选项卡中
         installedTab.setContent(installedTabContent);
@@ -182,6 +216,11 @@ public class PluginManagementPane extends BorderPane {
         // 创建一个按钮
         var toggleSwitch = new ToggleSwitch();
 
+        tgl.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            // 单击 ToggleSwitch 后执行的代码
+            isInstall = !isInstall;
+
+        });
         // 创建一个图标
         ImageView icon = new ImageView(new Image(pluginDescriptor.getIcon() == null ? "plug.png" : pluginDescriptor.getIcon()));
         // 指定要缩放的固定像素大小
@@ -226,17 +265,41 @@ public class PluginManagementPane extends BorderPane {
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
-        BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
-        booleanProperty.setValue(pluginDescriptor.isEnabled());
-        var uninstall = new MenuItem("卸载");
-        var state = new SplitMenuButton(uninstall);
-        state.getStyleClass().addAll(Styles.ACCENT);
-        state.setPrefWidth(80);
-        state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
-        state.setOnAction(event -> {
-            toggleSwitch.setSelected(!toggleSwitch.isSelected());
+
+        var isInstallItem = new MenuItem();
+        var state = new SplitMenuButton(isInstallItem);
+
+        state.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            // 切换isInstall的值
+            isInstall = !isInstall;
+            if (!isInstall) {
+                isInstallItem.setText("安装");
+                isInstallItem.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件安装的操作
+
+                });
+                state.setText("启用");
+                state.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件启动的操作
+
+                });
+
+            } else {
+                isInstallItem.setText("卸载");
+                isInstallItem.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件卸载的操作
+
+                });
+                state.setText("停用");
+                state.setOnAction(event1 -> {
+                    // TODO: 2023/9/23 插件停用的操作
+
+                });
+            }
         });
 
+        state.getStyleClass().addAll(Styles.ACCENT);
+        state.setPrefWidth(80);
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
