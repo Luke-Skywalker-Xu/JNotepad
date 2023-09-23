@@ -109,7 +109,7 @@ public class PluginManagementPane extends BorderPane {
         myTab.setContent(myTabContent);
 
         // 将选项卡添加到选项卡面板中
-        rootTabPane.getTabs().addAll(installedTab, marketTab, myTab);
+        rootTabPane.getTabs().addAll(marketTab, installedTab, myTab);
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
