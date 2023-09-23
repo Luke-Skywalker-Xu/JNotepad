@@ -77,7 +77,7 @@ public class SetStage extends Stage {
         HBox bottomBox = new HBox(10);
         bottomBox.setAlignment(Pos.CENTER_RIGHT);
         bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
-        bottomBox.setPadding(new Insets(5, 15, 5, 0));
+        bottomBox.setPadding(new Insets(7, 15, 7, 0));
         Button confirmButton = new Button(" 确认 ");
         confirmButton.setTextFill(Color.WHITE);
 

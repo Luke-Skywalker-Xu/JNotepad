@@ -4,12 +4,15 @@ import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
@@ -20,6 +23,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -111,6 +115,28 @@ public class PluginManagementPane extends BorderPane {
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
+
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.CENTER_RIGHT);
+        bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
+        bottomBox.setPadding(new Insets(7, 15, 7, 0));
+        Button confirmButton = new Button(" 确认 ");
+        confirmButton.setTextFill(Color.WHITE);
+
+        confirmButton.getStyleClass().addAll(Styles.SMALL);
+        confirmButton.setStyle("-fx-background-color: rgb(54,88,128);");
+        CustomSetButton cancelButton = new CustomSetButton(" 取消 ");
+        cancelButton.setOnAction(event -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+
+        });
+        cancelButton.getStyleClass().addAll(Styles.SMALL);
+        Button applicationButton = new Button(" 应用 ");
+        applicationButton.getStyleClass().addAll(Styles.SMALL);
+        bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
+
+        this.setBottom(bottomBox);
     }
 
     /**
@@ -122,7 +148,8 @@ public class PluginManagementPane extends BorderPane {
         // 创建示例插件列表项
         var image1 = new Image("plug.png");
         var tile1 = createTile("运行插件", "这是一个运行插件", image1);
-        //注意,第一个tile必须要设置宽度
+
+        // 注意,第一个tile必须要设置宽度
         tile1.setPrefWidth(1000);
 
         var image2 = new Image("plug.png");
@@ -218,7 +245,7 @@ public class PluginManagementPane extends BorderPane {
         authorBox.getChildren().addAll(author, authorLink);
 
 
-        var uninstall =new MenuItem("卸载");
+        var uninstall = new MenuItem("卸载");
         var state = new SplitMenuButton(uninstall);
         state.setText("禁用");
         state.getStyleClass().addAll(Styles.ACCENT);
