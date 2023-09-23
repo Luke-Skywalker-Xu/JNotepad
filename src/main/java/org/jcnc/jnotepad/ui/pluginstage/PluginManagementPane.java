@@ -4,10 +4,15 @@ import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
@@ -18,10 +23,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
+import java.awt.MenuBar;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -73,13 +80,13 @@ public class PluginManagementPane extends BorderPane {
         TabPane rootTabPane = new TabPane();
 
         // 创建市场、已安装和设置选项卡
-        Tab marketTab = new Tab("市场");
         Tab installedTab = new Tab("已安装");
+        Tab marketTab = new Tab("市场");
         Tab myTab = new Tab("设置");
 
         // 禁用选项卡关闭按钮
-        marketTab.setClosable(false);
         installedTab.setClosable(false);
+        marketTab.setClosable(false);
         myTab.setClosable(false);
 
         // 创建选项卡内容面板
@@ -89,25 +96,47 @@ public class PluginManagementPane extends BorderPane {
 
         // 创建自定义分割面板
         customSplitPane = new CustomSplitPane("", "");
-        marketTabContent.setCenter(customSplitPane);
+        installedTabContent.setCenter(customSplitPane);
 
         // 获取插件列表
         customSplitPane.setLeftContent(getScrollPane());
 
         // 创建示例按钮并添加到已安装和设置选项卡中
-        installedTabContent.setCenter(new Button("已安装"));
+        marketTabContent.setCenter(new Button("市场"));
         myTabContent.setCenter(new Button("设置"));
 
         // 将选项卡内容设置到选项卡中
-        marketTab.setContent(marketTabContent);
         installedTab.setContent(installedTabContent);
+        marketTab.setContent(marketTabContent);
         myTab.setContent(myTabContent);
 
         // 将选项卡添加到选项卡面板中
-        rootTabPane.getTabs().addAll(marketTab, installedTab, myTab);
+        rootTabPane.getTabs().addAll(installedTab, marketTab, myTab);
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
+
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.CENTER_RIGHT);
+        bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
+        bottomBox.setPadding(new Insets(7, 15, 7, 0));
+        Button confirmButton = new Button(" 确认 ");
+        confirmButton.setTextFill(Color.WHITE);
+
+        confirmButton.getStyleClass().addAll(Styles.SMALL);
+        confirmButton.setStyle("-fx-background-color: rgb(54,88,128);");
+        CustomSetButton cancelButton = new CustomSetButton(" 取消 ");
+        cancelButton.setOnAction(event -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+
+        });
+        cancelButton.getStyleClass().addAll(Styles.SMALL);
+        Button applicationButton = new Button(" 应用 ");
+        applicationButton.getStyleClass().addAll(Styles.SMALL);
+        bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
+
+        this.setBottom(bottomBox);
     }
 
     /**
@@ -118,7 +147,10 @@ public class PluginManagementPane extends BorderPane {
     private ScrollPane getScrollPane() {
         // 创建示例插件列表项
         var image1 = new Image("plug.png");
-        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t", image1);
+        var tile1 = createTile("运行插件", "这是一个运行插件", image1);
+
+        // 注意,第一个tile必须要设置宽度
+        tile1.setPrefWidth(1000);
 
         var image2 = new Image("plug.png");
         var tile2 = createTile("终端插件", "这是一个终端插件", image2);
@@ -212,8 +244,12 @@ public class PluginManagementPane extends BorderPane {
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
-        var state = new Text("未启用");
 
+        var uninstall = new MenuItem("卸载");
+        var state = new SplitMenuButton(uninstall);
+        state.setText("禁用");
+        state.getStyleClass().addAll(Styles.ACCENT);
+        state.setPrefWidth(80);
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
