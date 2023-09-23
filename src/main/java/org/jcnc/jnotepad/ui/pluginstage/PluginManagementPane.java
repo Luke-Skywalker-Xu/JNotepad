@@ -3,20 +3,13 @@ package org.jcnc.jnotepad.ui.pluginstage;
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
 import atlantafx.base.theme.Styles;
-import javafx.event.EventHandler;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -24,19 +17,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
+import org.jcnc.jnotepad.plugin.PluginManager;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
-import java.awt.MenuBar;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,9 +49,7 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
-
-    boolean isInstall = false;
-
+    PluginManager pluginManager = PluginManager.getInstance();
 
     /**
      * 图标大小常量
@@ -75,13 +75,13 @@ public class PluginManagementPane extends BorderPane {
      * 创建一个插件管理面板的实例。
      */
     public PluginManagementPane() {
-        init();
+        initialize();
     }
 
     /**
      * 初始化插件管理面板。
      */
-    private void init() {
+    private void initialize() {
         // 创建选项卡面板
         TabPane rootTabPane = new TabPane();
 
@@ -138,7 +138,7 @@ public class PluginManagementPane extends BorderPane {
         myTab.setContent(myTabContent);
 
         // 将选项卡添加到选项卡面板中
-        rootTabPane.getTabs().addAll(installedTab, marketTab, myTab);
+        rootTabPane.getTabs().addAll(marketTab, installedTab, myTab);
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
@@ -172,33 +172,13 @@ public class PluginManagementPane extends BorderPane {
      * @return 包含插件列表的滚动面板
      */
     private ScrollPane getScrollPane() {
-        // 创建示例插件列表项
-        var image1 = new Image("plug.png");
-        var tile1 = createTile("运行插件", "这是一个运行插件", image1);
+        List<Tile> tiles = new ArrayList<>();
 
-        // 注意,第一个tile必须要设置宽度
-        tile1.setPrefWidth(1000);
-
-        var image2 = new Image("plug.png");
-        var tile2 = createTile("终端插件", "这是一个终端插件", image2);
-
-        var image3 = new Image("plug.png");
-        var tile3 = createTile("构建插件", "这是一个构建插件", image3);
-
-        var image4 = new Image("plug.png");
-        var tile4 = createTile("1", "这是一个构建插件", image4);
-
-        var image5 = new Image("plug.png");
-        var tile5 = createTile("2", "这是一个构建插件", image5);
-
-        var image6 = new Image("plug.png");
-        var tile6 = createTile("4", "这是一个构建插件", image6);
-
-        var image7 = new Image("plug.png");
-        var tile7 = createTile("5", "这是一个构建插件", image7);
+        pluginManager.getPluginDescriptors().forEach(pluginDescriptor -> tiles.add(createPlugInListItem(pluginDescriptor)));
 
         // 创建VBox并将插件列表项添加到其中
-        var box = new VBox(tile1, tile2, tile3, tile4, tile5, tile6, tile7);
+        var box = new VBox();
+        box.getChildren().addAll(tiles);
 
         // 创建滚动面板并将VBox设置为其内容
         var scrollPane = new ScrollPane(box);
@@ -215,24 +195,16 @@ public class PluginManagementPane extends BorderPane {
     /**
      * 创建插件列表项Tile。
      *
-     * @param title       插件标题
-     * @param description 插件描述
-     * @param image       插件图标
+
      * @return 创建的插件列表项Tile
      */
-    private Tile createTile(String title, String description, Image image) {
+    private Tile createPlugInListItem(PluginDescriptor pluginDescriptor) {
         // 创建一个title
-        var tile = new Tile(title, description);
+        var tile = new Tile(pluginDescriptor.getName(), pluginDescriptor.getDescription());
         // 创建一个按钮
-        var tgl = new ToggleSwitch();
-
-        tgl.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // 单击 ToggleSwitch 后执行的代码
-            isInstall = !isInstall;
-
-        });
+        var toggleSwitch = new ToggleSwitch();
         // 创建一个图标
-        ImageView icon = new ImageView(image);
+        ImageView icon = new ImageView(new Image(pluginDescriptor.getIcon() == null ? "plug.png" : pluginDescriptor.getIcon()));
         // 指定要缩放的固定像素大小
         double iconSize = ICON_SIZE;
 
@@ -244,14 +216,14 @@ public class PluginManagementPane extends BorderPane {
         tile.setGraphic(icon);
 
         // 设置Tile的操作和操作处理程序
-        tile.setAction(tgl);
+        tile.setAction(toggleSwitch);
         tile.setActionHandler(() -> {
             customSplitPane.setRightContent(tileContentMap.get(tile));
             logger.info("点击了" + tile);
         });
 
         // 创建专属的customSplitPane内容
-        var content = createCustomSplitPaneContent(title);
+        var content = createCustomSplitPaneContent(pluginDescriptor, toggleSwitch);
 
         // 将内容与Tile关联起来
         tileContentMap.put(tile, content);
@@ -262,67 +234,58 @@ public class PluginManagementPane extends BorderPane {
     /**
      * 创建专属于每个插件的CustomSplitPane内容。
      *
-     * @param titleName 插件标题
      * @return 创建的CustomSplitPane内容
      */
-    private Node createCustomSplitPaneContent(String titleName) {
+    private Node createCustomSplitPaneContent(PluginDescriptor pluginDescriptor, ToggleSwitch toggleSwitch) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(10));
-        var titleLabel = new Text(titleName);
+        var titleLabel = new Text(pluginDescriptor.getName());
         titleLabel.getStyleClass().addAll(Styles.TITLE_1);
 
         var authorBox = new HBox(10);
-        var author = new Text("JCNC团队");
+        var author = new Text(pluginDescriptor.getAuthor());
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
 
-        var isInstallItem = new MenuItem();
-        var state = new SplitMenuButton(isInstallItem);
-
-        state.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            // 切换isInstall的值
-            isInstall = !isInstall;
-            if (!isInstall) {
-                isInstallItem.setText("安装");
-                isInstallItem.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件安装的操作
-
-                });
-                state.setText("启用");
-                state.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件启动的操作
-
-                });
-
-            } else {
-                isInstallItem.setText("卸载");
-                isInstallItem.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件卸载的操作
-
-                });
-                state.setText("停用");
-                state.setOnAction(event1 -> {
-                    // TODO: 2023/9/23 插件停用的操作
-
-                });
-            }
-        });
-
+        var uninstallItem = new MenuItem("卸载");
+        var state = new SplitMenuButton(uninstallItem);
+        toggleSwitch.setSelected(pluginDescriptor.isEnabled());
+        BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
+        state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);
+        toggleSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                pluginManager.enablePlugIn(pluginDescriptor);
+            } else {
+                pluginManager.disablePlugIn(pluginDescriptor);
+            }
+        });
+        state.setOnAction(event -> {
+            toggleSwitch.setSelected(!toggleSwitch.isSelected());
+            if (toggleSwitch.isSelected()) {
+                pluginManager.enablePlugIn(pluginDescriptor);
+            } else {
+                pluginManager.disablePlugIn(pluginDescriptor);
+            }
+
+        });
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
         TabPane tabPane = new TabPane();
 
-        Tab detailsTab = new Tab("细节");
+        Tab detailsTab = new Tab("简介");
         detailsTab.setClosable(false);
-        Tab featuresTab = new Tab("实现功能");
+        Tab featuresTab = new Tab("详细信息");
         featuresTab.setClosable(false);
         Tab changelogTab = new Tab("更新日志");
         changelogTab.setClosable(false);
-
+        Tab readMeTab = new Tab("README");
+        readMeTab.setClosable(false);
+        Tab othersTab = new Tab("其它信息");
+        othersTab.setClosable(false);
         // 在标签页中添加内容
         VBox detailsContent = new VBox(10);
 
@@ -338,15 +301,14 @@ public class PluginManagementPane extends BorderPane {
         engine.loadContent(htmlContent);
         // 将WebView添加到detailsContent
         detailsContent.getChildren().addAll(webView);
-
         VBox featuresContent = new VBox(10);
         VBox changelogContent = new VBox(10);
-
+        VBox readMeContent = new VBox(10);
         detailsTab.setContent(detailsContent);
         featuresTab.setContent(featuresContent);
         changelogTab.setContent(changelogContent);
-
-        tabPane.getTabs().addAll(detailsTab, featuresTab, changelogTab);
+        readMeTab.setContent(readMeContent);
+        tabPane.getTabs().addAll(detailsTab, featuresTab, changelogTab, readMeTab, othersTab);
 
         main.getChildren().addAll(tabPane);
 
@@ -428,7 +390,7 @@ public class PluginManagementPane extends BorderPane {
                     logger.info("系统不支持Desktop类!");
                 }
             } catch (Exception e) {
-                logger.info("启动" + authorLink + "失败!");
+                logger.error("启动{}失败!\n错误是{}", authorLink, e.getMessage());
             }
         });
         return authorLink;

@@ -89,17 +89,6 @@ public class PluginManager {
      */
     public void disablePlugIn(PluginDescriptor pluginDescriptor) {
         pluginDescriptor.setEnabled(false);
-        pluginDescriptor.setPlugin(null);
-        ThreadPoolManager.getThreadPool().submit(() -> {
-            PluginConfigController instance = PluginConfigController.getInstance();
-            instance.getConfig().getPlugins().forEach(plugin -> {
-                if ((pluginDescriptor.getName() + pluginDescriptor.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
-                    plugin.setEnabled(false);
-                }
-            });
-            instance.writeConfig();
-            ThreadPoolManager.threadContSelfSubtracting();
-        });
     }
 
     /**
@@ -141,7 +130,7 @@ public class PluginManager {
      */
     public void destroyPlugins() {
         for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
-            if (pluginDescriptor.isEnabled()) {
+            if (pluginDescriptor.isEnabled() && pluginDescriptor.getPlugin() != null) {
                 pluginDescriptor.getPlugin().destroyed();
             }
         }
@@ -156,7 +145,16 @@ public class PluginManager {
         return categories;
     }
 
-    public List<PluginDescriptor> getPluginInfos() {
+    public List<PluginDescriptor> getPluginDescriptors() {
         return pluginDescriptors;
+    }
+
+    /**
+     * 启用插件
+     *
+     * @param pluginDescriptor 插件信息类
+     */
+    public void enablePlugIn(PluginDescriptor pluginDescriptor) {
+        pluginDescriptor.setEnabled(true);
     }
 }
