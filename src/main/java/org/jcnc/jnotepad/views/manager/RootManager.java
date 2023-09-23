@@ -8,15 +8,15 @@ import org.jcnc.jnotepad.views.root.RootBorderPane;
 import static org.jcnc.jnotepad.views.root.bottom.RootBottomSideBarVerticalBox.initSidebarVerticalBox;
 
 /**
- * 视图管理器类，用于管理记事本应用程序的视图组件。
+ * 根布局管理器类，用于管理记事本应用程序的根布局组件。
  *
- * <p>该类负责管理应用程序的视图组件，包括主界面布局和标签页索引等。</p>
+ * <p>该类负责管理应用程序的视图组件，包括主界面布局</p>
  *
  * @author 许轲
  */
-public class ViewManager {
+public class RootManager {
 
-    private static ViewManager instance = null;
+    private static RootManager instance = null;
 
     /**
      * 主布局
@@ -28,35 +28,35 @@ public class ViewManager {
      *
      * @param scene 与视图相关联的 JavaFX 场景。
      */
-    private ViewManager(Scene scene) {
+    private RootManager(Scene scene) {
         root = new BorderPane();
         scene.setRoot(root);
     }
 
     /**
-     * 获取 ViewManager 的实例。如果实例不存在，则创建一个新实例。
+     * 获取 RootManager 的实例。如果实例不存在，则创建一个新实例。
      *
      * @param scene 与视图相关联的 JavaFX 场景。
-     * @return ViewManager 的实例。
+     * @return RootManager 的实例。
      */
-    public static ViewManager getInstance(Scene scene) {
+    public static RootManager getInstance(Scene scene) {
         if (instance == null) {
-            instance = new ViewManager(scene);
+            instance = new RootManager(scene);
         }
         return instance;
     }
 
     /**
-     * 获取 ViewManager 的实例。
+     * 获取 RootManager 的实例。
      *
-     * @return ViewManager 的实例。
+     * @return RootManager 的实例。
      * @throws AppException 如果实例未初始化。
      */
-    public static ViewManager getInstance() {
+    public static RootManager getInstance() {
         if (instance != null) {
             return instance;
         } else {
-            throw new AppException("ViewManager 的实例未初始化!");
+            throw new AppException("RootManager 的实例未初始化!");
         }
     }
 
@@ -67,10 +67,8 @@ public class ViewManager {
      * @param scene 与视图相关联的 JavaFX 场景。
      */
     public void initScreen(Scene scene) {
-
         // 创建主界面布局
         root = new BorderPane();
-        /*root.setTop(CustomTitleBar.getInstance());*/
         root.setCenter(RootBorderPane.getInstance());
 
         scene.setRoot(root);

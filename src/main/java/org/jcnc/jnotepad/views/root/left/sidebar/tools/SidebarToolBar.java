@@ -42,9 +42,6 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
         setButton.setGraphic(imageView);
         setButton.setPrefWidth(imageView.getFitWidth() + 20);
         setButton.setPrefHeight(imageView.getFitHeight() + 20);
-
-        // 将按钮添加到工具栏
-        getItems().addAll(setButton);
     }
 
     /**

@@ -71,6 +71,9 @@ public class CenterTabPane extends TabPane {
      */
     public void fireTabSelected() {
         CenterTab selectedTab = getSelected();
+        if (selectedTab == null) {
+            return;
+        }
         selectedTab.setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
         BottomStatusBox.getInstance().updateWhenTabSelected();
     }
