@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 
 import java.awt.*;
 import java.awt.MenuBar;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
@@ -108,7 +109,28 @@ public class PluginManagementPane extends BorderPane {
 
         // 创建示例按钮并添加到已安装和设置选项卡中
         marketTabContent.setCenter(new Button("市场"));
-        myTabContent.setCenter(new Button("设置"));
+
+        var myTabPane = new BorderPane();
+        var mainMyTabPane = new VBox();
+        var manageStorage = new Button("管理插件仓库");
+        manageStorage.setOnAction(event -> {
+            try {
+                // 获取当前软件运行根目录
+                String rootPath = System.getProperty("user.dir");
+                File rootDir = new File(rootPath);
+
+                // 打开文件资源管理器并选中运行根目录
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(rootDir);
+            } catch (Exception e) {
+                logger.info("打开了" + System.getProperty("user.dir") + "文件夹");
+
+            }
+        });
+        mainMyTabPane.getChildren().addAll(manageStorage);
+        myTabPane.setCenter(mainMyTabPane);
+        myTabContent.setCenter(myTabPane);
+
 
         // 将选项卡内容设置到选项卡中
         installedTab.setContent(installedTabContent);
