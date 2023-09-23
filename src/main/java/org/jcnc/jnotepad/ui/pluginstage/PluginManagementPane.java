@@ -6,6 +6,10 @@ import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -14,12 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
-import org.jcnc.jnotepad.model.entity.PluginDescriptor;
-import org.jcnc.jnotepad.plugin.PluginManager;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -28,9 +26,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,7 +37,6 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
-    PluginManager pluginManager = PluginManager.getInstance();
 
     /**
      * 图标大小常量
@@ -113,6 +108,28 @@ public class PluginManagementPane extends BorderPane {
 
         // 将选项卡面板设置为插件管理面板的中心内容
         this.setCenter(rootTabPane);
+
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.CENTER_RIGHT);
+        bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
+        bottomBox.setPadding(new Insets(7, 15, 7, 0));
+        Button confirmButton = new Button(" 确认 ");
+        confirmButton.setTextFill(Color.WHITE);
+
+        confirmButton.getStyleClass().addAll(Styles.SMALL);
+        confirmButton.setStyle("-fx-background-color: rgb(54,88,128);");
+        CustomSetButton cancelButton = new CustomSetButton(" 取消 ");
+        cancelButton.setOnAction(event -> {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+
+        });
+        cancelButton.getStyleClass().addAll(Styles.SMALL);
+        Button applicationButton = new Button(" 应用 ");
+        applicationButton.getStyleClass().addAll(Styles.SMALL);
+        bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
+
+        this.setBottom(bottomBox);
     }
 
     /**
@@ -200,6 +217,11 @@ public class PluginManagementPane extends BorderPane {
         toggleSwitch.setSelected(pluginDescriptor.isEnabled());
         var state = new Button(pluginDescriptor.isEnabled() ? "禁用" : "启用");
 
+        var uninstall = new MenuItem("卸载");
+        var state = new SplitMenuButton(uninstall);
+        state.setText("禁用");
+        state.getStyleClass().addAll(Styles.ACCENT);
+        state.setPrefWidth(80);
         var main = new VBox(10);
 
         // 创建TabPane并添加标签页
