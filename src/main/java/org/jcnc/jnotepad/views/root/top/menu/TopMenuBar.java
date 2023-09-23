@@ -277,7 +277,7 @@ public class TopMenuBar extends MenuBar {
 
             PluginManagementPane pluginManagementPane = new PluginManagementPane();
 
-            Scene scene = new Scene(pluginManagementPane, 900, 500);
+            Scene scene = new Scene(pluginManagementPane, 900, 600);
             newStage.setScene(scene);
             newStage.show();
         });
