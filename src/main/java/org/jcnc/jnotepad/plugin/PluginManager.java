@@ -89,17 +89,17 @@ public class PluginManager {
      */
     public void disablePlugIn(PluginDescriptor pluginDescriptor) {
         pluginDescriptor.setEnabled(false);
-        pluginDescriptor.setPlugin(null);
-        ThreadPoolManager.getThreadPool().submit(() -> {
-            PluginConfigController instance = PluginConfigController.getInstance();
-            instance.getConfig().getPlugins().forEach(plugin -> {
-                if ((pluginDescriptor.getName() + pluginDescriptor.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
-                    plugin.setEnabled(false);
-                }
-            });
-            instance.writeConfig();
-            ThreadPoolManager.threadContSelfSubtracting();
-        });
+//        pluginDescriptor.setPlugin(null);
+//        ThreadPoolManager.getThreadPool().submit(() -> {
+//            PluginConfigController instance = PluginConfigController.getInstance();
+//            instance.getConfig().getPlugins().forEach(plugin -> {
+//                if ((pluginDescriptor.getName() + pluginDescriptor.getAuthor()).equals(plugin.getName() + plugin.getAuthor())) {
+//                    plugin.setEnabled(false);
+//                }
+//            });
+//            instance.writeConfig();
+//            ThreadPoolManager.threadContSelfSubtracting();
+//        });
     }
 
     /**
@@ -156,7 +156,7 @@ public class PluginManager {
         return categories;
     }
 
-    public List<PluginDescriptor> getPluginInfos() {
+    public List<PluginDescriptor> getPluginDescriptors() {
         return pluginDescriptors;
     }
 }

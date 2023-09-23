@@ -29,11 +29,50 @@ public class PluginDescriptor {
      * 类别
      */
     private String category;
+    /**
+     * 图标
+     */
+    private String icon;
 
+    /**
+     * 插件大小
+     */
+    private Integer size;
+    /**
+     * 描述
+     */
+    private String description;
+    /**
+     * 详细介绍
+     */
+    private String detailedIntroduction;
+    /**
+     * 插件日志
+     */
+    private String log;
+    /**
+     * 插件网址
+     */
+    private String pluginUrl;
     /**
      * 主类名称
      */
     private String mainClass;
+    /**
+     * 资源文件夹
+     */
+    private String assetFolder;
+    /**
+     * ReadMe
+     */
+    private String readMe;
+
+    /**
+     * 插件评分
+     */
+    @JsonIgnore
+    private Float score;
+
     /**
      * 插件类
      */
@@ -94,5 +133,77 @@ public class PluginDescriptor {
 
     public void setPlugin(Plugin plugin) {
         this.plugin = plugin;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDetailedIntroduction() {
+        return detailedIntroduction;
+    }
+
+    public void setDetailedIntroduction(String detailedIntroduction) {
+        this.detailedIntroduction = detailedIntroduction;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
+
+    public String getPluginUrl() {
+        return pluginUrl;
+    }
+
+    public void setPluginUrl(String pluginUrl) {
+        this.pluginUrl = pluginUrl;
+    }
+
+    public String getAssetFolder() {
+        return assetFolder;
+    }
+
+    public void setAssetFolder(String assetFolder) {
+        this.assetFolder = assetFolder;
+    }
+
+    public String getReadMe() {
+        return readMe;
+    }
+
+    public void setReadMe(String readMe) {
+        this.readMe = readMe;
+    }
+
+    public Float getScore() {
+        return score;
+    }
+
+    public void setScore(Float score) {
+        this.score = score;
     }
 }

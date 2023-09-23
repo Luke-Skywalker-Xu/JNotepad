@@ -6,10 +6,6 @@ import atlantafx.base.theme.Styles;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -18,6 +14,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
+import org.jcnc.jnotepad.plugin.PluginManager;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
@@ -26,7 +28,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +41,7 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends BorderPane {
+    PluginManager pluginManager = PluginManager.getInstance();
 
     /**
      * 图标大小常量
@@ -62,13 +67,13 @@ public class PluginManagementPane extends BorderPane {
      * 创建一个插件管理面板的实例。
      */
     public PluginManagementPane() {
-        init();
+        initialize();
     }
 
     /**
      * 初始化插件管理面板。
      */
-    private void init() {
+    private void initialize() {
         // 创建选项卡面板
         TabPane rootTabPane = new TabPane();
 
@@ -116,30 +121,13 @@ public class PluginManagementPane extends BorderPane {
      * @return 包含插件列表的滚动面板
      */
     private ScrollPane getScrollPane() {
-        // 创建示例插件列表项
-        var image1 = new Image("plug.png");
-        var tile1 = createTile("运行插件", "这是一个运行插件\t\t\t\t\t\t", image1);
+        List<Tile> tiles = new ArrayList<>();
 
-        var image2 = new Image("plug.png");
-        var tile2 = createTile("终端插件", "这是一个终端插件", image2);
-
-        var image3 = new Image("plug.png");
-        var tile3 = createTile("构建插件", "这是一个构建插件", image3);
-
-        var image4 = new Image("plug.png");
-        var tile4 = createTile("1", "这是一个构建插件", image4);
-
-        var image5 = new Image("plug.png");
-        var tile5 = createTile("2", "这是一个构建插件", image5);
-
-        var image6 = new Image("plug.png");
-        var tile6 = createTile("4", "这是一个构建插件", image6);
-
-        var image7 = new Image("plug.png");
-        var tile7 = createTile("5", "这是一个构建插件", image7);
+        pluginManager.getPluginDescriptors().forEach(pluginDescriptor -> tiles.add(createPlugInListItem(pluginDescriptor)));
 
         // 创建VBox并将插件列表项添加到其中
-        var box = new VBox(tile1, tile2, tile3, tile4, tile5, tile6, tile7);
+        var box = new VBox();
+        box.getChildren().addAll(tiles);
 
         // 创建滚动面板并将VBox设置为其内容
         var scrollPane = new ScrollPane(box);
@@ -156,19 +144,17 @@ public class PluginManagementPane extends BorderPane {
     /**
      * 创建插件列表项Tile。
      *
-     * @param title       插件标题
-     * @param description 插件描述
-     * @param image       插件图标
+
      * @return 创建的插件列表项Tile
      */
-    private Tile createTile(String title, String description, Image image) {
+    private Tile createPlugInListItem(PluginDescriptor pluginDescriptor) {
         // 创建一个title
-        var tile = new Tile(title, description);
+        var tile = new Tile(pluginDescriptor.getName(), pluginDescriptor.getDescription());
         // 创建一个按钮
-        var tgl = new ToggleSwitch();
+        var toggleSwitch = new ToggleSwitch();
 
         // 创建一个图标
-        ImageView icon = new ImageView(image);
+        ImageView icon = new ImageView(new Image(pluginDescriptor.getIcon() == null ? "plug.png" : pluginDescriptor.getIcon()));
         // 指定要缩放的固定像素大小
         double iconSize = ICON_SIZE;
 
@@ -180,14 +166,14 @@ public class PluginManagementPane extends BorderPane {
         tile.setGraphic(icon);
 
         // 设置Tile的操作和操作处理程序
-        tile.setAction(tgl);
+        tile.setAction(toggleSwitch);
         tile.setActionHandler(() -> {
             customSplitPane.setRightContent(tileContentMap.get(tile));
             logger.info("点击了" + tile);
         });
 
         // 创建专属的customSplitPane内容
-        var content = createCustomSplitPaneContent(title);
+        var content = createCustomSplitPaneContent(pluginDescriptor, toggleSwitch);
 
         // 将内容与Tile关联起来
         tileContentMap.put(tile, content);
@@ -198,21 +184,21 @@ public class PluginManagementPane extends BorderPane {
     /**
      * 创建专属于每个插件的CustomSplitPane内容。
      *
-     * @param titleName 插件标题
      * @return 创建的CustomSplitPane内容
      */
-    private Node createCustomSplitPaneContent(String titleName) {
+    private Node createCustomSplitPaneContent(PluginDescriptor pluginDescriptor, ToggleSwitch toggleSwitch) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(10));
-        var titleLabel = new Text(titleName);
+        var titleLabel = new Text(pluginDescriptor.getName());
         titleLabel.getStyleClass().addAll(Styles.TITLE_1);
 
         var authorBox = new HBox(10);
-        var author = new Text("JCNC团队");
+        var author = new Text(pluginDescriptor.getAuthor());
         var authorLink = getAuthorLink();
         authorBox.getChildren().addAll(author, authorLink);
 
-        var state = new Text("未启用");
+        toggleSwitch.setSelected(pluginDescriptor.isEnabled());
+        var state = new Button(pluginDescriptor.isEnabled() ? "禁用" : "启用");
 
         var main = new VBox(10);
 
@@ -331,7 +317,7 @@ public class PluginManagementPane extends BorderPane {
                     logger.info("系统不支持Desktop类!");
                 }
             } catch (Exception e) {
-                logger.info("启动" + authorLink + "失败!");
+                logger.error("启动{}失败!\n错误是{}", authorLink, e.getMessage());
             }
         });
         return authorLink;

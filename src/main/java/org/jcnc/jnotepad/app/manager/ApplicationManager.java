@@ -114,7 +114,7 @@ public class ApplicationManager {
     public void stopApp() {
         PluginConfigController instance = PluginConfigController.getInstance();
         // 刷新插件配置文件
-        instance.getConfig().setPlugins(PluginManager.getInstance().getPluginInfos());
+        instance.getConfig().setPlugins(PluginManager.getInstance().getPluginDescriptors());
         instance.writeConfig();
         // 销毁插件可能申请的资源
         PluginManager.getInstance().destroyPlugins();

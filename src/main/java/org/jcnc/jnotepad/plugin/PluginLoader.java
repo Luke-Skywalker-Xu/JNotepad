@@ -180,7 +180,7 @@ public class PluginLoader {
     public void loadPluginByFile(File pluginJar, List<PluginDescriptor> configPluginDescriptors) {
         PluginManager pluginManager = PluginManager.getInstance();
         Map<String, List<String>> categories = pluginManager.getLoadedPluginsByCategory();
-        List<PluginDescriptor> pluginDescriptors = pluginManager.getPluginInfos();
+        List<PluginDescriptor> pluginDescriptors = pluginManager.getPluginDescriptors();
         if (pluginJar.exists() && pluginJar.isFile()) {
             try {
                 PluginDescriptor pluginDescriptor = readPlugin(pluginJar);
