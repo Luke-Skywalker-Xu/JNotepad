@@ -65,6 +65,7 @@ public class TopMenuBar extends MenuBar {
      * 增加
      */
     private final MenuItem addItem = new MenuItem();
+    private MenuItem pluginManagerItem;
     /**
      * 查看
      */
