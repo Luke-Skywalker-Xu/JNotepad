@@ -3,6 +3,8 @@ package org.jcnc.jnotepad.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jcnc.jnotepad.plugin.interfaces.Plugin;
 
+import java.util.Objects;
+
 /**
  * 插件信息
  *
@@ -240,5 +242,38 @@ public class PluginDescriptor {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, version, enabled, author, category, icon, size, description, detailedIntroduction, log, pluginUrl, mainClass, assetFolder, readMe, score, plugin);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        PluginDescriptor other = (PluginDescriptor) obj;
+        return Objects.equals(id, other.id) &&
+                Objects.equals(name, other.name) &&
+                Objects.equals(version, other.version) &&
+                enabled == other.enabled &&
+                Objects.equals(author, other.author) &&
+                Objects.equals(category, other.category) &&
+                Objects.equals(icon, other.icon) &&
+                Objects.equals(size, other.size) &&
+                Objects.equals(description, other.description) &&
+                Objects.equals(detailedIntroduction, other.detailedIntroduction) &&
+                Objects.equals(log, other.log) &&
+                Objects.equals(pluginUrl, other.pluginUrl) &&
+                Objects.equals(mainClass, other.mainClass) &&
+                Objects.equals(assetFolder, other.assetFolder) &&
+                Objects.equals(readMe, other.readMe) &&
+                Objects.equals(score, other.score) &&
+                Objects.equals(plugin, other.plugin);
     }
 }

@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.app.manager;
 
 import atlantafx.base.theme.PrimerLight;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -14,10 +15,12 @@ import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.RootManager;
 import org.jcnc.jnotepad.views.manager.SidebarToolBarManager;
 import org.jcnc.jnotepad.views.manager.TopMenuBarManager;
+import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +34,7 @@ import java.util.concurrent.ExecutorService;
  * @author gewuyou
  */
 public class ApplicationManager {
+    Logger logger = LogUtil.getLogger(this.getClass());
     private static final ApplicationManager INSTANCE = new ApplicationManager();
     /**
      * 线程池
@@ -179,5 +183,10 @@ public class ApplicationManager {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void stopApplication() {
+        Platform.exit();
+//        application.stop();
     }
 }

@@ -26,8 +26,11 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.ui.dialog.AppDialog;
+import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
@@ -149,6 +152,10 @@ public class PluginManagementPane extends BorderPane {
         bottomBox.setAlignment(Pos.CENTER_RIGHT);
         bottomBox.setStyle("-fx-background-color: rgba(43,43,43,0.12);");
         bottomBox.setPadding(new Insets(7, 15, 7, 0));
+        Button applicationButton = new Button(" 应用 ");
+        applicationButton.getStyleClass().addAll(Styles.SMALL);
+        applicationButton.setOnAction(event -> pluginManager.saveNotExitSettings());
+
         Button confirmButton = new Button(" 确认 ");
         confirmButton.setTextFill(Color.WHITE);
         confirmButton.getStyleClass().addAll(Styles.SMALL);
@@ -168,9 +175,7 @@ public class PluginManagementPane extends BorderPane {
             stage.close();
         });
         cancelButton.getStyleClass().addAll(Styles.SMALL);
-        Button applicationButton = new Button(" 应用 ");
-        applicationButton.getStyleClass().addAll(Styles.SMALL);
-        applicationButton.setOnAction(event -> pluginManager.saveNotExitSettings());
+
         bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
 
         this.setBottom(bottomBox);
@@ -228,11 +233,11 @@ public class PluginManagementPane extends BorderPane {
         tile.setAction(toggleSwitch);
         tile.setActionHandler(() -> {
             customSplitPane.setRightContent(tileContentMap.get(tile));
-            logger.info("点击了" + tile);
+            logger.info("点击了{}", tile);
         });
 
         // 创建专属的customSplitPane内容
-        var content = createCustomSplitPaneContent(pluginDescriptor, toggleSwitch);
+        var content = createCustomSplitPaneContent(pluginDescriptor, toggleSwitch, tile);
 
         // 将内容与Tile关联起来
         tileContentMap.put(tile, content);
@@ -245,7 +250,7 @@ public class PluginManagementPane extends BorderPane {
      *
      * @return 创建的CustomSplitPane内容
      */
-    private Node createCustomSplitPaneContent(PluginDescriptor pluginDescriptor, ToggleSwitch toggleSwitch) {
+    private Node createCustomSplitPaneContent(PluginDescriptor pluginDescriptor, ToggleSwitch toggleSwitch, Tile tile) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(10));
         var titleLabel = new Text(pluginDescriptor.getName());
@@ -258,17 +263,30 @@ public class PluginManagementPane extends BorderPane {
 
 
         var uninstallItem = new MenuItem("卸载");
+
         var state = new SplitMenuButton(uninstallItem);
         toggleSwitch.setSelected(pluginDescriptor.isEnabled());
         BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
         state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
+
+        uninstallItem.setOnAction(event -> PopUpUtil.warningAlert("卸载", "确定要卸载" + pluginDescriptor.getName() + "吗?", "此操作无法撤销!", new DialogButtonAction() {
+            @Override
+            public void handleAction(AppDialog dialog) {
+                pluginManager.unloadPlugin(pluginDescriptor);
+                state.setDisable(true);
+                toggleSwitch.setDisable(true);
+                dialog.close();
+            }
+        }, null));
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);
         toggleSwitch.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {
                 pluginManager.enablePlugIn(pluginDescriptor);
+                customSplitPane.setRightContent(tileContentMap.get(tile));
             } else {
                 pluginManager.disablePlugIn(pluginDescriptor);
+                customSplitPane.setRightContent(tileContentMap.get(tile));
             }
         });
         state.setOnAction(event -> {
