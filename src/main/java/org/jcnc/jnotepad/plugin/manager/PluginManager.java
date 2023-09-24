@@ -1,9 +1,11 @@
 package org.jcnc.jnotepad.plugin.manager;
 
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -67,29 +69,34 @@ public class PluginManager {
      */
     public void unloadPlugin(PluginDescriptor pluginDescriptor) {
         // 删除集合中的插件信息
-        pluginDescriptors.remove(pluginDescriptor);
-        PluginConfigController instance = PluginConfigController.getInstance();
-        instance.getConfig().getPlugins().remove(pluginDescriptor);
-        // 刷新配置
-        instance.writeConfig();
-        // 删除本地插件jar包
-        Path plungsPath = instance.getPlungsPath();
-        try (Stream<Path> pathStream = Files.walk(plungsPath)) {
-            pathStream.filter(path -> path.toString().endsWith(".jar")).forEach(path -> {
-                try {
-                    File pluginJar = new File(path.toString());
-                    PluginDescriptor temp = readPlugin(pluginJar);
-                    if ((temp.getName() + temp.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
-                        Files.delete(pluginJar.toPath());
+        ThreadPoolManager.getThreadPool().submit(() -> {
+            // 移除插件管理类中的插件描述类
+            pluginDescriptors.remove(pluginDescriptor);
+            // 移除插件配置文件类中的插件描述类
+            PluginConfigController instance = PluginConfigController.getInstance();
+            instance.getConfig().getPlugins().remove(pluginDescriptor);
+
+            // 刷新配置
+            instance.writeConfig();
+            // 删除本地插件jar包
+            Path plungsPath = instance.getPlungsPath();
+            try (Stream<Path> pathStream = Files.walk(plungsPath)) {
+                pathStream.filter(path -> path.toString().endsWith(".jar")).forEach(path -> {
+                    try {
+                        File pluginJar = new File(path.toString());
+                        PluginDescriptor temp = readPlugin(pluginJar);
+                        if ((temp.getName() + temp.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
+                            Files.delete(pluginJar.toPath());
+                        }
+                    } catch (IOException e) {
+                        logger.error(e.getMessage(), e);
                     }
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            });
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        ThreadPoolManager.threadContSelfSubtracting();
+                });
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+            ThreadPoolManager.threadContSelfSubtracting();
+        });
     }
 
     /**
@@ -166,10 +173,6 @@ public class PluginManager {
         return temporaryPluginDescriptors;
     }
 
-    public void setTemporaryPluginDescriptors(List<PluginDescriptor> temporaryPluginDescriptors) {
-        this.temporaryPluginDescriptors = temporaryPluginDescriptors;
-    }
-
     /**
      * 启用插件
      *
@@ -183,15 +186,28 @@ public class PluginManager {
      * 保存插件设置并退出
      */
     public void saveAndExitSettings() {
-        pluginDescriptors = temporaryPluginDescriptors;
+        settingsChange();
         clearTemporarySettings();
+    }
+
+    private void settingsChange() {
+        boolean equals = temporaryPluginDescriptors.equals(pluginDescriptors);
+        if (!equals) {
+            pluginDescriptors = temporaryPluginDescriptors;
+            PopUpUtil.questionAlert("更改", "程序与插件更新", "请重启程序以应用插件中的更改!",
+                    appDialog -> {
+                        appDialog.close();
+                        // 执行关闭操作
+                        ApplicationManager.getInstance().stopApplication();
+                    }, null);
+        }
     }
 
     /**
      * 保存插件设置但不退出
      */
     public void saveNotExitSettings() {
-        pluginDescriptors = temporaryPluginDescriptors;
+        settingsChange();
     }
 
     /**

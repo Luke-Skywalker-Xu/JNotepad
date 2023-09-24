@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.jcnc.jnotepad.model.enums.DialogType;
 import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -24,9 +25,9 @@ public class AppDialogBuilder {
     private double height = 150;
     private FontIcon icon;
 
-    private DialogButtonAction leftBtnAction = () -> appDialog.close();
+    private DialogButtonAction leftBtnAction = Stage::close;
 
-    private DialogButtonAction rightBtnAction = () -> appDialog.close();
+    private DialogButtonAction rightBtnAction = Stage::close;
 
     private String leftBtnText = "确定";
 

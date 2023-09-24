@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 
 /**
  * 应用对话框
@@ -53,8 +54,8 @@ public class AppDialog extends Stage {
         // 自定义文本
         Label customTextLabel = new Label(builder.getCustomText());
 
-        Button confirmButton = createButton(builder.getLeftBtnText(), builder.getLeftBtnAction()::handleAction);
-        Button cancelButton = createButton(builder.getRightBtnText(), builder.getRightBtnAction()::handleAction);
+        Button confirmButton = createButton(builder.getLeftBtnText(), builder.getLeftBtnAction());
+        Button cancelButton = createButton(builder.getRightBtnText(), builder.getRightBtnAction());
 
         HBox hBox = new HBox(builder.getHBoxSpacing(), confirmButton, cancelButton);
         hBox.setAlignment(builder.getHboxPos());
@@ -75,9 +76,9 @@ public class AppDialog extends Stage {
      * @param action 按钮点击时的操作
      * @return Button 按钮控件
      */
-    private Button createButton(String text, Runnable action) {
+    private Button createButton(String text, DialogButtonAction action) {
         Button button = new Button(text);
-        button.setOnAction(e -> action.run());
+        button.setOnAction(e -> action.handleAction(this));
         return button;
     }
 }

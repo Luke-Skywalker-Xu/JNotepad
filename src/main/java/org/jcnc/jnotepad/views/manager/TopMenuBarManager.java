@@ -357,6 +357,4 @@ public class TopMenuBarManager {
         });
         topMenu.add(menu);
     }
-
-
 }
