@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
-import org.jcnc.jnotepad.plugin.PluginManager;
+import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
@@ -82,6 +82,8 @@ public class PluginManagementPane extends BorderPane {
      * 初始化插件管理面板。
      */
     private void initialize() {
+        // 初始化插件临时集合
+        pluginManager.initializeTemporaryPluginDescriptors();
         // 创建选项卡面板
         TabPane rootTabPane = new TabPane();
 
@@ -149,18 +151,26 @@ public class PluginManagementPane extends BorderPane {
         bottomBox.setPadding(new Insets(7, 15, 7, 0));
         Button confirmButton = new Button(" 确认 ");
         confirmButton.setTextFill(Color.WHITE);
-
         confirmButton.getStyleClass().addAll(Styles.SMALL);
         confirmButton.setStyle("-fx-background-color: rgb(54,88,128);");
+        confirmButton.setOnAction(event -> {
+            Stage stage = (Stage) confirmButton.getScene().getWindow();
+            // 保存设置
+            pluginManager.saveAndExitSettings();
+            stage.close();
+        });
+
         CustomSetButton cancelButton = new CustomSetButton(" 取消 ");
         cancelButton.setOnAction(event -> {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
+            // 清空临时集合
+            pluginManager.clearTemporarySettings();
             stage.close();
-
         });
         cancelButton.getStyleClass().addAll(Styles.SMALL);
         Button applicationButton = new Button(" 应用 ");
         applicationButton.getStyleClass().addAll(Styles.SMALL);
+        applicationButton.setOnAction(event -> pluginManager.saveNotExitSettings());
         bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
 
         this.setBottom(bottomBox);
@@ -173,8 +183,8 @@ public class PluginManagementPane extends BorderPane {
      */
     private ScrollPane getScrollPane() {
         List<Tile> tiles = new ArrayList<>();
-
-        pluginManager.getPluginDescriptors().forEach(pluginDescriptor -> tiles.add(createPlugInListItem(pluginDescriptor)));
+        // 将拷贝的插件信息类添加进列表
+        pluginManager.getTemporaryPluginDescriptors().forEach(pluginDescriptor -> tiles.add(createPlugInListItem(pluginDescriptor)));
 
         // 创建VBox并将插件列表项添加到其中
         var box = new VBox();
@@ -195,7 +205,6 @@ public class PluginManagementPane extends BorderPane {
     /**
      * 创建插件列表项Tile。
      *
-
      * @return 创建的插件列表项Tile
      */
     private Tile createPlugInListItem(PluginDescriptor pluginDescriptor) {

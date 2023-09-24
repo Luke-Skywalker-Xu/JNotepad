@@ -13,7 +13,7 @@ import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
-import org.jcnc.jnotepad.plugin.PluginManager;
+import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.RootManager;
 import org.jcnc.jnotepad.views.manager.SidebarToolBarManager;

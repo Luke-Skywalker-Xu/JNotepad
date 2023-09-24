@@ -10,6 +10,10 @@ import org.jcnc.jnotepad.plugin.interfaces.Plugin;
  */
 public class PluginDescriptor {
     /**
+     * 插件id
+     */
+    private String id;
+    /**
      * 插件名称
      */
     private String name;
@@ -78,6 +82,29 @@ public class PluginDescriptor {
      */
     @JsonIgnore
     private Plugin plugin;
+
+    public PluginDescriptor() {
+    }
+
+    public PluginDescriptor(PluginDescriptor pluginDescriptor) {
+        this.id = pluginDescriptor.getId();
+        this.name = pluginDescriptor.getName();
+        this.version = pluginDescriptor.getVersion();
+        this.enabled = pluginDescriptor.isEnabled();
+        this.author = pluginDescriptor.getAuthor();
+        this.category = pluginDescriptor.getCategory();
+        this.icon = pluginDescriptor.getIcon();
+        this.size = pluginDescriptor.getSize();
+        this.description = pluginDescriptor.getDescription();
+        this.detailedIntroduction = pluginDescriptor.getDetailedIntroduction();
+        this.log = pluginDescriptor.getLog();
+        this.pluginUrl = pluginDescriptor.getPluginUrl();
+        this.mainClass = pluginDescriptor.getMainClass();
+        this.assetFolder = pluginDescriptor.getAssetFolder();
+        this.readMe = pluginDescriptor.getReadMe();
+        this.score = pluginDescriptor.getScore();
+        this.plugin = pluginDescriptor.getPlugin();
+    }
 
     public String getName() {
         return name;
@@ -205,5 +232,13 @@ public class PluginDescriptor {
 
     public void setScore(Float score) {
         this.score = score;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
