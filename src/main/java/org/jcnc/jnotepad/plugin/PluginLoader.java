@@ -5,6 +5,7 @@ import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.plugin.interfaces.Plugin;
+import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.util.JsonUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;

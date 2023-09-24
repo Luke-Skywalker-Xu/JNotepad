@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.plugin;
+package org.jcnc.jnotepad.plugin.manager;
 
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
@@ -35,7 +35,12 @@ public class PluginManager {
     /**
      * 插件信息
      */
-    private final List<PluginDescriptor> pluginDescriptors = new ArrayList<>();
+    private List<PluginDescriptor> pluginDescriptors = new ArrayList<>();
+
+    /**
+     * 插件信息临时集合
+     */
+    private List<PluginDescriptor> temporaryPluginDescriptors;
     Logger logger = LogUtil.getLogger(this.getClass());
 
     private PluginManager() {
@@ -46,6 +51,13 @@ public class PluginManager {
         return INSTANCE;
     }
 
+    /**
+     * 初始化插件临时集合
+     */
+    public void initializeTemporaryPluginDescriptors() {
+        temporaryPluginDescriptors = new ArrayList<>(pluginDescriptors.size());
+        pluginDescriptors.forEach(pluginDescriptor -> temporaryPluginDescriptors.add(new PluginDescriptor(pluginDescriptor)));
+    }
 
     /**
      * 卸载插件
@@ -149,6 +161,15 @@ public class PluginManager {
         return pluginDescriptors;
     }
 
+
+    public List<PluginDescriptor> getTemporaryPluginDescriptors() {
+        return temporaryPluginDescriptors;
+    }
+
+    public void setTemporaryPluginDescriptors(List<PluginDescriptor> temporaryPluginDescriptors) {
+        this.temporaryPluginDescriptors = temporaryPluginDescriptors;
+    }
+
     /**
      * 启用插件
      *
@@ -156,5 +177,27 @@ public class PluginManager {
      */
     public void enablePlugIn(PluginDescriptor pluginDescriptor) {
         pluginDescriptor.setEnabled(true);
+    }
+
+    /**
+     * 保存插件设置并退出
+     */
+    public void saveAndExitSettings() {
+        pluginDescriptors = temporaryPluginDescriptors;
+        clearTemporarySettings();
+    }
+
+    /**
+     * 保存插件设置但不退出
+     */
+    public void saveNotExitSettings() {
+        pluginDescriptors = temporaryPluginDescriptors;
+    }
+
+    /**
+     * 清除插件临时设置
+     */
+    public void clearTemporarySettings() {
+        temporaryPluginDescriptors = null;
     }
 }
