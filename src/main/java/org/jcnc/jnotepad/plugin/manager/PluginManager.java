@@ -190,6 +190,9 @@ public class PluginManager {
         clearTemporarySettings();
     }
 
+    /**
+     * 设置更改
+     */
     private void settingsChange() {
         boolean equals = temporaryPluginDescriptors.equals(pluginDescriptors);
         if (!equals) {
