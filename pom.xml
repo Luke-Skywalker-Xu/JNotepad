@@ -30,6 +30,8 @@
             <groupId>org.commonmark</groupId>
             <artifactId>commonmark</artifactId>
             <version>0.21.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/commonmark-0.21.0.jar</systemPath>
         </dependency>
 
         <dependency>
