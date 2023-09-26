@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.views.root.top.menu;
 
 import javafx.scene.control.*;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
-import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class TopMenuBar extends MenuBar {
     /**
      * 标签页布局组件封装。
      */
-    CenterTabPane centerTabPane = CenterTabPane.getInstance();
+    CenterTabPaneManager centerTabPane = CenterTabPaneManager.getInstance();
     /**
      * 文件菜单
      */

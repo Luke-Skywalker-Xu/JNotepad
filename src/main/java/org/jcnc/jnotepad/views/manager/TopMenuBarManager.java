@@ -17,7 +17,6 @@ import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.ui.pluginstage.PluginManagementPane;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
 import org.slf4j.Logger;
 
@@ -97,7 +96,7 @@ public class TopMenuBarManager {
             // 1. 更新全局配置
             AppConfigController.getInstance().setAutoLineConfig(after);
             // 2. 对当前tab生效配置
-            CenterTabPane.getInstance().fireTabSelected();
+            CenterTabPaneManager.getInstance().fireTabSelected();
         });
         topMenuBar.getLineFeedItem().selectedProperty().set(true);
 
