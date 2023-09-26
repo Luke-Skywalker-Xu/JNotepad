@@ -10,9 +10,9 @@ import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.manager.TopMenuBarManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
-import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前tab页
-        CenterTab selectedTab = CenterTabPane.getInstance().getSelected();
+        CenterTab selectedTab = CenterTabPaneManager.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }
@@ -72,7 +72,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
      * @see LogUtil
      */
     protected void saveTab(Class<?> currentClass) {
-        CenterTab selectedTab = CenterTabPane.getInstance().getSelected();
+        CenterTab selectedTab = CenterTabPaneManager.getInstance().getSelected();
         if (selectedTab == null) {
             return;
         }

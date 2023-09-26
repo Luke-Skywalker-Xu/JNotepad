@@ -7,7 +7,8 @@ import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
@@ -69,8 +70,8 @@ public class NewFile implements EventHandler<ActionEvent> {
         // 设置当前标签页与本地文件无关联
         centerTab.setRelevance(false);
         // 将Tab页添加到TabPane中
-        CenterTabPane.getInstance().addNewTab(centerTab);
+        CenterTabPaneManager.getInstance().addNewTab(centerTab);
         // 更新编码信息
-        BottomStatusBox.getInstance().updateEncodingLabel();
+        BottomStatusBoxManager.getInstance().updateEncodingLabel();
     }
 }

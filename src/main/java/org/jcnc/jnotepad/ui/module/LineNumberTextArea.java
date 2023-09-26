@@ -4,9 +4,9 @@ import javafx.geometry.Insets;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.StyleClassedTextArea;
 import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
+import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
-import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -51,7 +51,7 @@ public class LineNumberTextArea extends StyleClassedTextArea {
     private void initListeners() {
         // 监听主要文本区域的文本变化
         this.textProperty().addListener((observable, oldValue, newValue) -> {
-            BottomStatusBox.getInstance().updateWordCountStatusLabel();
+            BottomStatusBoxManager.getInstance().updateWordCountStatusLabel();
             save();
         });
     }
@@ -61,7 +61,7 @@ public class LineNumberTextArea extends StyleClassedTextArea {
      */
     public void save() {
         // 获取当前选定的中央标签页（CenterTab对象）
-        CenterTab tab = CenterTabPane.getInstance().getSelected();
+        CenterTab tab = CenterTabPaneManager.getInstance().getSelected();
 
         // 如果没有选定标签页，返回，不执行保存操作
         if (tab == null) {

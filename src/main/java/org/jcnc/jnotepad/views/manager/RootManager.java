@@ -5,8 +5,6 @@ import javafx.scene.layout.BorderPane;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.views.root.RootBorderPane;
 
-import static org.jcnc.jnotepad.views.root.bottom.RootBottomSideBarVerticalBox.initSidebarVerticalBox;
-
 /**
  * 根布局管理器类，用于管理记事本应用程序的根布局组件。
  *
@@ -72,6 +70,6 @@ public class RootManager {
         root.setCenter(RootBorderPane.getInstance());
 
         scene.setRoot(root);
-        initSidebarVerticalBox();
+
     }
 }

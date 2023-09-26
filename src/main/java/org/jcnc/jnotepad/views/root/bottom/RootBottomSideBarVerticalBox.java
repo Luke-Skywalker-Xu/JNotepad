@@ -2,8 +2,6 @@ package org.jcnc.jnotepad.views.root.bottom;
 
 import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
-import org.jcnc.jnotepad.views.root.bottom.function.FunctionBox;
-import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 
 /**
  * 底部根侧边栏垂直布局
@@ -17,7 +15,7 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
     /**
      * VBox实例
      */
-    private static final VBox V_BOX_INSTANCE = new VBox();
+    private final VBox vBox = new VBox();
 
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
@@ -37,21 +35,10 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
      *
      * @return VBox
      */
-    public static VBox getVboxInstance() {
-        return V_BOX_INSTANCE;
+    public VBox getVbox() {
+        return vBox;
     }
 
     private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
-
-    public static void initSidebarVerticalBox() {
-        FunctionBox functionBox = FunctionBox.getInstance();
-        if (!FunctionBox.getMenuBar().getMenus().isEmpty()) {
-            functionBox.getChildren().add(FunctionBox.getMenuBar());
-            V_BOX_INSTANCE.getChildren().addAll(functionBox);
-        }
-        V_BOX_INSTANCE.getChildren().addAll(BottomStatusBox.getInstance());
-        INSTANCE.getChildren().addAll(V_BOX_INSTANCE);
-
-    }
 
 }

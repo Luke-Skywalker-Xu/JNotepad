@@ -17,9 +17,7 @@ import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.manager.RootManager;
-import org.jcnc.jnotepad.views.manager.SidebarToolBarManager;
-import org.jcnc.jnotepad.views.manager.TopMenuBarManager;
+import org.jcnc.jnotepad.views.manager.*;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -65,11 +63,15 @@ public class ApplicationManager {
         // 初始化scene
         initScene();
         // 初始化插件
-        PluginManager.getInstance().initializePlugins();
+        PluginManager.getInstance().initPlugins();
         // 初始化顶部菜单栏
         TopMenuBarManager.getInstance().initTopMenuBar();
         // 初始化侧边工具栏
         SidebarToolBarManager.getInstance().initSidebarToolBar();
+        // 初始化下方状态栏
+        BottomStatusBoxManager.getInstance().initStatusBox();
+        // 初始标签页布局组件
+        CenterTabPaneManager.getInstance().initCenterTabPane();
         // 初始化ui组件
         initUiComponents();
         // 初始化primaryStage
@@ -159,6 +161,8 @@ public class ApplicationManager {
         // 加载组件
         RootManager rootManager = RootManager.getInstance(scene);
         rootManager.initScreen(scene);
+        // 初始化底部根侧边栏垂直布局
+        RootBottomSideBarVerticalBoxManager.getInstance().initSidebarVerticalBox();
     }
 
     public Pane getRoot() {
@@ -187,6 +191,5 @@ public class ApplicationManager {
 
     public void stopApplication() {
         Platform.exit();
-//        application.stop();
     }
 }

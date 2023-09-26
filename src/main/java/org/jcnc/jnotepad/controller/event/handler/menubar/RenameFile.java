@@ -11,6 +11,7 @@ import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取当前标签页
-        CenterTab centerTab = CenterTabPane.getInstance().getSelected();
+        CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
         if (centerTab == null || centerTab.getText().isEmpty()) {
             return;
         }

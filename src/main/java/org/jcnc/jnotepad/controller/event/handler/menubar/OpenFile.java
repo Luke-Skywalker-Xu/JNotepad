@@ -14,6 +14,7 @@ import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.util.EncodingDetector;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
@@ -126,7 +127,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                 // 设置当前标签页关联本地文件
                 tab.setRelevance(true);
                 tab.setUserData(file);
-                CenterTabPane.getInstance().addNewTab(tab);
+                CenterTabPaneManager.getInstance().addNewTab(tab);
             });
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");

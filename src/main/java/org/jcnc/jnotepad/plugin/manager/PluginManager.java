@@ -113,7 +113,7 @@ public class PluginManager {
     /**
      * 初始化所有启用的插件
      */
-    public void initializePlugins() {
+    public void initPlugins() {
         for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
             if (pluginDescriptor.isEnabled()) {
                 pluginDescriptor.getPlugin().initialize();
