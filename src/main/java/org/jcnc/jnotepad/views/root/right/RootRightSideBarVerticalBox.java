@@ -12,27 +12,21 @@ import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
 public class RootRightSideBarVerticalBox extends AbstractVerticalBox {
 
     /**
-     * 唯一的 RootRightSideBarVerticalBox 实例，使用单例模式
+     * 唯一的 RootRightSideBarVerticalBoxManager 实例，使用单例模式
      */
     private static final RootRightSideBarVerticalBox INSTANCE = new RootRightSideBarVerticalBox();
 
     private RootRightSideBarVerticalBox() {
-        initSidebarVerticalBox();
+
     }
 
     /**
-     * 获取 RootRightSideBarVerticalBox 的唯一实例。
+     * 获取 RootRightSideBarVerticalBoxManager 的唯一实例。
      *
-     * @return RootRightSideBarVerticalBox 的实例
+     * @return RootRightSideBarVerticalBoxManager 的实例
      */
     public static RootRightSideBarVerticalBox getInstance() {
         return INSTANCE;
     }
 
-    /**
-     * 初始化右侧边栏的垂直布局。
-     */
-    private void initSidebarVerticalBox() {
-        // 在此添加右侧边栏布局和内容的初始化代码
-    }
 }
