@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.views.root.top;
 
 import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
-import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
 
 /**
  * RootTopBorderPane 类表示 JNotepad 应用程序的顶部边界面板。
@@ -17,7 +16,7 @@ public class RootTopBorderPane extends AbstractBorderPane {
     private static final RootTopBorderPane INSTANCE = new RootTopBorderPane();
 
     private RootTopBorderPane() {
-        initRootBorderPane();
+
     }
 
     /**
@@ -29,13 +28,5 @@ public class RootTopBorderPane extends AbstractBorderPane {
         return INSTANCE;
     }
 
-    /**
-     * 初始化 RootTopBorderPane。
-     *
-     * <p>在顶部区域添加了 TopMenuBar 的单例实例。</p>
-     */
-    private void initRootBorderPane() {
-        // 在顶部区域添加菜单栏
-        setTopComponent(TopMenuBar.getInstance());
-    }
+
 }

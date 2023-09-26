@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.views.root.center.main;
 
 import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
-import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
 /**
  * 主界面边界布局
@@ -15,7 +14,7 @@ public class MainBorderPane extends AbstractBorderPane {
     private static final MainBorderPane INSTANCE = new MainBorderPane();
 
     private MainBorderPane() {
-        initRootBorderPane();
+
     }
 
     /**
@@ -25,11 +24,6 @@ public class MainBorderPane extends AbstractBorderPane {
      */
     public static MainBorderPane getInstance() {
         return INSTANCE;
-    }
-
-    private void initRootBorderPane() {
-        // 文本框
-        setCenterComponent(CenterTabPane.getInstance());
     }
 
 }

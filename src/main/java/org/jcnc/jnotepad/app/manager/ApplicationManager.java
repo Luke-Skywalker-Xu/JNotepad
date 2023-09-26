@@ -15,10 +15,8 @@ import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
-import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.*;
-import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +30,6 @@ import java.util.concurrent.ExecutorService;
  * @author gewuyou
  */
 public class ApplicationManager {
-    Logger logger = LogUtil.getLogger(this.getClass());
     private static final ApplicationManager INSTANCE = new ApplicationManager();
     /**
      * 线程池
@@ -72,8 +69,8 @@ public class ApplicationManager {
         BottomStatusBoxManager.getInstance().initStatusBox();
         // 初始标签页布局组件
         CenterTabPaneManager.getInstance().initCenterTabPane();
-        // 初始化ui组件
-        initUiComponents();
+        // 初始化应用布局
+        initAppLayout();
         // 初始化primaryStage
         initPrimaryStage();
     }
@@ -152,17 +149,25 @@ public class ApplicationManager {
     }
 
     /**
-     * 加载ui组件
+     * 加载程序布局
      *
      * @apiNote
      * @since 2023/9/20 17:25
      */
-    public void initUiComponents() {
-        // 加载组件
+    public void initAppLayout() {
+        // 加载根布局容器
         RootManager rootManager = RootManager.getInstance(scene);
         rootManager.initScreen(scene);
         // 初始化底部根侧边栏垂直布局
         RootBottomSideBarVerticalBoxManager.getInstance().initSidebarVerticalBox();
+        // 初始化主界面边界布局
+        MainBorderPaneManager.getInstance().initMainBorderPane();
+        // 初始化右侧边栏垂直布局
+        RootRightSideBarVerticalBoxManager.getInstance().initRootRightSideBarVerticalBox();
+        // 初始化顶部菜单栏
+        TopMenuBarManager.getInstance().initTopMenuBar();
+        // 初始化根布局
+        RootBorderPaneManager.getInstance().initRootBorderPane();
     }
 
     public Pane getRoot() {
