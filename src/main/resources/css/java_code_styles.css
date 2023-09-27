@@ -1,27 +1,40 @@
+/* CSS样式注释 */
+
+/* 标记关键字 */
 .keyword {
-    -fx-fill: purple;
-    -fx-font-weight: bold;
+    -fx-fill: purple; /* 设置文本颜色为紫色 */
+    -fx-font-weight: bold; /* 设置文本加粗 */
 }
+
+/* 标记分号 */
 .semicolon {
-    -fx-font-weight: bold;
+    -fx-font-weight: bold; /* 设置文本加粗 */
 }
+
+/* 标记括号 */
 .paren {
-    -fx-fill: firebrick;
-    -fx-font-weight: bold;
+    -fx-fill: firebrick; /* 设置文本颜色为火砖红 */
+    -fx-font-weight: bold; /* 设置文本加粗 */
 }
+
+/* 标记方括号 */
 .bracket {
-    -fx-fill: darkgreen;
-    -fx-font-weight: bold;
+    -fx-fill: darkgreen; /* 设置文本颜色为深绿色 */
+    -fx-font-weight: bold; /* 设置文本加粗 */
 }
+
+/* 标记大括号 */
 .brace {
-    -fx-fill: teal;
-    -fx-font-weight: bold;
+    -fx-fill: teal; /* 设置文本颜色为青色 */
+    -fx-font-weight: bold; /* 设置文本加粗 */
 }
+
+/* 标记字符串 */
 .string {
-    -fx-fill: blue;
+    -fx-fill: blue; /* 设置文本颜色为蓝色 */
 }
 
+/* 标记注释 */
 .comment {
-    -fx-fill: cadetblue;
+    -fx-fill: cadetblue; /* 设置文本颜色为军校蓝 */
 }
-

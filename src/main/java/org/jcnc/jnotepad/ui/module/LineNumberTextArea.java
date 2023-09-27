@@ -9,7 +9,6 @@ import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.GenericStyledArea;
 import org.fxmisc.richtext.LineNumberFactory;
-import org.fxmisc.richtext.StyleClassedTextArea;
 import org.fxmisc.richtext.model.Paragraph;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
@@ -56,17 +55,25 @@ public class LineNumberTextArea extends CodeArea {
             "transient", "try", "void", "volatile", "while"
     };
 
-    // 定义用于匹配关键字、括号、分号、字符串和注释的正则表达式模式
+    /**
+     * 定义用于匹配关键字、括号、分号、字符串和注释的正则表达式模式
+     */
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PAREN_PATTERN = "\\(|\\)";
     private static final String BRACE_PATTERN = "\\{|\\}";
     private static final String BRACKET_PATTERN = "\\[|\\]";
     private static final String SEMICOLON_PATTERN = "\\;";
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
-    private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/"   // 用于整体文本处理（文本块）
-            + "|" + "/\\*[^\\v]*" + "|" + "^\\h*\\*([^\\v]*|/)";  // 用于可见段落处理（逐行）
+    private static final String COMMENT_PATTERN =
+            // 用于整体文本处理（文本块）
+            "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/"
+                    // 用于可见段落处理（逐行）
+            + "|" + "/\\*[^\\v]*" + "|" + "^\\h*\\*([^\\v]*|/)";
 
-    // 使用正则表达式将关键字、括号、分号、字符串和注释的模式组合成一个复合模式
+
+    /**
+     * 使用正则表达式将关键字、括号、分号、字符串和注释的模式组合成一个复合模式
+     */
     private static final Pattern PATTERN = Pattern.compile(
             "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
                     + "|(?<PAREN>" + PAREN_PATTERN + ")"
@@ -95,7 +102,9 @@ public class LineNumberTextArea extends CodeArea {
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
         this.setContextMenu(new DefaultContextMenu());
 
-        // 重新计算所有文本的语法高亮，用户停止编辑区域后的500毫秒内
+        /*
+          重新计算所有文本的语法高亮，用户停止编辑区域后的500毫秒内
+         */
         Subscription cleanupWhenNoLongerNeedIt = this
                 .multiPlainChanges()
                 .successionEnds(Duration.ofMillis(500))
@@ -169,43 +178,45 @@ public class LineNumberTextArea extends CodeArea {
         @Override
         public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm )
         {
-            if ( lm.getAddedSize() > 0 ) Platform.runLater( () ->
-            {
-                int paragraph = Math.min( area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size()-1 );
-                String text = area.getText( paragraph, 0, paragraph, area.getParagraphLength( paragraph ) );
+            if (lm.getAddedSize() > 0) {
+                Platform.runLater(() -> {
+                    int paragraph = Math.min(area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size() - 1);
+                    String text = area.getText(paragraph, 0, paragraph, area.getParagraphLength(paragraph));
 
-                if ( paragraph != prevParagraph || text.length() != prevTextLength )
-                {
-                    if ( paragraph < area.getParagraphs().size()-1 )
-                    {
-                        int startPos = area.getAbsolutePosition( paragraph, 0 );
-                        area.setStyleSpans( startPos, computeStyles.apply( text ) );
+                    if (paragraph != prevParagraph || text.length() != prevTextLength) {
+                        if (paragraph < area.getParagraphs().size() - 1) {
+                            int startPos = area.getAbsolutePosition(paragraph, 0);
+                            area.setStyleSpans(startPos, computeStyles.apply(text));
+                        }
+                        prevTextLength = text.length();
+                        prevParagraph = paragraph;
                     }
-                    prevTextLength = text.length();
-                    prevParagraph = paragraph;
-                }
-            });
+                });
+            }
+
         }
     }
 
-    private class DefaultContextMenu extends ContextMenu {
-        private MenuItem fold, unfold, print;
+    private static class DefaultContextMenu extends ContextMenu {
+        private final MenuItem fold;
+        private final MenuItem unfold;
+        private final MenuItem print;
 
         public DefaultContextMenu() {
             fold = new MenuItem("折叠所选文本");
-            fold.setOnAction(AE -> {
+            fold.setOnAction(aE -> {
                 hide();
                 fold();
             });
 
             unfold = new MenuItem("从光标处展开");
-            unfold.setOnAction(AE -> {
+            unfold.setOnAction(aE -> {
                 hide();
                 unfold();
             });
 
             print = new MenuItem("打印");
-            print.setOnAction(AE -> {
+            print.setOnAction(aE -> {
                 hide();
                 print();
             });
