@@ -162,10 +162,10 @@ public class ApplicationManager {
         RootBottomSideBarVerticalBoxManager.getInstance().initSidebarVerticalBox();
         // 初始化主界面边界布局
         MainBorderPaneManager.getInstance().initMainBorderPane();
+        // 初始化顶部边界面板
+        RootTopBorderPaneManager.getInstance().initRootBorderPane();
         // 初始化右侧边栏垂直布局
         RootRightSideBarVerticalBoxManager.getInstance().initRootRightSideBarVerticalBox();
-        // 初始化顶部菜单栏
-        TopMenuBarManager.getInstance().initTopMenuBar();
         // 初始化根布局
         RootBorderPaneManager.getInstance().initRootBorderPane();
     }
