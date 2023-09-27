@@ -103,7 +103,7 @@ public class LineNumberTextArea extends CodeArea {
 
         this.getVisibleParagraphs().addModificationObserver
                 (
-                        new JavaKeywordsDemo.VisibleParagraphStyler<>(this, this::computeHighlighting)
+                        new LineNumberTextArea.VisibleParagraphStyler<>(this, this::computeHighlighting)
                 );
 
         // 自动缩进：在按下回车键时插入上一行的缩进
@@ -132,16 +132,7 @@ public class LineNumberTextArea extends CodeArea {
         StyleSpansBuilder<Collection<String>> spansBuilder
                 = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass =
-                    matcher.group("KEYWORD") != null ? "keyword" :
-                            matcher.group("PAREN") != null ? "paren" :
-                                    matcher.group("BRACE") != null ? "brace" :
-                                            matcher.group("BRACKET") != null ? "bracket" :
-                                                    matcher.group("SEMICOLON") != null ? "semicolon" :
-                                                            matcher.group("STRING") != null ? "string" :
-                                                                    matcher.group("COMMENT") != null ? "comment" :
-                                                                            null; /* 永远不会发生 */
-            assert styleClass != null;
+            String styleClass = getStyleClass(matcher);
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
@@ -150,34 +141,50 @@ public class LineNumberTextArea extends CodeArea {
         return spansBuilder.create();
     }
 
+    private static String getStyleClass(Matcher matcher) {
+        String styleClass =
+                matcher.group("KEYWORD") != null ? "keyword" :
+                        matcher.group("PAREN") != null ? "paren" :
+                                matcher.group("BRACE") != null ? "brace" :
+                                        matcher.group("BRACKET") != null ? "bracket" :
+                                                matcher.group("SEMICOLON") != null ? "semicolon" :
+                                                        matcher.group("STRING") != null ? "string" :
+                                                                matcher.group("COMMENT") != null ? "comment" :
+                                                                        null; /* 永远不会发生 */
+        assert styleClass != null;
+        return styleClass;
+    }
+
     static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
-        private final Function<String, StyleSpans<S>> computeStyles;
+        private final Function<String,StyleSpans<S>> computeStyles;
         private int prevParagraph, prevTextLength;
 
-        public VisibleParagraphStyler(GenericStyledArea<PS, SEG, S> area, Function<String, StyleSpans<S>> computeStyles) {
+        public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area, Function<String,StyleSpans<S>> computeStyles )
+        {
             this.computeStyles = computeStyles;
             this.area = area;
         }
 
         @Override
-        public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
-            if (lm.getAddedSize() > 0) {
-                Platform.runLater(() ->
-                {
-                    int paragraph = Math.min(area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size() - 1);
-                    String text = area.getText(paragraph, 0, paragraph, area.getParagraphLength(paragraph));
+        public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm )
+        {
+            if ( lm.getAddedSize() > 0 ) Platform.runLater( () ->
+            {
+                int paragraph = Math.min( area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size()-1 );
+                String text = area.getText( paragraph, 0, paragraph, area.getParagraphLength( paragraph ) );
 
-                    if (paragraph != prevParagraph || text.length() != prevTextLength) {
-                        if (paragraph < area.getParagraphs().size() - 1) {
-                            int startPos = area.getAbsolutePosition(paragraph, 0);
-                            area.setStyleSpans(startPos, computeStyles.apply(text));
-                        }
-                        prevTextLength = text.length();
-                        prevParagraph = paragraph;
+                if ( paragraph != prevParagraph || text.length() != prevTextLength )
+                {
+                    if ( paragraph < area.getParagraphs().size()-1 )
+                    {
+                        int startPos = area.getAbsolutePosition( paragraph, 0 );
+                        area.setStyleSpans( startPos, computeStyles.apply( text ) );
                     }
-                });
-            }
+                    prevTextLength = text.length();
+                    prevParagraph = paragraph;
+                }
+            });
         }
     }
 
