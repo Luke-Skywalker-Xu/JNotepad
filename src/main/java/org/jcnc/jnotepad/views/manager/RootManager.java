@@ -94,15 +94,14 @@ public class RootManager {
         msg.getStyleClass().addAll(Styles.ACCENT, Styles.ELEVATED_1);
         msg.setPrefHeight(Region.USE_PREF_SIZE);
         msg.setMaxHeight(Region.USE_PREF_SIZE);
-        StackPane.setAlignment(msg, Pos.TOP_RIGHT);
-        StackPane.setMargin(msg, new Insets(10, 10, 0, 0));
+        StackPane.setAlignment(msg, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(msg, new Insets(5, 10, 35, 0));
 
         msg.setOnClose(e -> {
             var out = Animations.slideOutUp(msg, Duration.millis(250));
             out.setOnFinished(f -> stackPane.getChildren().remove(msg));
             out.playFromStart();
         });
-
 
         var in = Animations.slideInDown(msg, Duration.millis(250));
         if (!stackPane.getChildren().contains(msg)) {
