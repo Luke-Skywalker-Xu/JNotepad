@@ -30,9 +30,9 @@ public class AppConfig {
      * @return 默认应用配置对象
      */
     public static AppConfig generateDefaultAppConfig() {
-        AppConfig myData = new AppConfig();
-        myData.setLanguage(CHINESE);
-        myData.setTextWrap(false);
+        AppConfig config = new AppConfig();
+        config.setLanguage(CHINESE);
+        config.setTextWrap(false);
 
         List<ShortcutKey> shortcutKeys = new ArrayList<>();
         shortcutKeys.add(createShortcutKey("newItem", CTRL_N));
@@ -43,8 +43,8 @@ public class AppConfig {
         shortcutKeys.add(createShortcutKey("openConfigItem", ALT_S));
         shortcutKeys.add(createShortcutKey("pluginManager", ""));
         shortcutKeys.add(createShortcutKey("countItem", ""));
-        myData.setShortcutKey(shortcutKeys);
-        return myData;
+        config.setShortcutKey(shortcutKeys);
+        return config;
     }
 
     /**

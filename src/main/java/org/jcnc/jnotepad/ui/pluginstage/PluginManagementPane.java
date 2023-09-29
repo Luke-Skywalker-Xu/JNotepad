@@ -218,7 +218,10 @@ public class PluginManagementPane extends BorderPane {
         // 创建一个按钮
         var toggleSwitch = new ToggleSwitch();
         // 创建一个图标
-        ImageView icon = new ImageView(new Image(pluginDescriptor.getIcon() == null ? "plug.png" : pluginDescriptor.getIcon()));
+        ImageView icon = new ImageView(
+                new Image(
+                        pluginDescriptor.getIcon() == null ||
+                                pluginDescriptor.getIcon().isEmpty() ? "plug.png" : pluginDescriptor.getIcon()));
         // 指定要缩放的固定像素大小
         double iconSize = ICON_SIZE;
 

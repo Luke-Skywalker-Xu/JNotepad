@@ -49,13 +49,13 @@ public class ApplicationManager {
     }
 
     /**
-     * 初始化程序
+     * 初始化程序(Initializes the application)
      *
      * @apiNote
      * @since 2023/9/20 17:26
      */
     public void initializeApp() {
-        // 设置应用程序主题
+        // 设置应用程序主题 SetTheApplicationTheme
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         // 初始化scene
         initScene();
