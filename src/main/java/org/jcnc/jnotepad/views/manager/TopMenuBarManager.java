@@ -39,6 +39,8 @@ public class TopMenuBarManager {
 
     private final Map<String, MenuItem> pluginMenuItems = new HashMap<>();
 
+    private final Map<String, MenuItem> helpMenuItems = new HashMap<>();
+
     private final Map<String, RadioMenuItem> languageMenuItems = new HashMap<>();
     Logger logger = LogUtil.getLogger(this.getClass());
     AppConfigController appConfigController = AppConfigController.getInstance();
@@ -66,8 +68,11 @@ public class TopMenuBarManager {
         toggleLanguageCheck(appConfigController.getLanguage());
         // 初始化设置菜单
         initSettingMenu();
+        // 初始化设置菜单
+        initHelpMenu();
         // 初始化插件菜单
         initPluginMenu();
+
         // 刷新顶部菜单栏
         refreshTopMenuBar();
         // 初始化快捷键
@@ -300,6 +305,17 @@ public class TopMenuBarManager {
         initMenuItems(pluginMenuItems, pluginMenu);
     }
 
+    /**
+     * 初始化插件菜单
+     */
+    private void initHelpMenu() {
+        logger.info("初始化帮助菜单!");
+        var helpMenu = topMenuBar.gethelpMenuMenu();
+        // 插件菜单
+        UiResourceBundle.bindStringProperty(helpMenu.textProperty(), HELP);
+
+        initMenuItems(helpMenuItems, helpMenu);
+    }
     /**
      * 初始化设置菜单
      */
