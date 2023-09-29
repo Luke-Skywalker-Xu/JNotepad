@@ -1,7 +1,6 @@
 package org.jcnc.jnotepad.app.util;
 
 import org.jcnc.jnotepad.util.LogUtil;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 
