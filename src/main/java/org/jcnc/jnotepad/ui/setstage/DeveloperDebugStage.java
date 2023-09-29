@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.app.util.ApplicationRestarter;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -33,6 +34,7 @@ public class DeveloperDebugStage extends Stage {
         Button debugButton3 = new Button("警告提示框");
         Button debugButton4 = new Button("疑问提示框");
         Button debugButton5 = new Button("成功提示框");
+        Button debugButton6 = new Button("重启软件");
 
         // 按钮点击事件处理
         debugButton1.setOnAction(e -> {
@@ -64,8 +66,13 @@ public class DeveloperDebugStage extends Stage {
             PopUpUtil.successAlert("成功", "成功", "这是一个示例成功提示框!", null, null);
         });
 
+        debugButton6.setOnAction(event -> {
+            logger.debug("开发者调试: {}启动!", debugButton6.getText());
+            // 执行重启操作
+            ApplicationRestarter.restart();
+        });
         // 将组件添加到布局中
-        root.getChildren().addAll(titleLabel, debugButton1, debugButton2, debugButton3, debugButton4, debugButton5);
+        root.getChildren().addAll(titleLabel, debugButton1, debugButton2, debugButton3, debugButton4, debugButton5, debugButton6);
 
         // 创建场景
         Scene scene = new Scene(root, 400, 300);
