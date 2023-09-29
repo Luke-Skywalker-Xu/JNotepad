@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -142,9 +144,9 @@ public class TopMenuBarManager {
         //帮助菜单
         registerHelpMenuItem(topMenuBar.getAboutItem(), ABOUT, "aboutItem", event -> {
             Stage aboutStage = new Stage();
-            String leftBtnText = " 确定 ";
+            String leftBtnText = " 复制并关闭 ";
 
-            String rightBtnText = " 取消 ";
+            String rightBtnText = " 关闭 ";
             Button leftBtn = new Button();
             leftBtn.getStyleClass().addAll(Styles.SMALL);
             leftBtn.setText(leftBtnText);
@@ -222,16 +224,34 @@ public class TopMenuBarManager {
             HBox bottomBox = new HBox(10);
             bottomBox.setPadding(new Insets(7, 15, 7, 0));
 
-            bottomBox.setAlignment(Pos.CENTER_RIGHT);
+            bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 
+            leftBtn.setOnAction(event1 -> {
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+                String info="软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
+                content.putString(info);
+                LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:" + info);
+                clipboard.setContent(content);
+                // 关闭当前的 Stage
+                Stage currentStage = (Stage) leftBtn.getScene().getWindow();
+                currentStage.close();
+            });
+
+            rightBtn.setOnAction(event1 -> {
+                // 关闭当前的 Stage
+                Stage currentStage = (Stage) rightBtn.getScene().getWindow();
+                currentStage.close();
+            });
             bottomBox.getChildren().addAll(leftBtn, rightBtn);
+
+            root.setLeft(iconBox);
+            root.setCenter(textBox);
+
             root.setBottom(bottomBox);
 
-            root.setCenter(textBox);
-            root.setLeft(iconBox);
-
             Scene scene = new Scene(root, 450, 240);
-            aboutStage.setResizable (false);
+            aboutStage.setResizable(false);
             aboutStage.setScene(scene);
             aboutStage.show();
 
