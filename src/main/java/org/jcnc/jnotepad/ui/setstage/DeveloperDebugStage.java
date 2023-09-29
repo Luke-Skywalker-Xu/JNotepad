@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.util.ApplicationRestarter;
@@ -23,18 +24,22 @@ public class DeveloperDebugStage extends Stage {
         primaryStage.setTitle("开发者调试页面");
         primaryStage.getIcons().add(UiUtil.getAppIcon());
         // 创建一个垂直布局
-        VBox root = new VBox();
+        VBox root = new VBox(10);
+        HBox alertBox = new HBox(5);
+        HBox toolBox = new HBox(5);
+
         root.setPadding(new Insets(20));
         root.setSpacing(10);
 
         // 添加一些调试功能按钮和标签
-        Label titleLabel = new Label("开发者调试页面");
+        Label alertLabel = new Label("提示框");
+        Label toolLabel = new Label("工具");
+
         Button debugButton1 = new Button("错误提示框");
         Button debugButton2 = new Button("信息提示框");
         Button debugButton3 = new Button("警告提示框");
         Button debugButton4 = new Button("疑问提示框");
         Button debugButton5 = new Button("成功提示框");
-        Button debugButton6 = new Button("重启软件");
 
         // 按钮点击事件处理
         debugButton1.setOnAction(e -> {
@@ -66,16 +71,20 @@ public class DeveloperDebugStage extends Stage {
             PopUpUtil.successAlert("成功", "成功", "这是一个示例成功提示框!", null, null);
         });
 
+        Button debugButton6 = new Button("重启软件");
         debugButton6.setOnAction(event -> {
             logger.debug("开发者调试: {}启动!", debugButton6.getText());
             // 执行重启操作
             ApplicationRestarter.restart();
         });
+
+        alertBox.getChildren().addAll(debugButton1, debugButton2, debugButton3, debugButton4, debugButton5);
+        toolBox.getChildren().addAll(debugButton6);
         // 将组件添加到布局中
-        root.getChildren().addAll(titleLabel, debugButton1, debugButton2, debugButton3, debugButton4, debugButton5, debugButton6);
+        root.getChildren().addAll(alertLabel, alertBox, toolLabel, toolBox);
 
         // 创建场景
-        Scene scene = new Scene(root, 400, 300);
+        Scene scene = new Scene(root, 800, 600);
 
         // 将场景添加到舞台
         primaryStage.setScene(scene);

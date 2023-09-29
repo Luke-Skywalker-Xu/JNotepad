@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.app.util;
 
+import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.util.LogUtil;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class ApplicationRestarter {
         try {
             // 获取当前Java应用程序的命令
             String javaCommand = System.getProperty("java.home") + "/bin/java";
-            String mainClass = ApplicationRestarter.class.getName();
+            String mainClass = LunchApp.class.getName();
 
             // 构建新进程来重新启动应用程序
             ProcessBuilder builder = new ProcessBuilder(javaCommand, "-cp", System.getProperty("java.class.path"), mainClass);
