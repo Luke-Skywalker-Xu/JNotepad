@@ -131,7 +131,6 @@
                         <configuration>
                             <mainClass>org.jcnc.jnotepad/org.jcnc.jnotepad.LunchApp</mainClass>
                             <launcher>JNotepad</launcher>
-                            <jlinkZipName>JNotepad</jlinkZipName>
                             <jlinkImageName>JNotepad</jlinkImageName>
                             <noManPages>true</noManPages>
                             <stripDebug>true</stripDebug>
