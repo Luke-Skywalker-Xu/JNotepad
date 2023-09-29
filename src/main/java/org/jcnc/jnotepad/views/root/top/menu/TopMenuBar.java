@@ -136,10 +136,6 @@ public class TopMenuBar extends MenuBar {
         return pluginMenu;
     }
 
-    public Menu gethelpMenuMenu() {
-        return helpMenu;
-    }
-
 
     public Menu getLanguageMenu() {
         return languageMenu;
