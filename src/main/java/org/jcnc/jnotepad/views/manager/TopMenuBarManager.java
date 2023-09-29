@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.manager;
 
+import atlantafx.base.controls.Notification;
 import atlantafx.base.theme.Styles;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
@@ -227,15 +228,27 @@ public class TopMenuBarManager {
             bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 
             leftBtn.setOnAction(event1 -> {
+
+                // 获取 RootManager 的实例
+                RootManager rootManager = RootManager.getInstance();
+
+                // 创建一个新的 Notification
+                Notification notification = new Notification();
+                notification.setMessage("已成功复制软件信息!");
+
+                // 调用 RootManager 中的方法来显示 Notification
+                rootManager.addNotificationToStackPane(rootManager.rootStackPane, notification);
+
                 Clipboard clipboard = Clipboard.getSystemClipboard();
                 ClipboardContent content = new ClipboardContent();
-                String info="软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
+                String info = "软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
                 content.putString(info);
                 LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:" + info);
                 clipboard.setContent(content);
                 // 关闭当前的 Stage
                 Stage currentStage = (Stage) leftBtn.getScene().getWindow();
                 currentStage.close();
+
             });
 
             rightBtn.setOnAction(event1 -> {

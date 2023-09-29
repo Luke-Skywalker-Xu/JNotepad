@@ -16,7 +16,6 @@ public class RootBorderPane extends AbstractBorderPane {
     private static final RootBorderPane INSTANCE = new RootBorderPane();
 
     private RootBorderPane() {
-
     }
 
     /**
