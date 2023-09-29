@@ -43,5 +43,6 @@ public class RootBorderPaneManager {
         rootBorderPane.setTopComponent(RootTopBorderPane.getInstance());
         // 主界面的下面，底部边栏
         rootBorderPane.setBottomComponent(RootBottomSideBarVerticalBox.getInstance());
+
     }
 }

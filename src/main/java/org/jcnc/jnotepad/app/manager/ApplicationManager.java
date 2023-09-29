@@ -168,6 +168,7 @@ public class ApplicationManager {
         RootRightSideBarVerticalBoxManager.getInstance().initRootRightSideBarVerticalBox();
         // 初始化根布局
         RootBorderPaneManager.getInstance().initRootBorderPane();
+
     }
 
     public Pane getRoot() {

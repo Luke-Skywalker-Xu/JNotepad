@@ -19,7 +19,7 @@ import javafx.util.Duration;
 public class CustomTitleBar extends HBox {
     private static CustomTitleBar instance;
 
-    private CustomTitleBar() {
+    public CustomTitleBar() {
         // 设置样式和布局
         this.setAlignment(Pos.CENTER);
 

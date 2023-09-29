@@ -43,6 +43,8 @@ public class AppConfig {
         shortcutKeys.add(createShortcutKey("openConfigItem", ALT_S));
         shortcutKeys.add(createShortcutKey("pluginManager", ""));
         shortcutKeys.add(createShortcutKey("countItem", ""));
+        shortcutKeys.add(createShortcutKey("aboutItem", ""));
+
         config.setShortcutKey(shortcutKeys);
         return config;
     }
