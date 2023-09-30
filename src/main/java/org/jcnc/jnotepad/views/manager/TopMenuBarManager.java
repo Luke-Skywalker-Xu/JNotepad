@@ -1,13 +1,23 @@
 package org.jcnc.jnotepad.views.manager;
 
+import atlantafx.base.controls.Notification;
+import atlantafx.base.theme.Styles;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
@@ -22,6 +32,7 @@ import org.slf4j.Logger;
 
 import java.util.*;
 
+import static org.jcnc.jnotepad.common.constants.AppConstants.*;
 import static org.jcnc.jnotepad.common.constants.TextConstants.*;
 
 /**
@@ -38,6 +49,8 @@ public class TopMenuBarManager {
     private final Map<String, MenuItem> setMenuItems = new HashMap<>();
 
     private final Map<String, MenuItem> pluginMenuItems = new HashMap<>();
+
+    private final Map<String, MenuItem> helpMenuItems = new HashMap<>();
 
     private final Map<String, RadioMenuItem> languageMenuItems = new HashMap<>();
     Logger logger = LogUtil.getLogger(this.getClass());
@@ -66,8 +79,11 @@ public class TopMenuBarManager {
         toggleLanguageCheck(appConfigController.getLanguage());
         // 初始化设置菜单
         initSettingMenu();
+        // 初始化设置菜单
+        initHelpMenu();
         // 初始化插件菜单
         initPluginMenu();
+
         // 刷新顶部菜单栏
         refreshTopMenuBar();
         // 初始化快捷键
@@ -125,6 +141,146 @@ public class TopMenuBarManager {
         });
         registerPluginMenuItem(topMenuBar.getCountItem(), STATISTICS, "countItem", event -> {
         });
+
+        //帮助菜单
+        registerHelpMenuItem(topMenuBar.getAboutItem(), ABOUT, "aboutItem", event -> {
+            Stage aboutStage = new Stage();
+            String leftBtnText = " 复制并关闭 ";
+
+            String rightBtnText = " 关闭 ";
+            Button leftBtn = new Button();
+            leftBtn.getStyleClass().addAll(Styles.SMALL);
+            leftBtn.setText(leftBtnText);
+
+            Button rightBtn = new Button();
+            rightBtn.getStyleClass().addAll(Styles.SMALL);
+            rightBtn.setText(rightBtnText);
+            aboutStage.getIcons().add(UiUtil.getAppIcon());
+            aboutStage.setTitle("关于 " + APP_NAME);
+            BorderPane root = new BorderPane();
+            VBox textBox = new VBox();
+            VBox iconBox = new VBox();
+            ImageView iconImageView = new ImageView(new Image("icon.png"));
+            iconImageView.setFitWidth(50);
+            iconImageView.setFitHeight(50);
+            iconBox.setPadding(new Insets(20));
+
+            iconBox.getChildren().addAll(iconImageView);
+
+
+            textBox.setPadding(new Insets(10));
+
+            HBox titleBox = new HBox(5);
+            titleBox.setPadding(new Insets(10, 0, 0, 0));
+
+            Label titleLabel = new Label(APP_NAME);
+            titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+            Label versionLabel = new Label(VERSION);
+            versionLabel.setPadding(new Insets(0.5, 0, 0, 0));
+            versionLabel.setStyle("-fx-font-size: 15px; -fx-font-weight: bold;");
+
+            titleBox.getChildren().addAll(titleLabel, versionLabel);
+
+            Label descriptionLabel = new Label(APP_NAME + "是一款自由的集成开发环境。");
+            descriptionLabel.setPadding(new Insets(8, 0, 8, 0));
+            descriptionLabel.setStyle("-fx-font-size: 14px;");
+
+            VBox linkBox = new VBox(7);
+            Hyperlink repositoryLink = new Hyperlink();
+            repositoryLink.setText("仓库地址");
+            repositoryLink.setOnAction(event1 -> {
+                openWebsite("https://gitee.com/jcnc-org/JNotepad");
+            });
+            repositoryLink.setVisited(true);
+            repositoryLink.setMnemonicParsing(true);
+            repositoryLink.setStyle("-color-link-fg-visited:-color-accent-fg;");
+
+            Hyperlink feedBackLink = new Hyperlink();
+            feedBackLink.setText("提交反馈");
+            feedBackLink.setOnAction(event1 -> {
+                openWebsite("https://gitee.com/jcnc-org/JNotepad/issues/new/choose");
+            });
+            feedBackLink.setVisited(true);
+            feedBackLink.setMnemonicParsing(true);
+            feedBackLink.setStyle("-color-link-fg-visited:-color-accent-fg;");
+
+            Hyperlink qLink = new Hyperlink();
+            qLink.setText("加入QQ群");
+            qLink.setOnAction(event1 -> {
+                openWebsite("https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=x3QF-jrJAKTiwu8kV5-giBk2ow66Kzyr&authKey=qNqrQauD7Ra4fXH%2Ftu4ylHXCyrf2EOYj9oMYOmFjlzYmrgDL8Yd0m2qhrQQEBL25&noverify=0&group_code=386279455");
+            });
+            qLink.setVisited(true);
+            qLink.setMnemonicParsing(true);
+            qLink.setStyle("-color-link-fg-visited:-color-accent-fg;");
+
+            linkBox.getChildren().addAll(repositoryLink, feedBackLink, qLink);
+
+            Label authorLabel = new Label("Copyleft © 2023 " + AUTHOR + ".");
+            authorLabel.setPadding(new Insets(8, 0, 8, 0));
+            authorLabel.setStyle("-fx-font-size: 14px;");
+
+            textBox.getChildren().addAll(titleBox, descriptionLabel, linkBox, authorLabel);
+
+            HBox bottomBox = new HBox(10);
+            bottomBox.setPadding(new Insets(7, 15, 7, 0));
+
+            bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
+
+            leftBtn.setOnAction(event1 -> {
+
+                // 获取 RootManager 的实例
+                RootManager rootManager = RootManager.getInstance();
+
+                // 创建一个新的 Notification
+                Notification notification = new Notification();
+                notification.setMessage("已成功复制软件信息!");
+
+                // 调用 RootManager 中的方法来显示 Notification
+                rootManager.addNotificationToStackPane(rootManager.rootStackPane, notification);
+
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+                String info = "软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
+                content.putString(info);
+                LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:" + info);
+                clipboard.setContent(content);
+                // 关闭当前的 Stage
+                Stage currentStage = (Stage) leftBtn.getScene().getWindow();
+                currentStage.close();
+
+            });
+
+            rightBtn.setOnAction(event1 -> {
+                // 关闭当前的 Stage
+                Stage currentStage = (Stage) rightBtn.getScene().getWindow();
+                currentStage.close();
+            });
+            bottomBox.getChildren().addAll(leftBtn, rightBtn);
+
+            root.setLeft(iconBox);
+            root.setCenter(textBox);
+
+            root.setBottom(bottomBox);
+
+            Scene scene = new Scene(root, 450, 240);
+            aboutStage.setResizable(false);
+            aboutStage.setScene(scene);
+            aboutStage.show();
+
+        });
+    }
+
+    /**
+     * 打开网页方法
+     */
+    private void openWebsite(String url) {
+        try {
+            LogUtil.getLogger(this.getClass()).info("正在打开---" + url);
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (java.io.IOException e) {
+            LogUtil.getLogger(this.getClass()).info("打开失败---" + url);
+        }
     }
 
     /**
@@ -162,6 +318,19 @@ public class TopMenuBarManager {
      */
     public void registerFileMenuItem(MenuItem menuItem, String menuItemName, String buttonName, EventHandler<ActionEvent> eventHandler) {
         fileMenuItems.put(menuItemName, menuItem);
+        setMenuItem(menuItem, buttonName, eventHandler);
+    }
+
+    /**
+     * 注册帮助菜单项
+     *
+     * @param menuItem     菜单项
+     * @param menuItemName 菜单项名称
+     * @param buttonName   按钮名称
+     * @param eventHandler 操作事件
+     */
+    public void registerHelpMenuItem(MenuItem menuItem, String menuItemName, String buttonName, EventHandler<ActionEvent> eventHandler) {
+        helpMenuItems.put(menuItemName, menuItem);
         setMenuItem(menuItem, buttonName, eventHandler);
     }
 
@@ -298,6 +467,18 @@ public class TopMenuBarManager {
         // 插件菜单
         UiResourceBundle.bindStringProperty(pluginMenu.textProperty(), PLUGIN);
         initMenuItems(pluginMenuItems, pluginMenu);
+    }
+
+    /**
+     * 初始化插件菜单
+     */
+    private void initHelpMenu() {
+        logger.info("初始化帮助菜单!");
+        var helpMenu = topMenuBar.getHelpMenu();
+        // 插件菜单
+        UiResourceBundle.bindStringProperty(helpMenu.textProperty(), HELP);
+
+        initMenuItems(helpMenuItems, helpMenu);
     }
 
     /**

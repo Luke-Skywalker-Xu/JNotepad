@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.plugin.manager;
 
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
+import org.jcnc.jnotepad.app.util.ApplicationRestarter;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
@@ -200,8 +201,8 @@ public class PluginManager {
             PopUpUtil.questionAlert("更改", "程序与插件更新", "请重启程序以应用插件中的更改!",
                     appDialog -> {
                         appDialog.close();
-                        // 执行关闭操作
-                        ApplicationManager.getInstance().stopApplication();
+                        // 执行重启操作
+                        ApplicationRestarter.restart();
                     }, null);
         }
     }

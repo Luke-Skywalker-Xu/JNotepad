@@ -32,11 +32,16 @@ public class TopMenuBar extends MenuBar {
      */
     private final Menu setMenu = new Menu();
 
+    /**
+     * 帮助菜单
+     */
+    private final Menu helpMenu = new Menu();
     ///  菜单按钮
     /**
      * 插件菜单
      */
     private final Menu pluginMenu = new Menu();
+
     /**
      * 语言菜单
      */
@@ -45,6 +50,11 @@ public class TopMenuBar extends MenuBar {
      * 新建
      */
     private final MenuItem newItem = new MenuItem();
+
+    /**
+     * 新建
+     */
+    private final MenuItem aboutItem = new MenuItem();
     /**
      * 打开
      */
@@ -116,9 +126,16 @@ public class TopMenuBar extends MenuBar {
         return setMenu;
     }
 
+    public Menu getHelpMenu() {
+        return helpMenu;
+    }
+
+
+
     public Menu getPluginMenu() {
         return pluginMenu;
     }
+
 
     public Menu getLanguageMenu() {
         return languageMenu;
@@ -130,6 +147,11 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getNewItem() {
         return newItem;
+    }
+
+
+    public MenuItem getAboutItem() {
+        return aboutItem;
     }
 
     public MenuItem getOpenItem() {

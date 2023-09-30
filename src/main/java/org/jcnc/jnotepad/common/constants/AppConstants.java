@@ -11,6 +11,18 @@ import java.util.regex.Pattern;
  */
 public class AppConstants {
     /**
+     * 版本号
+     */
+    public static final String VERSION = "1.0.12";
+    /**
+     * 作者
+     */
+    public static final String AUTHOR = "JCNC";
+    /**
+     * 软件名称
+     */
+    public static final String APP_NAME = "JNotepad";
+    /**
      * 初始宽度
      */
     public static final double SCREEN_WIDTH = 800;

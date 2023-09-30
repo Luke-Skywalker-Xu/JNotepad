@@ -1,7 +1,15 @@
 package org.jcnc.jnotepad.views.manager;
 
+import atlantafx.base.controls.Notification;
+import atlantafx.base.theme.Styles;
+import atlantafx.base.util.Animations;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.views.root.RootBorderPane;
 
@@ -15,7 +23,7 @@ import org.jcnc.jnotepad.views.root.RootBorderPane;
 public class RootManager {
 
     private static RootManager instance = null;
-
+    StackPane rootStackPane;
     /**
      * 主布局
      */
@@ -65,11 +73,41 @@ public class RootManager {
      * @param scene 与视图相关联的 JavaFX 场景。
      */
     public void initScreen(Scene scene) {
+        rootStackPane = new StackPane();
+
         // 创建主界面布局
-        root = new BorderPane();
+        BorderPane root = new BorderPane();
         root.setCenter(RootBorderPane.getInstance());
 
-        scene.setRoot(root);
+        rootStackPane.getChildren().addAll(root);
+        scene.setRoot(rootStackPane);
 
     }
+
+    /**
+     * 将提示框添加到 StackPane 中。
+     *
+     * @param stackPane 要添加提示框的 StackPane。
+     * @param msg       要显示的提示框。
+     */
+    public void addNotificationToStackPane(StackPane stackPane, Notification msg) {
+        msg.getStyleClass().addAll(Styles.ACCENT, Styles.ELEVATED_1);
+        msg.setPrefHeight(Region.USE_PREF_SIZE);
+        msg.setMaxHeight(Region.USE_PREF_SIZE);
+        StackPane.setAlignment(msg, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(msg, new Insets(5, 10, 35, 0));
+
+        msg.setOnClose(e -> {
+            var out = Animations.slideOutUp(msg, Duration.millis(250));
+            out.setOnFinished(f -> stackPane.getChildren().remove(msg));
+            out.playFromStart();
+        });
+
+        var in = Animations.slideInDown(msg, Duration.millis(250));
+        if (!stackPane.getChildren().contains(msg)) {
+            stackPane.getChildren().add(msg);
+        }
+        in.playFromStart();
+    }
+
 }
