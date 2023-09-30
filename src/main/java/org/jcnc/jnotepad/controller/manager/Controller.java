@@ -41,10 +41,8 @@ public class Controller implements ControllerAble {
         // 获取上次打开的页面
         Cache cache = CACHE_MANAGER.getCache("tabs", "centerTabs");
         List<String> fileTab = (List<String>) cache.getCacheData();
-//        fileTab.forEach(filePath -> new OpenFile().openFile(new File(filePath)));
-        for (String filePath : fileTab) {
-            new OpenFile().openFile(new File(filePath));
-        }
+        fileTab.forEach(filePath -> new OpenFile().openFile(new File(filePath)));
+
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);

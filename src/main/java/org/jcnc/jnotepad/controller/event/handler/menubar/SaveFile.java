@@ -55,7 +55,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
         } else {
             logger.info("当前保存文件为关联打开文件，调用自动保存方法");
             // 调用tab保存方法
-            selectedTab.save();
+            selectedTab.saveSelectedFileTab();
             // 如果该文件是配置文件，则刷新快捷键
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键

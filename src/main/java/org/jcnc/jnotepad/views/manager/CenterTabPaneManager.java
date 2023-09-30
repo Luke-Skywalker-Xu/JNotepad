@@ -98,6 +98,9 @@ public class CenterTabPaneManager {
         bottomStatusBoxManager.updateWhenTabSelected();
     }
 
+    /**
+     * 保存当前所有打开的文件标签页
+     */
     public void saveOpenFileTabs() {
         // 获取当前所有标签页
         ObservableList<Tab> tabs = centerTabPane.getTabs();
