@@ -1,8 +1,10 @@
 package org.jcnc.jnotepad.controller.manager;
 
 import org.jcnc.jnotepad.common.interfaces.ControllerAble;
+import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.controller.event.handler.menubar.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
+import org.jcnc.jnotepad.model.entity.Cache;
 
 import java.io.File;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.List;
  * @author 许轲
  */
 public class Controller implements ControllerAble {
+    private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
 
     private static final Controller INSTANCE = new Controller();
 
@@ -35,10 +38,17 @@ public class Controller implements ControllerAble {
      */
     @Override
     public void openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
+        // 获取上次打开的页面
+        Cache cache = CACHE_MANAGER.getCache("tabs", "centerTabs");
+        List<String> fileTab = (List<String>) cache.getCacheData();
+        fileTab.forEach(filePath -> new OpenFile().openFile(new File(filePath)));
+
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);
-        } else {
+            return;
+        }
+        if (fileTab.isEmpty()) {
             new NewFile().addNewFileTab();
         }
     }

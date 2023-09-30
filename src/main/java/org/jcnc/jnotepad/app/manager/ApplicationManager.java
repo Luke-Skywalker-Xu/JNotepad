@@ -12,6 +12,8 @@ import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.ResourceController;
+import org.jcnc.jnotepad.controller.cache.CacheController;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
@@ -76,7 +78,7 @@ public class ApplicationManager {
     }
 
     public void initializeDefaultAction() {
-        // 使用线程池加载关联文件并创建文本区域
+        // 使用加载关联文件并创建文本区域
         List<String> rawParameters = application.getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
     }
@@ -97,10 +99,15 @@ public class ApplicationManager {
     }
 
     /**
+     * 加载缓存
+     */
+    public void loadAppCache() {
+        // 加载缓存
+        CacheController.getInstance().loadCaches();
+    }
+
+    /**
      * 加载资源
-     *
-     * @apiNote
-     * @since 2023/9/20 18:29
      */
     public void loadAppResources() {
         // 加载资源
@@ -115,12 +122,18 @@ public class ApplicationManager {
      * @apiNote 在停止程序之前会执行此操作
      */
     public void stopApp() {
-        PluginConfigController instance = PluginConfigController.getInstance();
+        PluginConfigController pluginConfigController = PluginConfigController.getInstance();
         // 刷新插件配置文件
-        instance.getConfig().setPlugins(PluginManager.getInstance().getPluginDescriptors());
-        instance.writeConfig();
+        pluginConfigController.getConfig().setPlugins(PluginManager.getInstance().getPluginDescriptors());
+        pluginConfigController.writeConfig();
+        // 保存配置文件
+        AppConfigController.getInstance().writeConfig();
         // 销毁插件可能申请的资源
         PluginManager.getInstance().destroyPlugins();
+        // 保存已打开的文件标签页
+        CenterTabPaneManager.getInstance().saveOpenFileTabs();
+        // 将缓存写入本地
+        CacheController.getInstance().writeCaches();
         // 关闭线程池
         threadPool.shutdownNow();
     }

@@ -99,7 +99,7 @@ public class PluginLoader {
      */
     private static boolean pluginDoesNotExist(PluginDescriptor pluginDescriptor, List<PluginDescriptor> configPluginDescriptors) {
         for (PluginDescriptor configPluginDescriptor : configPluginDescriptors) {
-            if ((configPluginDescriptor.getName() + configPluginDescriptor.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
+            if (configPluginDescriptor.getId().equals(pluginDescriptor.getId())) {
                 return false;
             }
         }
@@ -110,7 +110,7 @@ public class PluginLoader {
         Iterator<PluginDescriptor> iterator = pluginDescriptors.iterator();
         while (iterator.hasNext()) {
             PluginDescriptor plugin = iterator.next();
-            if ((plugin.getName() + plugin.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
+            if (plugin.getId().equals(pluginDescriptor.getId())) {
                 if (plugin.getVersion().equals(pluginDescriptor.getVersion())) {
                     return true;
                 }
@@ -137,7 +137,7 @@ public class PluginLoader {
      * @since 2023/9/19 18:45
      */
     private static boolean disableDoNotLoad(PluginDescriptor pluginDescriptor, List<PluginDescriptor> pluginDescriptors, PluginDescriptor configPluginDescriptor) {
-        if ((configPluginDescriptor.getName() + configPluginDescriptor.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor()) && !configPluginDescriptor.isEnabled()) {
+        if (configPluginDescriptor.getId().equals(pluginDescriptor.getId()) && !configPluginDescriptor.isEnabled()) {
             pluginDescriptor.setEnabled(false);
             pluginDescriptors.add(pluginDescriptor);
             return true;

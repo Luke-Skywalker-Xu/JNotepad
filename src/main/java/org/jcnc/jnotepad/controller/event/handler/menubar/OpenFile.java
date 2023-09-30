@@ -1,14 +1,14 @@
 package org.jcnc.jnotepad.controller.event.handler.menubar;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.model.entity.Cache;
+import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.util.EncodingDetector;
@@ -24,8 +24,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import static org.jcnc.jnotepad.common.manager.ThreadPoolManager.threadContSelfSubtracting;
-
 /**
  * 打开文件的事件处理程序。
  * <p>
@@ -34,6 +32,8 @@ import static org.jcnc.jnotepad.common.manager.ThreadPoolManager.threadContSelfS
  * @author 许轲
  */
 public class OpenFile implements EventHandler<ActionEvent> {
+    private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
+
     /**
      * 处理打开文件事件。
      *
@@ -41,40 +41,26 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
+        // 获取缓存
+        Cache cache = CACHE_MANAGER.getCache("folder", "openFile");
         // 显示文件选择对话框，并获取选中的文件
         File file = BasicFileChooserFactory.getInstance().createFileChooser(
                         UiResourceBundle.getContent(TextConstants.OPEN),
                         null,
-                        null,
+                        cache == null ? null : new File((String) cache.getCacheData()),
                         new FileChooser.ExtensionFilter("All types", "*.*"))
                 .showOpenDialog(UiUtil.getAppWindow());
         if (file == null) {
             return;
         }
+        // 设置缓存
+        if (cache == null) {
+            CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("folder", "openFile", file.getParent(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
+        } else {
+            cache.setCacheData(file.getParent());
+            CACHE_MANAGER.addCache(cache);
+        }
         openFile(file);
-    }
-
-    /**
-     * 创建打开文件的任务。
-     *
-     * @param file 文件对象
-     * @return 打开文件的任务
-     */
-    public Task<Void> createOpenFileTask(File file) {
-        Task<Void> openFileTask = new Task<>() {
-            @Override
-            protected Void call() {
-                getText(file);
-                return null;
-            }
-
-        };
-        // 设置任务成功完成时的处理逻辑
-        openFileTask.setOnSucceeded(e -> threadContSelfSubtracting());
-
-        // 设置任务失败时的处理逻辑
-        openFileTask.setOnFailed(e -> threadContSelfSubtracting());
-        return openFileTask;
     }
 
     /**
@@ -98,7 +84,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
                 return;
             }
         }
-        ThreadPoolManager.getThreadPool().submit(createOpenFileTask(file));
+        getText(file);
     }
 
     /**
@@ -110,25 +96,24 @@ public class OpenFile implements EventHandler<ActionEvent> {
         LineNumberTextArea textArea = createNewTextArea();
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
+        StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(file, encoding))) {
-            StringBuilder textBuilder = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                if (!textBuilder.isEmpty()) {
-                    textBuilder.append("\n");
+                if (!stringBuilder.isEmpty()) {
+                    stringBuilder.append("\n");
                 }
-                textBuilder.append(line);
+                stringBuilder.append(line);
             }
-            String text = textBuilder.toString();
+            String text = stringBuilder.toString();
             LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
-            Platform.runLater(() -> {
-                textArea.appendText(text);
-                CenterTab tab = createNewTab(file.getName(), textArea, encoding);
-                // 设置当前标签页关联本地文件
-                tab.setRelevance(true);
-                tab.setUserData(file);
-                CenterTabPaneManager.getInstance().addNewTab(tab);
-            });
+
+            textArea.appendText(text);
+            CenterTab tab = createNewTab(file.getName(), textArea, encoding);
+            // 设置当前标签页关联本地文件
+            tab.setRelevance(true);
+            tab.setUserData(file);
+            CenterTabPaneManager.getInstance().addNewTab(tab);
         } catch (IOException ignored) {
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }

@@ -11,6 +11,10 @@ test/
 ### 此处忽略了json与xml后缀
 *.xml
 *.json
+
+### 此处排除证书目录
+certificate/
+
 ### Eclipse ###
 .apt_generated
 .classpath

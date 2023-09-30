@@ -86,7 +86,7 @@ public class PluginManager {
                     try {
                         File pluginJar = new File(path.toString());
                         PluginDescriptor temp = readPlugin(pluginJar);
-                        if ((temp.getName() + temp.getAuthor()).equals(pluginDescriptor.getName() + pluginDescriptor.getAuthor())) {
+                        if (temp.getId().equals(pluginDescriptor.getId())) {
                             Files.delete(pluginJar.toPath());
                         }
                     } catch (IOException e) {

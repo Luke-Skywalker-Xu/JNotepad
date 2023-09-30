@@ -31,6 +31,8 @@ public class LunchApp extends Application {
         APPLICATION_MANAGER.setPrimaryStage(primaryStage);
         // 加载应用程序资源
         APPLICATION_MANAGER.loadAppResources();
+        // 加载应用程序缓存
+        APPLICATION_MANAGER.loadAppCache();
         // 初始化应用程序
         APPLICATION_MANAGER.initializeApp();
         // 初始化默认操作

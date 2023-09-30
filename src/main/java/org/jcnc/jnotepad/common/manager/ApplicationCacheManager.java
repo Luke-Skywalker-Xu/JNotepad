@@ -22,12 +22,12 @@ public class ApplicationCacheManager extends AbstractCacheManager {
     }
 
     @Override
-    public Map<String, Cache<?>> getCaches() {
+    public Map<String, Cache> getCaches() {
         return caches;
     }
 
     @Override
-    public void setCaches(Map<String, Cache<?>> caches) {
+    public void setCaches(Map<String, Cache> caches) {
         this.caches = caches;
     }
 

@@ -139,6 +139,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     private void handleRenameRelevanceFile(CenterTab centerTab) {
         // 获取原始文件对象
         File file = (File) centerTab.getUserData();
+
         // 获取应用窗口并绑定
         File newFile = BasicFileChooserFactory.getInstance()
                 .createFileChooser(
