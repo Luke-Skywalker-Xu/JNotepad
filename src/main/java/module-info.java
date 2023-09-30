@@ -20,7 +20,6 @@ module org.jcnc.jnotepad {
     requires org.commonmark;
     requires javafx.web;
 
-
     exports org.jcnc.jnotepad;
     exports org.jcnc.jnotepad.model.enums;
     exports org.jcnc.jnotepad.app.config;

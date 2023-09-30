@@ -26,8 +26,6 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
-import org.jcnc.jnotepad.ui.dialog.AppDialog;
-import org.jcnc.jnotepad.ui.dialog.interfaces.DialogButtonAction;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
@@ -272,14 +270,11 @@ public class PluginManagementPane extends BorderPane {
         BooleanProperty booleanProperty = toggleSwitch.selectedProperty();
         state.textProperty().bind(Bindings.when(booleanProperty).then("禁用").otherwise("启用"));
 
-        uninstallItem.setOnAction(event -> PopUpUtil.warningAlert("卸载", "确定要卸载" + pluginDescriptor.getName() + "吗?", "此操作无法撤销!", new DialogButtonAction() {
-            @Override
-            public void handleAction(AppDialog dialog) {
-                pluginManager.unloadPlugin(pluginDescriptor);
-                state.setDisable(true);
-                toggleSwitch.setDisable(true);
-                dialog.close();
-            }
+        uninstallItem.setOnAction(event -> PopUpUtil.warningAlert("卸载", "确定要卸载" + pluginDescriptor.getName() + "吗?", "此操作无法撤销!", dialog -> {
+            pluginManager.unloadPlugin(pluginDescriptor);
+            state.setDisable(true);
+            toggleSwitch.setDisable(true);
+            dialog.close();
         }, null));
         state.getStyleClass().addAll(Styles.ACCENT);
         state.setPrefWidth(80);

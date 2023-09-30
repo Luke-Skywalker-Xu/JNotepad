@@ -8,7 +8,6 @@ import javafx.scene.control.TabPane;
  * @author songdragon
  */
 public class CenterTabPane extends TabPane {
-
     private static final CenterTabPane INSTANCE = new CenterTabPane();
 
     private CenterTabPane() {

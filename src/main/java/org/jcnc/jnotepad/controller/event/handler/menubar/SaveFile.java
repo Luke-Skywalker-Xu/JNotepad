@@ -5,8 +5,11 @@ import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
+import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
+import org.jcnc.jnotepad.model.entity.Cache;
+import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -28,6 +31,7 @@ import static org.jcnc.jnotepad.controller.config.AppConfigController.CONFIG_NAM
  * @author gewuyou
  */
 public class SaveFile implements EventHandler<ActionEvent> {
+    private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
     Logger logger = LogUtil.getLogger(this.getClass());
 
     /**
@@ -76,13 +80,20 @@ public class SaveFile implements EventHandler<ActionEvent> {
         if (selectedTab == null) {
             return;
         }
+        Cache cache = CACHE_MANAGER.getCache("folder", "saveFile");
         File file = BasicFileChooserFactory.getInstance().createFileChooser(
                         UiResourceBundle.getContent(TextConstants.SAVE_AS),
                         selectedTab.getText(),
-                        null,
+                        cache == null ? null : new File((String) cache.getCacheData()),
                         new FileChooser.ExtensionFilter("All types", "*.*"))
                 .showSaveDialog(UiUtil.getAppWindow());
         if (file != null) {
+            if (cache == null) {
+                CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("folder", "saveFile", file.getParent(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
+            } else {
+                cache.setCacheData(file.getParent());
+                CACHE_MANAGER.addCache(cache);
+            }
             LogUtil.getLogger(currentClass).info("正在保存文件: {}", file.getName());
             selectedTab.save(file);
             // 将保存后的文件设置为关联文件

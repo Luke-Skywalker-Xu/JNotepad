@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,12 +36,44 @@ public class JsonUtil {
      * 将对象转换为 JSON 字符串。
      *
      * @param o 要转换的对象
-     * @return 对象的 JSON 表示，如果转换失败则抛出 AppException 异常
+     * @return 对象的 JSON 表示
      * @throws AppException 如果转换失败
      */
     public static String toJsonString(Object o) {
         try {
             return OBJECT_MAPPER.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            throw new AppException(e);
+        }
+    }
+
+    /**
+     * 将json字符串解析成对象
+     *
+     * @param json  json字符串
+     * @param clazz 对象类型
+     * @return 对象
+     * @throws AppException 如果解析失败
+     */
+    public static <T> T fromJsonString(String json, Class<T> clazz) {
+        try {
+            return OBJECT_MAPPER.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new AppException(e);
+        }
+    }
+
+    /**
+     * 将json字符串解析成对象
+     *
+     * @param json         json字符串
+     * @param valueTypeRef 值 类型 引用
+     * @return 对象
+     * @throws AppException 如果解析失败
+     */
+    public static <T> T fromJsonString(String json, TypeReference<T> valueTypeRef) {
+        try {
+            return OBJECT_MAPPER.readValue(json, valueTypeRef);
         } catch (JsonProcessingException e) {
             throw new AppException(e);
         }
