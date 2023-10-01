@@ -7,6 +7,7 @@ import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
 import org.jcnc.jnotepad.model.entity.Cache;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +41,12 @@ public class Controller implements ControllerAble {
     public void openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         // 获取上次打开的页面
         Cache cache = CACHE_MANAGER.getCache("tabs", "centerTabs");
-        List<String> fileTab = (List<String>) cache.getCacheData();
+        List<String> fileTab;
+        if (cache == null) {
+            fileTab = Collections.emptyList();
+        } else {
+            fileTab = (List<String>) cache.getCacheData();
+        }
         fileTab.forEach(filePath -> new OpenFile().openFile(new File(filePath)));
 
         if (!rawParameters.isEmpty()) {

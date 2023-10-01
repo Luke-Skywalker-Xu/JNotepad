@@ -59,7 +59,7 @@ public class LineNumberTextArea extends CodeArea {
             // 用于整体文本处理（文本块）
             "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/"
                     // 用于可见段落处理（逐行）
-            + "|" + "/\\*[^\\v]*" + "|" + "^\\h*\\*([^\\v]*|/)";
+                    + "|" + "/\\*[^\\v]*" + "|" + "^\\h*\\*([^\\v]*|/)";
 
 
     /**
@@ -149,18 +149,16 @@ public class LineNumberTextArea extends CodeArea {
 
     static class VisibleParagraphStyler<PS, SEG, S> implements Consumer<ListModification<? extends Paragraph<PS, SEG, S>>> {
         private final GenericStyledArea<PS, SEG, S> area;
-        private final Function<String,StyleSpans<S>> computeStyles;
+        private final Function<String, StyleSpans<S>> computeStyles;
         private int prevParagraph, prevTextLength;
 
-        public VisibleParagraphStyler( GenericStyledArea<PS, SEG, S> area, Function<String,StyleSpans<S>> computeStyles )
-        {
+        public VisibleParagraphStyler(GenericStyledArea<PS, SEG, S> area, Function<String, StyleSpans<S>> computeStyles) {
             this.computeStyles = computeStyles;
             this.area = area;
         }
 
         @Override
-        public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm )
-        {
+        public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
             if (lm.getAddedSize() > 0) {
                 Platform.runLater(() -> {
                     int paragraph = Math.min(area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size() - 1);

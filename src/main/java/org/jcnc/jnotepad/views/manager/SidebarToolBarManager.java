@@ -1,9 +1,10 @@
 package org.jcnc.jnotepad.views.manager;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.jcnc.jnotepad.controller.event.handler.setting.SetBtn;
+import org.jcnc.jnotepad.views.manager.builder.SideBarButtonBuilder;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
 
 import java.util.ArrayList;
@@ -14,13 +15,13 @@ import java.util.List;
  *
  * @author gewuyou
  */
-public class SidebarToolBarManager {
+public class SidebarToolBarManager extends AbstractManager<Node> {
     private static final SidebarToolBarManager INSTANCE = new SidebarToolBarManager();
     /**
      * 工具栏
      */
     SidebarToolBar sidebarToolBar = SidebarToolBar.getInstance();
-    List<Button> buttonList = new ArrayList<>();
+    private final List<Node> nodeList = new ArrayList<>();
 
     public static SidebarToolBarManager getInstance() {
         return INSTANCE;
@@ -28,24 +29,30 @@ public class SidebarToolBarManager {
 
     public void initSidebarToolBar() {
         registerSidebarToolBar();
-        initButtons();
+        // 将节点添加到工具栏
+        sidebarToolBar.getItems().addAll(nodeList);
     }
 
-    private void initButtons() {
-        // 将按钮添加到工具栏
-        sidebarToolBar.getItems().addAll(buttonList);
-    }
 
     public void registerSidebarToolBar() {
-        registerButton(sidebarToolBar.getSetButton(), new SetBtn());
+        // 注册设置按钮
+        registerNode(
+                new SideBarButtonBuilder()
+                        .setButton(sidebarToolBar.getSetButton())
+                        .setImageView(new ImageView(new Image("tools.png")))
+                        .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
+                        .setButtonEssentialAttribute(20D, 20D)
+                        .setEventHandler(new SetBtn()).build());
     }
 
-    public void registerButton(Button button, EventHandler<ActionEvent> eventHandler) {
-        buttonList.add(button);
-        setButton(button, eventHandler);
-    }
 
-    private void setButton(Button button, EventHandler<ActionEvent> eventHandler) {
-        button.setOnAction(eventHandler);
+    /**
+     * 获取节点列表
+     *
+     * @return 节点列表
+     */
+    @Override
+    public List<Node> getNodeList() {
+        return nodeList;
     }
 }

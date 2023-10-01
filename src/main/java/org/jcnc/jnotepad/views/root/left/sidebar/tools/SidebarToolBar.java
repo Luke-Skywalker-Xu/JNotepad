@@ -1,8 +1,6 @@
 package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * SidebarToolBar 是 JNotepad 应用程序的工具栏类。
@@ -25,23 +23,6 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     Button setButton = new Button();
 
     private SidebarToolBar() {
-        // 创建工具栏上的按钮
-        Image image = new Image("tools.png");
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(10);
-        imageView.setFitHeight(10);
-
-        imageView.setPreserveRatio(true);
-
-        // 设置水平缩放比例
-        imageView.setScaleX(2.5);
-        // 设置垂直缩放比例
-        imageView.setScaleY(2.5);
-
-        // 设置缩放比例
-        setButton.setGraphic(imageView);
-        setButton.setPrefWidth(imageView.getFitWidth() + 20);
-        setButton.setPrefHeight(imageView.getFitHeight() + 20);
     }
 
     /**
