@@ -76,7 +76,6 @@ public class RootManager {
         rootStackPane = new StackPane();
 
         // 创建主界面布局
-        BorderPane root = new BorderPane();
         root.setCenter(RootBorderPane.getInstance());
 
         rootStackPane.getChildren().addAll(root);
@@ -110,4 +109,7 @@ public class RootManager {
         in.playFromStart();
     }
 
+    public StackPane getRootStackPane() {
+        return rootStackPane;
+    }
 }

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.pluginstage;
+package org.jcnc.jnotepad.ui.setstage.pluginstage;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.ui.pluginstage;
+package org.jcnc.jnotepad.ui.setstage.pluginstage;
 
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
@@ -8,6 +8,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -27,8 +28,10 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
+import org.jcnc.jnotepad.ui.setstage.AbstractPaneStage;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.slf4j.Logger;
 
 import java.awt.*;
@@ -49,7 +52,7 @@ import java.util.Map;
  *
  * @author luke
  */
-public class PluginManagementPane extends BorderPane {
+public class PluginManagementPane extends AbstractPaneStage {
     PluginManager pluginManager = PluginManager.getInstance();
 
     /**
@@ -78,11 +81,11 @@ public class PluginManagementPane extends BorderPane {
     public PluginManagementPane() {
         initialize();
     }
-
     /**
      * 初始化插件管理面板。
      */
-    private void initialize() {
+    @Override
+    protected void initialize() {
         // 初始化插件临时集合
         pluginManager.initializeTemporaryPluginDescriptors();
         // 创建选项卡面板
@@ -177,6 +180,17 @@ public class PluginManagementPane extends BorderPane {
         bottomBox.getChildren().addAll(confirmButton, cancelButton, applicationButton);
 
         this.setBottom(bottomBox);
+    }
+
+    /**
+     * 自定义启动方法
+     *
+     * @param stage 舞台
+     */
+    @Override
+    public void run(Stage stage) {
+        // 在此添加自定义逻辑
+        stage.show();
     }
 
     /**
@@ -419,5 +433,35 @@ public class PluginManagementPane extends BorderPane {
             }
         });
         return authorLink;
+    }
+
+    /**
+     * 获取舞台图标
+     *
+     * @return 舞台图标
+     */
+    @Override
+    protected Image getStageIcon() {
+        return UiUtil.getAppIcon();
+    }
+
+    /**
+     * 获取舞台标题
+     *
+     * @return 舞台标题
+     */
+    @Override
+    protected String getStageTitle() {
+        return "插件管理";
+    }
+
+    /**
+     * 获取舞台
+     *
+     * @return 舞台
+     */
+    @Override
+    protected Scene getCustomizationScene() {
+        return new Scene(this, 900, 600);
     }
 }
