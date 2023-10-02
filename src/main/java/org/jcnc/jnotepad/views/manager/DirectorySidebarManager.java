@@ -2,10 +2,13 @@ package org.jcnc.jnotepad.views.manager;
 
 import javafx.scene.control.TreeItem;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.common.util.FileUtil;
+import org.jcnc.jnotepad.controller.event.handler.menubar.OpenDirectory;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.views.root.center.main.MainBorderPane;
 import org.jcnc.jnotepad.views.root.center.main.center.directory.DirectorySidebarPane;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -97,7 +100,7 @@ public class DirectorySidebarManager {
 
     public void expandTheOpenFileTree() {
         // 获取缓存
-        Object cacheData = CACHE_MANAGER.getCacheData("directory", "folderThatWasOpened");
+        Object cacheData = CACHE_MANAGER.getCacheData(OpenDirectory.GROUP, "folderThatWasOpened");
         // 判空
         if (cacheData == null) {
             return;
@@ -105,7 +108,7 @@ public class DirectorySidebarManager {
         // 打开侧边栏
         controlShow(true);
         // 设置文件树功能
-        setTreeView((DirFileModel) cacheData);
+        setTreeView(FileUtil.getDirFileModel(new File((String) cacheData)));
     }
 
 
