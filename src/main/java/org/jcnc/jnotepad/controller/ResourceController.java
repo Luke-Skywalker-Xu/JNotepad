@@ -1,10 +1,10 @@
 package org.jcnc.jnotepad.controller;
 
+import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.plugin.PluginLoader;
-import org.jcnc.jnotepad.util.LogUtil;
 import org.slf4j.Logger;
 
 import java.io.IOException;

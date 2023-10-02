@@ -8,9 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.util.ApplicationRestarter;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.PopUpUtil;
-import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.common.util.PopUpUtil;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.slf4j.Logger;
 
 /**

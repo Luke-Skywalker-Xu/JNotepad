@@ -12,10 +12,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.plugin.PluginManagerInterface;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.ui.module.SettingsComponent;
-import org.jcnc.jnotepad.util.UiUtil;
 
 import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_LENGTH;
 import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_WIDTH;

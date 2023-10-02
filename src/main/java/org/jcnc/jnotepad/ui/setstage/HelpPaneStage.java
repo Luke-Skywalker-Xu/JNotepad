@@ -17,8 +17,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.RootManager;
 
 import static org.jcnc.jnotepad.common.constants.AppConstants.*;
