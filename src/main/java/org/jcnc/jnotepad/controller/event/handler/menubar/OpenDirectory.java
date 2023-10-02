@@ -26,10 +26,11 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
     private static final DirectorySidebarManager DIRECTORY_SIDEBAR_MANAGER = DirectorySidebarManager.getInstance();
 
+    public static final String GROUP = "directory";
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取缓存
-        Cache cache = CACHE_MANAGER.getCache("directory", "openDirectory");
+        Cache cache = CACHE_MANAGER.getCache(GROUP, "openDirectory");
 
         // 显示文件选择对话框，并获取选中的文件
         File file = BasicDirectoryChooserFactory.getInstance().createDirectoryChooser(
@@ -42,7 +43,7 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
         }
         // 设置缓存
         if (cache == null) {
-            CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("directory", "openDirectory", file.getAbsolutePath(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
+            CACHE_MANAGER.addCache(CACHE_MANAGER.createCache(GROUP, "openDirectory", file.getAbsolutePath(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
         } else {
             cache.setCacheData(file.getParent());
             CACHE_MANAGER.addCache(cache);
@@ -55,7 +56,7 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
         // 将文件转为实体类
         DirFileModel dirFileModel = FileUtil.getDirFileModel(file);
         // 缓存已打开的文件夹
-        CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("directory", "folderThatWasOpened", dirFileModel, CacheExpirationTime.NEVER_EXPIRES.getValue()));
+        CACHE_MANAGER.addCache(CACHE_MANAGER.createCache(GROUP, "folderThatWasOpened", file.getAbsolutePath(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
         // 打开侧边栏
         DIRECTORY_SIDEBAR_MANAGER.controlShow(true);
         // 设置文件树功能
