@@ -5,9 +5,11 @@ import javafx.scene.layout.VBox;
 import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
 
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  20:40
- * @description 垂直布局
+ * 垂直布局类
+ *
+ * <p>用于toolbar的垂直布局</p>
+ *
+ * @author cccqyu
  */
 public class ToolVerticalBox extends AbstractVerticalBox {
     /**
