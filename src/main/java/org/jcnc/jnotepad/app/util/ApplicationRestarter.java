@@ -9,6 +9,8 @@ import java.io.IOException;
  * @author luke
  */
 public class ApplicationRestarter {
+    private ApplicationRestarter() {
+    }
 
     public static void restart() {
         try {

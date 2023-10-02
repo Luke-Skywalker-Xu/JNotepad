@@ -81,6 +81,8 @@ public class ApplicationManager {
         // 使用加载关联文件并创建文本区域
         List<String> rawParameters = application.getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
+        // 加载已打开的文件夹
+        DirectorySidebarManager.getInstance().expandTheOpenFileTree();
     }
 
     private void initScene() {
@@ -96,6 +98,12 @@ public class ApplicationManager {
         primaryStage.setWidth(scene.getWidth());
         primaryStage.setHeight(scene.getHeight());
         primaryStage.getIcons().add(UiUtil.getAppIcon());
+        primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                CenterTabPaneManager instance = CenterTabPaneManager.getInstance();
+                instance.checkFileTabStatus(instance.getSelected());
+            }
+        });
     }
 
     /**

@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.common.util;
 
 import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
 import org.jcnc.jnotepad.exception.AppException;
+import org.jcnc.jnotepad.model.entity.DirFileModel;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -10,6 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 /**
  * 文件工具
@@ -125,5 +127,33 @@ public class FileUtil {
             LogUtil.getLogger(OpenFile.class).info("已忽视IO异常!");
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 将文件夹转为DirFileModel
+     *
+     * @param file 文件
+     * @return DirFileModel 存储文件夹与文件关系的实体类
+     */
+    public static DirFileModel getDirFileModel(File file) {
+        if (!file.exists()) {
+            return null;
+        }
+
+        DirFileModel dirFileModel = new DirFileModel(file.getAbsolutePath(), file.getName(), new ArrayList<>());
+
+        File[] files = file.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    DirFileModel childDirFileModel = getDirFileModel(f);
+                    dirFileModel.getChildFile().add(childDirFileModel);
+                } else {
+                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null));
+                }
+            }
+        }
+
+        return dirFileModel;
     }
 }
