@@ -96,6 +96,12 @@ public class ApplicationManager {
         primaryStage.setWidth(scene.getWidth());
         primaryStage.setHeight(scene.getHeight());
         primaryStage.getIcons().add(UiUtil.getAppIcon());
+        primaryStage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                CenterTabPaneManager instance = CenterTabPaneManager.getInstance();
+                instance.checkFileTabStatus(instance.getSelected());
+            }
+        });
     }
 
     /**

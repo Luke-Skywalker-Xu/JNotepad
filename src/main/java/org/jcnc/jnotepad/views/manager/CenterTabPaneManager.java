@@ -3,10 +3,8 @@ package org.jcnc.jnotepad.views.manager;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.FileUtil;
-import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
@@ -67,11 +65,6 @@ public class CenterTabPaneManager {
                     bottomStatusBoxManager.updateWhenTabSelected();
                 }
         );
-        ApplicationManager.getInstance().getPrimaryStage().focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue)) {
-                checkFileTabStatus(getSelected());
-            }
-        });
     }
 
 
@@ -80,10 +73,8 @@ public class CenterTabPaneManager {
      *
      * @apiNote 该方法检查当前文件是否被修改，如果被修改，则返回true
      */
-    private void checkFileTabStatus(CenterTab tab) {
+    public void checkFileTabStatus(CenterTab tab) {
         if (tab.isRelevance()) {
-            LogUtil.getLogger(this.getClass()).info("当前标签页关联文件");
-
             // 获取当前文本域对象
             LineNumberTextArea lineNumberTextArea = tab.getLineNumberTextArea();
             // 获取当前标签页对应文件上次修改时间

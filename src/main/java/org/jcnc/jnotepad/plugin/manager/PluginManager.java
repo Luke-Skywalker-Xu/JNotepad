@@ -134,7 +134,7 @@ public class PluginManager {
 
     /**
      * 执行加载的插件
-     * todo 待移除
+     * @deprecated 待删除
      */
     public void executePlugins() {
         for (PluginDescriptor pluginDescriptor : pluginDescriptors) {
@@ -202,7 +202,7 @@ public class PluginManager {
                         appDialog.close();
                         // 执行重启操作
                         ApplicationRestarter.restart();
-                    }, null);
+                    }, null, "重启", "以后再说");
         }
     }
 
