@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.views.manager;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jcnc.jnotepad.controller.event.handler.setting.DirTreeBtn;
 import org.jcnc.jnotepad.controller.event.handler.setting.SetBtn;
 import org.jcnc.jnotepad.views.manager.builder.SideBarButtonBuilder;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
@@ -43,17 +44,18 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new SetBtn()).build());
-
+        // 注册文件树按钮
         registerNode(
                 new SideBarButtonBuilder()
-                        .setButton(sidebarToolBar.getFileButton())
-                        .setImageView(new ImageView(new Image("tools.png")))
+                        .setButton(sidebarToolBar.getDirTreeButton())
+                        .setImageView(new ImageView(new Image("directory.png")))
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
-                        // TODO: 2023/10/2 修改点击事件
-                        .setEventHandler(new SetBtn()).build());
+                        .setEventHandler(new DirTreeBtn()).build());
 
     }
+
+
 
 
     /**

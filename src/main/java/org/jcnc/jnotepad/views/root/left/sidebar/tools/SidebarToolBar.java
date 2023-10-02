@@ -23,14 +23,22 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     Button setButton = new Button();
 
+
+    /**
+     * 工具栏上的文件树
+     */
+    Button dirTreeButton = new Button();
+
     /**
      * 工具栏上的文本侧边栏按钮
      */
     Button fileButton = new Button();
 
     private SidebarToolBar() {
+        // 垂直排列
         this.setOrientation(Orientation.VERTICAL);
     }
+
 
     /**
      * 获取 JNotepadToolBar 的单例实例。
@@ -49,12 +57,13 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     public Button getSetButton() {
         return setButton;
     }
+
     /**
-     * 获取工具栏上的文件侧边栏按钮。
+     * 获取工具栏上的文件树按钮。
      *
-     * @return 文件侧边栏按钮
+     * @return 文件树按钮
      */
-    public Button getFileButton() {
-        return fileButton;
+    public Button getDirTreeButton() {
+        return dirTreeButton;
     }
 }

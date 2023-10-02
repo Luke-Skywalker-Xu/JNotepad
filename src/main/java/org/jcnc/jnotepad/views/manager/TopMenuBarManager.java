@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import java.util.*;
 
 import static org.jcnc.jnotepad.common.constants.TextConstants.*;
+import static org.jcnc.jnotepad.common.constants.TextConstants.OPEN_DIRECTORY;
 
 /**
  * 顶部菜单栏管理类
@@ -89,6 +90,8 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         registerFileMenuItem(topMenuBar.getSaveItem(), SAVE, "saveItem", new SaveFile());
         registerFileMenuItem(topMenuBar.getSaveAsItem(), SAVE_AS, "saveAsItem", new SaveAsFile());
         registerFileMenuItem(topMenuBar.getRenameItem(), RENAME, "renameItem", new RenameFile());
+        // 打开文件夹按钮
+        registerFileMenuItem(topMenuBar.getOpenDirItem(), OPEN_DIRECTORY, "openDirItem", new OpenDirectory());
 
         // 语言菜单
         registerLanguageMenuItem(topMenuBar.getChineseItem(), UPPER_CHINESE, Locale.CHINESE, this::toggleLanguage);
