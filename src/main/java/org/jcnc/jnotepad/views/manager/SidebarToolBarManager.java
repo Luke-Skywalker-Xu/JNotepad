@@ -43,6 +43,16 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new SetBtn()).build());
+
+        registerNode(
+                new SideBarButtonBuilder()
+                        .setButton(sidebarToolBar.getFileButton())
+                        .setImageView(new ImageView(new Image("tools.png")))
+                        .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
+                        .setButtonEssentialAttribute(20D, 20D)
+                        // TODO: 2023/10/2 修改点击事件
+                        .setEventHandler(new SetBtn()).build());
+
     }
 
 

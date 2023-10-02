@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 
 /**
@@ -22,7 +23,13 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     Button setButton = new Button();
 
+    /**
+     * 工具栏上的文本侧边栏按钮
+     */
+    Button fileButton = new Button();
+
     private SidebarToolBar() {
+        this.setOrientation(Orientation.VERTICAL);
     }
 
     /**
@@ -41,5 +48,13 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     public Button getSetButton() {
         return setButton;
+    }
+    /**
+     * 获取工具栏上的文件侧边栏按钮。
+     *
+     * @return 文件侧边栏按钮
+     */
+    public Button getFileButton() {
+        return fileButton;
     }
 }
