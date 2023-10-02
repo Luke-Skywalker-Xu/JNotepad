@@ -19,7 +19,11 @@
     -fx-border-width: 0 1 0 0;
     -fx-border-color: -color-border-default;
 }
-
+/*左侧边栏*/
+.tool-horizontal-box {
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: -color-border-default;
+}
 
 .paragraph-box .has-caret {
     -fx-background-color: -color-neutral-muted
