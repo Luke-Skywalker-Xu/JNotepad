@@ -22,6 +22,11 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     Button setButton = new Button();
 
+    /**
+     * 工具栏上的文本侧边栏按钮
+     */
+    Button fileButton = new Button();
+
     private SidebarToolBar() {
     }
 
@@ -41,5 +46,13 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     public Button getSetButton() {
         return setButton;
+    }
+    /**
+     * 获取工具栏上的文件侧边栏按钮。
+     *
+     * @return 文件侧边栏按钮
+     */
+    public Button getFileButton() {
+        return fileButton;
     }
 }
