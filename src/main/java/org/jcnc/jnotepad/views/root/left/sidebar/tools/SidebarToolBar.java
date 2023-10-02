@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 
 /**
@@ -22,7 +23,14 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     Button setButton = new Button();
 
+    /**
+     * 工具栏上的文件树
+     */
+    Button dirTreeButton = new Button();
+
     private SidebarToolBar() {
+        // 垂直排列
+        this.setOrientation(Orientation.VERTICAL);
     }
 
     /**
@@ -41,5 +49,14 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     public Button getSetButton() {
         return setButton;
+    }
+
+    /**
+     * 获取工具栏上的文件树按钮。
+     *
+     * @return 文件树按钮
+     */
+    public Button getDirTreeButton() {
+        return dirTreeButton;
     }
 }

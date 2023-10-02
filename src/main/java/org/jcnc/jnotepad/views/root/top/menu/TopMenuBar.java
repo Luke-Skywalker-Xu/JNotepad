@@ -60,6 +60,10 @@ public class TopMenuBar extends MenuBar {
      */
     private final MenuItem openItem = new MenuItem();
     /**
+     * 打开文件夾
+     */
+    private final MenuItem openDirItem = new MenuItem();
+    /**
      * 另存为
      */
     private final MenuItem saveAsItem = new MenuItem();
@@ -197,5 +201,9 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getPluginManagerItem() {
         return pluginManagerItem;
+    }
+
+    public MenuItem getOpenDirItem() {
+        return openDirItem;
     }
 }
