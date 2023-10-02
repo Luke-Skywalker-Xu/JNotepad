@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.views.manager;
 
 import javafx.scene.control.TreeItem;
+import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.views.root.center.main.MainBorderPane;
 import org.jcnc.jnotepad.views.root.center.main.center.directory.DirectorySidebarPane;
@@ -17,7 +18,8 @@ public class DirectorySidebarManager {
     private DirectorySidebarManager() {
     }
 
-    ;
+    private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
+
     /**
      * 单例模式，保证只有一个 DirectorySidebar 实例
      */
@@ -34,7 +36,7 @@ public class DirectorySidebarManager {
 
     /**
      * 控制文件树显示
-     * */
+     */
     public void controlShow() {
         boolean isVisible = DIRECTORY_SIDEBAR_PANE.isVisible();
         // 设置自身显示
@@ -47,10 +49,12 @@ public class DirectorySidebarManager {
         }
 
     }
+
     /**
      * 控制文件树显示
+     *
      * @param bool 打开
-     * */
+     */
     public void controlShow(boolean bool) {
         // 设置自身显示
         DIRECTORY_SIDEBAR_PANE.setVisible(bool);
@@ -62,20 +66,23 @@ public class DirectorySidebarManager {
 
     /**
      * 设置文件树内容
+     *
      * @param dirFileModel 文件
-    * */
+     */
     public void setTreeView(DirFileModel dirFileModel) {
-        TreeItem<DirFileModel> rootItem = new TreeItem<DirFileModel>(dirFileModel);
+        TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel);
 
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
 
         expandFolder(dirFileModel, rootItem);
     }
+
     /**
      * 递归展开 dirFileModel
+     *
      * @param dirFileModel 文件
-     * @param item  文件树子项内容
-     * */
+     * @param item         文件树子项内容
+     */
     private void expandFolder(DirFileModel dirFileModel, TreeItem<DirFileModel> item) {
         List<DirFileModel> childFileList = dirFileModel.getChildFile();
         if (childFileList != null) {
@@ -86,6 +93,19 @@ public class DirectorySidebarManager {
             }
 
         }
+    }
+
+    public void expandTheOpenFileTree() {
+        // 获取缓存
+        Object cacheData = CACHE_MANAGER.getCacheData("directory", "folderThatWasOpened");
+        // 判空
+        if (cacheData == null) {
+            return;
+        }
+        // 打开侧边栏
+        controlShow(true);
+        // 设置文件树功能
+        setTreeView((DirFileModel) cacheData);
     }
 
 

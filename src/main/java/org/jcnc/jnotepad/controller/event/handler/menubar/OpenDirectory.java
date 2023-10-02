@@ -6,12 +6,12 @@ import javafx.event.EventHandler;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.common.util.FileUtil;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicDirectoryChooserFactory;
-import org.jcnc.jnotepad.util.FileUtil;
-import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
 
 import java.io.File;
@@ -24,7 +24,8 @@ import java.io.File;
 public class OpenDirectory implements EventHandler<ActionEvent> {
 
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
-     private static final DirectorySidebarManager DIRECTORY_SIDEBAR_MANAGER=DirectorySidebarManager.getInstance();
+    private static final DirectorySidebarManager DIRECTORY_SIDEBAR_MANAGER = DirectorySidebarManager.getInstance();
+
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取缓存
@@ -50,13 +51,14 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
 
     }
 
-    public void flushDirSidebar(File file){
+    public void flushDirSidebar(File file) {
         // 将文件转为实体类
         DirFileModel dirFileModel = FileUtil.getDirFileModel(file);
+        // 缓存已打开的文件夹
+        CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("directory", "folderThatWasOpened", dirFileModel, CacheExpirationTime.NEVER_EXPIRES.getValue()));
         // 打开侧边栏
         DIRECTORY_SIDEBAR_MANAGER.controlShow(true);
         // 设置文件树功能
         DIRECTORY_SIDEBAR_MANAGER.setTreeView(dirFileModel);
-
     }
 }

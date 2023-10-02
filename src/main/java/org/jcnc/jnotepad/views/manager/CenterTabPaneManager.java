@@ -74,6 +74,9 @@ public class CenterTabPaneManager {
      * @apiNote 该方法检查当前文件是否被修改，如果被修改，则返回true
      */
     public void checkFileTabStatus(CenterTab tab) {
+        if (tab == null) {
+            return;
+        }
         if (tab.isRelevance()) {
             // 获取当前文本域对象
             LineNumberTextArea lineNumberTextArea = tab.getLineNumberTextArea();

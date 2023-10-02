@@ -81,6 +81,8 @@ public class ApplicationManager {
         // 使用加载关联文件并创建文本区域
         List<String> rawParameters = application.getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
+        // 加载已打开的文件夹
+        DirectorySidebarManager.getInstance().expandTheOpenFileTree();
     }
 
     private void initScene() {
