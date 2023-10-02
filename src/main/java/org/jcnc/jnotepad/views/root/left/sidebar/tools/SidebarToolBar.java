@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
+import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 
 /**
@@ -28,6 +29,7 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     Button fileButton = new Button();
 
     private SidebarToolBar() {
+        this.setOrientation(Orientation.VERTICAL);
     }
 
     /**
