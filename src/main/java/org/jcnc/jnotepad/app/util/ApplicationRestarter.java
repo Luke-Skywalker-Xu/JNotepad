@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.app.util;
 
 import org.jcnc.jnotepad.LunchApp;
-import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.common.util.LogUtil;
 
 import java.io.IOException;
 

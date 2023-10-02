@@ -9,14 +9,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.ui.setstage.HelpPaneStage;
 import org.jcnc.jnotepad.ui.setstage.pluginstage.PluginManagementPane;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
 import org.slf4j.Logger;
 

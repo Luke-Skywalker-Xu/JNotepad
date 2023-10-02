@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.controller.event.handler.menubar;
 
 import javafx.event.ActionEvent;
+import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.util.LogUtil;
 
 import java.io.File;
 

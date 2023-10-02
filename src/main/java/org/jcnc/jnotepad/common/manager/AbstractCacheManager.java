@@ -42,14 +42,18 @@ public abstract class AbstractCacheManager {
      * @return 缓存集合
      */
 
-    public abstract Map<String, Cache> getCaches();
+    public Map<String, Cache> getCaches() {
+        return caches;
+    }
 
     /**
      * 设置缓存集合
      *
      * @param caches 缓存集合
      */
-    public abstract void setCaches(Map<String, Cache> caches);
+    public void setCaches(Map<String, Cache> caches) {
+        this.caches = caches;
+    }
 
     /**
      * 添加缓存
@@ -97,11 +101,12 @@ public abstract class AbstractCacheManager {
     /**
      * 获取缓存数据
      *
-     * @param cacheKey 缓存key
+     * @param group 组
+     * @param name  缓存名
      * @return 缓存类
      */
-    public Object getCacheData(String cacheKey) {
-        Cache cache = getCache(cacheKey);
+    public Object getCacheData(String group, String name) {
+        Cache cache = getCache(group, name);
         if (cache == null) {
             return null;
         }

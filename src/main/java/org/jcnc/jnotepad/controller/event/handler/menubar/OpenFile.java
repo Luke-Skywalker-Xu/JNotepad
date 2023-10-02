@@ -7,22 +7,21 @@ import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.common.util.EncodingDetector;
+import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.util.EncodingDetector;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.charset.Charset;
+
+import static org.jcnc.jnotepad.common.util.FileUtil.getFileText;
 
 /**
  * 打开文件的事件处理程序。
@@ -68,7 +67,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      *
      * @param file 文件对象
      */
-    public void openFile(File file) {
+    public static void openFile(File file) {
         // 获取标签页集合
         CenterTabPane jnotepadTabPane = CenterTabPane.getInstance();
         // 遍历标签页，查找匹配的标签页
@@ -92,39 +91,30 @@ public class OpenFile implements EventHandler<ActionEvent> {
      *
      * @param file 文件对象
      */
-    public void getText(File file) {
+    public static void getText(File file) {
         LineNumberTextArea textArea = createNewTextArea();
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, encoding))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (!stringBuilder.isEmpty()) {
-                    stringBuilder.append("\n");
-                }
-                stringBuilder.append(line);
-            }
-            String text = stringBuilder.toString();
-            LogUtil.getLogger(this.getClass()).info("已调用读取文件功能");
-
-            textArea.appendText(text);
-            CenterTab tab = createNewTab(file.getName(), textArea, encoding);
-            // 设置当前标签页关联本地文件
-            tab.setRelevance(true);
-            tab.setUserData(file);
-            CenterTabPaneManager.getInstance().addNewTab(tab);
-        } catch (IOException ignored) {
-            LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
-        }
+        String fileText = getFileText(file, encoding);
+        LogUtil.getLogger(OpenFile.class).info("已调用读取文件功能");
+        textArea.appendText(fileText);
+        CenterTab tab = createNewTab(file.getName(), textArea, encoding);
+        // 设置当前标签页关联本地文件
+        tab.setRelevance(true);
+        // 设置标签页关联文件
+        tab.setUserData(file);
+        // 设置关联文件最后的修改时间
+        tab.setLastModifiedTimeOfAssociatedFile(file.lastModified());
+        CenterTabPaneManager.getInstance().addNewTab(tab);
     }
+
 
     /**
      * 创建新的文本区域。
      *
      * @return 新的文本区域
      */
-    private LineNumberTextArea createNewTextArea() {
+    private static LineNumberTextArea createNewTextArea() {
         return new LineNumberTextArea();
     }
 
@@ -135,7 +125,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private CenterTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
+    private static CenterTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
         return new CenterTab(tabName, textArea, charset);
     }
 }

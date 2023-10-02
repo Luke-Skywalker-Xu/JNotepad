@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.util;
+package org.jcnc.jnotepad.common.util;
 
 import com.ibm.icu.text.CharsetDetector;
 import com.ibm.icu.text.CharsetMatch;

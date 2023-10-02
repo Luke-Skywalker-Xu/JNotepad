@@ -4,11 +4,11 @@ import org.jcnc.jnotepad.common.interfaces.ControllerAble;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.controller.event.handler.menubar.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
-import org.jcnc.jnotepad.model.entity.Cache;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 控制器类，实现 ControllerAble 接口，用于管理文本编辑器的各种操作和事件处理。
@@ -40,14 +40,11 @@ public class Controller implements ControllerAble {
     @Override
     public void openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         // 获取上次打开的页面
-        Cache cache = CACHE_MANAGER.getCache("tabs", "centerTabs");
-        List<String> fileTab;
-        if (cache == null) {
-            fileTab = Collections.emptyList();
-        } else {
-            fileTab = (List<String>) cache.getCacheData();
-        }
-        fileTab.forEach(filePath -> new OpenFile().openFile(new File(filePath)));
+        Optional<Object> cacheData = Optional.of(CACHE_MANAGER.getCacheData("tabs", "centerTabs"));
+        // 判空
+        List<String> fileTab = (List<String>) cacheData.orElse(Collections.emptyList());
+        // 打开上次打开的标签页
+        fileTab.forEach(filePath -> OpenFile.openFile(new File(filePath)));
 
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
@@ -68,7 +65,7 @@ public class Controller implements ControllerAble {
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            new OpenFile().openFile(file);
+            OpenFile.openFile(file);
         }
     }
 }
