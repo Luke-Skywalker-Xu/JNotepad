@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.util;
+package org.jcnc.jnotepad.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

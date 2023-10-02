@@ -2,9 +2,9 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
-import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.slf4j.Logger;
@@ -32,6 +32,10 @@ public class CenterTab extends Tab {
      * 是否与本地文件关联
      */
     private boolean isRelevance = false;
+    /**
+     * 关联文件上次修改时间
+     */
+    private Long lastModifiedTimeOfAssociatedFile;
     private Charset charset = Charset.defaultCharset();
 
     public CenterTab(String tabTitle) {
@@ -113,6 +117,8 @@ public class CenterTab extends Tab {
             // 如果发生IO异常，记录忽视的日志信息，但不中断程序执行
             LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
+        // 更新最后修改时间
+        tab.setLastModifiedTimeOfAssociatedFile(file.lastModified());
     }
 
     /**
@@ -138,4 +144,11 @@ public class CenterTab extends Tab {
         saveSelectedFileTab();
     }
 
+    public Long getLastModifiedTimeOfAssociatedFile() {
+        return lastModifiedTimeOfAssociatedFile;
+    }
+
+    public void setLastModifiedTimeOfAssociatedFile(Long lastModifiedTimeOfAssociatedFile) {
+        this.lastModifiedTimeOfAssociatedFile = lastModifiedTimeOfAssociatedFile;
+    }
 }

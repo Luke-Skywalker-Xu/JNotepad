@@ -1,9 +1,5 @@
 package org.jcnc.jnotepad.common.manager;
 
-import org.jcnc.jnotepad.model.entity.Cache;
-
-import java.util.Map;
-
 /**
  * 应用程序缓存管理类
  *
@@ -19,16 +15,6 @@ public class ApplicationCacheManager extends AbstractCacheManager {
 
     public static ApplicationCacheManager getInstance() {
         return INSTANCE;
-    }
-
-    @Override
-    public Map<String, Cache> getCaches() {
-        return caches;
-    }
-
-    @Override
-    public void setCaches(Map<String, Cache> caches) {
-        this.caches = caches;
     }
 
     @Override

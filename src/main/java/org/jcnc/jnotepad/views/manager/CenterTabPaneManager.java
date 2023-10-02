@@ -2,9 +2,15 @@ package org.jcnc.jnotepad.views.manager;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
+import javafx.stage.Stage;
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.common.util.FileUtil;
+import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.common.util.PopUpUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
+import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
@@ -48,15 +54,58 @@ public class CenterTabPaneManager {
     private void initListeners() {
         // tab选中行为监听器，用于tab切换后，更新与当前tab相关的组件
         centerTabPane.getSelectionModel().selectedItemProperty().addListener(
-                (ov, from, to) -> {
-                    if (to != null) {
+                (ov, preTab, currTab) -> {
+                    if (currTab != null) {
                         // 更新菜单栏中与tab相关设置
                         TopMenuBar.getInstance().updateMenuStatusBySelectedTab();
+                        // 判断当前标签页是否关联文件
+                        CenterTab tab = (CenterTab) currTab;
+                        // 检查文件标签页状态
+                        checkFileTabStatus(tab);
                     }
                     // 更新状态标签
                     bottomStatusBoxManager.updateWhenTabSelected();
                 }
         );
+        ApplicationManager.getInstance().getPrimaryStage().focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                checkFileTabStatus(getSelected());
+            }
+        });
+    }
+
+
+    /**
+     * 检查文件标签页状态
+     *
+     * @apiNote 该方法检查当前文件是否被修改，如果被修改，则返回true
+     */
+    private void checkFileTabStatus(CenterTab tab) {
+        if (tab.isRelevance()) {
+            LogUtil.getLogger(this.getClass()).info("当前标签页关联文件");
+
+            // 获取当前文本域对象
+            LineNumberTextArea lineNumberTextArea = tab.getLineNumberTextArea();
+            // 获取当前标签页对应文件上次修改时间
+            Long lastModifiedTime = tab.getLastModifiedTimeOfAssociatedFile();
+            // 获取对应文件上次修改时间
+            File file = (File) tab.getUserData();
+
+            Long lastModifiedTimeOfFile = file.lastModified();
+            if (lastModifiedTimeOfFile.equals(lastModifiedTime)) {
+                return;
+            }
+            //fixme 这行代码不能直接放到绑定的方法中,猜测匿名内部类的延迟执行特性可能会导致在获取 FileUtil.getFileText(file) 的返回值时，文件内容还没有被正确读取，导致空串，暂无解决办法
+            String fileText = FileUtil.getFileText(file);
+            // 当前文件已被外部修改
+            PopUpUtil.questionAlert(
+                    "重新加载", file.getAbsolutePath(), "此文件已被外部修改，是否重新加载该文件？",
+                    appDialog -> {
+                        lineNumberTextArea.clear();
+                        lineNumberTextArea.appendText(fileText);
+                        appDialog.close();
+                    }, Stage::close, "是", "否");
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.util;
+package org.jcnc.jnotepad.common.util;
 
 import atlantafx.base.theme.Styles;
 import javafx.scene.image.Image;
