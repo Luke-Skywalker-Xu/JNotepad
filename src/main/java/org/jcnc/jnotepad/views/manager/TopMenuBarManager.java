@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.UiUtil;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
@@ -44,7 +44,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
 
     private final Map<String, RadioMenuItem> languageMenuItems = new HashMap<>();
     Logger logger = LogUtil.getLogger(this.getClass());
-    AppConfigController appConfigController = AppConfigController.getInstance();
+    UserConfigController userConfigController = UserConfigController.getInstance();
 
     private TopMenuBarManager() {
 
@@ -66,7 +66,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         // 初始化语言菜单
         initLanguageMenu();
         // 设置当前语言选中状态
-        toggleLanguageCheck(appConfigController.getLanguage());
+        toggleLanguageCheck(userConfigController.getLanguage());
         // 初始化设置菜单
         initSettingMenu();
         // 初始化设置菜单
@@ -101,7 +101,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         // 设置菜单
         registerSetMenuItem(topMenuBar.getLineFeedItem(), WORD_WRAP, "lineFeedItem", (observableValue, before, after) -> {
             // 1. 更新全局配置
-            AppConfigController.getInstance().setAutoLineConfig(after);
+            UserConfigController.getInstance().setAutoLineConfig(after);
             // 2. 对当前tab生效配置
             CenterTabPaneManager.getInstance().fireTabSelected();
         });
@@ -273,7 +273,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
      */
     public void initShortcutKeys() {
         List<MenuItem> itemsToUnbind = new ArrayList<>();
-        List<ShortcutKey> shortcutKeyConfigs = appConfigController.getShortcutKey();
+        List<ShortcutKey> shortcutKeyConfigs = userConfigController.getShortcutKey();
         for (ShortcutKey shortcutKey : shortcutKeyConfigs) {
             // 保证json的key必须和变量名一致
             MenuItem menuItem = topMenuBar.getItemMap().get(shortcutKey.getButtonName());

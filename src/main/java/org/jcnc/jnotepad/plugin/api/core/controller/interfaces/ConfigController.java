@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller.interfaces;
+package org.jcnc.jnotepad.plugin.api.core.controller.interfaces;
 
 import java.nio.file.Path;
 
@@ -31,12 +31,12 @@ public interface ConfigController<T> {
     void createConfigIfNotExists();
 
     /**
-     * 创建配置文件json实体
+     * 创建配置文件实体
      *
      * @return 默认的配置文件实体
-     * @apiNote 返回默认的配置文件实体用于序列化jso
+     * @apiNote 返回默认的配置文件实体用于序列化json
      */
-    T createConfigJson();
+    T generateDefaultConfig();
 
     /**
      * 获取配置文件路径

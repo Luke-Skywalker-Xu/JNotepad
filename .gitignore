@@ -15,6 +15,9 @@ test/
 ### 此处排除证书目录
 certificate/
 
+### 此处排除了项目文件
+.jnotepad/
+
 ### Eclipse ###
 .apt_generated
 .classpath

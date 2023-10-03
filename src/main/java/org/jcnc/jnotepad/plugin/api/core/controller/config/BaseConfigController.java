@@ -3,8 +3,8 @@ package org.jcnc.jnotepad.plugin.api.core.controller.config;
 import org.jcnc.jnotepad.common.util.JsonUtil;
 import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
-import org.jcnc.jnotepad.controller.interfaces.ConfigController;
 import org.jcnc.jnotepad.exception.AppException;
+import org.jcnc.jnotepad.plugin.api.core.controller.interfaces.ConfigController;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -22,6 +22,8 @@ import java.nio.file.Paths;
  */
 public abstract class BaseConfigController<T> implements ConfigController<T> {
 
+    public static final String ROOT_CONFIG_DIR = "config";
+
     protected T config;
     Logger logger = LogUtil.getLogger(this.getClass());
 
@@ -31,13 +33,6 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
      * @return 配置文件Class类
      */
     protected abstract Class<T> getConfigClass();
-
-    /**
-     * 生成默认的配置文件
-     *
-     * @return 默认的配置文件
-     */
-    protected abstract T generateDefaultConfig();
 
     /**
      * 获取配置文件名称
@@ -62,9 +57,6 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
         return config;
     }
 
-    public void setConfig(T config) {
-        this.config = config;
-    }
 
     /**
      * 加载配置文件内容
@@ -102,7 +94,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     public void writeConfig(T config) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(getConfigPath().toString()))) {
             if (config == null) {
-                config = createConfigJson();
+                config = generateDefaultConfig();
             }
             writer.write(JsonUtil.toJsonString(config));
         } catch (Exception e) {
@@ -125,17 +117,6 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
             directory.mkdirs();
         }
         writeConfig(null);
-    }
-
-    /**
-     * 创建配置文件json实体
-     *
-     * @return 默认的配置文件实体
-     * @apiNote 返回默认的配置文件实体用于序列化jso
-     */
-    @Override
-    public T createConfigJson() {
-        return generateDefaultConfig();
     }
 
     /**

@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.jcnc.jnotepad.common.util.LogUtil;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
@@ -51,7 +51,7 @@ public class CenterTab extends Tab {
         lineNumberTextArea = textArea;
         initTextAreaListeners();
         this.setContent(new VirtualizedScrollPane<>(lineNumberTextArea));
-        setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
+        setAutoLine(UserConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
     }
 

@@ -5,8 +5,7 @@ import org.jcnc.jnotepad.plugin.api.core.controller.config.BaseConfigController;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
+import java.util.ArrayList;
 
 /**
  * 插件控制器
@@ -24,8 +23,9 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
     private String pluginsDir;
 
     private PluginConfigController() {
-        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad").toString();
-        setPluginsDir(Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad", "plugins").toString());
+        String rootPath = AppConfigController.getInstance().getConfig().getRootPath();
+        configDir = Paths.get(rootPath, ".jnotepad", ROOT_CONFIG_DIR).toString();
+        setPluginsDir(Paths.get(rootPath, ".jnotepad", "plugins").toString());
         loadConfig();
     }
 
@@ -43,15 +43,6 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
         return PluginConfig.class;
     }
 
-    /**
-     * 生成默认的配置文件
-     *
-     * @return 默认的配置文件
-     */
-    @Override
-    protected PluginConfig generateDefaultConfig() {
-        return PluginConfig.generateDefaultPluginConfig();
-    }
 
     /**
      * 获取配置文件名称
@@ -72,6 +63,20 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
     protected String getConfigDir() {
         return configDir;
     }
+
+    /**
+     * 创建配置文件实体
+     *
+     * @return 默认的配置文件实体
+     * @apiNote 返回默认的配置文件实体用于序列化json
+     */
+    @Override
+    public PluginConfig generateDefaultConfig() {
+        PluginConfig pluginConfig = new PluginConfig();
+        pluginConfig.setPlugins(new ArrayList<>());
+        return pluginConfig;
+    }
+
 
     public void setConfigDir(String configDir) {
         this.configDir = configDir;
