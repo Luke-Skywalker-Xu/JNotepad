@@ -29,9 +29,9 @@ import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
 import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
+import org.jcnc.jnotepad.plugin.api.core.ui.stage.AbstractPaneStage;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
-import org.jcnc.jnotepad.ui.setstage.AbstractPaneStage;
 import org.slf4j.Logger;
 
 import java.awt.*;

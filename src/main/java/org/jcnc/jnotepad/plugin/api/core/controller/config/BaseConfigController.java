@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.controller.config;
+package org.jcnc.jnotepad.plugin.api.core.controller.config;
 
 import org.jcnc.jnotepad.common.util.JsonUtil;
 import org.jcnc.jnotepad.common.util.LogUtil;

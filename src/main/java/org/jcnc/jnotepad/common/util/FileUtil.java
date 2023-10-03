@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.common.util;
 import org.jcnc.jnotepad.controller.event.handler.menubar.OpenFile;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -12,6 +13,8 @@ import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.*;
 
 /**
  * 文件工具
@@ -140,7 +143,7 @@ public class FileUtil {
             return null;
         }
 
-        DirFileModel dirFileModel = new DirFileModel(file.getAbsolutePath(), file.getName(), new ArrayList<>());
+        DirFileModel dirFileModel = new DirFileModel(file.getAbsolutePath(), file.getName(), new ArrayList<>(), new FontIcon(FOLDER), new FontIcon(FOLDER_OPEN));
 
         File[] files = file.listFiles();
         if (files != null) {
@@ -149,7 +152,7 @@ public class FileUtil {
                     DirFileModel childDirFileModel = getDirFileModel(f);
                     dirFileModel.getChildFile().add(childDirFileModel);
                 } else {
-                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null));
+                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null, new FontIcon(FILE), new FontIcon(FILE)));
                 }
             }
         }

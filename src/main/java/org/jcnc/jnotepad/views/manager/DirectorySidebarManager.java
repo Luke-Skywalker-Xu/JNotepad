@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.manager;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TreeItem;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.FileUtil;
@@ -12,9 +13,9 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * 文件树管理类
+ *
  * @author : cccqyu
- * @createTime 2023/10/2  20:33
- * @description 文件树管理类
  */
 public class DirectorySidebarManager {
 
@@ -67,16 +68,26 @@ public class DirectorySidebarManager {
 
     }
 
+    private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
+        return (observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                item.setGraphic(item.getValue().getIconIsSelected());
+            } else {
+                item.setGraphic(item.getValue().getIconIsNotSelected());
+            }
+        };
+    }
+
     /**
      * 设置文件树内容
      *
      * @param dirFileModel 文件
      */
     public void setTreeView(DirFileModel dirFileModel) {
-        TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel);
+        TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel, dirFileModel.getIconIsNotSelected());
 
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
-
+        rootItem.expandedProperty().addListener(getTreeItemListener(rootItem));
         expandFolder(dirFileModel, rootItem);
     }
 
@@ -90,7 +101,8 @@ public class DirectorySidebarManager {
         List<DirFileModel> childFileList = dirFileModel.getChildFile();
         if (childFileList != null) {
             for (DirFileModel childFile : childFileList) {
-                TreeItem<DirFileModel> childItem = new TreeItem<>(childFile);
+                TreeItem<DirFileModel> childItem = new TreeItem<>(childFile, childFile.getIconIsNotSelected());
+                childItem.expandedProperty().addListener(getTreeItemListener(childItem));
                 item.getChildren().add(childItem);
                 expandFolder(childFile, childItem);
             }
@@ -98,6 +110,11 @@ public class DirectorySidebarManager {
         }
     }
 
+    /**
+     * 展开已打开文件树
+     *
+     * @since 2023/10/2 23:12
+     */
     public void expandTheOpenFileTree() {
         // 获取缓存
         Object cacheData = CACHE_MANAGER.getCacheData(OpenDirectory.GROUP, "folderThatWasOpened");

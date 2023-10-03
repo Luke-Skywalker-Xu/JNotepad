@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.util.ApplicationRestarter;
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
 import org.jcnc.jnotepad.common.util.UiUtil;
@@ -75,7 +75,7 @@ public class DeveloperDebugStage extends Stage {
         debugButton6.setOnAction(event -> {
             logger.debug("开发者调试: {}启动!", debugButton6.getText());
             // 执行重启操作
-            ApplicationRestarter.restart();
+            ApplicationManager.getInstance().restart();
         });
 
         alertBox.getChildren().addAll(debugButton1, debugButton2, debugButton3, debugButton4, debugButton5);

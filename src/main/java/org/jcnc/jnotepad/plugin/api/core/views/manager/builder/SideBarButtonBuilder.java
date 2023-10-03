@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.views.manager.builder;
+package org.jcnc.jnotepad.plugin.api.core.views.manager.builder;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

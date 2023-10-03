@@ -7,10 +7,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
@@ -20,6 +22,7 @@ import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.views.manager.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
@@ -77,7 +80,10 @@ public class ApplicationManager {
         initPrimaryStage();
     }
 
-    public void initializeDefaultAction() {
+    /**
+     * 执行默认操作
+     */
+    public void executeDefaultAction() {
         // 使用加载关联文件并创建文本区域
         List<String> rawParameters = application.getParameters().getRaw();
         Controller.getInstance().openAssociatedFileAndCreateTextArea(rawParameters);
@@ -191,6 +197,25 @@ public class ApplicationManager {
         RootBorderPaneManager.getInstance().initRootBorderPane();
 
     }
+
+    public void restart() {
+        try {
+            // 获取当前Java应用程序的命令
+            String javaCommand = System.getProperty("java.home") + "/bin/java";
+            String mainClass = LunchApp.class.getName();
+
+            // 构建新进程来重新启动应用程序
+            ProcessBuilder builder = new ProcessBuilder(javaCommand, "-cp", System.getProperty("java.class.path"), mainClass);
+            builder.start();
+
+            // 关闭当前应用程序
+            System.exit(0);
+        } catch (IOException e) {
+            LogUtil.getLogger("正在重启当前应用程序".getClass());
+
+        }
+    }
+
 
     public Pane getRoot() {
         return root;

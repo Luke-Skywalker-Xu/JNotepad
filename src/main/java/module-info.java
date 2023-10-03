@@ -35,12 +35,13 @@ module org.jcnc.jnotepad {
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.plugin.interfaces;
     exports org.jcnc.jnotepad.views.root.bottom.function;
-    exports org.jcnc.jnotepad.views.root.bottom.function.interfaces;
     exports org.jcnc.jnotepad.ui.dialog;
     exports org.jcnc.jnotepad.ui.dialog.interfaces;
     exports org.jcnc.jnotepad.ui.module;
     exports org.jcnc.jnotepad.model.entity;
     exports org.jcnc.jnotepad.views.root.bottom;
     exports org.jcnc.jnotepad.views.root.bottom.status;
+    exports org.jcnc.jnotepad.plugin.api.core.views.sidebar.bottom;
+    exports org.jcnc.jnotepad.plugin.api.core.controller.config;
 
 }

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.views.manager;
+package org.jcnc.jnotepad.plugin.api.core.views.manager;
 
 import java.util.List;
 

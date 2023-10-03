@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.views.root.bottom.function.interfaces;
+package org.jcnc.jnotepad.plugin.api.core.views.sidebar.bottom;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
