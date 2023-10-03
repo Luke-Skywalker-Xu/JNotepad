@@ -14,7 +14,7 @@ import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
  */
 public class DirTreeBtn implements EventHandler<ActionEvent> {
 
-    private static final DirectorySidebarManager  DIRECTORY_SIDEBAR_MANAGER = DirectorySidebarManager.getInstance();
+    private static final DirectorySidebarManager DIRECTORY_SIDEBAR_MANAGER = DirectorySidebarManager.getInstance();
 
     @Override
     public void handle(ActionEvent actionEvent) {
