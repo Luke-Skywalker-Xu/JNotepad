@@ -72,4 +72,8 @@ public class DirFileModel {
     public void setIconIsSelected(FontIcon iconIsSelected) {
         this.iconIsSelected = iconIsSelected;
     }
+
+    public void setChildFile(List<DirFileModel> childFile) {
+        this.childFile = childFile;
+    }
 }

@@ -42,7 +42,7 @@ public class DirectorySidebarManager {
     private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
 
 
-    private static final double lastDividerPosition = 0.3;
+    private static final double LAST_DIVIDER_POSITION = 0.3;
 
     /**
      * 控制文件树显示
@@ -57,13 +57,13 @@ public class DirectorySidebarManager {
         double roundedNumber = Double.parseDouble(formattedNumber);
 
         // 分割条位置不等于 代表展开
-        if (roundedNumber != 0.0) {
+        if (Double.compare(roundedNumber, 0.0) != 0) {
             // 收缩分割条 收缩文件树
             center.setDividerPositions(0.0);
 
         } else {
             // 展开分割条，文件树
-            center.setDividerPositions(lastDividerPosition);
+            center.setDividerPositions(LAST_DIVIDER_POSITION);
 
         }
     }
@@ -77,7 +77,7 @@ public class DirectorySidebarManager {
         if (bool) {
             // 获取分割面板
             SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
-            center.setDividerPositions(lastDividerPosition);
+            center.setDividerPositions(LAST_DIVIDER_POSITION);
         }
 
     }
