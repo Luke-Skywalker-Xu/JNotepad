@@ -152,6 +152,7 @@ public class FileUtil {
                     DirFileModel childDirFileModel = getDirFileModel(f);
                     dirFileModel.getChildFile().add(childDirFileModel);
                 } else {
+                    // todo 在此监测文件后缀，设置对应的图标
                     dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null, new FontIcon(FILE), new FontIcon(FILE)));
                 }
             }
