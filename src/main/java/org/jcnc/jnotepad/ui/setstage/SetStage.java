@@ -1,6 +1,10 @@
 package org.jcnc.jnotepad.ui.setstage;
 
+import atlantafx.base.controls.CustomTextField;
+import atlantafx.base.theme.Dracula;
+import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.Styles;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -11,6 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.common.util.UiUtil;
 import org.jcnc.jnotepad.plugin.PluginManagerInterface;
@@ -213,8 +219,28 @@ public class SetStage extends Stage {
      * @return 常规设置项1的布局节点
      */
     private Node createGeneralSettingsLayout1() {
-        VBox generalLayout = new VBox();
-        generalLayout.getChildren().add(new Label("常规设置项1的布局"));
+        VBox generalLayout = new VBox(10);
+        generalLayout.setPadding(new Insets(25));
+
+        var hBox=new HBox(5);
+
+        var fileChooseText =new Text("路径选择: ");
+        fileChooseText.setFont(new Font(18));
+
+        var fileChoose =new CustomTextField("");
+        fileChoose.getStyleClass().add(Styles.SMALL);
+        fileChoose.setPrefWidth(420);
+
+        var fileChooseBtn =new Button();
+        fileChooseBtn.setText("选择文件夹");
+        fileChooseBtn.getStyleClass().addAll(Styles.SMALL);
+        fileChooseBtn.setOnAction(event -> {
+            // TODO: 2023/10/4 选择文件
+
+        });
+        hBox.getChildren().addAll(fileChooseText,fileChoose,fileChooseBtn);
+
+        generalLayout.getChildren().addAll(hBox);
 
         return generalLayout;
     }
