@@ -17,9 +17,11 @@ import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
 import java.io.File;
 
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  1:29
- * @description 当用户选择打开文件夹时，将创建一个左侧树型结构目录。
+ * 打开文件夹處理器
+ *
+ * <p>当用户选择打开文件夹时，将创建一个左侧树型结构目录。</p>
+ *
+ * @author cccqyu
  */
 public class OpenDirectory implements EventHandler<ActionEvent> {
 

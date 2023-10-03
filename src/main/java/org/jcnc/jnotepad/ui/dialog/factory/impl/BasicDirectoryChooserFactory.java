@@ -6,9 +6,11 @@ import org.jcnc.jnotepad.ui.dialog.factory.DirectoryChooserFactory;
 import java.io.File;
 
 /**
- * @author : cccqyu@outlook.com
- * @createTime 2023/10/2  1:54
- * @description 基本文件夹选择对话框
+ * 文件夹选择对话框
+ *
+ * <p>基本文件夹选择对话框的封装</p>
+ *
+ * @author cccqyu
  */
 public class BasicDirectoryChooserFactory implements DirectoryChooserFactory {
 

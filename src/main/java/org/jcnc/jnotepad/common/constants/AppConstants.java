@@ -25,11 +25,11 @@ public class AppConstants {
     /**
      * 初始宽度
      */
-    public static final double SCREEN_WIDTH = 800;
+    public static final double SCREEN_WIDTH = 1050;
     /**
      * 初始高度
      */
-    public static final double SCREEN_LENGTH = 600;
+    public static final double SCREEN_LENGTH = 750;
     /**
      * logo地址
      */

@@ -4,10 +4,13 @@ import javafx.stage.DirectoryChooser;
 
 import java.io.File;
 
+
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  1:49
- * @description 文件夹选择对话框工厂,该工厂接口用于创建文件夹选择对话框，包括原始和详细两种类型。
+ * 文件夹选择对话框工厂
+ *
+ * <p>文件夹选择对话框工厂,该工厂接口用于创建文件夹选择对话框，包括原始和详细两种类型。</p>
+ *
+ * @author cccqyu
  */
 public interface DirectoryChooserFactory {
     /**

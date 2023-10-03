@@ -4,10 +4,13 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.List;
 
+
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  20:31
- * @description 文件夹实体类
+ * 文件夹实体类
+ *
+ * <p>用于存储文件夹结构</p>
+ *
+ * @author cccqyu
  */
 public class DirFileModel {
     private String path;
@@ -32,11 +35,7 @@ public class DirFileModel {
     public List<DirFileModel> getChildFile() {
         return childFile;
     }
-
-    public void setChildFile(List<DirFileModel> childFile) {
-        this.childFile = childFile;
-    }
-
+    
     public String getPath() {
         return path;
     }

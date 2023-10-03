@@ -10,9 +10,11 @@ import java.util.Objects;
 
 
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  20:34
- * @description TreeView封装
+ * 目录树ui
+ *
+ * <p>TreeView封装</p>
+ *
+ * @author cccqyu
  */
 public class DirectorySidebarPane extends TreeView<DirFileModel> {
 
@@ -21,8 +23,6 @@ public class DirectorySidebarPane extends TreeView<DirFileModel> {
     private static final int CLICK_COUNT = 2;
 
     private DirectorySidebarPane() {
-        this.setVisible(false);
-
         this.setOnMouseClicked(mouseEvent -> {
             if (mouseEvent.getClickCount() == CLICK_COUNT) {
                 TreeItem<DirFileModel> item = DirectorySidebarPane.this.getSelectionModel().getSelectedItem();
@@ -35,7 +35,6 @@ public class DirectorySidebarPane extends TreeView<DirFileModel> {
                     return;
                 }
                 OpenFile.openFile(file);
-
             }
         });
     }

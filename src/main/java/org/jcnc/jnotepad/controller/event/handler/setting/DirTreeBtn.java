@@ -4,10 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
 
+
 /**
- * @author : cccqyu
- * @createTime 2023/10/2  17:24
- * @description 文件树按钮事件的事件处理程序。
+ * 文件树按钮
+ *
+ * <p>文件树按钮事件的事件处理程序。</p>
+ *
+ * @author cccqyu
  */
 public class DirTreeBtn implements EventHandler<ActionEvent> {
 

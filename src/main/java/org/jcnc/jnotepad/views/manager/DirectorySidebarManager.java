@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.views.manager;
 
 import javafx.beans.value.ChangeListener;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.FileUtil;
@@ -15,7 +16,9 @@ import java.util.List;
 /**
  * 文件树管理类
  *
- * @author : cccqyu
+ * <p>管理文件树，处理文件树操作</p>
+ *
+ * @author cccqyu
  */
 public class DirectorySidebarManager {
 
@@ -38,20 +41,31 @@ public class DirectorySidebarManager {
 
     private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
 
+
+    private static final double lastDividerPosition = 0.3;
+
     /**
      * 控制文件树显示
      */
     public void controlShow() {
-        boolean isVisible = DIRECTORY_SIDEBAR_PANE.isVisible();
-        // 设置自身显示
-        DIRECTORY_SIDEBAR_PANE.setVisible(!isVisible);
-        if (isVisible) {
-            // 布局中移除
-            MAIN_BORDER_PANE.setLeft(null);
-        } else {
-            MAIN_BORDER_PANE.setLeft(DIRECTORY_SIDEBAR_PANE);
-        }
+        // 获取分割面板
+        SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
+        // 获取分割条位置
+        double dividerPosition = center.getDividerPositions()[0];
+        // 保留分割条位置一位小数
+        String formattedNumber = String.format("%.1f", dividerPosition);
+        double roundedNumber = Double.parseDouble(formattedNumber);
 
+        // 分割条位置不等于 代表展开
+        if (roundedNumber != 0.0) {
+            // 收缩分割条 收缩文件树
+            center.setDividerPositions(0.0);
+
+        } else {
+            // 展开分割条，文件树
+            center.setDividerPositions(lastDividerPosition);
+
+        }
     }
 
     /**
@@ -60,10 +74,10 @@ public class DirectorySidebarManager {
      * @param bool 打开
      */
     public void controlShow(boolean bool) {
-        // 设置自身显示
-        DIRECTORY_SIDEBAR_PANE.setVisible(bool);
-        if (!MAIN_BORDER_PANE.getChildren().contains(DIRECTORY_SIDEBAR_PANE)) {
-            MAIN_BORDER_PANE.setLeft(DIRECTORY_SIDEBAR_PANE);
+        if (bool) {
+            // 获取分割面板
+            SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
+            center.setDividerPositions(lastDividerPosition);
         }
 
     }
