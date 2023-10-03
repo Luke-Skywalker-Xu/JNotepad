@@ -5,7 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.jcnc.jnotepad.controller.event.handler.setting.DirTreeBtn;
 import org.jcnc.jnotepad.controller.event.handler.setting.SetBtn;
-import org.jcnc.jnotepad.views.manager.builder.SideBarButtonBuilder;
+import org.jcnc.jnotepad.plugin.api.core.views.manager.AbstractManager;
+import org.jcnc.jnotepad.plugin.api.core.views.manager.builder.SideBarButtonBuilder;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
 
 import java.util.ArrayList;

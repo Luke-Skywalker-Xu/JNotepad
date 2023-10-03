@@ -15,6 +15,7 @@ import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menubar.*;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
+import org.jcnc.jnotepad.plugin.api.core.views.manager.AbstractManager;
 import org.jcnc.jnotepad.ui.setstage.HelpPaneStage;
 import org.jcnc.jnotepad.ui.setstage.pluginstage.PluginManagementPane;
 import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
@@ -23,7 +24,6 @@ import org.slf4j.Logger;
 import java.util.*;
 
 import static org.jcnc.jnotepad.common.constants.TextConstants.*;
-import static org.jcnc.jnotepad.common.constants.TextConstants.OPEN_DIRECTORY;
 
 /**
  * 顶部菜单栏管理类

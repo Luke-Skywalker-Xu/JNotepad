@@ -20,18 +20,21 @@ public class DirectorySidebarPane extends TreeView<DirFileModel> {
 
     private static final DirectorySidebarPane INSTANCE = new DirectorySidebarPane();
 
+    private static final int CLICK_COUNT = 2;
+
     private DirectorySidebarPane() {
         this.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getClickCount() == 2) {
+            if (mouseEvent.getClickCount() == CLICK_COUNT) {
                 TreeItem<DirFileModel> item = DirectorySidebarPane.this.getSelectionModel().getSelectedItem();
-                if (Objects.isNull(item)) return;
+                if (Objects.isNull(item)) {
+                    return;
+                }
                 File file = new File(item.getValue().getPath());
 
                 if (!file.isFile()) {
                     return;
                 }
                 OpenFile.openFile(file);
-
             }
         });
     }

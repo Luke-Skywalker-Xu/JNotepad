@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.common.manager;
+package org.jcnc.jnotepad.plugin.api.core.manager;
 
 import org.jcnc.jnotepad.model.entity.Cache;
 

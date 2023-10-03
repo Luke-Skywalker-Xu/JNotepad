@@ -36,7 +36,7 @@ public class LunchApp extends Application {
         // 初始化应用程序
         APPLICATION_MANAGER.initializeApp();
         // 初始化默认操作
-        APPLICATION_MANAGER.initializeDefaultAction();
+        APPLICATION_MANAGER.executeDefaultAction();
         primaryStage.show();
     }
 

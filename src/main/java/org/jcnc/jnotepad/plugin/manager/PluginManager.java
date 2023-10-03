@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.plugin.manager;
 
-import org.jcnc.jnotepad.app.util.ApplicationRestarter;
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
@@ -201,7 +201,7 @@ public class PluginManager {
                     appDialog -> {
                         appDialog.close();
                         // 执行重启操作
-                        ApplicationRestarter.restart();
+                        ApplicationManager.getInstance().restart();
                     }, null, "重启", "以后再说");
         }
     }

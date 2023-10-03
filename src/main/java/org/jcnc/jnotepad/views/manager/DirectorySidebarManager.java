@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.manager;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
@@ -41,7 +42,7 @@ public class DirectorySidebarManager {
     private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
 
 
-    private static final double lastDividerPosition = 0.3;
+    private static final double LAST_DIVIDER_POSITION = 0.3;
 
     /**
      * 控制文件树显示
@@ -56,13 +57,13 @@ public class DirectorySidebarManager {
         double roundedNumber = Double.parseDouble(formattedNumber);
 
         // 分割条位置不等于 代表展开
-        if (roundedNumber != 0.0) {
+        if (Double.compare(roundedNumber, 0.0) != 0) {
             // 收缩分割条 收缩文件树
             center.setDividerPositions(0.0);
 
         } else {
             // 展开分割条，文件树
-            center.setDividerPositions(lastDividerPosition);
+            center.setDividerPositions(LAST_DIVIDER_POSITION);
 
         }
     }
@@ -76,8 +77,19 @@ public class DirectorySidebarManager {
         if (bool) {
             // 获取分割面板
             SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
-            center.setDividerPositions(lastDividerPosition);
+            center.setDividerPositions(LAST_DIVIDER_POSITION);
         }
+
+    }
+
+    private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
+        return (observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                item.setGraphic(item.getValue().getIconIsSelected());
+            } else {
+                item.setGraphic(item.getValue().getIconIsNotSelected());
+            }
+        };
     }
 
     /**
@@ -86,10 +98,10 @@ public class DirectorySidebarManager {
      * @param dirFileModel 文件
      */
     public void setTreeView(DirFileModel dirFileModel) {
-        TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel);
+        TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel, dirFileModel.getIconIsNotSelected());
 
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
-
+        rootItem.expandedProperty().addListener(getTreeItemListener(rootItem));
         expandFolder(dirFileModel, rootItem);
     }
 
@@ -103,7 +115,8 @@ public class DirectorySidebarManager {
         List<DirFileModel> childFileList = dirFileModel.getChildFile();
         if (childFileList != null) {
             for (DirFileModel childFile : childFileList) {
-                TreeItem<DirFileModel> childItem = new TreeItem<>(childFile);
+                TreeItem<DirFileModel> childItem = new TreeItem<>(childFile, childFile.getIconIsNotSelected());
+                childItem.expandedProperty().addListener(getTreeItemListener(childItem));
                 item.getChildren().add(childItem);
                 expandFolder(childFile, childItem);
             }
@@ -111,6 +124,11 @@ public class DirectorySidebarManager {
         }
     }
 
+    /**
+     * 展开已打开文件树
+     *
+     * @since 2023/10/2 23:12
+     */
     public void expandTheOpenFileTree() {
         // 获取缓存
         Object cacheData = CACHE_MANAGER.getCacheData(OpenDirectory.GROUP, "folderThatWasOpened");
