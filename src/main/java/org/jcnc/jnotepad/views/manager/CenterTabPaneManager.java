@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.FileUtil;
 import org.jcnc.jnotepad.common.util.PopUpUtil;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
@@ -137,7 +137,7 @@ public class CenterTabPaneManager {
         if (selectedTab == null) {
             return;
         }
-        selectedTab.setAutoLine(AppConfigController.getInstance().getAutoLineConfig());
+        selectedTab.setAutoLine(UserConfigController.getInstance().getAutoLineConfig());
         bottomStatusBoxManager.updateWhenTabSelected();
     }
 

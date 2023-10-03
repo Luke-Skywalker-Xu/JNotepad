@@ -40,7 +40,7 @@ public class Controller implements ControllerAble {
     @Override
     public void openAssociatedFileAndCreateTextArea(List<String> rawParameters) {
         // 获取上次打开的页面
-        Optional<Object> cacheData = Optional.of(CACHE_MANAGER.getCacheData("tabs", "centerTabs"));
+        Optional<Object> cacheData = Optional.ofNullable(CACHE_MANAGER.getCacheData("tabs", "centerTabs"));
         // 判空
         List<String> fileTab = (List<String>) cacheData.orElse(Collections.emptyList());
         // 打开上次打开的标签页

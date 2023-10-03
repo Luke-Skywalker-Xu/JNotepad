@@ -40,7 +40,7 @@ public class TextConstants {
      */
     public static final String ENGLISH = "english";
 
-    /// Config 文本常量
+    /// BaseConfig 文本常量
     /**
      * 中文小写
      */

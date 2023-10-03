@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.JsonUtil;
 import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.slf4j.Logger;
@@ -18,8 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
 
 /**
  * 缓存控制器
@@ -36,7 +35,7 @@ public class CacheController {
     private String cacheDir;
 
     private CacheController() {
-        cacheDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad", "caches").toString();
+        cacheDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), ".jnotepad", "caches").toString();
     }
 
     public static CacheController getInstance() {
@@ -48,7 +47,6 @@ public class CacheController {
         if (createCachesIfNotExists()) {
             return;
         }
-
         // 检查并获取缓存根目录
         File cacheFileDir = createCacheRootIfNotExist();
         // 获取缓存命名空间

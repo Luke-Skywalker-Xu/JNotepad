@@ -147,7 +147,7 @@
                 <configuration>
                     <mainClass>org.jcnc.jnotepad/org.jcnc.jnotepad.LunchApp</mainClass>
                     <reflectionList>
-                        org.jcnc.jnotepad.app.config.AppConfig,org.jcnc.jnotepad.app.config.AppConfig$ShortcutKey
+                        org.jcnc.jnotepad.app.config.UserConfig,org.jcnc.jnotepad.app.config.UserConfig$ShortcutKey
                     </reflectionList>
                     <bundlesList>
                         i18n/i18n

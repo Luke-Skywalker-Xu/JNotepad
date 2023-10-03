@@ -3,6 +3,7 @@ package org.jcnc.jnotepad;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
+import org.jcnc.jnotepad.common.util.LogUtil;
 
 
 /**
@@ -26,6 +27,10 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // 获取当前启动位置
+        String currentWorkingDirectory = System.getProperty("user.dir");
+        LogUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
+
         // 设置参数
         APPLICATION_MANAGER.setApplication(this);
         APPLICATION_MANAGER.setPrimaryStage(primaryStage);

@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.i18n;
 
 import org.jcnc.jnotepad.LunchApp;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -37,10 +37,10 @@ public class LocalizationController {
         SUPPORT_LANGUAGES.put(Locale.ENGLISH, ENGLISH);
     }
 
-    private final AppConfigController appConfigController;
+    private final UserConfigController userConfigController;
 
     private LocalizationController() {
-        this.appConfigController = AppConfigController.getInstance();
+        this.userConfigController = UserConfigController.getInstance();
     }
 
     /**
@@ -87,10 +87,10 @@ public class LocalizationController {
      * @return appConfig中的当前语言配置
      */
     public String getLanguage() {
-        return appConfigController.getLanguage();
+        return userConfigController.getLanguage();
     }
 
     private void setLanguage(String language) {
-        appConfigController.updateLanguage(language);
+        userConfigController.updateLanguage(language);
     }
 }

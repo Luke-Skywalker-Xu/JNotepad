@@ -60,11 +60,9 @@ public class DirectorySidebarManager {
         if (Double.compare(roundedNumber, 0.0) != 0) {
             // 收缩分割条 收缩文件树
             center.setDividerPositions(0.0);
-
         } else {
             // 展开分割条，文件树
             center.setDividerPositions(LAST_DIVIDER_POSITION);
-
         }
     }
 
@@ -82,6 +80,12 @@ public class DirectorySidebarManager {
 
     }
 
+    /**
+     * 设置文件树项监听事件
+     *
+     * @param item 文件树项
+     * @return 监听事件
+     */
     private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
         return (observable, oldValue, newValue) -> {
             if (Boolean.TRUE.equals(newValue)) {

@@ -8,7 +8,7 @@ import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.common.util.UiUtil;
-import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 
 import java.io.File;
 
-import static org.jcnc.jnotepad.controller.config.AppConfigController.CONFIG_NAME;
+import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NAME;
 
 /**
  * 保存文件事件处理程序。
@@ -59,7 +59,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
             // 如果该文件是配置文件，则刷新快捷键
             if (CONFIG_NAME.equals(selectedTab.getText())) {
                 // 重新加载语言包和快捷键
-                AppConfigController.getInstance().loadConfig();
+                UserConfigController.getInstance().loadConfig();
                 TopMenuBarManager.getInstance().initShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包！");
