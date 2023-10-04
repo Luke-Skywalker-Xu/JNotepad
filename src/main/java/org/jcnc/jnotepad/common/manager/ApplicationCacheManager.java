@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.common.manager;
 
-import org.jcnc.jnotepad.plugin.api.core.manager.AbstractCacheManager;
+import org.jcnc.jnotepad.api.core.manager.AbstractCacheManager;
 
 /**
  * 应用程序缓存管理类

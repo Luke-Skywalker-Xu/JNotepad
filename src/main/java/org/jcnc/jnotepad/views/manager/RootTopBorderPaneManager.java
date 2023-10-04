@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.views.manager;
 
 import org.jcnc.jnotepad.views.root.top.RootTopBorderPane;
-import org.jcnc.jnotepad.views.root.top.menu.TopMenuBar;
+import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
 
 /**
  * 顶部边界面板管理类

@@ -1,11 +1,10 @@
 package org.jcnc.jnotepad.controller.cache;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.jcnc.jnotepad.api.util.JsonUtil;
+import org.jcnc.jnotepad.api.util.LogUtil;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.common.util.JsonUtil;
-import org.jcnc.jnotepad.common.util.LogUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.exception.AppException;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.slf4j.Logger;
 
@@ -130,7 +129,7 @@ public class CacheController {
                 return true;
             }
         } catch (IOException e) {
-            throw new AppException(e);
+            logger.error("清理缓存文件或文件夹出错!", e);
         }
         return false;
     }
@@ -164,10 +163,10 @@ public class CacheController {
                 try {
                     boolean flag = groupFile.createNewFile();
                     if (!flag) {
-                        throw new AppException("创建文件失败");
+                        logger.error("创建缓存文件失败:{}", groupFile);
                     }
                 } catch (IOException e) {
-                    throw new AppException(e);
+                    logger.error("创建缓存文件失败!", e);
                 }
             }
             fileMap.computeIfAbsent(groupFile, k -> new HashMap<>(16));
@@ -180,7 +179,7 @@ public class CacheController {
             try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                 fileOutputStream.write(new byte[0]);
             } catch (IOException e) {
-                throw new AppException(e);
+                logger.error("清空缓存文件失败!", e);
             }
         });
         // 写入缓存
@@ -188,7 +187,7 @@ public class CacheController {
             try (FileWriter writer = new FileWriter(entry.getKey(), true)) {
                 writer.write(JsonUtil.toJsonString(entry.getValue()));
             } catch (IOException e) {
-                throw new AppException(e);
+                logger.error("写入缓存文件失败!", e);
             }
         }
     }

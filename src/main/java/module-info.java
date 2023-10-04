@@ -29,8 +29,8 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.controller.manager;
     exports org.jcnc.jnotepad.controller.i18n;
     exports org.jcnc.jnotepad.controller.event.handler.setting;
-    exports org.jcnc.jnotepad.controller.event.handler.menubar;
-    exports org.jcnc.jnotepad.common.util;
+    exports org.jcnc.jnotepad.controller.event.handler.menuitem;
+    exports org.jcnc.jnotepad.api.util;
     exports org.jcnc.jnotepad.common.interfaces;
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.plugin.interfaces;
@@ -41,7 +41,7 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.model.entity;
     exports org.jcnc.jnotepad.views.root.bottom;
     exports org.jcnc.jnotepad.views.root.bottom.status;
-    exports org.jcnc.jnotepad.plugin.api.core.views.sidebar.bottom;
-    exports org.jcnc.jnotepad.plugin.api.core.controller.config;
+    exports org.jcnc.jnotepad.api.core.views.sidebar.bottom;
+    exports org.jcnc.jnotepad.api.core.controller.config;
 
 }
