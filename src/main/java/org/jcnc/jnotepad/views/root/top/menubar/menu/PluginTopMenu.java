@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.views.root.top.menubar.menu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
-import org.jcnc.jnotepad.ui.setstage.pluginstage.PluginManagementPane;
+import org.jcnc.jnotepad.component.stage.setting.plugin.PluginManagementPane;
 
 import java.util.HashMap;
 import java.util.Map;

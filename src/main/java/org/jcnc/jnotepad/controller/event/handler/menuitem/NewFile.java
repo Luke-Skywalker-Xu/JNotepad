@@ -6,7 +6,7 @@ import javafx.scene.control.Tab;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.component.module.CodeArea;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
@@ -38,7 +38,7 @@ public class NewFile implements EventHandler<ActionEvent> {
      */
     public void addNewFileTab() {
         // 创建一个新的文本编辑区
-        LineNumberTextArea textArea = new LineNumberTextArea();
+        CodeArea textArea = new CodeArea();
         // TODO: refactor：统一TextArea新建、绑定监听器入口
         // 设定初始索引
         int index = 1;

@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.app.config;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.jcnc.jnotepad.model.entity.ShortcutKey;
+import org.jcnc.jnotepad.cache.entity.ShortcutKey;
 
 import java.util.List;
 

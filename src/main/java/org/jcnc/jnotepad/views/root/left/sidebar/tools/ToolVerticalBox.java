@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
+import org.jcnc.jnotepad.component.module.base.AbstractVerticalBox;
 
 /**
  * 垂直布局类

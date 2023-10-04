@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.views.root.center.main;
 
-import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
+import org.jcnc.jnotepad.component.module.base.AbstractBorderPane;
 
 /**
  * 主界面边界布局

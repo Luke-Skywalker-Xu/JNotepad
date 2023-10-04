@@ -4,7 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
-import org.jcnc.jnotepad.ui.setstage.HelpPaneStage;
+import org.jcnc.jnotepad.component.stage.setting.HelpPaneStage;
 
 import java.util.HashMap;
 import java.util.Map;
