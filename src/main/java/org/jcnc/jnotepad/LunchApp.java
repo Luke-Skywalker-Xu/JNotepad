@@ -2,8 +2,8 @@ package org.jcnc.jnotepad;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.api.util.LogUtil;
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
-import org.jcnc.jnotepad.common.util.LogUtil;
 
 
 /**

@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.jcnc.jnotepad.common.util.LogUtil;
+import org.jcnc.jnotepad.api.util.LogUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;

@@ -1,10 +1,7 @@
 package org.jcnc.jnotepad.ui.setstage;
 
 import atlantafx.base.controls.CustomTextField;
-import atlantafx.base.theme.Dracula;
-import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.Styles;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,8 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.common.util.UiUtil;
+import org.jcnc.jnotepad.api.util.UiUtil;
 import org.jcnc.jnotepad.plugin.PluginManagerInterface;
 import org.jcnc.jnotepad.ui.module.CustomSetButton;
 import org.jcnc.jnotepad.ui.module.SettingsComponent;
@@ -71,7 +69,8 @@ public class SetStage extends Stage {
         Stage primaryStage = new Stage();
         primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.setTitle("设置窗口");
-
+        // 将窗口设置为模态
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         contentDisplay = new StackPane();
 
@@ -93,7 +92,6 @@ public class SetStage extends Stage {
         cancelButton.setOnAction(event -> {
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
-
         });
         cancelButton.getStyleClass().addAll(Styles.SMALL);
         Button applicationButton = new Button(" 应用 ");
