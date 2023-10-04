@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.controller.manager;
 
-import org.jcnc.jnotepad.common.interfaces.ControllerAble;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.component.module.interfaces.ControllerAble;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.NewFile;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 

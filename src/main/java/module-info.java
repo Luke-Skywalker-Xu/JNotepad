@@ -21,7 +21,7 @@ module org.jcnc.jnotepad {
     requires javafx.web;
 
     exports org.jcnc.jnotepad;
-    exports org.jcnc.jnotepad.model.enums;
+    exports org.jcnc.jnotepad.cache.enums;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.app.i18n;
     exports org.jcnc.jnotepad.common.constants;
@@ -30,18 +30,20 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.controller.i18n;
     exports org.jcnc.jnotepad.controller.event.handler.setting;
     exports org.jcnc.jnotepad.controller.event.handler.menuitem;
-    exports org.jcnc.jnotepad.api.util;
-    exports org.jcnc.jnotepad.common.interfaces;
+    exports org.jcnc.jnotepad.component.module.interfaces;
     opens org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.plugin.interfaces;
     exports org.jcnc.jnotepad.views.root.bottom.function;
-    exports org.jcnc.jnotepad.ui.dialog;
-    exports org.jcnc.jnotepad.ui.dialog.interfaces;
-    exports org.jcnc.jnotepad.ui.module;
-    exports org.jcnc.jnotepad.model.entity;
+
+    exports org.jcnc.jnotepad.component.module;
+    exports org.jcnc.jnotepad.cache.entity;
     exports org.jcnc.jnotepad.views.root.bottom;
     exports org.jcnc.jnotepad.views.root.bottom.status;
     exports org.jcnc.jnotepad.api.core.views.sidebar.bottom;
     exports org.jcnc.jnotepad.api.core.controller.config;
+    exports org.jcnc.jnotepad.component.module.base;
+    exports org.jcnc.jnotepad.component.stage.setting;
+    exports org.jcnc.jnotepad.component.module.vbox;
+    exports org.jcnc.jnotepad.component.module.hbox;
 
 }

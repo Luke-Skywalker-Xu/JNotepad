@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.views.root;
 
-import org.jcnc.jnotepad.ui.module.AbstractBorderPane;
+import org.jcnc.jnotepad.component.module.base.AbstractBorderPane;
 
 /**
  * RootBorderPane 表示 JNotepad 应用程序的根布局。

@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import org.jcnc.jnotepad.exception.AppException;
+import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.views.root.RootBorderPane;
 
 /**

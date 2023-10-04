@@ -2,9 +2,9 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.jcnc.jnotepad.api.util.LogUtil;
+import org.jcnc.jnotepad.component.module.CodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
-import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
  */
 public class CenterTab extends Tab {
     Logger logger = LogUtil.getLogger(this.getClass());
-    private final LineNumberTextArea lineNumberTextArea;
+    private final CodeArea codeArea;
     /**
      * 默认关闭自动换行
      */
@@ -39,18 +39,18 @@ public class CenterTab extends Tab {
     private Charset charset = Charset.defaultCharset();
 
     public CenterTab(String tabTitle) {
-        this(tabTitle, new LineNumberTextArea());
+        this(tabTitle, new CodeArea());
     }
 
-    public CenterTab(String tabTitle, LineNumberTextArea textArea) {
+    public CenterTab(String tabTitle, CodeArea textArea) {
         this(tabTitle, textArea, Charset.defaultCharset());
     }
 
-    public CenterTab(String tabTitle, LineNumberTextArea textArea, Charset charset) {
+    public CenterTab(String tabTitle, CodeArea textArea, Charset charset) {
         super(tabTitle);
-        lineNumberTextArea = textArea;
+        codeArea = textArea;
         initTextAreaListeners();
-        this.setContent(new VirtualizedScrollPane<>(lineNumberTextArea));
+        this.setContent(new VirtualizedScrollPane<>(codeArea));
         setAutoLine(UserConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
     }
@@ -69,11 +69,11 @@ public class CenterTab extends Tab {
 
     public void setAutoLine(boolean autoLine) {
         this.autoLine = autoLine;
-        lineNumberTextArea.setWrapText(autoLine);
+        codeArea.setWrapText(autoLine);
     }
 
-    public LineNumberTextArea getLineNumberTextArea() {
-        return lineNumberTextArea;
+    public CodeArea getLineNumberTextArea() {
+        return codeArea;
     }
 
     public Charset getCharset() {
@@ -126,7 +126,7 @@ public class CenterTab extends Tab {
      */
     private void initTextAreaListeners() {
         // 监听主要文本区域的文本变化
-        lineNumberTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
+        codeArea.textProperty().addListener((observable, oldValue, newValue) -> {
             BottomStatusBoxManager.getInstance().updateWordCountStatusLabel();
             saveSelectedFileTab();
         });

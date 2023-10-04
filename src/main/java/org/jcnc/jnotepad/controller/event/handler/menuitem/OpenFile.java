@@ -4,16 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.api.util.EncodingDetector;
-import org.jcnc.jnotepad.api.util.LogUtil;
-import org.jcnc.jnotepad.api.util.UiUtil;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+import org.jcnc.jnotepad.cache.entity.Cache;
+import org.jcnc.jnotepad.cache.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.model.entity.Cache;
-import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
-import org.jcnc.jnotepad.ui.dialog.factory.impl.BasicFileChooserFactory;
-import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.component.module.CodeArea;
+import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicFileChooserFactory;
+import org.jcnc.jnotepad.util.EncodingDetector;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
@@ -21,7 +21,8 @@ import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import java.io.File;
 import java.nio.charset.Charset;
 
-import static org.jcnc.jnotepad.api.util.FileUtil.getFileText;
+import static org.jcnc.jnotepad.util.FileUtil.getFileText;
+
 
 /**
  * 打开文件的事件处理程序。
@@ -92,7 +93,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param file 文件对象
      */
     public static void getText(File file) {
-        LineNumberTextArea textArea = createNewTextArea();
+        CodeArea textArea = createNewTextArea();
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
         String fileText = getFileText(file, encoding);
@@ -114,8 +115,8 @@ public class OpenFile implements EventHandler<ActionEvent> {
      *
      * @return 新的文本区域
      */
-    private static LineNumberTextArea createNewTextArea() {
-        return new LineNumberTextArea();
+    private static CodeArea createNewTextArea() {
+        return new CodeArea();
     }
 
     /**
@@ -125,7 +126,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param textArea 文本区域
      * @return 新的标签页
      */
-    private static CenterTab createNewTab(String tabName, LineNumberTextArea textArea, Charset charset) {
+    private static CenterTab createNewTab(String tabName, CodeArea textArea, Charset charset) {
         return new CenterTab(tabName, textArea, charset);
     }
 }

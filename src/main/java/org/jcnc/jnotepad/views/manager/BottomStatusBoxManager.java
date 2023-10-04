@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.component.module.CodeArea;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 
@@ -106,7 +106,7 @@ public class BottomStatusBoxManager {
         if (instance.getSelected() == null) {
             return;
         }
-        LineNumberTextArea textArea = instance.getSelected().getLineNumberTextArea();
+        CodeArea textArea = instance.getSelected().getLineNumberTextArea();
         int caretPosition = textArea.getCaretPosition();
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());
@@ -128,7 +128,7 @@ public class BottomStatusBoxManager {
                 updateEncodingLabel(centerTab.getCharset().name());
 
                 // 添加光标位置变化监听器
-                LineNumberTextArea textArea = centerTab.getLineNumberTextArea();
+                CodeArea textArea = centerTab.getLineNumberTextArea();
                 textArea.caretPositionProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> updateRowColumnLabel(textArea.getCaretPosition(), textArea.getText()));
             }
         }

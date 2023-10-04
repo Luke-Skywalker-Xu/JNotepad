@@ -8,8 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jcnc.jnotepad.LunchApp;
-import org.jcnc.jnotepad.api.util.LogUtil;
-import org.jcnc.jnotepad.api.util.UiUtil;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
@@ -20,6 +18,8 @@ import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.*;
 
 import java.io.IOException;

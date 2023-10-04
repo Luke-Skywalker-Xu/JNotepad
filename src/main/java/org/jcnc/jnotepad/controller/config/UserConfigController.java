@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.config;
 
 import org.jcnc.jnotepad.api.core.controller.config.BaseConfigController;
 import org.jcnc.jnotepad.app.config.UserConfig;
-import org.jcnc.jnotepad.model.entity.ShortcutKey;
+import org.jcnc.jnotepad.cache.entity.ShortcutKey;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;

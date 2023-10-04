@@ -3,12 +3,12 @@ package org.jcnc.jnotepad.views.manager;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.api.util.FileUtil;
-import org.jcnc.jnotepad.api.util.PopUpUtil;
+import org.jcnc.jnotepad.cache.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.component.module.CodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
-import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
-import org.jcnc.jnotepad.ui.module.LineNumberTextArea;
+import org.jcnc.jnotepad.util.FileUtil;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
@@ -79,7 +79,7 @@ public class CenterTabPaneManager {
         }
         if (tab.isRelevance()) {
             // 获取当前文本域对象
-            LineNumberTextArea lineNumberTextArea = tab.getLineNumberTextArea();
+            CodeArea codeArea = tab.getLineNumberTextArea();
             // 获取当前标签页对应文件上次修改时间
             Long lastModifiedTime = tab.getLastModifiedTimeOfAssociatedFile();
             // 获取对应文件上次修改时间
@@ -95,8 +95,8 @@ public class CenterTabPaneManager {
             PopUpUtil.questionAlert(
                     "重新加载", file.getAbsolutePath(), "此文件已被外部修改，是否重新加载该文件？",
                     appDialog -> {
-                        lineNumberTextArea.clear();
-                        lineNumberTextArea.appendText(fileText);
+                        codeArea.clear();
+                        codeArea.appendText(fileText);
                         appDialog.close();
                     }, Stage::close, "是", "否");
         }

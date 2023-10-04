@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import org.jcnc.jnotepad.ui.module.AbstractHorizontalBox;
+import org.jcnc.jnotepad.component.module.base.AbstractHorizontalBox;
 
 /**
  * ToolHBox 是 JNotepad 应用程序的工具栏水平布局类。

@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.views.root.bottom.status;
 
 import javafx.scene.control.Label;
-import org.jcnc.jnotepad.ui.module.AbstractHorizontalBox;
+import org.jcnc.jnotepad.component.module.base.AbstractHorizontalBox;
 
 /**
  * 状态栏组件封装。

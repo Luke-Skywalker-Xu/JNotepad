@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.views.root.right;
 
-import org.jcnc.jnotepad.ui.module.AbstractVerticalBox;
+import org.jcnc.jnotepad.component.module.base.AbstractVerticalBox;
 
 /**
  * 右侧边栏的垂直布局容器类。
