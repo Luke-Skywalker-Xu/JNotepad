@@ -15,7 +15,6 @@ import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
-import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.util.LogUtil;
@@ -140,8 +139,7 @@ public class ApplicationManager {
         // 刷新插件配置文件
         pluginConfigController.getConfig().setPlugins(PluginManager.getInstance().getPluginDescriptors());
         pluginConfigController.writeConfig();
-        // 保存配置文件
-        UserConfigController.getInstance().writeConfig();
+
         // 销毁插件可能申请的资源
         PluginManager.getInstance().destroyPlugins();
         // 保存已打开的文件标签页

@@ -18,8 +18,8 @@ public class SideBarButtonBuilder {
     private EventHandler<ActionEvent> eventHandler;
 
     public Button build() {
-        Optional<Button> container = Optional.of(new Button());
-        button = container.get();
+        Optional<Button> container = Optional.ofNullable(button);
+        button = container.orElseGet(Button::new);
         button.setGraphic(imageView);
         button.setOnAction(eventHandler);
         return button;
@@ -31,9 +31,9 @@ public class SideBarButtonBuilder {
     }
 
     public SideBarButtonBuilder setButtonEssentialAttribute(Double relativelyPrefWidth, Double relativelyPrefHeight) {
-        Optional<Double> container = Optional.of(relativelyPrefHeight);
+        Optional<Double> container = Optional.ofNullable(relativelyPrefHeight);
         button.setPrefWidth(imageView.getFitWidth() + container.orElse(20D));
-        container = Optional.of(relativelyPrefWidth);
+        container = Optional.ofNullable(relativelyPrefWidth);
         button.setPrefHeight(imageView.getFitHeight() + container.orElse(20D));
         return this;
     }
@@ -49,14 +49,14 @@ public class SideBarButtonBuilder {
      * @return 建造者对象
      */
     public SideBarButtonBuilder setImageViewEssentialAttribute(Double fitWidth, Double fitHeight, boolean preserveRatio, Double scaleX, Double scaleY) {
-        Optional<Double> container = Optional.of(fitWidth);
+        Optional<Double> container = Optional.ofNullable(fitWidth);
         imageView.setFitWidth(container.orElse(10D));
-        container = Optional.of(fitHeight);
+        container = Optional.ofNullable(fitHeight);
         imageView.setFitHeight(container.orElse(10D));
         imageView.setPreserveRatio(preserveRatio);
-        container = Optional.of(scaleX);
+        container = Optional.ofNullable(scaleX);
         imageView.setScaleX(container.orElse(2.5));
-        container = Optional.of(scaleY);
+        container = Optional.ofNullable(scaleY);
         imageView.setScaleY(container.orElse(2.5));
         return this;
     }

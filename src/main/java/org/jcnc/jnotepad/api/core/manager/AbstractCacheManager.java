@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.api.core.manager;
 
-import org.jcnc.jnotepad.cache.entity.Cache;
+import org.jcnc.jnotepad.model.entity.Cache;
 
 import java.util.Map;
 

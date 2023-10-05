@@ -1,9 +1,9 @@
 package org.jcnc.jnotepad.plugin;
 
-import org.jcnc.jnotepad.cache.entity.PluginDescriptor;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.exception.AppException;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.plugin.interfaces.Plugin;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
 import org.jcnc.jnotepad.util.JsonUtil;

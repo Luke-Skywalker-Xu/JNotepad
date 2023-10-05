@@ -16,8 +16,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.jcnc.jnotepad.app.config.AppConfig;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
+import org.jcnc.jnotepad.app.manager.ApplicationManager;
+import org.jcnc.jnotepad.common.constants.TextConstants;
+import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
+import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicDirectoryChooserFactory;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
+import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenDirectory;
+import org.jcnc.jnotepad.model.entity.Cache;
+import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.plugin.PluginManagerInterface;
+import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.util.UiUtil;
+
+import java.io.File;
 
 import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_LENGTH;
 import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_WIDTH;
@@ -41,6 +54,8 @@ public class SetStage extends Stage {
     public static final String DEVELOPER_DEBUG_PAGE = "开发者调试页面";
     private static SetStage instance;
     private StackPane contentDisplay;
+
+    private final ApplicationCacheManager cacheManager = ApplicationCacheManager.getInstance();
 
     /**
      * 私有构造方法以实现单例模式。
@@ -202,8 +217,6 @@ public class SetStage extends Stage {
             DeveloperDebugStage debugPage = new DeveloperDebugStage();
             debugPage.start(new Stage());
         });
-
-
         generalLayout.getChildren().addAll(devBox);
 
         return generalLayout;
@@ -218,23 +231,50 @@ public class SetStage extends Stage {
         VBox generalLayout = new VBox(10);
         generalLayout.setPadding(new Insets(25));
 
-        var hBox=new HBox(5);
+        var hBox = new HBox(5);
 
-        var fileChooseText =new Text("路径选择: ");
+        var fileChooseText = new Text("文件根路径: ");
         fileChooseText.setFont(new Font(18));
-
-        var fileChoose =new CustomTextField("");
+        AppConfig config = AppConfigController.getInstance().getConfig();
+        var fileChoose = new CustomTextField(config.getRootPath());
         fileChoose.getStyleClass().add(Styles.SMALL);
         fileChoose.setPrefWidth(420);
 
-        var fileChooseBtn =new Button();
+        var fileChooseBtn = new Button();
         fileChooseBtn.setText("选择文件夹");
         fileChooseBtn.getStyleClass().addAll(Styles.SMALL);
+        BasicDirectoryChooserFactory directoryChooserFactory = BasicDirectoryChooserFactory.getInstance();
         fileChooseBtn.setOnAction(event -> {
-            // TODO: 2023/10/4 选择文件
+            // 获取打开目录缓存
+            Cache cache = cacheManager.getCache(OpenDirectory.GROUP, "openDirectory");
 
+            File file = directoryChooserFactory.createDirectoryChooser(
+                            UiResourceBundle.getContent(TextConstants.OPEN),
+                            cache == null ? null : new File((String) cache.getCacheData()))
+                    .showDialog(UiUtil.getAppWindow());
+            if (file == null) {
+                return;
+            }
+            if (file.equals(new File(config.getRootPath()))) {
+                PopUpUtil.errorAlert("错误", "路径不能和默认路径相同", "请重新选择路径", null, null);
+                return;
+            }
+            // 设置缓存
+            if (cache == null) {
+                cacheManager.addCache(cacheManager.createCache(OpenDirectory.GROUP, "openDirectory", file.getAbsolutePath(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
+            } else {
+                cache.setCacheData(file.getParent());
+                cacheManager.addCache(cache);
+            }
+            config.setRootPath(file.getAbsolutePath());
+            PopUpUtil.questionAlert("更改", "设置程序文件根路径", "设置成功，请重启程序以应用路径更改!", appDialog -> {
+                appDialog.close();
+                ApplicationManager.getInstance().restart();
+            }, null, "重启", "以后再说");
+            Stage stage = (Stage) fileChooseBtn.getScene().getWindow();
+            stage.close();
         });
-        hBox.getChildren().addAll(fileChooseText,fileChoose,fileChooseBtn);
+        hBox.getChildren().addAll(fileChooseText, fileChoose, fileChooseBtn);
 
         generalLayout.getChildren().addAll(hBox);
 
