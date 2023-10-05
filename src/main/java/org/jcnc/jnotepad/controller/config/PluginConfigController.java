@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+
 /**
  * 插件控制器
  *
@@ -24,8 +26,8 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
 
     private PluginConfigController() {
         String rootPath = AppConfigController.getInstance().getConfig().getRootPath();
-        configDir = Paths.get(rootPath, ".jnotepad", ROOT_CONFIG_DIR).toString();
-        setPluginsDir(Paths.get(rootPath, ".jnotepad", "plugins").toString());
+        configDir = Paths.get(rootPath, PROGRAM_FILE_DIRECTORY, rootConfigDir).toString();
+        setPluginsDir(Paths.get(rootPath, PROGRAM_FILE_DIRECTORY, "plugins").toString());
         loadConfig();
     }
 
