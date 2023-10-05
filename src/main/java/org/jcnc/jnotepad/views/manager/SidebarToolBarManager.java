@@ -5,8 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
 import org.jcnc.jnotepad.api.core.views.manager.builder.SideBarButtonBuilder;
-import org.jcnc.jnotepad.controller.event.handler.setting.DirTreeBtn;
-import org.jcnc.jnotepad.controller.event.handler.setting.SetBtn;
+import org.jcnc.jnotepad.controller.event.handler.toolbar.DirTreeBtn;
+import org.jcnc.jnotepad.controller.event.handler.toolbar.RunBtn;
+import org.jcnc.jnotepad.controller.event.handler.toolbar.SetBtn;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
 
 import java.util.ArrayList;
@@ -53,7 +54,13 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new DirTreeBtn()).build());
-
+        registerNode(
+                new SideBarButtonBuilder()
+                        .setButton(sidebarToolBar.getRunButton())
+                        .setImageView(new ImageView(new Image("directory.png")))
+                        .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
+                        .setButtonEssentialAttribute(20D, 20D)
+                        .setEventHandler(new RunBtn()).build());
     }
 
 

@@ -4,6 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.*;
+import org.jcnc.jnotepad.controller.event.handler.toolbar.OpenDirectory;
 
 import java.util.HashMap;
 import java.util.Map;
