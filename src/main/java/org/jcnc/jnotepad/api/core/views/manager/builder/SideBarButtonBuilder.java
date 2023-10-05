@@ -18,8 +18,8 @@ public class SideBarButtonBuilder {
     private EventHandler<ActionEvent> eventHandler;
 
     public Button build() {
-        Optional<Button> container = Optional.of(new Button());
-        button = container.get();
+        Optional<Button> container = Optional.ofNullable(button);
+        button = container.orElseGet(Button::new);
         button.setGraphic(imageView);
         button.setOnAction(eventHandler);
         return button;
@@ -31,9 +31,9 @@ public class SideBarButtonBuilder {
     }
 
     public SideBarButtonBuilder setButtonEssentialAttribute(Double relativelyPrefWidth, Double relativelyPrefHeight) {
-        Optional<Double> container = Optional.of(relativelyPrefHeight);
+        Optional<Double> container = Optional.ofNullable(relativelyPrefHeight);
         button.setPrefWidth(imageView.getFitWidth() + container.orElse(20D));
-        container = Optional.of(relativelyPrefWidth);
+        container = Optional.ofNullable(relativelyPrefWidth);
         button.setPrefHeight(imageView.getFitHeight() + container.orElse(20D));
         return this;
     }

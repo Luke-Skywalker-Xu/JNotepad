@@ -9,7 +9,9 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -157,7 +159,42 @@ public class FileUtil {
                 }
             }
         }
-
         return dirFileModel;
     }
+
+    /**
+     * 文件夹迁移
+     *
+     * @param sourceFolder 源文件夹
+     * @param targetFolder 目标文件夹
+     * @since 2023/10/5 12:18
+     */
+
+    private static void migrateFolder(File sourceFolder, File targetFolder) {
+        // 创建目标文件夹
+        targetFolder.mkdirs();
+
+        // 获取源文件夹中的所有文件和文件夹
+        File[] files = sourceFolder.listFiles();
+
+        if (files != null) {
+            // 遍历源文件夹中的每个文件和文件夹
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    // 如果是文件夹，递归调用自身进行迁移
+                    migrateFolder(file, new File(targetFolder, file.getName()));
+                } else {
+                    // 如果是文件，将文件复制到目标文件夹中
+                    Path sourceFilePath = file.toPath();
+                    Path targetFilePath = new File(targetFolder, file.getName()).toPath();
+                    try {
+                        Files.copy(sourceFilePath, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        throw new AppException(e);
+                    }
+                }
+            }
+        }
+    }
+
 }
