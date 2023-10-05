@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.app.config;
 
-import org.jcnc.jnotepad.cache.entity.PluginDescriptor;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.cache.enums;
+package org.jcnc.jnotepad.model.enums;
 
 /**
  * 缓存过期时间枚举

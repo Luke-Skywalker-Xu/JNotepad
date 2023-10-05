@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.cache.entity;
+package org.jcnc.jnotepad.model.entity;
 
 import org.kordamp.ikonli.javafx.FontIcon;
 

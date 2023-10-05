@@ -2,8 +2,8 @@ package org.jcnc.jnotepad.views.root.center.main.center.directory;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.jcnc.jnotepad.cache.entity.DirFileModel;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
+import org.jcnc.jnotepad.model.entity.DirFileModel;
 
 import java.io.File;
 import java.util.Objects;

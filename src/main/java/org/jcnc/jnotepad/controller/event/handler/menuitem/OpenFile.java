@@ -5,12 +5,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.cache.entity.Cache;
-import org.jcnc.jnotepad.cache.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.component.module.CodeArea;
+import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicFileChooserFactory;
+import org.jcnc.jnotepad.model.entity.Cache;
+import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.util.EncodingDetector;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
@@ -70,9 +70,9 @@ public class OpenFile implements EventHandler<ActionEvent> {
      */
     public static void openFile(File file) {
         // 获取标签页集合
-        CenterTabPane jnotepadTabPane = CenterTabPane.getInstance();
+        CenterTabPane centerTabPane = CenterTabPane.getInstance();
         // 遍历标签页，查找匹配的标签页
-        for (Tab tab : jnotepadTabPane.getTabs()) {
+        for (Tab tab : centerTabPane.getTabs()) {
             // 获取绑定的文件
             File tabFile = (File) tab.getUserData();
             if (tabFile == null) {
@@ -80,7 +80,7 @@ public class OpenFile implements EventHandler<ActionEvent> {
             }
             if (file.getPath().equals((tabFile).getPath())) {
                 // 找到匹配的标签页，设置为选中状态并跳转
-                jnotepadTabPane.getSelectionModel().select(tab);
+                centerTabPane.getSelectionModel().select(tab);
                 return;
             }
         }
@@ -93,13 +93,13 @@ public class OpenFile implements EventHandler<ActionEvent> {
      * @param file 文件对象
      */
     public static void getText(File file) {
-        CodeArea textArea = createNewTextArea();
+        TextCodeArea textCodeArea = createNewTextArea();
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
         String fileText = getFileText(file, encoding);
         LogUtil.getLogger(OpenFile.class).info("已调用读取文件功能");
-        textArea.appendText(fileText);
-        CenterTab tab = createNewTab(file.getName(), textArea, encoding);
+        textCodeArea.appendText(fileText);
+        CenterTab tab = createNewTab(file.getName(), textCodeArea, encoding);
         // 设置当前标签页关联本地文件
         tab.setRelevance(true);
         // 设置标签页关联文件
@@ -115,18 +115,18 @@ public class OpenFile implements EventHandler<ActionEvent> {
      *
      * @return 新的文本区域
      */
-    private static CodeArea createNewTextArea() {
-        return new CodeArea();
+    private static TextCodeArea createNewTextArea() {
+        return new TextCodeArea();
     }
 
     /**
      * 创建新的标签页。
      *
      * @param tabName  标签名
-     * @param textArea 文本区域
+     * @param textCodeArea 文本区域
      * @return 新的标签页
      */
-    private static CenterTab createNewTab(String tabName, CodeArea textArea, Charset charset) {
-        return new CenterTab(tabName, textArea, charset);
+    private static CenterTab createNewTab(String tabName, TextCodeArea textCodeArea, Charset charset) {
+        return new CenterTab(tabName, textCodeArea, charset);
     }
 }

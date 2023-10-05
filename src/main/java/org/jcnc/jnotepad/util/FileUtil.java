@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.util;
 
-import org.jcnc.jnotepad.cache.entity.DirFileModel;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.controller.exception.AppException;
+import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.*;

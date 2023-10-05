@@ -1,8 +1,8 @@
 package org.jcnc.jnotepad.util;
 
-import org.jcnc.jnotepad.cache.enums.DialogType;
 import org.jcnc.jnotepad.component.stage.dialog.AppDialogBuilder;
 import org.jcnc.jnotepad.component.stage.dialog.interfaces.DialogButtonAction;
+import org.jcnc.jnotepad.model.enums.DialogType;
 
 /**
  * 弹窗工具类

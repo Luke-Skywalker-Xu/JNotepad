@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.cache.entity;
+package org.jcnc.jnotepad.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jcnc.jnotepad.plugin.interfaces.Plugin;

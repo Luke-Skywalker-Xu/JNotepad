@@ -49,14 +49,14 @@ public class SideBarButtonBuilder {
      * @return 建造者对象
      */
     public SideBarButtonBuilder setImageViewEssentialAttribute(Double fitWidth, Double fitHeight, boolean preserveRatio, Double scaleX, Double scaleY) {
-        Optional<Double> container = Optional.of(fitWidth);
+        Optional<Double> container = Optional.ofNullable(fitWidth);
         imageView.setFitWidth(container.orElse(10D));
-        container = Optional.of(fitHeight);
+        container = Optional.ofNullable(fitHeight);
         imageView.setFitHeight(container.orElse(10D));
         imageView.setPreserveRatio(preserveRatio);
-        container = Optional.of(scaleX);
+        container = Optional.ofNullable(scaleX);
         imageView.setScaleX(container.orElse(2.5));
-        container = Optional.of(scaleY);
+        container = Optional.ofNullable(scaleY);
         imageView.setScaleY(container.orElse(2.5));
         return this;
     }

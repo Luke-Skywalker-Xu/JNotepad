@@ -1,9 +1,9 @@
 package org.jcnc.jnotepad.plugin.manager;
 
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
-import org.jcnc.jnotepad.cache.entity.PluginDescriptor;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
+import org.jcnc.jnotepad.model.entity.PluginDescriptor;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
 import org.slf4j.Logger;

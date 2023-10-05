@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.api.core.ui.stage;
+package org.jcnc.jnotepad.api.core.component.stage;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

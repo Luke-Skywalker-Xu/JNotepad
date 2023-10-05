@@ -21,7 +21,7 @@ module org.jcnc.jnotepad {
     requires javafx.web;
 
     exports org.jcnc.jnotepad;
-    exports org.jcnc.jnotepad.cache.enums;
+    exports org.jcnc.jnotepad.model.enums;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.app.i18n;
     exports org.jcnc.jnotepad.common.constants;
@@ -36,7 +36,7 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.views.root.bottom.function;
 
     exports org.jcnc.jnotepad.component.module;
-    exports org.jcnc.jnotepad.cache.entity;
+    exports org.jcnc.jnotepad.model.entity;
     exports org.jcnc.jnotepad.views.root.bottom;
     exports org.jcnc.jnotepad.views.root.bottom.status;
     exports org.jcnc.jnotepad.api.core.views.sidebar.bottom;
