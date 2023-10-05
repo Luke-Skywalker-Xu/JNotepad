@@ -44,6 +44,10 @@ public class AppConstants {
      * 默认属性
      */
     public static final String DEFAULT_PROPERTY = "user.home";
+    /**
+     * 程序文件目录
+     */
+    public static final String PROGRAM_FILE_DIRECTORY = ".jnotepad";
 
 
     /**

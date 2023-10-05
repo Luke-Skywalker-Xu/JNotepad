@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
 
 /**
@@ -31,7 +32,7 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
     private String configDir;
 
     private UserConfigController() {
-        configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), ".jnotepad", ROOT_CONFIG_DIR).toString();
+        configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), PROGRAM_FILE_DIRECTORY, rootConfigDir).toString();
         loadConfig();
     }
 

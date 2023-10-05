@@ -15,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.*;
 
@@ -170,7 +171,7 @@ public class FileUtil {
      * @since 2023/10/5 12:18
      */
 
-    private static void migrateFolder(File sourceFolder, File targetFolder) {
+    public static void migrateFolder(File sourceFolder, File targetFolder) {
         // 创建目标文件夹
         targetFolder.mkdirs();
 
@@ -197,4 +198,74 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 迁移文件夹
+     *
+     * @param sourceFolder   源文件夹
+     * @param targetFolder   目标文件夹
+     * @param ignoredFolders 忽略的文件夹集合
+     * @param ignoredFiles   忽略的文件集合
+     * @since 2023/10/5 13:58
+     */
+    public static void migrateFolder(File sourceFolder, File targetFolder, Set<File> ignoredFolders, Set<File> ignoredFiles) {
+        // 创建目标文件夹
+        targetFolder.mkdir();
+        // 获取源文件夹中的所有文件和文件夹
+        File[] files = sourceFolder.listFiles();
+        if (files != null) {
+            // 遍历源文件夹中的每个文件和文件夹
+            for (File file : files) {
+                // 如果是文件夹且不是忽略的文件夹，递归调用自身进行迁移
+                if (file.isDirectory() && !ignoredFolders.contains(file)) {
+                    migrateFolder(targetFolder, ignoredFolders, ignoredFiles, file);
+                    continue;
+                }
+                // 如果是文件且不是忽略的文件，将文件复制到目标文件夹中
+                if (!file.isDirectory() && !ignoredFiles.contains(file)) {
+                    migrateFile(targetFolder, file);
+                }
+            }
+        }
+    }
+
+    /**
+     * 迁移文件
+     *
+     * @param targetFolder 目标文件夹
+     * @param file         文件
+     */
+    public static void migrateFile(File targetFolder, File file) {
+        Path sourceFilePath = file.toPath();
+        Path targetFilePath = new File(targetFolder, file.getName()).toPath();
+        try {
+            Files.copy(sourceFilePath, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new AppException(e);
+        }
+        // 删除源文件
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            throw new AppException(e);
+        }
+    }
+
+    /**
+     * 迁移文件夹
+     *
+     * @param targetFolder   目标文件夹
+     * @param ignoredFolders 忽略的文件夹集合
+     * @param ignoredFiles   忽略的文件集合
+     * @param file           文件
+     */
+    private static void migrateFolder(File targetFolder, Set<File> ignoredFolders, Set<File> ignoredFiles, File file) {
+        migrateFolder(file, new File(targetFolder, file.getName()), ignoredFolders, ignoredFiles);
+        // 调用完毕删除当前目录
+        try {
+            Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            throw new AppException(e);
+        }
+    }
 }
+

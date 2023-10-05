@@ -8,23 +8,34 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
+import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
+import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.controller.manager.Controller;
 import org.jcnc.jnotepad.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.util.FileUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
+
+import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 
 /**
@@ -130,11 +141,42 @@ public class ApplicationManager {
     }
 
     /**
-     * 停止程序
+     * 迁移程序根文件夹
+     */
+    public void migrateFileRootFolder() {
+        AppConfig config = AppConfigController.getInstance().getConfig();
+        String lastRootPath = config.getLastRootPath();
+        if (lastRootPath == null) {
+            return;
+        }
+        // 获取源文件夹
+        File sourceFolder = new File(lastRootPath, PROGRAM_FILE_DIRECTORY);
+        // 获取目标文件夹
+        File targetFolder = new File(config.getRootPath(), PROGRAM_FILE_DIRECTORY);
+        // 设置忽略文件夹
+        Set<File> ignoredFolders = config.getIgnoreFolder();
+        // 设置忽略文件
+        Set<File> ignoredFiles = config.getIgnoreFile();
+        // 移动文件夹
+        FileUtil.migrateFolder(sourceFolder, targetFolder, ignoredFolders, ignoredFiles);
+        // 删除.jnotepad
+        if (!sourceFolder.equals(new File(Paths.get(System.getProperty(DEFAULT_PROPERTY), PROGRAM_FILE_DIRECTORY).toString()))) {
+            try {
+                Files.delete(sourceFolder.toPath());
+            } catch (IOException e) {
+                throw new AppException(e);
+            }
+        }
+        // 保存新配置
+        AppConfigController.getInstance().writeConfig();
+    }
+
+    /**
+     * 停止前操作
      *
      * @apiNote 在停止程序之前会执行此操作
      */
-    public void stopApp() {
+    public void operationBeforeStopping() {
         PluginConfigController pluginConfigController = PluginConfigController.getInstance();
         // 刷新插件配置文件
         pluginConfigController.getConfig().setPlugins(PluginManager.getInstance().getPluginDescriptors());
@@ -146,6 +188,8 @@ public class ApplicationManager {
         CenterTabPaneManager.getInstance().saveOpenFileTabs();
         // 将缓存写入本地
         CacheController.getInstance().writeCaches();
+        // 迁移文件夹
+        migrateFileRootFolder();
         // 关闭线程池
         threadPool.shutdownNow();
     }
@@ -205,12 +249,11 @@ public class ApplicationManager {
             // 构建新进程来重新启动应用程序
             ProcessBuilder builder = new ProcessBuilder(javaCommand, "-cp", System.getProperty("java.class.path"), mainClass);
             builder.start();
-
             // 关闭当前应用程序
-            System.exit(0);
+            // fixme 使用这个System.exit(0);，在开发环境，点击重启程序，停止前操作不生效
+            stop();
         } catch (IOException e) {
             LogUtil.getLogger("正在重启当前应用程序".getClass());
-
         }
     }
 
@@ -239,7 +282,7 @@ public class ApplicationManager {
         this.primaryStage = primaryStage;
     }
 
-    public void stopApplication() {
+    public void stop() {
         Platform.exit();
     }
 }
