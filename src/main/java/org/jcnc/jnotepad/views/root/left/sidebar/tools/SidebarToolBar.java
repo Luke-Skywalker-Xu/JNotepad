@@ -30,9 +30,9 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     Button dirTreeButton = new Button();
 
     /**
-     * 工具栏上的文本侧边栏按钮
+     * 工具栏上的运行侧边栏按钮
      */
-    Button fileButton = new Button();
+    Button runButton = new Button();
 
     private SidebarToolBar() {
         // 垂直排列
@@ -68,5 +68,14 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
      */
     public Button getDirTreeButton() {
         return dirTreeButton;
+    }
+
+    /**
+     * 获取工具栏上的运行按钮。
+     *
+     * @return 运行按钮
+     */
+    public Button getRunButton() {
+        return runButton;
     }
 }

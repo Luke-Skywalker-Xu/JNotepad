@@ -28,7 +28,7 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.controller.config;
     exports org.jcnc.jnotepad.controller.manager;
     exports org.jcnc.jnotepad.controller.i18n;
-    exports org.jcnc.jnotepad.controller.event.handler.setting;
+    exports org.jcnc.jnotepad.controller.event.handler.toolbar;
     exports org.jcnc.jnotepad.controller.event.handler.menuitem;
     exports org.jcnc.jnotepad.component.module.interfaces;
     opens org.jcnc.jnotepad.app.config;

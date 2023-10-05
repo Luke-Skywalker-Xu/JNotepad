@@ -22,7 +22,7 @@ import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicDirectoryChooserFactory;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenDirectory;
+import org.jcnc.jnotepad.controller.event.handler.toolbar.OpenDirectory;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.plugin.PluginManagerInterface;
