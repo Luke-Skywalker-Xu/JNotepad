@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @author 许轲
  */
-public class Controller implements ControllerAble {
+public class Controller implements ControllerAble<List<String>> {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
 
     private static final Controller INSTANCE = new Controller();

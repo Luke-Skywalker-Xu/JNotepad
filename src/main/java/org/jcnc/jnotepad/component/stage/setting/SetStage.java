@@ -266,6 +266,9 @@ public class SetStage extends Stage {
                 cache.setCacheData(file.getParent());
                 cacheManager.addCache(cache);
             }
+            // 设置上次的根路径
+            config.setLastRootPath(config.getRootPath());
+            // 设置当前根路径
             config.setRootPath(file.getAbsolutePath());
             PopUpUtil.questionAlert("更改", "设置程序文件根路径", "设置成功，请重启程序以应用路径更改!", appDialog -> {
                 appDialog.close();

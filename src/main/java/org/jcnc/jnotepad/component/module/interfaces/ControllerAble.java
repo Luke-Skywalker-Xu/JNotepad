@@ -1,7 +1,5 @@
 package org.jcnc.jnotepad.component.module.interfaces;
 
-import java.util.List;
-
 /**
  * 控制器接口类
  *
@@ -9,14 +7,14 @@ import java.util.List;
  *
  * @author 许轲
  */
-public interface ControllerAble {
+public interface ControllerAble<T> {
 
     /**
      * 打开关联文件并创建 TextArea。
      *
      * @param rawParameters 原始参数列表
      */
-    void openAssociatedFileAndCreateTextArea(List<String> rawParameters);
+    void openAssociatedFileAndCreateTextArea(T rawParameters);
 
     /**
      * 打开关联文件。

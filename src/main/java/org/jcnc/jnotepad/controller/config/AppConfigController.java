@@ -6,6 +6,7 @@ import org.jcnc.jnotepad.app.config.AppConfig;
 import java.nio.file.Paths;
 
 import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
  * 应用程序配置文件控制器
@@ -23,12 +24,12 @@ public class AppConfigController extends BaseConfigController<AppConfig> {
     /**
      * 配置文件名
      */
-    public static final String CONFIG_NAME = "appConfig.json";
+    public static final String CONFIG_NAME = "JNotepadConfig.json";
 
     private final String configDir;
 
     public AppConfigController() {
-        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), ".jnotepad", ROOT_CONFIG_DIR).toString();
+        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), PROGRAM_FILE_DIRECTORY, systemConfigDir).toString();
         loadConfig();
     }
 

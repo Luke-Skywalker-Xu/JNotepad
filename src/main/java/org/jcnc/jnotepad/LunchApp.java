@@ -47,6 +47,6 @@ public class LunchApp extends Application {
 
     @Override
     public void stop() {
-        APPLICATION_MANAGER.stopApp();
+        APPLICATION_MANAGER.operationBeforeStopping();
     }
 }
