@@ -126,8 +126,8 @@ POM文件中的全部依赖项：
 - Windows 平台
   ![Windows](screenshot/windows-1.png)
 
-- MacOS 平台 (待更新，原因：没有设备)  
-  ![MacOS](screenshot/Mac0S-1.png)
+- MacOS 平台
+  ![MacOS](screenshot/MacOS-1.png)
 
 - Linux 平台   
   ![Linux](screenshot/Linux-1.png)
@@ -135,6 +135,6 @@ POM文件中的全部依赖项：
 # 参与贡献
 
 1. 加入JCNC社区
-1. [阅读JCNC开发者文档][docs-url]
-1. 加入QQ群:386279455
-1. 联系微信:xuxiaolankaka 加入群聊
+2. [阅读JCNC开发者文档][docs-url]
+3. 加入QQ群:386279455
+4. 联系微信:xuxiaolankaka 加入群聊
