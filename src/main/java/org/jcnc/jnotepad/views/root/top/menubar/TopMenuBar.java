@@ -36,6 +36,12 @@ public class TopMenuBar extends MenuBar {
      * 帮助菜单
      */
     private final Menu helpMenu = new Menu();
+
+    /**
+     * 运行菜单
+     */
+    private final Menu runMenu = new Menu();
+
     ///  菜单按钮
     /**
      * 插件菜单
@@ -55,6 +61,16 @@ public class TopMenuBar extends MenuBar {
      * 关于
      */
     private final MenuItem aboutItem = new MenuItem();
+
+    /**
+     * 调试
+     */
+    private final MenuItem deBugItem = new MenuItem();
+    /**
+     * 运行
+     */
+
+    private final MenuItem runItem = new MenuItem();
 
     private final MenuItem developerItem = new MenuItem();
 
@@ -212,5 +228,17 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getDeveloperItem() {
         return developerItem;
+    }
+
+    public Menu getRunMenu() {
+        return runMenu;
+    }
+
+    public MenuItem getDeBugItem() {
+        return deBugItem;
+    }
+
+    public MenuItem getRunItem() {
+        return runItem;
     }
 }
