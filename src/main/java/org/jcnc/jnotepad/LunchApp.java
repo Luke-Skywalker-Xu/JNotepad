@@ -27,7 +27,7 @@ public class LunchApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // 获取当前启动位置
+        // 获取当前启动位置a
         String currentWorkingDirectory = System.getProperty("user.dir");
         LogUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
 
