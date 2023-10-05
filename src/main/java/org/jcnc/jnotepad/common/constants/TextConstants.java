@@ -11,6 +11,8 @@ public class TextConstants {
     public static final String TITLE = "title";
     public static final String SAVE = "SAVE";
     public static final String FILE = "FILE";
+
+    public static final String RUN = "RUN";
     public static final String NEW = "NEW";
     public static final String OPEN = "OPEN";
     public static final String OPEN_DIRECTORY  = "OPEN_DIRECTORY";

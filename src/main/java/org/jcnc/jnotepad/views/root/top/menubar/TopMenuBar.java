@@ -41,6 +41,7 @@ public class TopMenuBar extends MenuBar {
      * 插件菜单
      */
     private final Menu pluginMenu = new Menu();
+    private final Menu runMenu = new Menu();
 
     /**
      * 语言菜单
@@ -139,6 +140,10 @@ public class TopMenuBar extends MenuBar {
     public Menu getPluginMenu() {
         return pluginMenu;
     }
+    public Menu getRunMenu() {
+        return runMenu;
+    }
+
 
 
     public Menu getLanguageMenu() {

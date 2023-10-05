@@ -34,6 +34,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
     SettingTopMenu settingTopMenu = SettingTopMenu.getInstance();
     HelpTopMenu helpTopMenu = HelpTopMenu.getInstance();
 
+    RunTopMenu runTopMenu=RunTopMenu.getInstance();
     PluginTopMenu pluginTopMenu = PluginTopMenu.getInstance();
     private TopMenuBarManager() {
 
@@ -61,6 +62,8 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         // 初始化插件菜单
         pluginTopMenu.initMenu();
 
+        runTopMenu.initMenu();
+
         // 刷新顶部菜单栏
         refreshTopMenuBar();
         // 初始化快捷键
@@ -79,6 +82,8 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         registerNode(helpTopMenu.getMenu());
         // 插件菜单
         registerNode(topMenuBar.getPluginMenu());
+
+        registerNode(runTopMenu.getMenu());
     }
 
 
