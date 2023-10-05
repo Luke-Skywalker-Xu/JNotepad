@@ -125,8 +125,10 @@ POM文件中的全部依赖项：
 
 - Windows 平台
   ![Windows](screenshot/windows-1.png)
-- MacOS 平台   
+
+- MacOS 平台 (待更新，原因：没有设备)  
   ![MacOS](screenshot/Mac0S-1.png)
+
 - Linux 平台   
   ![Linux](screenshot/Linux-1.png)
 
