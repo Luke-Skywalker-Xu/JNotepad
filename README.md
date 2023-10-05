@@ -127,6 +127,8 @@ POM文件中的全部依赖项：
   ![Windows](screenshot/windows-1.png)
 - MacOS 平台   
   ![MacOS](screenshot/Mac0S-1.png)
+- Linux 平台   
+  ![Linux](screenshot/Linux-1.png)
 
 # 参与贡献
 
