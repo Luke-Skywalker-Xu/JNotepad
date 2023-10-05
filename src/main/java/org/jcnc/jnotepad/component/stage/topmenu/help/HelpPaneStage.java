@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.component.stage.setting;
+package org.jcnc.jnotepad.component.stage.topmenu.help;
 
 import atlantafx.base.controls.Notification;
 import atlantafx.base.theme.Styles;
@@ -16,6 +16,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
 import org.jcnc.jnotepad.util.LogUtil;
@@ -193,6 +194,8 @@ public class HelpPaneStage extends AbstractPaneStage {
         stage.setTitle(getStageTitle());
         stage.setScene(getCustomizationScene());
         stage.setResizable(false);
+        // 设置为模态
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 

@@ -24,6 +24,7 @@ public class TextConstants {
 
     public static final String ABOUT = "ABOUT";
 
+    public static final String DEVELOPER = "DEVELOPER";
     public static final String STATISTICS = "STATISTICS";
     public static final String OPEN_CONFIGURATION_FILE = "OPEN_CONFIGURATION_FILE";
     public static final String TOP = "TOP";

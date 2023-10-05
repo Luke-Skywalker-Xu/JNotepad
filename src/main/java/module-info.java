@@ -45,5 +45,7 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.component.stage.setting;
     exports org.jcnc.jnotepad.component.module.vbox;
     exports org.jcnc.jnotepad.component.module.hbox;
+    exports org.jcnc.jnotepad.component.stage.topmenu.help;
+    exports org.jcnc.jnotepad.component.stage.topmenu.plugin;
 
 }

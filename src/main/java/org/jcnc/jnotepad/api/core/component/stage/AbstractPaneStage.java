@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.api.core.component.stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -53,6 +54,8 @@ public abstract class AbstractPaneStage extends BorderPane {
         stage.getIcons().add(getStageIcon());
         stage.setTitle(getStageTitle());
         stage.setScene(getCustomizationScene());
+        // 设置为模态
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
 }

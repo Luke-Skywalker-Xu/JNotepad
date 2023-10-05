@@ -52,9 +52,12 @@ public class TopMenuBar extends MenuBar {
     private final MenuItem newItem = new MenuItem();
 
     /**
-     * 新建
+     * 关于
      */
     private final MenuItem aboutItem = new MenuItem();
+
+    private final MenuItem developerItem = new MenuItem();
+
     /**
      * 打开
      */
@@ -205,5 +208,9 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getOpenDirItem() {
         return openDirItem;
+    }
+
+    public MenuItem getDeveloperItem() {
+        return developerItem;
     }
 }

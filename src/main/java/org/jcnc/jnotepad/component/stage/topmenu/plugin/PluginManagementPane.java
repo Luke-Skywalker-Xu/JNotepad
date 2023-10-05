@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.component.stage.setting.plugin;
+package org.jcnc.jnotepad.component.stage.topmenu.plugin;
 
 import atlantafx.base.controls.Tile;
 import atlantafx.base.controls.ToggleSwitch;
