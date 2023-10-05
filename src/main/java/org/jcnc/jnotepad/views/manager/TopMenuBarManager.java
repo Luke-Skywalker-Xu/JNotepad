@@ -32,9 +32,12 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
     LanguageTopMenu languageTopMenu = LanguageTopMenu.getInstance();
 
     SettingTopMenu settingTopMenu = SettingTopMenu.getInstance();
+
+    RunTopMenu runTopMenu=RunTopMenu.getInstance();
+    PluginTopMenu pluginTopMenu = PluginTopMenu.getInstance();
+
     HelpTopMenu helpTopMenu = HelpTopMenu.getInstance();
 
-    PluginTopMenu pluginTopMenu = PluginTopMenu.getInstance();
     private TopMenuBarManager() {
 
     }
@@ -61,6 +64,8 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         // 初始化插件菜单
         pluginTopMenu.initMenu();
 
+        runTopMenu.initMenu();
+
         // 刷新顶部菜单栏
         refreshTopMenuBar();
         // 初始化快捷键
@@ -73,12 +78,18 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
     public void registerTopMenuBar() {
         // 文件菜单
         registerNode(fileTopMenu.getMenu());
+
         // 设置菜单
         registerNode(topMenuBar.getSetMenu());
-        // 帮助菜单
-        registerNode(helpTopMenu.getMenu());
+
         // 插件菜单
         registerNode(topMenuBar.getPluginMenu());
+
+        // 运行菜单
+        registerNode(runTopMenu.getMenu());
+
+        // 帮助菜单
+        registerNode(helpTopMenu.getMenu());
     }
 
 
