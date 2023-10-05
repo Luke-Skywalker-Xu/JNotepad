@@ -20,6 +20,7 @@ public class DeveloperDebugStage extends Stage {
     Logger logger = LogUtil.getLogger(this.getClass());
 
     public void start(Stage primaryStage) {
+        this.setAlwaysOnTop(true);
         // 创建主舞台
         primaryStage.setTitle("开发者调试页面");
         primaryStage.getIcons().add(UiUtil.getAppIcon());

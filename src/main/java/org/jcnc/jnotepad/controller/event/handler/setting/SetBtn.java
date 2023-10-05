@@ -12,6 +12,10 @@ import org.jcnc.jnotepad.component.stage.setting.SetStage;
  * @author 许轲
  */
 public class SetBtn implements EventHandler<ActionEvent> {
+    /**
+     * 标志变量，跟踪Stage是否已创建
+     */
+    private boolean isStageCreated = false;
 
     /**
      * 打开设置窗口处理事件。
@@ -20,6 +24,11 @@ public class SetBtn implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        SetStage.getInstance().openSetStage();
+        if (!isStageCreated) {
+            SetStage.getInstance().openSetStage();
+            // 设置标志变量为true，表示Stage已创建
+            isStageCreated = true;
+        }
     }
 }
+

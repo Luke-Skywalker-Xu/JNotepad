@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
@@ -83,7 +82,7 @@ public class SetStage extends Stage {
         primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.setTitle("设置窗口");
         // 将窗口设置为模态
-        primaryStage.initModality(Modality.APPLICATION_MODAL);
+        //primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         contentDisplay = new StackPane();
 
@@ -215,6 +214,7 @@ public class SetStage extends Stage {
         devBox.setButtonAction(event -> {
             // 创建并启动DeveloperDebugPage
             DeveloperDebugStage debugPage = new DeveloperDebugStage();
+            debugPage.setAlwaysOnTop (true);
             debugPage.start(new Stage());
         });
         generalLayout.getChildren().addAll(devBox);
