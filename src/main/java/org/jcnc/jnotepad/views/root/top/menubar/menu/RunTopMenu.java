@@ -7,6 +7,7 @@ import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.jcnc.jnotepad.common.constants.TextConstants.DE_BUG;
 import static org.jcnc.jnotepad.common.constants.TextConstants.RUN;
 
 /**
@@ -58,7 +59,12 @@ public class RunTopMenu extends AbstractTopMenu {
      */
     @Override
     protected void registerTopMenu() {
-        // 文件菜单
+        // 运行
+        registerMenuItem(topMenuBar.getRunItem(), RUN, "runItem", null);
+
+        // 调试
+        registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", null);
+
 
     }
 }
