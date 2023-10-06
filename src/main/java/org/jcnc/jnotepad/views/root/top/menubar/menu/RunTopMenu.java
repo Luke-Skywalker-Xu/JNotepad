@@ -24,7 +24,6 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.RUN;
  * @author gewuyou
  */
 public class RunTopMenu extends AbstractTopMenu {
-    CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
     private static final BuildPanelManager BUILD_PANEL_MANAGER = BuildPanelManager.getInstance();
     private static final BuildPanel BUILD_PANEL = BuildPanel.getInstance();
     private static final RunTopMenu INSTANCE = new RunTopMenu();
@@ -64,22 +63,17 @@ public class RunTopMenu extends AbstractTopMenu {
         return runMenuItems;
     }
 
-     EventHandler<ActionEvent> codeRun = event -> {
-        // 创建一个TextArea用于输出编译后的结果
-//        TextArea resultTextArea = new TextArea();
-//        resultTextArea.setPrefRowCount(10);
-//        resultTextArea.setPrefColumnCount(40);
-//        resultTextArea.setEditable(false); // 禁止编辑
+    EventHandler<ActionEvent> codeRun = event -> {
 
         // 获取TextCodeArea的文本内容
-
         CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
+
         String code = centerTab.getLineNumberTextArea().getText();
 
         // TextCodeArea的当前文本内容
         System.out.println("TextCodeArea的当前文本内容：" + code);
 
-        String fileName = "temp.c";
+        String fileName = centerTab.getText();
 
         // 将C代码写入临时文件
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
@@ -88,9 +82,8 @@ public class RunTopMenu extends AbstractTopMenu {
             LogUtil.getLogger(this.getClass()).info("正在写入：{}", code);
         }
 
-        // 编译和运行C代码
-//        compileAndRunCode(fileName, resultTextArea);
-         compileAndRunCode(fileName);
+        // 编译C代码
+        compileAndRunCode(fileName);
     };
 
     /**
@@ -98,8 +91,9 @@ public class RunTopMenu extends AbstractTopMenu {
      */
     private void compileAndRunCode(String fileName) {
         try {
+            CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
             // 创建ProcessBuilder并指定GCC编译命令
-            ProcessBuilder processBuilder = new ProcessBuilder("gcc", fileName, "-o", "temp");
+            ProcessBuilder processBuilder = new ProcessBuilder("gcc", fileName, "-o", centerTab.getText());
 
             // 设置工作目录
             processBuilder.directory(null);
@@ -120,7 +114,7 @@ public class RunTopMenu extends AbstractTopMenu {
                 System.out.println("编译成功！");
 
                 // 运行编译后的可执行文件
-                Process runProcess = new ProcessBuilder("./temp").start();
+                Process runProcess = new ProcessBuilder("./" + centerTab.getText()).start();
 
                 // 读取运行结果
                 BufferedReader runReader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
@@ -130,7 +124,7 @@ public class RunTopMenu extends AbstractTopMenu {
                 }
                 // 显示运行结果
                 BUILD_PANEL_MANAGER.controlShow(true);
-                BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getRunBox(),result.toString());
+                BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getRunBox(), result.toString());
             } else {
                 System.out.println("编译失败，返回代码：" + compileExitCode);
             }
@@ -152,7 +146,7 @@ public class RunTopMenu extends AbstractTopMenu {
         // 调试 test
         registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", event -> {
             BUILD_PANEL_MANAGER.controlShow(true);
-            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getBuildBox(),"待开发");
+            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getBuildBox(), "待开发");
         });
 
 

@@ -55,3 +55,4 @@ logs/
 /jnotepadConfig.json
 /qodana.yaml
 .mvn/
+/main.c
