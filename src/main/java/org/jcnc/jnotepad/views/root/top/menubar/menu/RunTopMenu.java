@@ -4,9 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.component.module.vbox.BuildPanel;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.views.manager.BuildPanelManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 
@@ -24,6 +25,8 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.RUN;
  */
 public class RunTopMenu extends AbstractTopMenu {
     CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
+    private static final BuildPanelManager BUILD_PANEL_MANAGER = BuildPanelManager.getInstance();
+    private static final BuildPanel BUILD_PANEL = BuildPanel.getInstance();
     private static final RunTopMenu INSTANCE = new RunTopMenu();
     private final Map<String, MenuItem> runMenuItems = new HashMap<>();
 
@@ -61,12 +64,12 @@ public class RunTopMenu extends AbstractTopMenu {
         return runMenuItems;
     }
 
-    EventHandler<ActionEvent> codeRun = event -> {
+     EventHandler<ActionEvent> codeRun = event -> {
         // 创建一个TextArea用于输出编译后的结果
-        TextArea resultTextArea = new TextArea();
-        resultTextArea.setPrefRowCount(10);
-        resultTextArea.setPrefColumnCount(40);
-        resultTextArea.setEditable(false); // 禁止编辑
+//        TextArea resultTextArea = new TextArea();
+//        resultTextArea.setPrefRowCount(10);
+//        resultTextArea.setPrefColumnCount(40);
+//        resultTextArea.setEditable(false); // 禁止编辑
 
         // 获取TextCodeArea的文本内容
 
@@ -86,13 +89,14 @@ public class RunTopMenu extends AbstractTopMenu {
         }
 
         // 编译和运行C代码
-        compileAndRunCode(fileName, resultTextArea);
+//        compileAndRunCode(fileName, resultTextArea);
+         compileAndRunCode(fileName);
     };
 
     /**
      * 编译和运行C代码的方法
      */
-    private void compileAndRunCode(String fileName, TextArea resultTextArea) {
+    private void compileAndRunCode(String fileName) {
         try {
             // 创建ProcessBuilder并指定GCC编译命令
             ProcessBuilder processBuilder = new ProcessBuilder("gcc", fileName, "-o", "temp");
@@ -124,9 +128,9 @@ public class RunTopMenu extends AbstractTopMenu {
                 while ((line = runReader.readLine()) != null) {
                     result.append(line).append("\n");
                 }
-
                 // 显示运行结果
-                resultTextArea.setText(result.toString());
+                BUILD_PANEL_MANAGER.controlShow(true);
+                BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getRunBox(),result.toString());
             } else {
                 System.out.println("编译失败，返回代码：" + compileExitCode);
             }
@@ -145,8 +149,11 @@ public class RunTopMenu extends AbstractTopMenu {
         registerMenuItem(topMenuBar.getRunItem(), RUN, "runItem", codeRun);
 
 
-        // 调试
-        registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", null);
+        // 调试 test
+        registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", event -> {
+            BUILD_PANEL_MANAGER.controlShow(true);
+            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getBuildBox(),"待开发");
+        });
 
 
     }

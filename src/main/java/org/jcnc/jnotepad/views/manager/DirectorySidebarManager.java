@@ -3,6 +3,7 @@ package org.jcnc.jnotepad.views.manager;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
+import org.jcnc.jnotepad.common.constants.SplitPaneItemConstants;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.OpenDirectory;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
@@ -44,26 +45,25 @@ public class DirectorySidebarManager {
 
     private static final double LAST_DIVIDER_POSITION = 0.3;
 
+    private static boolean isShow = false;
+
     /**
      * 控制文件树显示
      */
     public void controlShow() {
-        // 获取分割面板
-        SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
-        // 获取分割条位置
-        double dividerPosition = center.getDividerPositions()[0];
-        // 保留分割条位置一位小数
-        String formattedNumber = String.format("%.1f", dividerPosition);
-        double roundedNumber = Double.parseDouble(formattedNumber);
+        // 获取root分割面板
+        SplitPane root = (SplitPane) MAIN_BORDER_PANE.getCenter();
 
-        // 分割条位置不等于 代表展开
-        if (Double.compare(roundedNumber, 0.0) != 0) {
-            // 收缩分割条 收缩文件树
-            center.setDividerPositions(0.0);
+        // 获取root的上部分割面板
+        SplitPane topSplitPane = (SplitPane) root.getItems().get(SplitPaneItemConstants.ROOT_SPLIT_PANE_TOP_SPLIT_PANE);
+
+        if (isShow) {
+            topSplitPane.setDividerPositions(0);
         } else {
             // 展开分割条，文件树
-            center.setDividerPositions(LAST_DIVIDER_POSITION);
+            topSplitPane.setDividerPositions(LAST_DIVIDER_POSITION);
         }
+        isShow = !isShow;
     }
 
     /**
@@ -74,10 +74,13 @@ public class DirectorySidebarManager {
     public void controlShow(boolean bool) {
         if (bool) {
             // 获取分割面板
-            SplitPane center = (SplitPane) MAIN_BORDER_PANE.getCenter();
-            center.setDividerPositions(LAST_DIVIDER_POSITION);
-        }
+            SplitPane root = (SplitPane) MAIN_BORDER_PANE.getCenter();
+            // 获取root的上部分割面板
+            SplitPane topSplitPane = (SplitPane) root.getItems().get(SplitPaneItemConstants.ROOT_SPLIT_PANE_TOP_SPLIT_PANE);
 
+            topSplitPane.setDividerPositions(LAST_DIVIDER_POSITION);
+            isShow = true;
+        }
     }
 
     /**
