@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
@@ -40,7 +41,7 @@ import static org.jcnc.jnotepad.common.constants.AppConstants.SCREEN_WIDTH;
  *
  * @author luke
  */
-public class SetStage extends Stage {
+public class SetStage {
 
     public static final String GENERAL_SETTING_1 = "常规设置项1";
     public static final String GENERAL_SETTING_2 = "常规设置项2";
@@ -50,7 +51,6 @@ public class SetStage extends Stage {
     public static final String SECURITY_SETTING_1 = "安全设置项1";
     public static final String SECURITY_SETTING_2 = "安全设置项2";
 
-    public static final String DEVELOPER_DEBUG_PAGE = "开发者调试页面";
     private static SetStage instance;
     private StackPane contentDisplay;
 
@@ -82,7 +82,7 @@ public class SetStage extends Stage {
         primaryStage.getIcons().add(UiUtil.getAppIcon());
         primaryStage.setTitle("设置窗口");
         // 将窗口设置为模态
-        //primaryStage.initModality(Modality.APPLICATION_MODAL);
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
 
         contentDisplay = new StackPane();
 
@@ -159,14 +159,11 @@ public class SetStage extends Stage {
         securityItem.getChildren().add(securityItem1);
         securityItem.getChildren().add(securityItem2);
 
-        // 开发者调试页面
-        TreeItem<String> developerItem = new TreeItem<>(DEVELOPER_DEBUG_PAGE);
 
 
         root.getChildren().add(generalItem);
         root.getChildren().add(appearanceItem);
         root.getChildren().add(securityItem);
-        root.getChildren().add(developerItem);
         root.getChildren().add(pluginsItem);
         TreeView<String> treeView = new TreeView<>(root);
         treeView.setShowRoot(false);
@@ -190,8 +187,7 @@ public class SetStage extends Stage {
             case APPEARANCE_SETTING_2 -> createAppearanceSettingsLayout2();
             case SECURITY_SETTING_1 -> createSecuritySettingsLayout1();
             case SECURITY_SETTING_2 -> createSecuritySettingsLayout2();
-            case DEVELOPER_DEBUG_PAGE -> createDevelopersDebugPageLayouts();
-            case PLUGINS -> createPluginsLayout();
+//            case PLUGINS -> createPluginsLayout();
             default -> null;
         };
     }
@@ -206,21 +202,7 @@ public class SetStage extends Stage {
         return generalLayout;
     }
 
-    private Node createDevelopersDebugPageLayouts() {
-        VBox generalLayout = new VBox(10);
-        generalLayout.setPadding(new Insets(25));
 
-        SetDevBox devBox = new SetDevBox("打开开发者调试页面", DEVELOPER_DEBUG_PAGE);
-        devBox.setButtonAction(event -> {
-            // 创建并启动DeveloperDebugPage
-            DeveloperDebugStage debugPage = new DeveloperDebugStage();
-            debugPage.setAlwaysOnTop (true);
-            debugPage.start(new Stage());
-        });
-        generalLayout.getChildren().addAll(devBox);
-
-        return generalLayout;
-    }
 
     /**
      * 创建常规设置项1的布局。

@@ -32,6 +32,15 @@ public class TopMenuBar extends MenuBar {
      */
     private final Menu setMenu = new Menu();
 
+    /**
+     * 帮助菜单
+     */
+    private final Menu helpMenu = new Menu();
+
+    /**
+     * 运行菜单
+     */
+    private final Menu runMenu = new Menu();
 
     ///  菜单按钮
     /**
@@ -40,26 +49,30 @@ public class TopMenuBar extends MenuBar {
     private final Menu pluginMenu = new Menu();
 
     /**
-     * 运行菜单
-     */
-    private final Menu runMenu = new Menu();
-    /**
-     * 调试菜单
-     */
-    private final MenuItem deBugItem = new MenuItem();
-    /**
-     * 新建
-     */
-    private final MenuItem newItem = new MenuItem();
-    /**
      * 语言菜单
      */
     private final Menu languageMenu = new Menu();
     /**
      * 新建
      */
+    private final MenuItem newItem = new MenuItem();
+
+    /**
+     * 关于
+     */
+    private final MenuItem aboutItem = new MenuItem();
+
+    /**
+     * 调试
+     */
+    private final MenuItem deBugItem = new MenuItem();
+    /**
+     * 运行
+     */
+
     private final MenuItem runItem = new MenuItem();
 
+    private final MenuItem developerItem = new MenuItem();
 
     /**
      * 打开
@@ -112,15 +125,6 @@ public class TopMenuBar extends MenuBar {
      */
     private final MenuItem pluginManagerItem = new MenuItem();
 
-    /**
-     * 帮助菜单
-     */
-    private final Menu helpMenu = new Menu();
-    
-    /**
-     * 关于
-     */
-    private final MenuItem aboutItem = new MenuItem();
     private TopMenuBar() {
     }
 
@@ -154,10 +158,6 @@ public class TopMenuBar extends MenuBar {
     public Menu getPluginMenu() {
         return pluginMenu;
     }
-    public Menu getRunMenu() {
-        return runMenu;
-    }
-
 
 
     public Menu getLanguageMenu() {
@@ -170,13 +170,6 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getNewItem() {
         return newItem;
-    }
-    public MenuItem getRunItem() {
-        return runItem;
-    }
-
-    public MenuItem getDeBugItem() {
-        return deBugItem;
     }
 
 
@@ -231,5 +224,21 @@ public class TopMenuBar extends MenuBar {
 
     public MenuItem getOpenDirItem() {
         return openDirItem;
+    }
+
+    public MenuItem getDeveloperItem() {
+        return developerItem;
+    }
+
+    public Menu getRunMenu() {
+        return runMenu;
+    }
+
+    public MenuItem getDeBugItem() {
+        return deBugItem;
+    }
+
+    public MenuItem getRunItem() {
+        return runItem;
     }
 }
