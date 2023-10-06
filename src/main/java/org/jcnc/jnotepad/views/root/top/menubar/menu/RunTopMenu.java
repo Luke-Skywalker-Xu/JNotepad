@@ -129,7 +129,7 @@ public class RunTopMenu extends AbstractTopMenu {
                 System.out.println("编译失败，返回代码：" + compileExitCode);
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            LogUtil.getLogger(this.getClass()).info("编译失败：{}", fileName);
         }
     }
 
