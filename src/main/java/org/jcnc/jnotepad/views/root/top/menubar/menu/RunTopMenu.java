@@ -70,9 +70,6 @@ public class RunTopMenu extends AbstractTopMenu {
 
         String code = centerTab.getLineNumberTextArea().getText();
 
-        // TextCodeArea的当前文本内容
-        System.out.println("TextCodeArea的当前文本内容：" + code);
-
         String fileName = centerTab.getText();
 
         // 将C代码写入临时文件

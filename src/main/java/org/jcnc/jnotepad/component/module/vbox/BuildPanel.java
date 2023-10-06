@@ -2,9 +2,11 @@ package org.jcnc.jnotepad.component.module.vbox;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import org.jcnc.jnotepad.component.module.vbox.components.DebugBox;
 import org.jcnc.jnotepad.component.module.vbox.components.CmdTerminalBox;
+import org.jcnc.jnotepad.component.module.vbox.components.DebugBox;
 import org.jcnc.jnotepad.component.module.vbox.components.RunBox;
+
+import static org.jcnc.jnotepad.common.constants.TextConstants.*;
 
 /**
  * 底部Run,Debug,Cmd面板
@@ -33,13 +35,13 @@ public class BuildPanel extends TabPane {
         runBox = new RunBox();
         debugBox = new DebugBox();
 
-        Tab runTab = new Tab("运行",runBox);
+        Tab runTab = new Tab(RUN,runBox);
         runTab.setClosable(false);
 
-        Tab buildTab = new Tab("构建", debugBox);
+        Tab buildTab = new Tab(BUILD, debugBox);
         buildTab.setClosable(false);
 
-        Tab cmdTab = new Tab("控制台",cmdTerminalBox);
+        Tab cmdTab = new Tab(TERMINAL,cmdTerminalBox);
         cmdTab.setClosable(false);
         this.getTabs().addAll(runTab,buildTab,cmdTab);
     }
