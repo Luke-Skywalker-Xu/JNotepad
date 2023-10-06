@@ -54,10 +54,13 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new DirTreeBtn()).build());
+
+
+        // Cmd 按钮
         registerNode(
                 new SideBarButtonBuilder()
                         .setButton(sidebarToolBar.getRunButton())
-                        .setImageView(new ImageView(new Image("directory.png")))
+                        .setImageView(new ImageView(new Image("cmd.png")))
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new RunBtn()).build());

@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.component.module.vbox;
+package org.jcnc.jnotepad.component.module.vbox.components;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
