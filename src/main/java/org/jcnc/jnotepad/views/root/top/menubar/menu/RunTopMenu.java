@@ -4,9 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.component.module.vbox.BuildPanel;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.views.manager.BuildPanelManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 
@@ -23,7 +24,8 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.RUN;
  * @author gewuyou
  */
 public class RunTopMenu extends AbstractTopMenu {
-    CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
+    private static final BuildPanelManager BUILD_PANEL_MANAGER = BuildPanelManager.getInstance();
+    private static final BuildPanel BUILD_PANEL = BuildPanel.getInstance();
     private static final RunTopMenu INSTANCE = new RunTopMenu();
     private final Map<String, MenuItem> runMenuItems = new HashMap<>();
 
@@ -62,21 +64,13 @@ public class RunTopMenu extends AbstractTopMenu {
     }
 
     EventHandler<ActionEvent> codeRun = event -> {
-        // 创建一个TextArea用于输出编译后的结果
-        TextArea resultTextArea = new TextArea();
-        resultTextArea.setPrefRowCount(10);
-        resultTextArea.setPrefColumnCount(40);
-        resultTextArea.setEditable(false); // 禁止编辑
 
         // 获取TextCodeArea的文本内容
-
         CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
-        String code = centerTab.getTextCodeArea().getText();
 
-        // TextCodeArea的当前文本内容
-        System.out.println("TextCodeArea的当前文本内容：" + code);
+        String code = centerTab.getLineNumberTextArea().getText();
 
-        String fileName = "temp.c";
+        String fileName = centerTab.getText();
 
         // 将C代码写入临时文件
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
@@ -85,17 +79,18 @@ public class RunTopMenu extends AbstractTopMenu {
             LogUtil.getLogger(this.getClass()).info("正在写入：{}", code);
         }
 
-        // 编译和运行C代码
-        compileAndRunCode(fileName, resultTextArea);
+        // 编译C代码
+        compileAndRunCode(fileName);
     };
 
     /**
      * 编译和运行C代码的方法
      */
-    private void compileAndRunCode(String fileName, TextArea resultTextArea) {
+    private void compileAndRunCode(String fileName) {
         try {
+            CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
             // 创建ProcessBuilder并指定GCC编译命令
-            ProcessBuilder processBuilder = new ProcessBuilder("gcc", fileName, "-o", "temp");
+            ProcessBuilder processBuilder = new ProcessBuilder("gcc", fileName, "-o", centerTab.getText());
 
             // 设置工作目录
             processBuilder.directory(null);
@@ -116,7 +111,7 @@ public class RunTopMenu extends AbstractTopMenu {
                 System.out.println("编译成功！");
 
                 // 运行编译后的可执行文件
-                Process runProcess = new ProcessBuilder("./temp").start();
+                Process runProcess = new ProcessBuilder("./" + centerTab.getText()).start();
 
                 // 读取运行结果
                 BufferedReader runReader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
@@ -124,14 +119,14 @@ public class RunTopMenu extends AbstractTopMenu {
                 while ((line = runReader.readLine()) != null) {
                     result.append(line).append("\n");
                 }
-
                 // 显示运行结果
-                resultTextArea.setText(result.toString());
+                BUILD_PANEL_MANAGER.controlShow(true);
+                BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getRunBox(), result.toString());
             } else {
                 System.out.println("编译失败，返回代码：" + compileExitCode);
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            LogUtil.getLogger(this.getClass()).info("编译失败：{}", fileName);
         }
     }
 
@@ -145,8 +140,11 @@ public class RunTopMenu extends AbstractTopMenu {
         registerMenuItem(topMenuBar.getRunItem(), RUN, "runItem", codeRun);
 
 
-        // 调试
-        registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", null);
+        // 调试 test
+        registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", event -> {
+            BUILD_PANEL_MANAGER.controlShow(true);
+            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getBuildBox(), "待开发");
+        });
 
 
     }

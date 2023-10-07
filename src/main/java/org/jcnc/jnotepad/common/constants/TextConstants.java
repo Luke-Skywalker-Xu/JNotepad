@@ -12,6 +12,9 @@ public class TextConstants {
     public static final String SAVE = "SAVE";
     public static final String FILE = "FILE";
 
+    public static final String BUILD = "BUILD";
+    public static final String TERMINAL = "TERMINAL";
+
     public static final String RUN = "RUN";
     public static final String DE_BUG = "DE_BUG";
     public static final String NEW = "NEW";

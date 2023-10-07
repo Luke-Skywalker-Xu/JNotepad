@@ -3,15 +3,20 @@ package org.jcnc.jnotepad.controller.event.handler.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import org.jcnc.jnotepad.views.manager.BuildPanelManager;
 
 /**
- * @author luke
+ * 终端处理器
+ *
+ *
+ * @author cccqyu
  */
 public class RunBtn implements EventHandler<ActionEvent> {
 
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        // TODO: 2023/10/6 点击按钮,打开下方侧边栏的运行输出栏
+    private static final BuildPanelManager BUILD_PANEL_MANAGER = BuildPanelManager.getInstance();
 
+    @Override
+    public void handle(ActionEvent event) {
+        BUILD_PANEL_MANAGER.controlShow();
     }
 }

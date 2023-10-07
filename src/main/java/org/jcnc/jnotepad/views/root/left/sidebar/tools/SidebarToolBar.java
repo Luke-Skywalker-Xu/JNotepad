@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.root.left.sidebar.tools;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 
@@ -37,6 +38,7 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     private SidebarToolBar() {
         // 垂直排列
         this.setOrientation(Orientation.VERTICAL);
+        this.setPadding(new Insets(1,5,0,0));
         this.setOnMouseClicked(event -> {
             // SidebarToolBar 点击事件
         });
