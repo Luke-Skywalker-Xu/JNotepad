@@ -115,7 +115,7 @@ public class UiUtil {
      * 获取应用窗口。
      *
      * @return javafx.stage.Window 应用窗口对象
-     * @apiNote LunchApp.getWindow()
+     * @apiNote JnotepadApp.getWindow()
      */
     public static Window getAppWindow() {
         return ApplicationManager.getInstance().getWindow();

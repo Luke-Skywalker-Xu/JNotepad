@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: org.jcnc.jnotepad.LunchApp
+Main-Class: org.jcnc.jnotepad.JnotepadApp
 Implementation-Vendor: JCNC
 Created-By: IntelliJ IDEA
 

@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.controller.i18n;
 
-import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.JnotepadApp;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 
@@ -18,7 +18,7 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.ENGLISH;
  * <p>该类负责处理应用程序的本地化配置，包括语言和区域设置。</p>
  *
  * @author gewuyou
- * @see LunchApp
+ * @see JnotepadApp
  */
 public class LocalizationController {
     private static final LocalizationController LOCALIZATION_CONFIG = new LocalizationController();

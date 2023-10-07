@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.jcnc.jnotepad.LunchApp;
+import org.jcnc.jnotepad.JnotepadApp;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.AppConstants;
@@ -244,7 +244,7 @@ public class ApplicationManager {
         try {
             // 获取当前Java应用程序的命令
             String javaCommand = System.getProperty("java.home") + "/bin/java";
-            String mainClass = LunchApp.class.getName();
+            String mainClass = JnotepadApp.class.getName();
 
             // 构建新进程来重新启动应用程序
             ProcessBuilder builder = new ProcessBuilder(javaCommand, "-cp", System.getProperty("java.class.path"), mainClass);
