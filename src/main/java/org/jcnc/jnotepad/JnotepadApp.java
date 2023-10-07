@@ -13,7 +13,7 @@ import org.jcnc.jnotepad.util.LogUtil;
  *
  * @author 许轲
  */
-public class LunchApp extends Application {
+public class JnotepadApp extends Application {
     private static final ApplicationManager APPLICATION_MANAGER = ApplicationManager.getInstance();
 
     /**
