@@ -106,7 +106,7 @@ public class BottomStatusBoxManager {
         if (instance.getSelected() == null) {
             return;
         }
-        TextCodeArea textArea = instance.getSelected().getLineNumberTextArea();
+        TextCodeArea textArea = instance.getSelected().getTextCodeArea();
         int caretPosition = textArea.getCaretPosition();
         int row = getRow(caretPosition, textArea.getText());
         int column = getColumn(caretPosition, textArea.getText());
@@ -128,7 +128,7 @@ public class BottomStatusBoxManager {
                 updateEncodingLabel(centerTab.getCharset().name());
 
                 // 添加光标位置变化监听器
-                TextCodeArea textArea = centerTab.getLineNumberTextArea();
+                TextCodeArea textArea = centerTab.getTextCodeArea();
                 textArea.caretPositionProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> updateRowColumnLabel(textArea.getCaretPosition(), textArea.getText()));
             }
         }

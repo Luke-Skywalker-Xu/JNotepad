@@ -72,7 +72,7 @@ public class CenterTab extends Tab {
         textCodeArea.setWrapText(autoLine);
     }
 
-    public TextCodeArea getLineNumberTextArea() {
+    public TextCodeArea getTextCodeArea() {
         return textCodeArea;
     }
 
@@ -99,7 +99,7 @@ public class CenterTab extends Tab {
         // 从标签页的用户数据中获取文件对象
         File file = (File) tab.getUserData();
         // 获取主文本区域中的文本内容
-        String newValue = tab.getLineNumberTextArea().getText();
+        String newValue = tab.getTextCodeArea().getText();
 
         // 如果文件对象为空，记录警告信息并返回，不执行保存操作
         if (file == null) {

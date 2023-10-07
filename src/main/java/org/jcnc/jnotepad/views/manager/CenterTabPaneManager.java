@@ -79,7 +79,7 @@ public class CenterTabPaneManager {
         }
         if (tab.isRelevance()) {
             // 获取当前文本域对象
-            TextCodeArea textCodeArea = tab.getLineNumberTextArea();
+            TextCodeArea textCodeArea = tab.getTextCodeArea();
             // 获取当前标签页对应文件上次修改时间
             Long lastModifiedTime = tab.getLastModifiedTimeOfAssociatedFile();
             // 获取对应文件上次修改时间
