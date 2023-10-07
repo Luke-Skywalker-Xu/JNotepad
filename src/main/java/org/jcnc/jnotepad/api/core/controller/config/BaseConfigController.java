@@ -22,9 +22,9 @@ import java.nio.file.Paths;
  */
 public abstract class BaseConfigController<T> implements ConfigController<T> {
 
-    protected final String rootConfigDir = "config";
+    protected static final String ROOT_CONFIG_DIR = "config";
 
-    protected final String systemConfigDir = "system";
+    protected static final String SYSTEM_CONFIG_DIR = "system";
 
     protected T config;
     Logger logger = LogUtil.getLogger(this.getClass());

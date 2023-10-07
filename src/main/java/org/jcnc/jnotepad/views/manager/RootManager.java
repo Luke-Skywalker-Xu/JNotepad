@@ -27,7 +27,7 @@ public class RootManager {
     /**
      * 主布局
      */
-    private BorderPane root;
+    private final BorderPane root;
 
     /**
      * 私有构造函数。设置场景和根布局。

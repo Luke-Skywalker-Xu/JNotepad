@@ -27,10 +27,12 @@ import java.io.File;
  * @author gewuyou
  */
 public class RenameFile implements EventHandler<ActionEvent> {
-    Logger logger = LogUtil.getLogger(this.getClass());
+    static Logger logger = LogUtil.getLogger(RenameFile.class);
 
-    @Override
-    public void handle(ActionEvent actionEvent) {
+    /**
+     * 重命名
+     */
+    public static void rename() {
         // 获取当前标签页
         CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
         if (centerTab == null || centerTab.getText().isEmpty()) {
@@ -52,7 +54,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
      *
      * @param centerTab 标签页组件
      */
-    private void handleRenameTab(CenterTab centerTab) {
+    private static void handleRenameTab(CenterTab centerTab) {
         TextField textField = new TextField(centerTab.getText());
         textField.getStyleClass().add("tab-title-editable");
         // 临时记录标签页名称
@@ -116,7 +118,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
      * @param newTabName 要检查的新标签页名称
      * @return 如果存在具有相同名称的标签页，则返回 true；否则返回 false
      */
-    private boolean isTabNameExists(String newTabName) {
+    private static boolean isTabNameExists(String newTabName) {
         CenterTabPane tabPane = CenterTabPane.getInstance();
         return tabPane.getTabs().stream()
                 .anyMatch(tab -> tab.getText().equals(newTabName));
@@ -125,7 +127,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
     /**
      * 显示警告弹窗，提示用户更换重复的名称。
      */
-    private void showDuplicateNameAlert(String newTabName) {
+    private static void showDuplicateNameAlert(String newTabName) {
 
         PopUpUtil.errorAlert("重命名错误", "\" " + newTabName + "\" 和已有标签页名字重复", "请再次重命名", null, null);
 
@@ -136,7 +138,7 @@ public class RenameFile implements EventHandler<ActionEvent> {
      *
      * @param centerTab 标签页组件
      */
-    private void handleRenameRelevanceFile(CenterTab centerTab) {
+    private static void handleRenameRelevanceFile(CenterTab centerTab) {
         // 获取原始文件对象
         File file = (File) centerTab.getUserData();
 
@@ -159,5 +161,10 @@ public class RenameFile implements EventHandler<ActionEvent> {
                 logger.debug("文件重命名失败");
             }
         }
+    }
+
+    @Override
+    public void handle(ActionEvent actionEvent) {
+        rename();
     }
 }

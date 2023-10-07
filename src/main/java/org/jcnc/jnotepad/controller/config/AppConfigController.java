@@ -29,7 +29,7 @@ public class AppConfigController extends BaseConfigController<AppConfig> {
     private final String configDir;
 
     public AppConfigController() {
-        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), PROGRAM_FILE_DIRECTORY, systemConfigDir).toString();
+        configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), PROGRAM_FILE_DIRECTORY, SYSTEM_CONFIG_DIR).toString();
         loadConfig();
     }
 

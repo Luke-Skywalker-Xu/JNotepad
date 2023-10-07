@@ -26,7 +26,7 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
 
     private PluginConfigController() {
         String rootPath = AppConfigController.getInstance().getConfig().getRootPath();
-        configDir = Paths.get(rootPath, PROGRAM_FILE_DIRECTORY, rootConfigDir).toString();
+        configDir = Paths.get(rootPath, PROGRAM_FILE_DIRECTORY, ROOT_CONFIG_DIR).toString();
         setPluginsDir(Paths.get(rootPath, PROGRAM_FILE_DIRECTORY, "plugins").toString());
         loadConfig();
     }

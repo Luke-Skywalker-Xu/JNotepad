@@ -32,17 +32,9 @@ import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NA
  */
 public class SaveFile implements EventHandler<ActionEvent> {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    static Logger logger = LogUtil.getLogger(SaveFile.class);
 
-    /**
-     * 处理保存文件事件。
-     *
-     * @param actionEvent 事件对象
-     * @apiNote 当用户选择保存文件时，如果当前标签页是关联文件，则自动保存；
-     * 否则，调用另存为方法。
-     */
-    @Override
-    public void handle(ActionEvent actionEvent) {
+    public static void saveFile() {
         // 获取当前tab页
         CenterTab selectedTab = CenterTabPaneManager.getInstance().getSelected();
         if (selectedTab == null) {
@@ -51,7 +43,7 @@ public class SaveFile implements EventHandler<ActionEvent> {
         // 如果打开的是非关联文件，则调用另存为方法
         if (!selectedTab.isRelevance()) {
             logger.info("当前保存文件为非关联打开文件，调用另存为方法");
-            saveTab(this.getClass());
+            saveAsFile();
         } else {
             logger.info("当前保存文件为关联打开文件，调用自动保存方法");
             // 调用tab保存方法
@@ -71,11 +63,10 @@ public class SaveFile implements EventHandler<ActionEvent> {
     /**
      * 保存标签页的方法。
      *
-     * @param currentClass 调用该方法的类
      * @apiNote 将当前选中的标签页进行另存为弹出窗口式的保存。
      * @see LogUtil
      */
-    protected void saveTab(Class<?> currentClass) {
+    public static void saveAsFile() {
         CenterTab selectedTab = CenterTabPaneManager.getInstance().getSelected();
         if (selectedTab == null) {
             return;
@@ -94,12 +85,24 @@ public class SaveFile implements EventHandler<ActionEvent> {
                 cache.setCacheData(file.getParent());
                 CACHE_MANAGER.addCache(cache);
             }
-            LogUtil.getLogger(currentClass).info("正在保存文件: {}", file.getName());
+            logger.info("正在保存文件: {}", file.getName());
             selectedTab.save(file);
             // 将保存后的文件设置为关联文件
             selectedTab.setRelevance(true);
             // 更新标签页上的文件名
             selectedTab.setText(file.getName());
         }
+    }
+
+    /**
+     * 处理保存文件事件。
+     *
+     * @param actionEvent 事件对象
+     * @apiNote 当用户选择保存文件时，如果当前标签页是关联文件，则自动保存；
+     * 否则，调用另存为方法。
+     */
+    @Override
+    public void handle(ActionEvent actionEvent) {
+        saveFile();
     }
 }
