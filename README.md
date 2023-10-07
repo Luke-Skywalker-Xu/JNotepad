@@ -1,7 +1,7 @@
 <p align="center">
   <img src="src/main/resources/img/icon.svg" alt="JNotepad Icon">
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
-<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFx开发，插件驱动，创造无限可能</h4>
+<h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFX开发，插件驱动，创造无限可能</h4>
 
 <p align="center">
     <a href='https://gitee.com/jcnc-org/JNotepad/stargazers'><img
@@ -16,7 +16,7 @@
         <img src="https://img.shields.io/badge/%20license-GPL--3.0%20-blue" alt="">
     </a>
     <a href="https://gitee.com/jcnc-org/JNotepad/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/version-v1.1.12-blue" alt="">
+        <img src="https://img.shields.io/badge/version-v1.1.13-blue" alt="">
     </a>
 </p>
 <p align="center">
