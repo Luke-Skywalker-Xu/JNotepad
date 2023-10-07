@@ -68,7 +68,7 @@ public class RunTopMenu extends AbstractTopMenu {
         // 获取TextCodeArea的文本内容
         CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
 
-        String code = centerTab.getLineNumberTextArea().getText();
+        String code = centerTab.getTextCodeArea().getText();
 
         String fileName = centerTab.getText();
 
