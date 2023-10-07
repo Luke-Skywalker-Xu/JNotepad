@@ -12,13 +12,12 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
+import org.jcnc.jnotepad.util.ClipboardUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.manager.RootManager;
@@ -139,12 +138,10 @@ public class HelpPaneStage extends AbstractPaneStage {
             // 调用 RootManager 中的方法来显示 Notification
             rootManager.addNotificationToStackPane(rootManager.getRootStackPane(), notification);
 
-            Clipboard clipboard = Clipboard.getSystemClipboard();
-            ClipboardContent content = new ClipboardContent();
             String info = "软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
-            content.putString(info);
+            ClipboardUtil.writeTextToClipboard(info);
             LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:{}", info);
-            clipboard.setContent(content);
+
             // 关闭当前的 Stage
             Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             currentStage.close();

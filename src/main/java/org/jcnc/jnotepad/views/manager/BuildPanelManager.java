@@ -28,7 +28,7 @@ public class BuildPanelManager {
 
 
     private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
-    private static boolean isShow = false;
+    private boolean isShow = false;
 
     /**
      * 控制终端显示

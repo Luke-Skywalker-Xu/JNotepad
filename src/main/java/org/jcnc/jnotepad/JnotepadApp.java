@@ -30,7 +30,6 @@ public class JnotepadApp extends Application {
         // 获取当前启动位置a
         String currentWorkingDirectory = System.getProperty("user.dir");
         LogUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
-
         // 设置参数
         APPLICATION_MANAGER.setApplication(this);
         APPLICATION_MANAGER.setPrimaryStage(primaryStage);

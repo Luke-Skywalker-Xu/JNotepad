@@ -32,7 +32,7 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
     private String configDir;
 
     private UserConfigController() {
-        configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), PROGRAM_FILE_DIRECTORY, rootConfigDir).toString();
+        configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), PROGRAM_FILE_DIRECTORY, ROOT_CONFIG_DIR).toString();
         loadConfig();
     }
 

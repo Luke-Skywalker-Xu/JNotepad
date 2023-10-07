@@ -22,6 +22,6 @@ public class SaveAsFile extends SaveFile {
     @Override
     public void handle(ActionEvent event) {
         LogUtil.getLogger(SaveAsFile.class).info("已调用另存为功能");
-        saveTab(this.getClass());
+        saveAsFile();
     }
 }

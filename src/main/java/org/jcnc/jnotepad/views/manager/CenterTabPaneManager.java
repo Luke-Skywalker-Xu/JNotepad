@@ -157,4 +157,82 @@ public class CenterTabPaneManager {
         });
         CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("tabs", "centerTabs", filePaths, CacheExpirationTime.NEVER_EXPIRES.getValue()));
     }
+
+    /**
+     * Removes the specified CenterTab from the Tabs.
+     *
+     * @param tab the CenterTab to be removed
+     */
+    public void removeTab(CenterTab tab) {
+        centerTabPane.getTabs().remove(tab);
+    }
+
+    /**
+     * Removes all tabs from the center tab pane.
+     */
+    public void removeAllTabs() {
+        centerTabPane.getTabs().clear();
+    }
+
+    /**
+     * Removes all tabs from the center tab pane that are not equal to the specified center tab.
+     *
+     * @param centerTab the center tab to compare against
+     */
+    public void removeOtherTabs(CenterTab centerTab) {
+        centerTabPane.getTabs().removeIf(tab -> !centerTab.equals(tab));
+    }
+
+    /**
+     * This function removes the left tabs from the given CenterTab object.
+     *
+     * @param centerTab the CenterTab object from which to remove the left tabs
+     */
+    public void removeLeftTabs(CenterTab centerTab) {
+        ObservableList<Tab> tabs = centerTabPane.getTabs();
+        tabs.remove(0, tabs.indexOf(centerTab));
+    }
+
+    /**
+     * Removes all tabs to the right of the specified center tab.
+     *
+     * @param centerTab the center tab to remove right tabs from
+     */
+    public void removeRightTabs(CenterTab centerTab) {
+        ObservableList<Tab> tabs = centerTabPane.getTabs();
+        tabs.remove(tabs.indexOf(centerTab), tabs.size());
+    }
+
+    /**
+     * 判断是否有其它标签页
+     *
+     * @return 是否有其它标签页
+     */
+    public boolean hasOtherTabs() {
+        return centerTabPane.getTabs().size() > 1;
+    }
+
+
+    /**
+     * 判断是否有左侧标签页
+     *
+     * @param centerTab 标签页
+     * @return 是否有左侧标签页
+     */
+    public boolean hasLeftTabs(CenterTab centerTab) {
+        int index = centerTabPane.getTabs().indexOf(centerTab);
+        return index > 0;
+    }
+
+    /**
+     * 判断是否有右侧标签页
+     *
+     * @param centerTab 标签页
+     * @return 是否有右侧标签页
+     */
+    public boolean hasRightTabs(CenterTab centerTab) {
+        ObservableList<Tab> tabs = centerTabPane.getTabs();
+        int index = tabs.indexOf(centerTab);
+        return index != tabs.size() - 1;
+    }
 }

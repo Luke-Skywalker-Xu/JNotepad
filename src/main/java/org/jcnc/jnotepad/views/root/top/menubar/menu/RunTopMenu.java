@@ -19,7 +19,7 @@ import static org.jcnc.jnotepad.common.constants.TextConstants.DE_BUG;
 import static org.jcnc.jnotepad.common.constants.TextConstants.RUN;
 
 /**
- * 文件菜单
+ * 运行菜单
  *
  * @author gewuyou
  */
@@ -138,7 +138,6 @@ public class RunTopMenu extends AbstractTopMenu {
 
         // 运行
         registerMenuItem(topMenuBar.getRunItem(), RUN, "runItem", codeRun);
-
 
         // 调试 test
         registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", event -> {
