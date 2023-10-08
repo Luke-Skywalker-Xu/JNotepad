@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.manager;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
@@ -9,12 +10,14 @@ import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.util.FileUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
+import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -177,10 +180,10 @@ public class CenterTabPaneManager {
     /**
      * Removes all tabs from the center tab pane that are not equal to the specified center tab.
      *
-     * @param centerTab the center tab to compare against
+     * @param currTab the current tab
      */
-    public void removeOtherTabs(CenterTab centerTab) {
-        centerTabPane.getTabs().removeIf(tab -> !centerTab.equals(tab));
+    public void removeOtherTabs(CenterTab currTab) {
+        centerTabPane.getTabs().removeIf(tab -> (!currTab.equals(tab) || !((CenterTab) tab).isFixed()));
     }
 
     /**
@@ -190,7 +193,16 @@ public class CenterTabPaneManager {
      */
     public void removeLeftTabs(CenterTab centerTab) {
         ObservableList<Tab> tabs = centerTabPane.getTabs();
-        tabs.remove(0, tabs.indexOf(centerTab));
+        Iterator<Tab> iterator = tabs.iterator();
+        while (iterator.hasNext()) {
+            CenterTab tab = (CenterTab) iterator.next();
+            if (tab.equals(centerTab)) {
+                return;
+            }
+            if (!tab.isFixed()) {
+                iterator.remove();
+            }
+        }
     }
 
     /**
@@ -200,7 +212,18 @@ public class CenterTabPaneManager {
      */
     public void removeRightTabs(CenterTab centerTab) {
         ObservableList<Tab> tabs = centerTabPane.getTabs();
-        tabs.remove(tabs.indexOf(centerTab), tabs.size());
+        Iterator<Tab> iterator = tabs.iterator();
+        boolean flag = false;
+        while (iterator.hasNext()) {
+            CenterTab tab = (CenterTab) iterator.next();
+            if (tab.equals(centerTab)) {
+                flag = true;
+                continue;
+            }
+            if (flag && !tab.isFixed()) {
+                iterator.remove();
+            }
+        }
     }
 
     /**
@@ -235,4 +258,26 @@ public class CenterTabPaneManager {
         int index = tabs.indexOf(centerTab);
         return index != tabs.size() - 1;
     }
+
+    /**
+     * Sets a listener for the tabs in the center tab pane.
+     *
+     * @param tab the tab to set the listener for
+     */
+    public void setTabsListener(CenterTab tab) {
+        centerTabPane.getTabs().addListener((ListChangeListener<Tab>) c -> tab.contextMenuMonitor());
+    }
+
+    /**
+     * Updates the pinned state of the given center tab.
+     *
+     * @param tab the center tab to update
+     */
+    public void updateTabPinnedState(CenterTab tab) {
+        tab.setFixed(!tab.isFixed());
+        TabUtil.updateTabContextMenu(tab);
+    }
+    
+
+
 }

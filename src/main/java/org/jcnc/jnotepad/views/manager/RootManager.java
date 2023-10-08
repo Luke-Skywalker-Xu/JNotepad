@@ -1,8 +1,9 @@
 package org.jcnc.jnotepad.views.manager;
 
 import atlantafx.base.controls.Notification;
-import atlantafx.base.theme.Styles;
 import atlantafx.base.util.Animations;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -89,8 +90,33 @@ public class RootManager {
      * @param stackPane 要添加提示框的 StackPane。
      * @param msg       要显示的提示框。
      */
-    public void addNotificationToStackPane(StackPane stackPane, Notification msg) {
-        msg.getStyleClass().addAll(Styles.ACCENT, Styles.ELEVATED_1);
+    public static void addNotificationToStackPane(StackPane stackPane, Notification msg, int closeDelaySeconds) {
+        addNotificationToStackPane(stackPane, msg);
+        automaticallyCloseNotification(stackPane, msg, closeDelaySeconds);
+    }
+
+    /**
+     * Adds a notification to the given StackPane.
+     *
+     * @param stackPane the StackPane to add the notification to
+     * @param msg       the notification message
+     * @param autoClose true if the notification should automatically close, false otherwise
+     */
+    public static void addNotificationToStackPane(StackPane stackPane, Notification msg, boolean autoClose) {
+        addNotificationToStackPane(stackPane, msg);
+        if (autoClose) {
+            automaticallyCloseNotification(stackPane, msg, 3);
+        }
+
+    }
+
+    /**
+     * Adds a notification message to a StackPane.
+     *
+     * @param stackPane the StackPane to add the notification to
+     * @param msg       the notification message to be added
+     */
+    private static void addNotificationToStackPane(StackPane stackPane, Notification msg) {
         msg.setPrefHeight(Region.USE_PREF_SIZE);
         msg.setMaxHeight(Region.USE_PREF_SIZE);
         StackPane.setAlignment(msg, Pos.BOTTOM_RIGHT);
@@ -107,6 +133,26 @@ public class RootManager {
             stackPane.getChildren().add(msg);
         }
         in.playFromStart();
+    }
+
+    /**
+     * Automatically closes the notification after a specified delay.
+     *
+     * @param stackPane         the StackPane containing the notification
+     * @param msg               the notification to be closed
+     * @param closeDelaySeconds the delay time in seconds before closing the notification
+     */
+    private static void automaticallyCloseNotification(StackPane stackPane, Notification msg, int closeDelaySeconds) {
+        // 自动关闭提示框
+        // 设置关闭延迟时间（单位：秒）
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(closeDelaySeconds), event -> {
+            // 关闭提示框
+            var out = Animations.slideOutUp(msg, Duration.millis(450));
+            out.setOnFinished(f -> stackPane.getChildren().remove(msg));
+            out.playFromStart();
+        }));
+        timeline.setCycleCount(1);
+        timeline.play();
     }
 
     public StackPane getRootStackPane() {

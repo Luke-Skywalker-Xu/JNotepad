@@ -1,6 +1,5 @@
 package org.jcnc.jnotepad.component.stage.topmenu.help;
 
-import atlantafx.base.controls.Notification;
 import atlantafx.base.theme.Styles;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,8 +18,8 @@ import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
 import org.jcnc.jnotepad.util.ClipboardUtil;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.NotificationUtil;
 import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.manager.RootManager;
 
 import static org.jcnc.jnotepad.common.constants.AppConstants.*;
 
@@ -128,16 +127,7 @@ public class HelpPaneStage extends AbstractPaneStage {
         bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
 
         Button leftBtn = getButton(" 复制并关闭 ", event -> {
-            // 获取 RootManager 的实例
-            RootManager rootManager = RootManager.getInstance();
-
-            // 创建一个新的 Notification
-            Notification notification = new Notification();
-            notification.setMessage("已成功复制软件信息!");
-
-            // 调用 RootManager 中的方法来显示 Notification
-            rootManager.addNotificationToStackPane(rootManager.getRootStackPane(), notification);
-
+            NotificationUtil.infoNotification("软件信息已经复制到剪贴板!");
             String info = "软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
             ClipboardUtil.writeTextToClipboard(info);
             LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:{}", info);

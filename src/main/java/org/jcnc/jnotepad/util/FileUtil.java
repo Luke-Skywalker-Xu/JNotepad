@@ -5,6 +5,7 @@ import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -263,6 +264,25 @@ public class FileUtil {
         // 调用完毕删除当前目录
         try {
             Files.deleteIfExists(file.toPath());
+        } catch (IOException e) {
+            throw new AppException(e);
+        }
+    }
+
+    /**
+     * Opens the file explorer to the specified file or its parent directory.
+     *
+     * @param file the file or directory to open in the file explorer
+     */
+    public static void openExplorer(File file) {
+        try { // 判断传入的是文件还是文件夹
+            if (file.isDirectory()) {
+                Desktop.getDesktop().open(file);
+            }
+            // 如果是文件则打开所在文件夹
+            else {
+                Desktop.getDesktop().open(file.getParentFile());
+            }
         } catch (IOException e) {
             throw new AppException(e);
         }

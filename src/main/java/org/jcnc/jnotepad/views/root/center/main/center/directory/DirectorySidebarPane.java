@@ -2,11 +2,12 @@ package org.jcnc.jnotepad.views.root.center.main.center.directory;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 
 import java.io.File;
 import java.util.Objects;
+
+import static org.jcnc.jnotepad.util.TabUtil.openFileToTab;
 
 
 /**
@@ -34,7 +35,7 @@ public class DirectorySidebarPane extends TreeView<DirFileModel> {
                 if (!file.isFile()) {
                     return;
                 }
-                OpenFile.openFile(file);
+                openFileToTab(file);
             }
         });
     }
