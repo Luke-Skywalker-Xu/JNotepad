@@ -14,11 +14,14 @@ import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.PUSHPIN;
 
 /**
  * 中心标签页窗格管理类
@@ -305,6 +308,13 @@ public class CenterTabPaneManager {
      */
     public void updateTabPinnedState(CenterTab tab, CheckMenuItem checkMenuItem) {
         tab.setFixed(!tab.isFixed());
+        if (tab.isFixed()) {
+            FontIcon icon = FontIcon.of(PUSHPIN);
+            icon.setRotate(-45);
+            tab.setGraphic(icon);
+        } else {
+            tab.setGraphic(new FontIcon());
+        }
         checkMenuItem.setSelected(tab.isFixed());
     }
 
