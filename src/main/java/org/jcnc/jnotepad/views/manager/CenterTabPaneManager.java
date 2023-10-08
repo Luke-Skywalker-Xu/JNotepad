@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.views.manager;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
@@ -10,7 +11,6 @@ import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.util.FileUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
-import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
@@ -92,7 +92,7 @@ public class CenterTabPaneManager {
             if (lastModifiedTimeOfFile.equals(lastModifiedTime)) {
                 return;
             }
-            //fixme 这行代码不能直接放到绑定的方法中,猜测匿名内部类的延迟执行特性可能会导致在获取 FileUtil.getFileText(file) 的返回值时，文件内容还没有被正确读取，导致空串，暂无解决办法
+            // 这行代码不能直接放到绑定的方法中,猜测匿名内部类的延迟执行特性可能会导致在获取 FileUtil.getFileText(file) 的返回值时，文件内容还没有被正确读取，导致空串，暂无解决办法
             String fileText = FileUtil.getFileText(file);
             // 当前文件已被外部修改
             PopUpUtil.questionAlert(
@@ -240,6 +240,23 @@ public class CenterTabPaneManager {
      * 判断是否有左侧标签页
      *
      * @param centerTab 标签页
+     * @apiNote 由于不知道怎么监听固定状态，因此，还是使用简单的判断，如果能够监听固定状态时可以把代码修改为
+     * <blockquote><pre>
+     *  public boolean hasLeftTabs(CenterTab centerTab) {
+     *     ObservableList<Tab> tabs = centerTabPane.getTabs();
+     *     int edge = tabs.indexOf(centerTab);
+     *     if (edge == 0) {
+     *         return false;
+     *     }
+     *     for (int i = 0; i < edge; i++) {
+     *         CenterTab tab = (CenterTab) tabs.get(i);
+     *         if (!tab.isFixed()) {
+     *             return true;
+     *         }
+     *     }
+     *     return false;
+     * }
+     * <blockquote><pre>
      * @return 是否有左侧标签页
      */
     public boolean hasLeftTabs(CenterTab centerTab) {
@@ -252,6 +269,19 @@ public class CenterTabPaneManager {
      *
      * @param centerTab 标签页
      * @return 是否有右侧标签页
+     * @apiNote 由于不知道怎么监听固定状态，因此，还是使用简单的判断，如果能够监听固定状态时可以把代码修改为
+     * <blockquote><pre>
+     *  public boolean hasRightTabs(CenterTab centerTab) {
+     *         ObservableList<Tab> tabs = centerTabPane.getTabs();
+     *         for (int i = tabs.indexOf(centerTab); i < tabs.size(); i++) {
+     *             CenterTab tab = (CenterTab) tabs.get(i);
+     *             if (!tab.isFixed()) {
+     *                 return true;
+     *             }
+     *         }
+     *         return false;
+     *     }
+     * </pre></blockquote>
      */
     public boolean hasRightTabs(CenterTab centerTab) {
         ObservableList<Tab> tabs = centerTabPane.getTabs();
@@ -273,11 +303,20 @@ public class CenterTabPaneManager {
      *
      * @param tab the center tab to update
      */
-    public void updateTabPinnedState(CenterTab tab) {
+    public void updateTabPinnedState(CenterTab tab, CheckMenuItem checkMenuItem) {
         tab.setFixed(!tab.isFixed());
-        TabUtil.updateTabContextMenu(tab);
+        checkMenuItem.setSelected(tab.isFixed());
     }
-    
 
-
+    /**
+     * Updates the read-only property of a given tab and its associated check menu item.
+     *
+     * @param tab           the center tab to update
+     * @param checkMenuItem the check menu item associated with the tab
+     */
+    public void updateReadOnlyProperty(CenterTab tab, CheckMenuItem checkMenuItem) {
+        TextCodeArea textCodeArea = tab.getTextCodeArea();
+        textCodeArea.setEditable(!textCodeArea.isEditable());
+        checkMenuItem.setSelected(!textCodeArea.isEditable());
+    }
 }
