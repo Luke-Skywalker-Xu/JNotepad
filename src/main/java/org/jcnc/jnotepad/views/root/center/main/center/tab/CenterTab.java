@@ -6,6 +6,7 @@ import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
 import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
+import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.RenameFile;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.SaveFile;
 import org.jcnc.jnotepad.util.ClipboardUtil;
@@ -14,6 +15,7 @@ import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.slf4j.Logger;
 
+import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -129,7 +131,13 @@ public class CenterTab extends Tab {
                         .addSeparatorMenuItem()
                         .addMenu(new MenuBuilder("打开于")
                                 .addMenuItem("资源管理器", e -> {
-
+                                    try {
+                                        LogUtil.getLogger(OpenFile.class).info("已调用资源管理器");
+                                        File file1 = (File) this.getUserData();
+                                        Desktop.getDesktop().open(file1.getParentFile());
+                                    } catch (IOException exception) {
+                                        logger.error("加载资源管理器失败!");
+                                    }
                                 })
                                 .addMenuItem("终端", e -> {
 
