@@ -324,6 +324,11 @@ public class TabUtil {
         CenterTabPaneManager.getInstance().addNewTab(tab);
     }
 
+    /**
+     * Updates the context menu for a given tab in the center tab pane.
+     *
+     * @param tab The tab for which the context menu is being updated.
+     */
     public static void updateTabContextMenu(CenterTab tab) {
         ContextMenuBuilder builder = new ContextMenuBuilder();
         CenterTabPaneManager centerTabPaneManager = CenterTabPaneManager.getInstance();
