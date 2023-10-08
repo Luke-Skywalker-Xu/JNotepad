@@ -2,8 +2,13 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
+import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
+import org.jcnc.jnotepad.controller.event.handler.menuitem.RenameFile;
+import org.jcnc.jnotepad.controller.event.handler.menuitem.SaveFile;
+import org.jcnc.jnotepad.util.ClipboardUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
@@ -35,7 +40,7 @@ public class CenterTab extends Tab {
     private boolean isRelevance = false;
 
     /**
-     * 是否关闭
+     * 是否固定
      */
     private boolean isFixed = false;
     /**
