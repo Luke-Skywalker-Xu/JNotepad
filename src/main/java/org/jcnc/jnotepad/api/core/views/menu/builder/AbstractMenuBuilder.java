@@ -3,9 +3,7 @@ package org.jcnc.jnotepad.api.core.views.menu.builder;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 
 /**
  * 抽象菜单建造者类
@@ -60,14 +58,14 @@ public abstract class AbstractMenuBuilder<B, T> {
     }
 
     /**
-     * 添加单选菜单项
+     * 添加单选菜单项 todo 待完善
      *
      * @param label        菜单项名称
      * @param eventHandler 事件
      * @return 建造者
      */
     public B addRadioMenuItem(String label, EventHandler<ActionEvent> eventHandler) {
-        MenuItem menuItem = new MenuItem(label);
+        RadioMenuItem menuItem = new RadioMenuItem(label);
         menuItem.setOnAction(eventHandler);
         getItems().add(menuItem);
         return getBuilder();
@@ -81,7 +79,7 @@ public abstract class AbstractMenuBuilder<B, T> {
      * @return 建造者
      */
     public B addCheckMenuItem(String label, EventHandler<ActionEvent> eventHandler) {
-        MenuItem menuItem = new MenuItem(label);
+        CheckMenuItem menuItem = new CheckMenuItem(label);
         menuItem.setOnAction(eventHandler);
         getItems().add(menuItem);
         return getBuilder();
@@ -94,6 +92,21 @@ public abstract class AbstractMenuBuilder<B, T> {
      * @return 建造者
      */
     public B addMenu(Menu menu) {
+        getItems().add(menu);
+        return getBuilder();
+    }
+
+    /**
+     * 添加菜单
+     *
+     * @param menu    菜单
+     * @param disable 是否禁用
+     * @return 建造者
+     */
+    public B addMenu(Menu menu, boolean disable) {
+        if (!disable) {
+            return getBuilder();
+        }
         getItems().add(menu);
         return getBuilder();
     }

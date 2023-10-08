@@ -6,6 +6,8 @@ import org.jcnc.jnotepad.util.LogUtil;
 
 import java.io.File;
 
+import static org.jcnc.jnotepad.util.TabUtil.openFileToTab;
+
 /**
  * 打开配置文件事件处理程序。
  *
@@ -26,6 +28,6 @@ public class OpenConfig extends OpenFile {
         File file = UserConfigController.getInstance().getConfigPath().toFile();
         LogUtil.getLogger(this.getClass()).info("已调用打开配置文件功能, {}", file);
         // 创建打开文件的任务并启动线程执行任务
-        openFile(file);
+        openFileToTab(file);
     }
 }

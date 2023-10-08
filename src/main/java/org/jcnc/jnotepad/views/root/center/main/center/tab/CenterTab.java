@@ -2,14 +2,10 @@ package org.jcnc.jnotepad.views.root.center.main.center.tab;
 
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
-import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.RenameFile;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.SaveFile;
-import org.jcnc.jnotepad.util.ClipboardUtil;
 import org.jcnc.jnotepad.util.LogUtil;
+import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
 import org.slf4j.Logger;
@@ -37,6 +33,11 @@ public class CenterTab extends Tab {
      * 是否与本地文件关联
      */
     private boolean isRelevance = false;
+
+    /**
+     * 是否关闭
+     */
+    private boolean isFixed = false;
     /**
      * 关联文件上次修改时间
      */
@@ -58,7 +59,8 @@ public class CenterTab extends Tab {
         this.setContent(new VirtualizedScrollPane<>(textCodeArea));
         setAutoLine(UserConfigController.getInstance().getAutoLineConfig());
         this.charset = charset;
-        contextMenuMonitor();
+        // 绑定标签页监听
+        CenterTabPaneManager.getInstance().setTabsListener(this);
     }
 
     public boolean isRelevance() {
@@ -90,53 +92,13 @@ public class CenterTab extends Tab {
         this.charset = charset;
     }
 
+    /**
+     * Monitors the context menu.
+     */
     public void contextMenuMonitor() {
-        ContextMenuBuilder builder = new ContextMenuBuilder();
-        CenterTabPaneManager centerTabPaneManager = CenterTabPaneManager.getInstance();
-        File file = (File) this.getUserData();
-        //todo 设置上下文菜单
-        this.setContextMenu(
-                builder
-                        .addMenuItem("关闭", e -> centerTabPaneManager.removeTab(this))
-                        .addMenuItem(
-                                "关闭其它标签页",
-                                e -> centerTabPaneManager.removeOtherTabs(this),
-                                centerTabPaneManager.hasOtherTabs()
-                        )
-                        .addMenuItem("关闭所有标签页", e -> centerTabPaneManager.removeAllTabs())
-                        .addMenuItem(
-                                "关闭左侧标签页",
-                                e -> centerTabPaneManager.removeLeftTabs(this),
-                                centerTabPaneManager.hasLeftTabs(this)
-                        )
-                        .addMenuItem(
-                                "关闭右侧标签页",
-                                e -> centerTabPaneManager.removeRightTabs(this),
-                                centerTabPaneManager.hasRightTabs(this)
-                        )
-                        .addSeparatorMenuItem()
-                        .addMenu(
-                                new MenuBuilder("复制")
-                                        .addMenuItem("文件名", e -> ClipboardUtil.writeTextToClipboard(this.getText()))
-                                        .addMenuItem("文件路径", e -> ClipboardUtil.writeTextToClipboard(file.getAbsolutePath()))
-                                        .addMenuItem("所在文件夹", e -> ClipboardUtil.writeTextToClipboard(file.getParent()))
-                                        .build()
-                        )
-                        .addSeparatorMenuItem()
-                        .addMenuItem("保存", e -> SaveFile.saveFile())
-                        .addMenuItem("另存为", e -> SaveFile.saveAsFile(), isRelevance)
-                        .addMenuItem("重命名", e -> RenameFile.rename())
-                        .addSeparatorMenuItem()
-                        .addMenu(new MenuBuilder("打开于")
-                                .addMenuItem("资源管理器", e -> {
-
-                                })
-                                .addMenuItem("终端", e -> {
-
-                                })
-                                .build())
-                        .build());
+        TabUtil.updateTabContextMenu(this);
     }
+
 
     /**
      * 保存选中的文件标签页
@@ -205,5 +167,13 @@ public class CenterTab extends Tab {
 
     public void setLastModifiedTimeOfAssociatedFile(Long lastModifiedTimeOfAssociatedFile) {
         this.lastModifiedTimeOfAssociatedFile = lastModifiedTimeOfAssociatedFile;
+    }
+
+    public boolean isFixed() {
+        return isFixed;
+    }
+
+    public void setFixed(boolean fixed) {
+        isFixed = fixed;
     }
 }

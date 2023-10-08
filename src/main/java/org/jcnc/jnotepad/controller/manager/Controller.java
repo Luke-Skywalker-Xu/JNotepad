@@ -2,13 +2,14 @@ package org.jcnc.jnotepad.controller.manager;
 
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.component.module.interfaces.ControllerAble;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.NewFile;
-import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static org.jcnc.jnotepad.util.TabUtil.addNewFileTab;
+import static org.jcnc.jnotepad.util.TabUtil.openFileToTab;
 
 /**
  * 控制器类，实现 ControllerAble 接口，用于管理文本编辑器的各种操作和事件处理。
@@ -44,7 +45,7 @@ public class Controller implements ControllerAble<List<String>> {
         // 判空
         List<String> fileTab = (List<String>) cacheData.orElse(Collections.emptyList());
         // 打开上次打开的标签页
-        fileTab.forEach(filePath -> OpenFile.openFile(new File(filePath)));
+        fileTab.forEach(filePath -> openFileToTab(new File(filePath)));
 
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
@@ -52,7 +53,7 @@ public class Controller implements ControllerAble<List<String>> {
             return;
         }
         if (fileTab.isEmpty()) {
-            new NewFile().addNewFileTab();
+            addNewFileTab();
         }
     }
 
@@ -65,7 +66,7 @@ public class Controller implements ControllerAble<List<String>> {
     public void openAssociatedFile(String filePath) {
         File file = new File(filePath);
         if (file.exists() && file.isFile()) {
-            OpenFile.openFile(file);
+            openFileToTab(file);
         }
     }
 }
