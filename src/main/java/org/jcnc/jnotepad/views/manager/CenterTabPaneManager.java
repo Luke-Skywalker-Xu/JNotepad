@@ -2,6 +2,7 @@ package org.jcnc.jnotepad.views.manager;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
@@ -10,7 +11,6 @@ import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
 import org.jcnc.jnotepad.util.FileUtil;
 import org.jcnc.jnotepad.util.PopUpUtil;
-import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
@@ -273,11 +273,20 @@ public class CenterTabPaneManager {
      *
      * @param tab the center tab to update
      */
-    public void updateTabPinnedState(CenterTab tab) {
+    public void updateTabPinnedState(CenterTab tab, CheckMenuItem checkMenuItem) {
         tab.setFixed(!tab.isFixed());
-        TabUtil.updateTabContextMenu(tab);
+        checkMenuItem.setSelected(tab.isFixed());
     }
-    
 
-
+    /**
+     * Updates the read-only property of a given tab and its associated check menu item.
+     *
+     * @param tab           the center tab to update
+     * @param checkMenuItem the check menu item associated with the tab
+     */
+    public void updateReadOnlyProperty(CenterTab tab, CheckMenuItem checkMenuItem) {
+        TextCodeArea textCodeArea = tab.getTextCodeArea();
+        textCodeArea.setEditable(!textCodeArea.isEditable());
+        checkMenuItem.setSelected(!textCodeArea.isEditable());
+    }
 }

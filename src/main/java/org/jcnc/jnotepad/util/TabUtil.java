@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.util;
 
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -40,6 +41,7 @@ import static org.jcnc.jnotepad.util.FileUtil.getFileText;
 public class TabUtil {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
     static Logger logger = LogUtil.getLogger(TabUtil.class);
+
     private TabUtil() {
     }
 
@@ -379,8 +381,9 @@ public class TabUtil {
                                 })
                                 .build(), tab.isRelevance())
                         .addSeparatorMenuItem()
-                        .addMenuItem("固定标签页", e -> centerTabPaneManager.updateTabPinnedState(tab), !tab.isFixed())
-                        .addMenuItem("取消固定", e -> centerTabPaneManager.updateTabPinnedState(tab), tab.isFixed())
+                        .addCheckMenuItem("固定标签页", e -> centerTabPaneManager.updateTabPinnedState(tab, (CheckMenuItem) e.getSource()))
+                        .addSeparatorMenuItem()
+                        .addCheckMenuItem("只读", e -> centerTabPaneManager.updateReadOnlyProperty(tab, (CheckMenuItem) e.getSource()))
                         .build());
     }
 }
