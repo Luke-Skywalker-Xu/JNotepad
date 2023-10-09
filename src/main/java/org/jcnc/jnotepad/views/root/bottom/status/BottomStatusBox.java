@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.views.root.bottom.status;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.jcnc.jnotepad.component.module.base.AbstractHorizontalBox;
 
@@ -23,6 +24,11 @@ public class BottomStatusBox extends AbstractHorizontalBox {
      */
     private final Label encodingLabel = new Label();
 
+    /**
+     * 只读按钮
+     */
+    private final Button readOnlyButton = new Button();
+
     private BottomStatusBox() {
 
     }
@@ -38,5 +44,9 @@ public class BottomStatusBox extends AbstractHorizontalBox {
 
     public Label getEncodingLabel() {
         return encodingLabel;
+    }
+
+    public Button getReadOnlyButton() {
+        return readOnlyButton;
     }
 }

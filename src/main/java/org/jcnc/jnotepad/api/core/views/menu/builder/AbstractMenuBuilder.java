@@ -58,7 +58,7 @@ public abstract class AbstractMenuBuilder<B, T> {
     }
 
     /**
-     * 添加单选菜单项 todo 待完善
+     * 添加单选菜单项
      *
      * @param label        菜单项名称
      * @param eventHandler 事件

@@ -2,7 +2,6 @@ package org.jcnc.jnotepad.views.manager;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
@@ -14,14 +13,11 @@ import org.jcnc.jnotepad.util.PopUpUtil;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.PUSHPIN;
 
 /**
  * 中心标签页窗格管理类
@@ -276,7 +272,7 @@ public class CenterTabPaneManager {
      * <blockquote><pre>
      *  public boolean hasRightTabs(CenterTab centerTab) {
      *         ObservableList<Tab> tabs = centerTabPane.getTabs();
-     *         for (int i = tabs.indexOf(centerTab); i < tabs.size(); i++) {
+     *         for (int i = tabs.indexOf(centerTab)+1; i < tabs.size(); i++) {
      *             CenterTab tab = (CenterTab) tabs.get(i);
      *             if (!tab.isFixed()) {
      *                 return true;
@@ -298,7 +294,11 @@ public class CenterTabPaneManager {
      * @param tab the tab to set the listener for
      */
     public void setTabsListener(CenterTab tab) {
-        centerTabPane.getTabs().addListener((ListChangeListener<Tab>) c -> tab.contextMenuMonitor());
+        ObservableList<Tab> tabs = centerTabPane.getTabs();
+        tabs.addListener((ListChangeListener<Tab>) c -> {
+            tab.contextMenuMonitor();
+            BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, centerTabPane.getTabs());
+        });
     }
 
     /**
@@ -306,27 +306,20 @@ public class CenterTabPaneManager {
      *
      * @param tab the center tab to update
      */
-    public void updateTabPinnedState(CenterTab tab, CheckMenuItem checkMenuItem) {
+    public void updateTabPinnedState(CenterTab tab) {
         tab.setFixed(!tab.isFixed());
-        if (tab.isFixed()) {
-            FontIcon icon = FontIcon.of(PUSHPIN);
-            icon.setRotate(-45);
-            tab.setGraphic(icon);
-        } else {
-            tab.setGraphic(new FontIcon());
-        }
-        checkMenuItem.setSelected(tab.isFixed());
+        tab.setClosable(!tab.isFixed());
     }
 
     /**
      * Updates the read-only property of a given tab and its associated check menu item.
      *
      * @param tab           the center tab to update
-     * @param checkMenuItem the check menu item associated with the tab
      */
-    public void updateReadOnlyProperty(CenterTab tab, CheckMenuItem checkMenuItem) {
+    public void updateReadOnlyProperty(CenterTab tab) {
         TextCodeArea textCodeArea = tab.getTextCodeArea();
         textCodeArea.setEditable(!textCodeArea.isEditable());
-        checkMenuItem.setSelected(!textCodeArea.isEditable());
+        tab.contextMenuMonitor();
+        BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, centerTabPane.getTabs());
     }
 }
