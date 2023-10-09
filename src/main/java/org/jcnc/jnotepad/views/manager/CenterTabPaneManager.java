@@ -182,7 +182,13 @@ public class CenterTabPaneManager {
      * @param currTab the current tab
      */
     public void removeOtherTabs(CenterTab currTab) {
-        centerTabPane.getTabs().removeIf(tab -> (!currTab.equals(tab) || !((CenterTab) tab).isFixed()));
+        centerTabPane.getTabs().removeIf(tab -> {
+            CenterTab centerTab = (CenterTab) tab;
+            if (centerTab.equals(currTab)) {
+                return false;
+            }
+            return !centerTab.isFixed() && !centerTab.equals(currTab);
+        });
     }
 
     /**
@@ -314,7 +320,7 @@ public class CenterTabPaneManager {
     /**
      * Updates the read-only property of a given tab and its associated check menu item.
      *
-     * @param tab           the center tab to update
+     * @param tab the center tab to update
      */
     public void updateReadOnlyProperty(CenterTab tab) {
         TextCodeArea textCodeArea = tab.getTextCodeArea();
