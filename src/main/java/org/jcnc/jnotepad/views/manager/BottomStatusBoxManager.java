@@ -1,17 +1,27 @@
 package org.jcnc.jnotepad.views.manager;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
+import org.jcnc.jnotepad.api.core.views.manager.builder.BottomStatusBoxButtonBuilder;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.charset.Charset;
+
+import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.LOCK;
+import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.UNLOCK;
 
 /**
  * 状态栏组件管理类
@@ -58,10 +68,9 @@ public class BottomStatusBoxManager {
      */
     public void registerBottomStatusBox() {
         Label statusLabel = BOTTOM_STATUS_BOX.getStatusLabel();
-        registerChildrenByLabel(statusLabel);
+        registerChildren(statusLabel);
         statusLabel.setText(getStatusBarFormattedText(0, 0, 1));
-
-        registerChildrenByLabel(BOTTOM_STATUS_BOX.getEncodingLabel());
+        registerChildren(BOTTOM_STATUS_BOX.getEncodingLabel());
     }
 
     /**
@@ -73,13 +82,14 @@ public class BottomStatusBoxManager {
         this.style = style;
     }
 
+
     /**
-     * 注册状态栏标签组件
+     * Registers the given node as a child of the current node.
      *
-     * @param label 标签组件
+     * @param node the node to be registered as a child
      */
-    public void registerChildrenByLabel(Label label) {
-        BOTTOM_STATUS_BOX.getChildren().add(label);
+    public void registerChildren(Node node) {
+        BOTTOM_STATUS_BOX.getChildren().add(node);
     }
 
     public void updateEncodingLabel() {
@@ -126,7 +136,7 @@ public class BottomStatusBoxManager {
             CenterTab centerTab = instance.getSelected();
             if (centerTab != null) {
                 updateEncodingLabel(centerTab.getCharset().name());
-
+                updateReadOnlyProperty(centerTab, CenterTabPane.getInstance().getTabs());
                 // 添加光标位置变化监听器
                 TextCodeArea textArea = centerTab.getTextCodeArea();
                 textArea.caretPositionProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> updateRowColumnLabel(textArea.getCaretPosition(), textArea.getText()));
@@ -194,5 +204,42 @@ public class BottomStatusBoxManager {
     public String getEncodingFormattedText(String encoding) {
         String encodingLabelFormat = "%s : %s";
         return String.format(encodingLabelFormat, UiResourceBundle.getContent(TextConstants.ENCODE), encoding);
+    }
+
+    /**
+     * Updates the read-only property of a tab in the center tab pane.
+     *
+     * @param tab  the tab to update the read-only property for
+     * @param tabs the list of tabs in the center tab pane
+     */
+    public void updateReadOnlyProperty(CenterTab tab, ObservableList<Tab> tabs) {
+        ObservableList<Node> children = BOTTOM_STATUS_BOX.getChildren();
+        Button readOnlyButton = BOTTOM_STATUS_BOX.getReadOnlyButton();
+        BottomStatusBoxButtonBuilder builder = new BottomStatusBoxButtonBuilder(readOnlyButton);
+        if (tab.getTextCodeArea().isEditable()) {
+            FontIcon icon = FontIcon.of(UNLOCK);
+            if (children.contains(readOnlyButton)) {
+                readOnlyButton.setGraphic(icon);
+            } else {
+                registerChildren(builder
+                        .setFontIcon(icon)
+                        .setEventHandler(e -> CenterTabPaneManager.getInstance().updateReadOnlyProperty(tab))
+                        .build());
+            }
+
+        } else {
+            FontIcon icon = FontIcon.of(LOCK);
+            if (children.contains(readOnlyButton)) {
+                readOnlyButton.setGraphic(icon);
+            } else {
+                registerChildren(builder
+                        .setFontIcon(icon)
+                        .setEventHandler(e -> CenterTabPaneManager.getInstance().updateReadOnlyProperty(tab))
+                        .build());
+            }
+        }
+        if (tabs.isEmpty()) {
+            children.remove(readOnlyButton);
+        }
     }
 }

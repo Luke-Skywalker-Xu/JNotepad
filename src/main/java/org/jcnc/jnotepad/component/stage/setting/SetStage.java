@@ -160,7 +160,6 @@ public class SetStage {
         securityItem.getChildren().add(securityItem2);
 
 
-
         root.getChildren().add(generalItem);
         root.getChildren().add(appearanceItem);
         root.getChildren().add(securityItem);
@@ -203,7 +202,6 @@ public class SetStage {
     }
 
 
-
     /**
      * 创建常规设置项1的布局。
      *
@@ -225,12 +223,11 @@ public class SetStage {
         var fileChooseBtn = new Button();
         fileChooseBtn.setText("选择文件夹");
         fileChooseBtn.getStyleClass().addAll(Styles.SMALL);
-        BasicDirectoryChooserFactory directoryChooserFactory = BasicDirectoryChooserFactory.getInstance();
         fileChooseBtn.setOnAction(event -> {
             // 获取打开目录缓存
             Cache cache = cacheManager.getCache(OpenDirectory.GROUP, "openDirectory");
 
-            File file = directoryChooserFactory.createDirectoryChooser(
+            File file = BasicDirectoryChooserFactory.getInstance().createDirectoryChooser(
                             UiResourceBundle.getContent(TextConstants.OPEN),
                             cache == null ? null : new File((String) cache.getCacheData()))
                     .showDialog(UiUtil.getAppWindow());

@@ -1,6 +1,5 @@
 package org.jcnc.jnotepad.util;
 
-import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -40,7 +39,7 @@ import static org.jcnc.jnotepad.util.FileUtil.getFileText;
  */
 public class TabUtil {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
-    static Logger logger = LogUtil.getLogger(TabUtil.class);
+    private static final Logger logger = LogUtil.getLogger(TabUtil.class);
 
     private TabUtil() {
     }
@@ -91,7 +90,9 @@ public class TabUtil {
                 .showSaveDialog(UiUtil.getAppWindow());
         if (file != null) {
             if (cache == null) {
-                CACHE_MANAGER.addCache(CACHE_MANAGER.createCache("folder", "saveFile", file.getParent(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
+                CACHE_MANAGER.addCache(
+                        CACHE_MANAGER.createCache("folder", "saveFile", file.getParent(),
+                                CacheExpirationTime.NEVER_EXPIRES.getValue()));
             } else {
                 cache.setCacheData(file.getParent());
                 CACHE_MANAGER.addCache(cache);
@@ -202,9 +203,12 @@ public class TabUtil {
      * 显示警告弹窗，提示用户更换重复的名称。
      */
     private static void showDuplicateNameAlert(String newTabName) {
-
-        PopUpUtil.errorAlert("重命名错误", "\" " + newTabName + "\" 和已有标签页名字重复", "请再次重命名", null, null);
-
+        PopUpUtil.errorAlert(
+                "重命名错误",
+                "\" " + newTabName + "\" 和已有标签页名字重复",
+                "请再次重命名",
+                null,
+                null);
     }
 
     /**
@@ -336,13 +340,17 @@ public class TabUtil {
         //todo 设置上下文菜单
         tab.setContextMenu(
                 builder
-                        .addMenuItem("关闭", e -> centerTabPaneManager.removeTab(tab))
+                        .addMenuItem(
+                                "关闭",
+                                e -> centerTabPaneManager.removeTab(tab))
                         .addMenuItem(
                                 "关闭其它标签页",
                                 e -> centerTabPaneManager.removeOtherTabs(tab),
                                 centerTabPaneManager.hasOtherTabs()
                         )
-                        .addMenuItem("关闭所有标签页", e -> centerTabPaneManager.removeAllTabs())
+                        .addMenuItem(
+                                "关闭所有标签页",
+                                e -> centerTabPaneManager.removeAllTabs())
                         .addMenuItem(
                                 "关闭左侧标签页",
                                 e -> centerTabPaneManager.removeLeftTabs(tab),
@@ -386,9 +394,19 @@ public class TabUtil {
                                 })
                                 .build(), tab.isRelevance())
                         .addSeparatorMenuItem()
-                        .addCheckMenuItem("固定标签页", e -> centerTabPaneManager.updateTabPinnedState(tab, (CheckMenuItem) e.getSource()))
+                        .addMenuItem("固定标签页",
+                                e -> centerTabPaneManager.updateTabPinnedState(tab),
+                                !tab.isFixed())
+                        .addMenuItem("取消固定",
+                                e -> centerTabPaneManager.updateTabPinnedState(tab),
+                                tab.isFixed())
                         .addSeparatorMenuItem()
-                        .addCheckMenuItem("只读", e -> centerTabPaneManager.updateReadOnlyProperty(tab, (CheckMenuItem) e.getSource()))
+                        .addMenuItem("只读",
+                                e -> centerTabPaneManager.updateReadOnlyProperty(tab),
+                                tab.getTextCodeArea().isEditable())
+                        .addMenuItem("取消只读",
+                                e -> centerTabPaneManager.updateReadOnlyProperty(tab),
+                                !tab.getTextCodeArea().isEditable())
                         .build());
     }
 }
