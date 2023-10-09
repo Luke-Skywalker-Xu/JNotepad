@@ -297,7 +297,7 @@ public class CenterTabPaneManager {
         ObservableList<Tab> tabs = centerTabPane.getTabs();
         tabs.addListener((ListChangeListener<Tab>) c -> {
             tab.contextMenuMonitor();
-            BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, centerTabPane.getTabs());
+            BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, tabs);
         });
     }
 

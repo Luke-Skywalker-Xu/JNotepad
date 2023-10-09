@@ -15,6 +15,7 @@ import org.jcnc.jnotepad.common.constants.TextConstants;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.views.root.bottom.status.BottomStatusBox;
 import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTab;
+import org.jcnc.jnotepad.views.root.center.main.center.tab.CenterTabPane;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.nio.charset.Charset;
@@ -135,7 +136,7 @@ public class BottomStatusBoxManager {
             CenterTab centerTab = instance.getSelected();
             if (centerTab != null) {
                 updateEncodingLabel(centerTab.getCharset().name());
-
+                updateReadOnlyProperty(centerTab, CenterTabPane.getInstance().getTabs());
                 // 添加光标位置变化监听器
                 TextCodeArea textArea = centerTab.getTextCodeArea();
                 textArea.caretPositionProperty().addListener((ChangeListener<Number>) (observable, oldValue, newValue) -> updateRowColumnLabel(textArea.getCaretPosition(), textArea.getText()));
@@ -205,12 +206,18 @@ public class BottomStatusBoxManager {
         return String.format(encodingLabelFormat, UiResourceBundle.getContent(TextConstants.ENCODE), encoding);
     }
 
+    /**
+     * Updates the read-only property of a tab in the center tab pane.
+     *
+     * @param tab  the tab to update the read-only property for
+     * @param tabs the list of tabs in the center tab pane
+     */
     public void updateReadOnlyProperty(CenterTab tab, ObservableList<Tab> tabs) {
         ObservableList<Node> children = BOTTOM_STATUS_BOX.getChildren();
         Button readOnlyButton = BOTTOM_STATUS_BOX.getReadOnlyButton();
         BottomStatusBoxButtonBuilder builder = new BottomStatusBoxButtonBuilder(readOnlyButton);
         if (tab.getTextCodeArea().isEditable()) {
-            FontIcon icon = FontIcon.of(LOCK);
+            FontIcon icon = FontIcon.of(UNLOCK);
             if (children.contains(readOnlyButton)) {
                 readOnlyButton.setGraphic(icon);
             } else {
@@ -221,7 +228,7 @@ public class BottomStatusBoxManager {
             }
 
         } else {
-            FontIcon icon = FontIcon.of(UNLOCK);
+            FontIcon icon = FontIcon.of(LOCK);
             if (children.contains(readOnlyButton)) {
                 readOnlyButton.setGraphic(icon);
             } else {
