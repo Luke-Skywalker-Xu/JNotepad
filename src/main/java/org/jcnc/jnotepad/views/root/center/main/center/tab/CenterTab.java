@@ -6,6 +6,7 @@ import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.jcnc.jnotepad.component.module.TextCodeArea;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
+import org.jcnc.jnotepad.util.FileUtil;
 import org.jcnc.jnotepad.util.LogUtil;
 import org.jcnc.jnotepad.util.TabUtil;
 import org.jcnc.jnotepad.views.manager.BottomStatusBoxManager;
@@ -56,6 +57,8 @@ public class CenterTab extends Tab {
 
     public CenterTab(String tabTitle, TextCodeArea textArea, Charset charset) {
         super(tabTitle);
+        // 在此根据标签页名称设置文件图标
+        this.setGraphic(FileUtil.getIconCorrespondingToFileName(tabTitle));
         textCodeArea = textArea;
         initTextAreaListeners();
         this.setContent(new VirtualizedScrollPane<>(textCodeArea));

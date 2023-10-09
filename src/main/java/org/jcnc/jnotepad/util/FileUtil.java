@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.util;
 
+import javafx.scene.Node;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
@@ -286,6 +287,27 @@ public class FileUtil {
         } catch (IOException e) {
             throw new AppException(e);
         }
+    }
+
+
+    /**
+     * Retrieves the icon corresponding to the given file name.
+     *
+     * @param tabTitle the title of the tab
+     * @return the icon node corresponding to the file name
+     */
+    public static Node getIconCorrespondingToFileName(String tabTitle) {
+        // todo 在此根据文件缀名获取对应的图标
+        String fileExtension = tabTitle.substring(tabTitle.lastIndexOf(".") + 1);
+        return switch (fileExtension.toLowerCase()) {
+            case "txt" -> FontIcon.of(FILE_TEXT);
+            case "doc" -> FontIcon.of(FILE_WORD);
+            case "pdf" -> FontIcon.of(FILE_PDF);
+            case "ppt" -> FontIcon.of(FILE_PPT);
+            case "xls" -> FontIcon.of(FILE_EXCEL);
+            case "md" -> FontIcon.of(FILE_MARKDOWN);
+            default -> FontIcon.of(FILE_UNKNOWN);
+        };
     }
 }
 
