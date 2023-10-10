@@ -1,11 +1,14 @@
 package org.jcnc.jnotepad.component.module.interfaces;
 
 /**
- * 控制器接口类
+ * 控制器接口类。
  *
- * <p>该接口定义了控制器的方法，用于打开关联文件并创建TextArea。</p>
+ * <p>该接口定义了控制器的方法，用于打开关联文件并创建 TextArea。</p>
  *
- * @author 许轲
+ * <p>实现此接口的类可以通过调用方法来打开关联文件并创建 TextArea，以执行与文件操作相关的控制逻辑。</p>
+ *
+ * @param <T> 原始参数的类型
+ * @author luke
  */
 public interface ControllerAble<T> {
 
