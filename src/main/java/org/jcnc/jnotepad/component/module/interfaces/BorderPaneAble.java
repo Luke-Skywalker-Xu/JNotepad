@@ -3,9 +3,11 @@ package org.jcnc.jnotepad.component.module.interfaces;
 import javafx.scene.Node;
 
 /**
- * 可设置BorderPane子组件的接口
+ * 可设置BorderPane子组件的接口。
  *
  * <p>该接口定义了设置BorderPane的各个子组件（上、下、左、右、中）的方法。</p>
+ *
+ * <p>实现此接口的类可以设置BorderPane布局的各个子组件，以定制UI布局。</p>
  *
  * @author luke
  */
