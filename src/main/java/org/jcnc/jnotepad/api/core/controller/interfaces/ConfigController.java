@@ -9,7 +9,6 @@ import java.nio.file.Path;
  * </p>
  *
  * @param <T> 配置文件类型
- *
  * @author gewuyou
  */
 public interface ConfigController<T> {
