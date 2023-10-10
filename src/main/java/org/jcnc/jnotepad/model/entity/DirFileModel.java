@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.model.entity;
 
-import org.kordamp.ikonli.javafx.FontIcon;
+import javafx.scene.Node;
 
 import java.util.List;
 
@@ -16,14 +16,13 @@ public class DirFileModel {
     private String path;
     private String name;
 
-    private FontIcon iconIsNotSelected;
+    private Node iconIsNotSelected;
 
-    private FontIcon iconIsSelected;
+    private Node iconIsSelected;
 
     private List<DirFileModel> childFile;
 
-
-    public DirFileModel(String path, String name, List<DirFileModel> childFile, FontIcon iconIsNotSelected, FontIcon iconIsSelected) {
+    public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected) {
         this.path = path;
         this.name = name;
         this.childFile = childFile;
@@ -35,7 +34,7 @@ public class DirFileModel {
     public List<DirFileModel> getChildFile() {
         return childFile;
     }
-    
+
     public String getPath() {
         return path;
     }
@@ -57,21 +56,22 @@ public class DirFileModel {
         return name;
     }
 
-    public FontIcon getIconIsNotSelected() {
+    public Node getIconIsNotSelected() {
         return iconIsNotSelected;
     }
 
-    public void setIconIsNotSelected(FontIcon iconIsNotSelected) {
+    public void setIconIsNotSelected(Node iconIsNotSelected) {
         this.iconIsNotSelected = iconIsNotSelected;
     }
 
-    public FontIcon getIconIsSelected() {
+    public void setIconIsSelected(Node iconIsSelected) {
+        this.iconIsSelected = iconIsSelected;
+    }
+
+    public Node getIconIsSelected() {
         return iconIsSelected;
     }
 
-    public void setIconIsSelected(FontIcon iconIsSelected) {
-        this.iconIsSelected = iconIsSelected;
-    }
 
     public void setChildFile(List<DirFileModel> childFile) {
         this.childFile = childFile;

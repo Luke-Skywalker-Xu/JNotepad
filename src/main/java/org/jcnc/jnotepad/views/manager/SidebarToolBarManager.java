@@ -1,13 +1,12 @@
 package org.jcnc.jnotepad.views.manager;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
 import org.jcnc.jnotepad.api.core.views.manager.builder.SideBarButtonBuilder;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.DirTreeBtn;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.RunBtn;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.SetBtn;
+import org.jcnc.jnotepad.util.UiUtil;
 import org.jcnc.jnotepad.views.root.left.sidebar.tools.SidebarToolBar;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
         registerNode(
                 new SideBarButtonBuilder()
                         .setButton(sidebarToolBar.getSetButton())
-                        .setImageView(new ImageView(new Image("tools.png")))
+                        .setImageView(UiUtil.sidebarIconByPng("tools"))
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new SetBtn()).build());
@@ -50,7 +49,7 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
         registerNode(
                 new SideBarButtonBuilder()
                         .setButton(sidebarToolBar.getDirTreeButton())
-                        .setImageView(new ImageView(new Image("directory.png")))
+                        .setImageView(UiUtil.sidebarIconByPng("directory"))
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new DirTreeBtn()).build());
@@ -60,7 +59,7 @@ public class SidebarToolBarManager extends AbstractManager<Node> {
         registerNode(
                 new SideBarButtonBuilder()
                         .setButton(sidebarToolBar.getRunButton())
-                        .setImageView(new ImageView(new Image("cmd.png")))
+                        .setImageView(UiUtil.sidebarIconByPng("cmd"))
                         .setImageViewEssentialAttribute(10D, 10D, true, 2.5D, 2.5D)
                         .setButtonEssentialAttribute(20D, 20D)
                         .setEventHandler(new RunBtn()).build());

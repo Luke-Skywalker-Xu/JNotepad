@@ -33,7 +33,7 @@ public class AppConstants {
     /**
      * logo地址
      */
-    public static final String APP_ICON = "/img/icon.png";
+    public static final String APP_ICON = "/jcnc/app/images/appIcons/icon.png";
 
     /**
      * 默认标签页的正则
