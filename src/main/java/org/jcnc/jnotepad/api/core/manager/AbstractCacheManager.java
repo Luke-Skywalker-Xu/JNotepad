@@ -7,6 +7,10 @@ import java.util.Map;
 /**
  * 抽象缓存管理类
  *
+ * <p>
+ * 该类是缓存管理的抽象基类，用于管理不同类型的缓存。
+ * </p>
+ *
  * @author gewuyou
  */
 public abstract class AbstractCacheManager {
@@ -41,7 +45,6 @@ public abstract class AbstractCacheManager {
      *
      * @return 缓存集合
      */
-
     public Map<String, Cache> getCaches() {
         return caches;
     }
@@ -112,5 +115,4 @@ public abstract class AbstractCacheManager {
         }
         return cache.getCacheData();
     }
-
 }
