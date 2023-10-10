@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
-import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.ui.component.module.vbox.BuildPanel;
 import org.jcnc.jnotepad.ui.views.manager.BuildPanelManager;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;

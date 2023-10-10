@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.app.util;
+package org.jcnc.jnotepad.app.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

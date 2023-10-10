@@ -5,7 +5,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import org.jcnc.jnotepad.app.common.constants.SplitPaneItemConstants;
 import org.jcnc.jnotepad.app.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.app.util.FileUtil;
+import org.jcnc.jnotepad.app.utils.FileUtil;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.OpenDirectory;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.ui.views.root.center.main.MainBorderPane;

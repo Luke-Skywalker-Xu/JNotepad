@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.jcnc.jnotepad.app.util.TabUtil.addNewFileTab;
-import static org.jcnc.jnotepad.app.util.TabUtil.openFileToTab;
+import static org.jcnc.jnotepad.app.utils.TabUtil.addNewFileTab;
+import static org.jcnc.jnotepad.app.utils.TabUtil.openFileToTab;
 
 /**
  * 控制器类，实现 ControllerAble 接口，用于管理文本编辑器的各种操作和事件处理。

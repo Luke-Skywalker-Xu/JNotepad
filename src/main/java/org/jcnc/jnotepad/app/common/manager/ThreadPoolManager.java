@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.app.common.manager;
 
-import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.slf4j.Logger;
 
 import java.util.concurrent.*;

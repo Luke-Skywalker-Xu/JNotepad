@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.util.UiUtil;
+import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.model.enums.DialogType;
 import org.jcnc.jnotepad.ui.component.stage.dialog.interfaces.DialogButtonAction;
 import org.kordamp.ikonli.javafx.FontIcon;

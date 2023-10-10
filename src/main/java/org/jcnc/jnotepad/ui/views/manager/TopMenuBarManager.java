@@ -6,7 +6,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
-import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.ui.views.root.top.menubar.TopMenuBar;

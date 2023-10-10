@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.app.util;
+package org.jcnc.jnotepad.app.utils;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -29,7 +29,7 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.jcnc.jnotepad.app.util.FileUtil.getFileText;
+import static org.jcnc.jnotepad.app.utils.FileUtil.getFileText;
 import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NAME;
 
 /**

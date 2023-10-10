@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
 
-import static org.jcnc.jnotepad.app.util.TabUtil.rename;
+import static org.jcnc.jnotepad.app.utils.TabUtil.rename;
 
 /**
  * 重命名文件事件处理器。

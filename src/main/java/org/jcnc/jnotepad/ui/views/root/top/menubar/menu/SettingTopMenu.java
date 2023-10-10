@@ -4,7 +4,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
-import org.jcnc.jnotepad.app.util.UiUtil;
+import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenConfig;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;

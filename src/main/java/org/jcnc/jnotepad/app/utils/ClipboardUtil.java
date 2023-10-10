@@ -1,4 +1,4 @@
-package org.jcnc.jnotepad.app.util;
+package org.jcnc.jnotepad.app.utils;
 
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;

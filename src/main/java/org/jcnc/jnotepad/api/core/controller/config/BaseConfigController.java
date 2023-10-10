@@ -1,9 +1,9 @@
 package org.jcnc.jnotepad.api.core.controller.config;
 
 import org.jcnc.jnotepad.api.core.controller.interfaces.ConfigController;
-import org.jcnc.jnotepad.app.util.JsonUtil;
-import org.jcnc.jnotepad.app.util.LogUtil;
-import org.jcnc.jnotepad.app.util.PopUpUtil;
+import org.jcnc.jnotepad.app.utils.JsonUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.slf4j.Logger;
 

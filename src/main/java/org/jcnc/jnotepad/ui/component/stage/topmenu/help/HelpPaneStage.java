@@ -16,10 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
-import org.jcnc.jnotepad.app.util.ClipboardUtil;
-import org.jcnc.jnotepad.app.util.LogUtil;
-import org.jcnc.jnotepad.app.util.NotificationUtil;
-import org.jcnc.jnotepad.app.util.UiUtil;
+import org.jcnc.jnotepad.app.utils.ClipboardUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.NotificationUtil;
+import org.jcnc.jnotepad.app.utils.UiUtil;
 
 import static org.jcnc.jnotepad.app.common.constants.AppConstants.*;
 

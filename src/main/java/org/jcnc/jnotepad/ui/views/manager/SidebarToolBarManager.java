@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.ui.views.manager;
 import javafx.scene.Node;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
 import org.jcnc.jnotepad.api.core.views.manager.builder.SideBarButtonBuilder;
-import org.jcnc.jnotepad.app.util.UiUtil;
+import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.DirTreeBtn;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.RunBtn;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.SetBtn;

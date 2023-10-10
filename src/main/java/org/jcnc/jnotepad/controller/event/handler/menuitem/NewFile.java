@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.controller.event.handler.menuitem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-import static org.jcnc.jnotepad.app.util.TabUtil.addNewFileTab;
+import static org.jcnc.jnotepad.app.utils.TabUtil.addNewFileTab;
 
 /**
  * 新建文件事件的事件处理程序。

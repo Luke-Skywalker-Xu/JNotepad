@@ -7,7 +7,7 @@ import org.jcnc.jnotepad.model.entity.DirFileModel;
 import java.io.File;
 import java.util.Objects;
 
-import static org.jcnc.jnotepad.app.util.TabUtil.openFileToTab;
+import static org.jcnc.jnotepad.app.utils.TabUtil.openFileToTab;
 
 
 /**

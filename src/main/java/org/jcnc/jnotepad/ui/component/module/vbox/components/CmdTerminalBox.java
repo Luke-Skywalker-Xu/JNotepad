@@ -10,7 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.fxmisc.richtext.StyleClassedTextArea;
-import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 
 import java.io.*;
 import java.nio.charset.Charset;
