@@ -142,7 +142,7 @@ public class RunTopMenu extends AbstractTopMenu {
         // 调试 test
         registerMenuItem(topMenuBar.getDeBugItem(), DE_BUG, "deBugItem", event -> {
             BUILD_PANEL_MANAGER.controlShow(true);
-            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getBuildBox(), "待开发");
+            BUILD_PANEL_MANAGER.setText(BUILD_PANEL.getDebugBox(), "待开发");
         });
 
 
