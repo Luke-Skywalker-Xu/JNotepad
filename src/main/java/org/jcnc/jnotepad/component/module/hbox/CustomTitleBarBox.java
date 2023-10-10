@@ -14,11 +14,18 @@ import javafx.util.Duration;
  * 自定义标题栏组件，用于自定义窗口标题栏的显示和交互。
  * 该类提供了窗口图标、标题文本以及最小化、最大化和关闭按钮的功能。
  *
- * @author 许轲
+ * <p>这个类允许用户创建自定义的窗口标题栏，包括图标、标题文本和按钮来最小化、最大化和关闭窗口。</p>
+ *
+ * <p>通过使用 {@link #getInstance()} 方法获取单例实例，然后将其添加到窗口的顶部，即可创建自定义标题栏。</p>
+ *
+ * @author luke
  */
 public class CustomTitleBarBox extends HBox {
     private static CustomTitleBarBox instance;
 
+    /**
+     * 创建一个新的 CustomTitleBarBox 实例。
+     */
     public CustomTitleBarBox() {
         // 设置样式和布局
         this.setAlignment(Pos.CENTER);
@@ -65,9 +72,9 @@ public class CustomTitleBarBox extends HBox {
     }
 
     /**
-     * 获取标题栏的单例实例
+     * 获取标题栏的单例实例。
      *
-     * @return CustomTitleBar的单例实例
+     * @return CustomTitleBarBox 的单例实例
      */
     public static CustomTitleBarBox getInstance() {
         if (instance == null) {
@@ -77,9 +84,9 @@ public class CustomTitleBarBox extends HBox {
     }
 
     /**
-     * 使窗口可拖动
+     * 使窗口可拖动。
      *
-     * @param stage 要拖动的窗口的Stage对象
+     * @param stage 要拖动的窗口的 Stage 对象
      */
     public void makeDraggable(Stage stage) {
         // 创建一个平移动画，设置持续时间和目标位置
