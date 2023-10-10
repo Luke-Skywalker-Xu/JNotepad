@@ -107,7 +107,7 @@ public class TextCodeArea extends CodeArea {
                 }
             }
         });
-        this.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/java_code_styles.css")).toString());
+        this.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/jcnc/app/css/java_code_styles.css")).toString());
     }
 
 

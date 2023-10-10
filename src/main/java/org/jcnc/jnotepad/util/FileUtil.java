@@ -158,7 +158,7 @@ public class FileUtil {
                     dirFileModel.getChildFile().add(childDirFileModel);
                 } else {
                     // todo 在此监测文件后缀，设置对应的图标
-                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null, new FontIcon(FILE), new FontIcon(FILE)));
+                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null, getIconCorrespondingToFileName(f.getName()), new FontIcon(FILE)));
                 }
             }
         }
@@ -293,21 +293,13 @@ public class FileUtil {
     /**
      * Retrieves the icon corresponding to the given file name.
      *
-     * @param tabTitle the title of the tab
-     * @return the icon node corresponding to the file name
+     * @param fileName the file name
+     * @return the corresponding icon for the file extension
      */
-    public static Node getIconCorrespondingToFileName(String tabTitle) {
+    public static Node getIconCorrespondingToFileName(String fileName) {
         // todo 在此根据文件缀名获取对应的图标
-        String fileExtension = tabTitle.substring(tabTitle.lastIndexOf(".") + 1);
-        return switch (fileExtension.toLowerCase()) {
-            case "txt" -> FontIcon.of(FILE_TEXT);
-            case "doc" -> FontIcon.of(FILE_WORD);
-            case "pdf" -> FontIcon.of(FILE_PDF);
-            case "ppt" -> FontIcon.of(FILE_PPT);
-            case "xls" -> FontIcon.of(FILE_EXCEL);
-            case "md" -> FontIcon.of(FILE_MARKDOWN);
-            default -> FontIcon.of(FILE_UNKNOWN);
-        };
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        return UiUtil.getIconMap().getOrDefault(fileExtension, FontIcon.of(FILE_UNKNOWN));
     }
 }
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/main/resources/img/icon.svg" alt="JNotepad Icon">
+  <img src="src/main/resources/jcnc/app/svg/icon.svg" alt="JNotepad Icon">
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">JNotepad</h1>
 <h4 align="center" style="margin: 30px 0 30px; font-weight: bold;">JavaFX开发，插件驱动，创造无限可能</h4>
 

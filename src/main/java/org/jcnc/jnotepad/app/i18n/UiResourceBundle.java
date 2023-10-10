@@ -21,7 +21,7 @@ public class UiResourceBundle {
     /**
      * resource目录下的i18n/i18nXXX.properties
      */
-    private static final String BASENAME = "i18n/i18n";
+    private static final String BASENAME = "jcnc/app/i18n/i18n";
     /**
      * 资源文件的观察者绑定。
      */

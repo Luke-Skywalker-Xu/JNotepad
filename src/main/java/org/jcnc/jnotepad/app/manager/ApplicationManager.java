@@ -106,7 +106,7 @@ public class ApplicationManager {
         double width = AppConstants.SCREEN_WIDTH;
         double length = AppConstants.SCREEN_LENGTH;
         scene = new Scene(root, width, length);
-        scene.getStylesheets().add(Objects.requireNonNull(application.getClass().getResource("/css/styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(application.getClass().getResource("/jcnc/app/css/styles.css")).toExternalForm());
     }
 
     private void initPrimaryStage() {

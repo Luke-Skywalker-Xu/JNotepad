@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.model.entity;
 
+import javafx.scene.Node;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.util.List;
@@ -16,14 +17,22 @@ public class DirFileModel {
     private String path;
     private String name;
 
-    private FontIcon iconIsNotSelected;
+    private Node iconIsNotSelected;
 
-    private FontIcon iconIsSelected;
+    private Node iconIsSelected;
 
     private List<DirFileModel> childFile;
 
 
     public DirFileModel(String path, String name, List<DirFileModel> childFile, FontIcon iconIsNotSelected, FontIcon iconIsSelected) {
+        this.path = path;
+        this.name = name;
+        this.childFile = childFile;
+        this.iconIsNotSelected = iconIsNotSelected;
+        this.iconIsSelected = iconIsSelected;
+    }
+
+    public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected) {
         this.path = path;
         this.name = name;
         this.childFile = childFile;
@@ -57,7 +66,7 @@ public class DirFileModel {
         return name;
     }
 
-    public FontIcon getIconIsNotSelected() {
+    public Node getIconIsNotSelected() {
         return iconIsNotSelected;
     }
 
@@ -65,7 +74,7 @@ public class DirFileModel {
         this.iconIsNotSelected = iconIsNotSelected;
     }
 
-    public FontIcon getIconIsSelected() {
+    public Node getIconIsSelected() {
         return iconIsSelected;
     }
 
