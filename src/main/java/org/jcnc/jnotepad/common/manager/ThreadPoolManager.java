@@ -7,9 +7,10 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 线程池管理类
- *
- * <p>该类用于管理应用程序中的线程池，提供了异步操作的执行环境。</p>
+ * 线程池管理类。
+ * <p>
+ * 该类用于管理应用程序中的线程池，提供了异步操作的执行环境。
+ * </p>
  *
  * @author gewuyou
  */
@@ -68,9 +69,11 @@ public class ThreadPoolManager {
     }
 
     /**
-     * 当前运行线程数自减
+     * 当前运行线程数自减。
+     * <p>
+     * 当你创建任务时，务必在最后执行一次该方法。
+     * </p>
      *
-     * @apiNote 当你创建任务时，务必在最后执行一次该方法
      * @see ThreadPoolManager
      */
     public static void threadContSelfSubtracting() {
