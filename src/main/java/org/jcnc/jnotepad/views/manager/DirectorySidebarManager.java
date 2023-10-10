@@ -113,6 +113,16 @@ public class DirectorySidebarManager {
     }
 
     /**
+     * Check if the given `DirFileModel` represents a directory.
+     *
+     * @param childFile the `DirFileModel` to check
+     * @return `true` if the `childFile` represents a directory, `false` otherwise
+     */
+    private static boolean isDirectoryByDirFileModel(DirFileModel childFile) {
+        return new File(childFile.getPath()).isDirectory();
+    }
+
+    /**
      * 递归展开 dirFileModel
      *
      * @param dirFileModel 文件
@@ -123,7 +133,10 @@ public class DirectorySidebarManager {
         if (childFileList != null) {
             for (DirFileModel childFile : childFileList) {
                 TreeItem<DirFileModel> childItem = new TreeItem<>(childFile, childFile.getIconIsNotSelected());
-                childItem.expandedProperty().addListener(getTreeItemListener(childItem));
+                // 只有文件夹树才添加监听事件
+                if (isDirectoryByDirFileModel(childFile)) {
+                    childItem.expandedProperty().addListener(getTreeItemListener(childItem));
+                }
                 item.getChildren().add(childItem);
                 expandFolder(childFile, childItem);
             }
