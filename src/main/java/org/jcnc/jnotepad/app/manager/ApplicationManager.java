@@ -8,22 +8,22 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jcnc.jnotepad.JnotepadApp;
+import org.jcnc.jnotepad.app.common.constants.AppConstants;
+import org.jcnc.jnotepad.app.common.constants.TextConstants;
+import org.jcnc.jnotepad.app.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.common.constants.AppConstants;
-import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.app.util.FileUtil;
+import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.app.util.UiUtil;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.controller.manager.Controller;
-import org.jcnc.jnotepad.plugin.manager.PluginManager;
-import org.jcnc.jnotepad.util.FileUtil;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.manager.*;
+import org.jcnc.jnotepad.controller.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.ui.views.manager.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +34,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
  * 应用程序管理类

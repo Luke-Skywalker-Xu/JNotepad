@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
  * 应用程序配置文件

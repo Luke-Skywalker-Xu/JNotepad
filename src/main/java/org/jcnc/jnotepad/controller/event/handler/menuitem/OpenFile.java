@@ -3,17 +3,17 @@ package org.jcnc.jnotepad.controller.event.handler.menuitem;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.FileChooser;
+import org.jcnc.jnotepad.app.common.constants.TextConstants;
+import org.jcnc.jnotepad.app.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicFileChooserFactory;
+import org.jcnc.jnotepad.app.util.UiUtil;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
-import org.jcnc.jnotepad.util.UiUtil;
+import org.jcnc.jnotepad.ui.component.stage.dialog.factory.impl.BasicFileChooserFactory;
 
 import java.io.File;
 
-import static org.jcnc.jnotepad.util.TabUtil.openFileToTab;
+import static org.jcnc.jnotepad.app.util.TabUtil.openFileToTab;
 
 
 /**

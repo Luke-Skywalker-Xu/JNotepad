@@ -3,16 +3,16 @@ package org.jcnc.jnotepad.controller.event.handler.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import org.jcnc.jnotepad.app.common.constants.TextConstants;
+import org.jcnc.jnotepad.app.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.common.manager.ApplicationCacheManager;
-import org.jcnc.jnotepad.component.stage.dialog.factory.impl.BasicDirectoryChooserFactory;
+import org.jcnc.jnotepad.app.util.FileUtil;
+import org.jcnc.jnotepad.app.util.UiUtil;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.model.enums.CacheExpirationTime;
-import org.jcnc.jnotepad.util.FileUtil;
-import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
+import org.jcnc.jnotepad.ui.component.stage.dialog.factory.impl.BasicDirectoryChooserFactory;
+import org.jcnc.jnotepad.ui.views.manager.DirectorySidebarManager;
 
 import java.io.File;
 

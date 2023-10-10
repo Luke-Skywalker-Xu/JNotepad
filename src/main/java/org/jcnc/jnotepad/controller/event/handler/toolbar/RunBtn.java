@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.controller.event.handler.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.views.manager.BuildPanelManager;
+import org.jcnc.jnotepad.ui.views.manager.BuildPanelManager;
 
 /**
  * 终端处理器

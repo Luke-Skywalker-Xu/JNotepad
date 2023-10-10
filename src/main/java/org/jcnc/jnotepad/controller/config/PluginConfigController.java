@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
  * 插件控制器

@@ -8,8 +8,8 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
+import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.ui.views.root.top.menubar.TopMenuBar;
 import org.slf4j.Logger;
 
 import java.util.Map;

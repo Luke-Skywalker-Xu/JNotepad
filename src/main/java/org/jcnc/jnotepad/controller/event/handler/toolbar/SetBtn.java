@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.component.stage.setting.SetStage;
+import org.jcnc.jnotepad.ui.component.stage.setting.SetStage;
 
 /**
  * 设置按钮事件的事件处理程序。

@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.api.core.views.sidebar.bottom;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import org.jcnc.jnotepad.views.root.bottom.function.FunctionBox;
+import org.jcnc.jnotepad.ui.views.root.bottom.function.FunctionBox;
 
 /**
  * 子功能栏抽象类

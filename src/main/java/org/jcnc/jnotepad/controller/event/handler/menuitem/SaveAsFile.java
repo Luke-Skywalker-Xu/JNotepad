@@ -1,10 +1,10 @@
 package org.jcnc.jnotepad.controller.event.handler.menuitem;
 
 import javafx.event.ActionEvent;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.views.manager.CenterTabPaneManager;
+import org.jcnc.jnotepad.app.util.LogUtil;
+import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
 
-import static org.jcnc.jnotepad.util.TabUtil.saveAsFile;
+import static org.jcnc.jnotepad.app.util.TabUtil.saveAsFile;
 
 /**
  * 保存文件事件处理器。
