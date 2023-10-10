@@ -148,7 +148,11 @@ public class FileUtil {
             return null;
         }
 
-        DirFileModel dirFileModel = new DirFileModel(file.getAbsolutePath(), file.getName(), new ArrayList<>(), new FontIcon(FOLDER), new FontIcon(FOLDER_OPEN));
+        DirFileModel dirFileModel = new DirFileModel(
+                file.getAbsolutePath(),
+                file.getName(), new ArrayList<>(),
+                new FontIcon(FOLDER),
+                new FontIcon(FOLDER_OPEN));
 
         File[] files = file.listFiles();
         if (files != null) {
@@ -158,7 +162,10 @@ public class FileUtil {
                     dirFileModel.getChildFile().add(childDirFileModel);
                 } else {
                     // todo 在此监测文件后缀，设置对应的图标
-                    dirFileModel.getChildFile().add(new DirFileModel(f.getAbsolutePath(), f.getName(), null, getIconCorrespondingToFileName(f.getName()), getIconCorrespondingToFileName(f.getName())));
+                    dirFileModel.getChildFile().add(new DirFileModel(
+                            f.getAbsolutePath(), f.getName(), null,
+                            getIconCorrespondingToFileName(f.getName()),
+                            getIconCorrespondingToFileName(f.getName())));
                 }
             }
         }
