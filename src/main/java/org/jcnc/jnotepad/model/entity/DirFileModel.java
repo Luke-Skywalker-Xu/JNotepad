@@ -13,13 +13,26 @@ import java.util.List;
  * @author cccqyu
  */
 public class DirFileModel {
+    /**
+     * 路径
+     */
     private String path;
+    /**
+     * 文件名
+     */
     private String name;
 
+    /**
+     * 未选中时的图标
+     */
     private Node iconIsNotSelected;
-
+    /**
+     * 选中时的图标
+     */
     private Node iconIsSelected;
-
+    /**
+     * 子文件
+     */
     private List<DirFileModel> childFile;
 
     public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected) {
