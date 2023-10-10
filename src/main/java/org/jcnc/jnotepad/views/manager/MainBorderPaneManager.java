@@ -52,7 +52,7 @@ public class MainBorderPaneManager {
         BuildPanel buildPanel = BuildPanel.getInstance();
 
         rootSplitPane.getItems().add(SplitPaneItemConstants.ROOT_SPLIT_PANE_TOP_SPLIT_PANE, topSplitPane);
-        rootSplitPane.getItems().add(SplitPaneItemConstants.ROOT_SPLIT_PANE_CMDBox, buildPanel);
+        rootSplitPane.getItems().add(SplitPaneItemConstants.TOP_SPLIT_PANE_CENTER_TAB_PANE, buildPanel);
 
         // 将总分割面板设置在布局中部
         MAIN_BORDER_PANE.setCenterComponent(rootSplitPane);
