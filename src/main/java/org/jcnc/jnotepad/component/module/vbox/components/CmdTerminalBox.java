@@ -18,6 +18,12 @@ import java.nio.charset.Charset;
 /**
  * 命令行终端界面。
  *
+ * <p>这个类实现了一个简单的命令行终端界面，用于显示命令输出并接受用户输入的命令。</p>
+ *
+ * <p>通过调用构造函数来创建CmdTerminal对象。它包括了一个用于显示命令输出的文本区域和一个用于输入命令的文本框。</p>
+ *
+ * <p>这个终端界面支持基本的命令执行，并将命令输出显示在文本区域中。</p>
+ *
  * @author luke
  */
 public class CmdTerminalBox extends VBox {
@@ -64,7 +70,6 @@ public class CmdTerminalBox extends VBox {
         // 获取当前工作目录的文件夹路径
         currentDirectory = System.getProperty("user.dir");
 
-
         // 创建并启动cmd进程，使用GBK字符编码
         try {
             cmdProcess = new ProcessBuilder("cmd.exe")
@@ -77,11 +82,9 @@ public class CmdTerminalBox extends VBox {
             LogUtil.getLogger(this.getClass()).info("已调用, {}", cmdProcess);
         }
 
-
         // 延迟执行打印当前文件夹路径的语句
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), event -> {
             appendTextToCmdOutput(currentDirectory + ">" + "\n");
-
         }));
         timeline.setCycleCount(1);
         timeline.play();
