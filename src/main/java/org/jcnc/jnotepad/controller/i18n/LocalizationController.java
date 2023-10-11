@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
-import static org.jcnc.jnotepad.common.constants.TextConstants.ENGLISH;
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.CHINESE;
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.ENGLISH;
 
 /**
  * 本地化控制器

@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
-import static org.jcnc.jnotepad.common.constants.TextConstants.CHINESE;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.CHINESE;
 
 /**
  * 应用程序配置控制器

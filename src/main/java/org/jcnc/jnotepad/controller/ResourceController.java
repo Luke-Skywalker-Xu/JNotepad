@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.controller;
 
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
-import org.jcnc.jnotepad.plugin.PluginLoader;
+import org.jcnc.jnotepad.controller.plugin.PluginLoader;
 
 /**
  * 资源控制器

@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.event.handler.toolbar;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import org.jcnc.jnotepad.views.manager.DirectorySidebarManager;
+import org.jcnc.jnotepad.ui.views.manager.DirectorySidebarManager;
 
 
 /**

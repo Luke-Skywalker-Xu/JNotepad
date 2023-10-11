@@ -1,12 +1,12 @@
 package org.jcnc.jnotepad.controller.event.handler.menuitem;
 
 import javafx.event.ActionEvent;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
-import org.jcnc.jnotepad.util.LogUtil;
 
 import java.io.File;
 
-import static org.jcnc.jnotepad.util.TabUtil.openFileToTab;
+import static org.jcnc.jnotepad.app.utils.TabUtil.openFileToTab;
 
 /**
  * 打开配置文件事件处理程序。

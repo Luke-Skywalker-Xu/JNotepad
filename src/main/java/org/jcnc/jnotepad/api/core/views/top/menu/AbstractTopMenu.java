@@ -8,14 +8,18 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.views.root.top.menubar.TopMenuBar;
+import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.ui.views.root.top.menubar.TopMenuBar;
 import org.slf4j.Logger;
 
 import java.util.Map;
 
 /**
- * 抽象顶部菜单
+ * 抽象顶部菜单类
+ *
+ * <p>
+ * 此抽象类用于创建顶部菜单，包括菜单项的注册和初始化。
+ * </p>
  *
  * @author gewuyou
  */
@@ -56,7 +60,7 @@ public abstract class AbstractTopMenu {
      * @param menuItem     菜单项
      * @param menuItemName 菜单项名称
      * @param userData     用户数据，用来存放必要的数据，比如按钮菜单项名称
-     * @param eventHandler 事件
+     * @param eventHandler 事件处理器
      */
     public void registerMenuItem(MenuItem menuItem, String menuItemName, Object userData, EventHandler<ActionEvent> eventHandler) {
         getMenuItems().put(menuItemName, menuItem);
@@ -70,9 +74,8 @@ public abstract class AbstractTopMenu {
      * @param checkMenuItem 检查菜单项
      * @param menuItemName  菜单项名称
      * @param userData      用户数据，用来存放必要的数据，比如按钮菜单项名称
-     * @param listener      监听事件
+     * @param listener      监听器
      */
-
     public void registerMenuItem(CheckMenuItem checkMenuItem, String menuItemName, Object userData, ChangeListener<Boolean> listener) {
         getMenuItems().put(menuItemName, checkMenuItem);
         checkMenuItem.setUserData(userData);
@@ -85,9 +88,8 @@ public abstract class AbstractTopMenu {
      * @param radioMenuItem 单选菜单项
      * @param menuItemName  菜单项名称
      * @param userData      用户数据，用来存放必要的数据
-     * @param eventHandler  操作事件
+     * @param eventHandler  事件处理器
      */
-
     public void registerRadioMenuItem(Map<String, RadioMenuItem> radioMenuItems, RadioMenuItem radioMenuItem, String menuItemName, Object userData, EventHandler<ActionEvent> eventHandler) {
         radioMenuItems.put(menuItemName, radioMenuItem);
         radioMenuItem.setUserData(userData);
@@ -101,7 +103,7 @@ public abstract class AbstractTopMenu {
         registerTopMenu();
         logger.info("初始化菜单!");
         Menu menu = getMenu();
-        // 文件菜单
+        // 菜单名称国际化
         UiResourceBundle.bindStringProperty(menu.textProperty(), getMenuName());
         // 初始化菜单项
         initMenuItems(getMenuItems(), menu);
@@ -113,7 +115,6 @@ public abstract class AbstractTopMenu {
      * @param menuItems 菜单项集合
      * @param menu      菜单
      */
-
     private void initMenuItems(Map<String, MenuItem> menuItems, Menu menu) {
         logger.info("初始化菜单项!");
         var itemMap = topMenuBar.getAllItemMap();

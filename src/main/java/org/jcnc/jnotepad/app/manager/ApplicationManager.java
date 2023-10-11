@@ -8,22 +8,22 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.jcnc.jnotepad.JnotepadApp;
+import org.jcnc.jnotepad.app.common.constants.AppConstants;
+import org.jcnc.jnotepad.app.common.constants.TextConstants;
+import org.jcnc.jnotepad.app.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.common.constants.AppConstants;
-import org.jcnc.jnotepad.common.constants.TextConstants;
-import org.jcnc.jnotepad.common.manager.ThreadPoolManager;
+import org.jcnc.jnotepad.app.utils.FileUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.controller.manager.Controller;
-import org.jcnc.jnotepad.plugin.manager.PluginManager;
-import org.jcnc.jnotepad.util.FileUtil;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.UiUtil;
-import org.jcnc.jnotepad.views.manager.*;
+import org.jcnc.jnotepad.controller.plugin.manager.PluginManager;
+import org.jcnc.jnotepad.ui.views.manager.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,13 +34,19 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
-
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
- * 应用程序管理类<br/>
- * 此类负责管理应用程序的生命周期等操作
+ * 应用程序管理类
+ *
+ * <p>
+ * 此类负责管理应用程序的生命周期和操作。它包括初始化应用程序、执行默认操作、加载缓存、加载资源、迁移程序根文件夹、停止前操作等功能。
+ * </p>
+ *
+ * <p>
+ * 该类是一个单例类，通过getInstance方法获取实例。
+ * </p>
  *
  * @author gewuyou
  */
@@ -55,22 +61,27 @@ public class ApplicationManager {
     private Stage primaryStage;
     private Application application;
 
-
     private ApplicationManager() {
     }
 
+    /**
+     * 获取ApplicationManager的单例实例
+     *
+     * @return ApplicationManager的单例实例
+     */
     public static ApplicationManager getInstance() {
         return INSTANCE;
     }
 
     /**
-     * 初始化程序(Initializes the application)
+     * 初始化应用程序
      *
-     * @apiNote
-     * @since 2023/9/20 17:26
+     * <p>
+     * 此方法用于初始化应用程序的各个组件，包括设置应用程序主题、初始化UI组件、初始化插件、初始化顶部菜单栏、初始化侧边工具栏、初始化下方状态栏、初始化标签页布局等。
+     * </p>
      */
     public void initializeApp() {
-        // 设置应用程序主题 SetTheApplicationTheme
+        // 设置应用程序主题
         Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
         // 初始化scene
         initScene();
@@ -92,6 +103,10 @@ public class ApplicationManager {
 
     /**
      * 执行默认操作
+     *
+     * <p>
+     * 此方法用于执行应用程序的默认操作，例如根据参数打开关联文件并创建文本区域，加载已打开的文件夹等。
+     * </p>
      */
     public void executeDefaultAction() {
         // 使用加载关联文件并创建文本区域
@@ -124,6 +139,10 @@ public class ApplicationManager {
 
     /**
      * 加载缓存
+     *
+     * <p>
+     * 此方法用于加载应用程序的缓存。
+     * </p>
      */
     public void loadAppCache() {
         // 加载缓存
@@ -132,6 +151,10 @@ public class ApplicationManager {
 
     /**
      * 加载资源
+     *
+     * <p>
+     * 此方法用于加载应用程序的资源，包括加载资源文件和绑定快捷键。
+     * </p>
      */
     public void loadAppResources() {
         // 加载资源
@@ -142,6 +165,10 @@ public class ApplicationManager {
 
     /**
      * 迁移程序根文件夹
+     *
+     * <p>
+     * 此方法用于迁移应用程序的根文件夹，将根文件夹从之前的位置迁移到新的位置。
+     * </p>
      */
     public void migrateFileRootFolder() {
         AppConfig config = AppConfigController.getInstance().getConfig();
@@ -174,7 +201,9 @@ public class ApplicationManager {
     /**
      * 停止前操作
      *
-     * @apiNote 在停止程序之前会执行此操作
+     * <p>
+     * 在停止应用程序之前，执行一系列操作，包括刷新插件配置、销毁插件、保存已打开的文件标签页、将缓存写入本地、迁移程序根文件夹、关闭线程池等。
+     * </p>
      */
     public void operationBeforeStopping() {
         PluginConfigController pluginConfigController = PluginConfigController.getInstance();
@@ -195,7 +224,7 @@ public class ApplicationManager {
     }
 
     /**
-     * 获取当前窗口。
+     * 获取当前窗口
      *
      * @return 当前窗口
      */
@@ -206,8 +235,7 @@ public class ApplicationManager {
     /**
      * 获取当前窗口的场景
      *
-     * @return javafx.scene.Scene
-     * @since 2023/9/20 18:21
+     * @return 当前窗口的场景
      */
     public Scene getScene() {
         return scene;
@@ -220,8 +248,9 @@ public class ApplicationManager {
     /**
      * 加载程序布局
      *
-     * @apiNote
-     * @since 2023/9/20 17:25
+     * <p>
+     * 此方法用于加载应用程序的布局，包括根布局容器、底部根侧边栏垂直布局、主界面边界布局、顶部边界面板、右侧边栏垂直布局、根布局等组件。
+     * </p>
      */
     public void initAppLayout() {
         // 加载根布局容器
@@ -237,9 +266,15 @@ public class ApplicationManager {
         RootRightSideBarVerticalBoxManager.getInstance().initRootRightSideBarVerticalBox();
         // 初始化根布局
         RootBorderPaneManager.getInstance().initRootBorderPane();
-
     }
 
+    /**
+     * 重启应用程序
+     *
+     * <p>
+     * 此方法用于重启当前的Java应用程序。
+     * </p>
+     */
     public void restart() {
         try {
             // 获取当前Java应用程序的命令
@@ -250,13 +285,11 @@ public class ApplicationManager {
             ProcessBuilder builder = new ProcessBuilder(javaCommand, "-cp", System.getProperty("java.class.path"), mainClass);
             builder.start();
             // 关闭当前应用程序
-            // fixme 使用这个System.exit(0);，在开发环境，点击重启程序，停止前操作不生效
             stop();
         } catch (IOException e) {
             LogUtil.getLogger("正在重启当前应用程序".getClass());
         }
     }
-
 
     public Pane getRoot() {
         return root;
@@ -282,6 +315,13 @@ public class ApplicationManager {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * 停止应用程序
+     *
+     * <p>
+     * 此方法用于停止应用程序。
+     * </p>
+     */
     public void stop() {
         Platform.exit();
     }

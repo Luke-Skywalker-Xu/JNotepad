@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.jcnc.jnotepad.plugin.interfaces.Plugin;
+import org.jcnc.jnotepad.controller.plugin.interfaces.Plugin;
 
 import java.util.Objects;
 

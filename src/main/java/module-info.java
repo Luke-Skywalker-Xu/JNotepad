@@ -24,30 +24,30 @@ module org.jcnc.jnotepad {
     exports org.jcnc.jnotepad.model.enums;
     exports org.jcnc.jnotepad.app.config;
     exports org.jcnc.jnotepad.app.i18n;
-    exports org.jcnc.jnotepad.common.constants;
+    exports org.jcnc.jnotepad.app.common.constants;
     exports org.jcnc.jnotepad.controller.config;
     exports org.jcnc.jnotepad.controller.manager;
     exports org.jcnc.jnotepad.controller.i18n;
     exports org.jcnc.jnotepad.controller.event.handler.toolbar;
     exports org.jcnc.jnotepad.controller.event.handler.menuitem;
-    exports org.jcnc.jnotepad.component.module.interfaces;
+    exports org.jcnc.jnotepad.ui.component.module.interfaces;
     opens org.jcnc.jnotepad.app.config;
-    exports org.jcnc.jnotepad.plugin.interfaces;
-    exports org.jcnc.jnotepad.views.root.bottom.function;
+    exports org.jcnc.jnotepad.controller.plugin.interfaces;
+    exports org.jcnc.jnotepad.ui.views.root.bottom.function;
 
-    exports org.jcnc.jnotepad.component.module;
+    exports org.jcnc.jnotepad.ui.component.module;
     exports org.jcnc.jnotepad.model.entity;
-    exports org.jcnc.jnotepad.views.root.bottom;
-    exports org.jcnc.jnotepad.views.root.bottom.status;
+    exports org.jcnc.jnotepad.ui.views.root.bottom;
+    exports org.jcnc.jnotepad.ui.views.root.bottom.status;
     exports org.jcnc.jnotepad.api.core.views.sidebar.bottom;
     exports org.jcnc.jnotepad.api.core.controller.config;
-    exports org.jcnc.jnotepad.component.module.base;
-    exports org.jcnc.jnotepad.component.stage.setting;
-    exports org.jcnc.jnotepad.component.module.vbox;
-    exports org.jcnc.jnotepad.component.module.hbox;
-    exports org.jcnc.jnotepad.component.stage.topmenu.help;
-    exports org.jcnc.jnotepad.component.stage.topmenu.plugin;
-    exports org.jcnc.jnotepad.component.module.vbox.components;
-    exports org.jcnc.jnotepad.views.root.center.main.center.tab;
+    exports org.jcnc.jnotepad.ui.component.module.base;
+    exports org.jcnc.jnotepad.ui.component.stage.setting;
+    exports org.jcnc.jnotepad.ui.component.module.vbox;
+    exports org.jcnc.jnotepad.ui.component.module.hbox;
+    exports org.jcnc.jnotepad.ui.component.stage.topmenu.help;
+    exports org.jcnc.jnotepad.ui.component.stage.topmenu.plugin;
+    exports org.jcnc.jnotepad.ui.component.module.vbox.components;
+    exports org.jcnc.jnotepad.ui.views.root.center.main.center.tab;
 
 }

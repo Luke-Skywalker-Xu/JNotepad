@@ -1,10 +1,10 @@
 package org.jcnc.jnotepad.api.core.controller.config;
 
 import org.jcnc.jnotepad.api.core.controller.interfaces.ConfigController;
+import org.jcnc.jnotepad.app.utils.JsonUtil;
+import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.controller.exception.AppException;
-import org.jcnc.jnotepad.util.JsonUtil;
-import org.jcnc.jnotepad.util.LogUtil;
-import org.jcnc.jnotepad.util.PopUpUtil;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -16,8 +16,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * 基本配置文件控制器抽象类
+ * 抽象基本配置文件控制器类。
+ * <p>
+ * 该类是基本配置文件控制器的抽象实现，提供了加载、持久化配置文件以及其他相关方法。
+ * </p>
  *
+ * @param <T> 配置文件类型
+ *           
  * @author gewuyou
  */
 public abstract class BaseConfigController<T> implements ConfigController<T> {
@@ -27,48 +32,47 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     protected static final String SYSTEM_CONFIG_DIR = "system";
 
     protected T config;
-    Logger logger = LogUtil.getLogger(this.getClass());
+    private final Logger logger = LogUtil.getLogger(getClass());
 
     /**
-     * 获取配置文件Class类
+     * 获取配置文件Class类。
      *
      * @return 配置文件Class类
      */
     protected abstract Class<T> getConfigClass();
 
     /**
-     * 获取配置文件名称
+     * 获取配置文件名称。
      *
      * @return 配置文件名称
      */
     protected abstract String getConfigName();
 
     /**
-     * 获取配置文件文件夹路径
+     * 获取配置文件文件夹路径。
      *
      * @return 配置文件夹路径
      */
     protected abstract String getConfigDir();
 
     /**
-     * 获取配置文件类
+     * 获取配置文件对象。
      *
-     * @return 获取配置文件类
+     * @return 配置文件对象
      */
     public T getConfig() {
         return config;
     }
 
-
     /**
-     * 加载配置文件内容
+     * 加载配置文件内容。
      */
     @Override
     public void loadConfig() {
         createConfigIfNotExists();
         // 存在则加载
         try {
-            logger.info("正在加载配置文件:{}...", getConfigClass());
+            logger.info("正在加载配置文件: {}...", getConfigClass());
             String configContent = Files.readString(getConfigPath());
             config = JsonUtil.OBJECT_MAPPER.readValue(configContent, getConfigClass());
         } catch (IOException e) {
@@ -79,7 +83,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     }
 
     /**
-     * 配置文件持久化
+     * 配置文件持久化。
      */
     @Override
     public void writeConfig() {
@@ -88,7 +92,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     }
 
     /**
-     * 配置文件持久化
+     * 配置文件持久化。
      *
      * @param config 配置文件对象
      */
@@ -106,7 +110,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     }
 
     /**
-     * 如果配置文件不存在则创建
+     * 如果配置文件不存在则创建。
      */
     @Override
     public void createConfigIfNotExists() {
@@ -122,7 +126,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     }
 
     /**
-     * 获取配置文件路径
+     * 获取配置文件路径。
      *
      * @return 配置文件路径
      */

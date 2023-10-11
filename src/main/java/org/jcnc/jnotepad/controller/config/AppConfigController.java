@@ -5,8 +5,8 @@ import org.jcnc.jnotepad.app.config.AppConfig;
 
 import java.nio.file.Paths;
 
-import static org.jcnc.jnotepad.common.constants.AppConstants.DEFAULT_PROPERTY;
-import static org.jcnc.jnotepad.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.DEFAULT_PROPERTY;
+import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 
 /**
  * 应用程序配置文件控制器

@@ -13,6 +13,22 @@ import java.util.ResourceBundle;
 /**
  * UI资源绑定，用于加载语言文件。
  *
+ * <p>
+ * 此类用于加载和管理UI资源文件，支持国际化和多语言功能。可以通过绑定StringProperty和键值对应的内容，以及获取当前资源文件的内容。
+ * </p>
+ *
+ * <p>
+ * 该类是一个单例类，通过getInstance方法获取实例。
+ * </p>
+ *
+ * <p>
+ * 使用方法示例：
+ * <code>
+ * UiResourceBundle.bindStringProperty(stringProperty, "key");
+ * String content = UiResourceBundle.getContent("key");
+ * </code>
+ * </p>
+ *
  * @author songdragon
  */
 public class UiResourceBundle {
@@ -35,6 +51,11 @@ public class UiResourceBundle {
 
     }
 
+    /**
+     * 获取UiResourceBundle的单例实例
+     *
+     * @return UiResourceBundle的单例实例
+     */
     public static UiResourceBundle getInstance() {
         return INSTANCE;
     }
@@ -81,6 +102,8 @@ public class UiResourceBundle {
 
     /**
      * 重置当前local
+     *
+     * @param toLocal 要设置的新的Locale
      */
     public final void resetLocal(Locale toLocal) {
         if (this.currentLocale == toLocal) {
