@@ -1,6 +1,7 @@
 package org.jcnc.jnotepad.app.utils;
 
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
@@ -165,7 +166,7 @@ public class FileUtil {
                     dirFileModel.getChildFile().add(new DirFileModel(
                             f.getAbsolutePath(), f.getName(), null,
                             getIconCorrespondingToFileName(f.getName()),
-                            getIconCorrespondingToFileName(f.getName())));
+                            null));
                 }
             }
         }
@@ -306,7 +307,14 @@ public class FileUtil {
     public static Node getIconCorrespondingToFileName(String fileName) {
         // todo 在此根据文件缀名获取对应的图标
         String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
-        return UiUtil.getIconMap().getOrDefault(fileExtension, FontIcon.of(FILE_UNKNOWN));
+        Node orDefault = UiUtil.getIconMap().getOrDefault(fileExtension, FontIcon.of(FILE_UNKNOWN));
+        if (orDefault instanceof FontIcon fontIcon) {
+            return new FontIcon(fontIcon.getIconLiteral());
+        }
+        if (orDefault instanceof ImageView imageView) {
+            return new ImageView(imageView.getImage());
+        }
+        return orDefault;
     }
 }
 
