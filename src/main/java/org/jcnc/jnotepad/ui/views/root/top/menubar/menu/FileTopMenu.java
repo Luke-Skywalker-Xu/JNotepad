@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.ui.views.root.top.menubar.menu;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.*;
 import org.jcnc.jnotepad.controller.event.handler.toolbar.OpenDirectory;
 
@@ -16,7 +16,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
  *
  * @author gewuyou
  */
-public class FileTopMenu extends AbstractTopMenu {
+public class FileTopMenu extends AbstractBaseMenu {
     private static final FileTopMenu INSTANCE = new FileTopMenu();
     private final Map<String, MenuItem> fileMenuItems = new HashMap<>();
 
@@ -59,7 +59,7 @@ public class FileTopMenu extends AbstractTopMenu {
      * 注册顶部菜单
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
         // 文件菜单
         registerMenuItem(topMenuBar.getNewItem(), NEW, "newItem", new NewFile());
         registerMenuItem(topMenuBar.getOpenItem(), OPEN, "openItem", new OpenFile());

@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.ui.views.root.top.menubar.menu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.ui.component.stage.topmenu.help.DeveloperDebugPaneStage;
 import org.jcnc.jnotepad.ui.component.stage.topmenu.help.HelpPaneStage;
 
@@ -17,7 +17,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
  *
  * @author gewuyou
  */
-public class HelpTopMenu extends AbstractTopMenu {
+public class HelpTopMenu extends AbstractBaseMenu {
 
     private static final HelpTopMenu INSTANCE = new HelpTopMenu();
 
@@ -62,7 +62,7 @@ public class HelpTopMenu extends AbstractTopMenu {
      * 注册顶部菜单
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
         registerMenuItem(topMenuBar.getAboutItem(), ABOUT, "aboutItem", event -> new HelpPaneStage().run(new Stage()));
         registerMenuItem(topMenuBar.getDeveloperItem(), DEVELOPER, "developerItem", event -> new DeveloperDebugPaneStage().run());
     }

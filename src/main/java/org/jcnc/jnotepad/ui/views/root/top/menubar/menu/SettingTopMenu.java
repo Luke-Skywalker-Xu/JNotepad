@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.ui.views.root.top.menubar.menu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenConfig;
@@ -19,7 +19,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
  *
  * @author gewuyou
  */
-public class SettingTopMenu extends AbstractTopMenu {
+public class SettingTopMenu extends AbstractBaseMenu {
 
     private static final SettingTopMenu INSTANCE = new SettingTopMenu();
     private final Map<String, MenuItem> setMenuItems = new HashMap<>();
@@ -64,7 +64,7 @@ public class SettingTopMenu extends AbstractTopMenu {
      * @apiNote 此方法
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
         registerMenuItem(topMenuBar.getLineFeedItem(), WORD_WRAP, "lineFeedItem", (observableValue, before, after) -> {
             // 1. 更新全局配置
             UserConfigController.getInstance().setAutoLineConfig(after);

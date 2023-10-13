@@ -1,12 +1,17 @@
 package org.jcnc.jnotepad.controller.config;
 
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.api.core.controller.config.BaseConfigController;
 import org.jcnc.jnotepad.app.config.UserConfig;
+import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
+import org.slf4j.Logger;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_DIRECTORY;
 import static org.jcnc.jnotepad.app.common.constants.TextConstants.CHINESE;
@@ -31,10 +36,15 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
     private static final UserConfigController INSTANCE = new UserConfigController();
     private String configDir;
 
+    private final List<Map<String, MenuItem>> menuItems = new ArrayList<>();
+
+    Logger logger = LogUtil.getLogger(this.getClass());
+
     private UserConfigController() {
         configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), PROGRAM_FILE_DIRECTORY, ROOT_CONFIG_DIR).toString();
         loadConfig();
     }
+
 
     /**
      * 获取 UserConfigController 的实例。
@@ -164,4 +174,35 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
         return getConfig().getShortcutKey();
     }
 
+    public void initAllShortcutKeys() {
+        menuItems.forEach(this::initShortcutKeys);
+    }
+
+    /**
+     * 初始化快捷键
+     */
+    public void initShortcutKeys(Map<String, MenuItem> menuItemMap) {
+        List<MenuItem> itemsToUnbind = new ArrayList<>();
+        List<ShortcutKey> shortcutKeyConfigs = getShortcutKey();
+        for (ShortcutKey shortcutKey : shortcutKeyConfigs) {
+            // 保证json的key必须和变量名一致
+            MenuItem menuItem = menuItemMap.get(shortcutKey.getButtonName());
+            String shortKeyValue = shortcutKey.getShortcutKeyValue();
+            if ("".equals(shortKeyValue) && menuItem != null) {
+                itemsToUnbind.add(menuItem);
+                continue;
+            }
+            if (menuItem != null) {
+                logger.info("功能名称：{}->快捷键:{}", menuItem.getText(), shortKeyValue);
+                // 动态添加快捷键
+                menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
+            }
+        }
+        // 解绑需要解绑的快捷键
+        itemsToUnbind.forEach(menuItem -> menuItem.setAccelerator(null));
+    }
+
+    public List<Map<String, MenuItem>> getMenuItems() {
+        return menuItems;
+    }
 }

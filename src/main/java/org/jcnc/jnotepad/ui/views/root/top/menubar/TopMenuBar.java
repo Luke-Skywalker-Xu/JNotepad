@@ -4,9 +4,6 @@ import javafx.scene.control.*;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
 import org.jcnc.jnotepad.ui.views.root.center.main.center.tab.CenterTab;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 封装菜单栏组件。
  *
@@ -15,10 +12,6 @@ import java.util.Map;
 public class TopMenuBar extends MenuBar {
 
     private static final TopMenuBar MENU_BAR = new TopMenuBar();
-    /**
-     * 按钮集合
-     */
-    private final Map<String, MenuItem> allItemMap = new HashMap<>();
     /**
      * 标签页布局组件封装。
      */
@@ -153,8 +146,6 @@ public class TopMenuBar extends MenuBar {
         return helpMenu;
     }
 
-
-
     public Menu getPluginMenu() {
         return pluginMenu;
     }
@@ -164,9 +155,6 @@ public class TopMenuBar extends MenuBar {
         return languageMenu;
     }
 
-    public Map<String, MenuItem> getAllItemMap() {
-        return allItemMap;
-    }
 
     public MenuItem getNewItem() {
         return newItem;
