@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.ui.component.module.vbox.BuildPanel;
 import org.jcnc.jnotepad.ui.views.manager.BuildPanelManager;
@@ -23,7 +23,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.RUN;
  *
  * @author gewuyou
  */
-public class RunTopMenu extends AbstractTopMenu {
+public class RunTopMenu extends AbstractBaseMenu {
     private static final BuildPanelManager BUILD_PANEL_MANAGER = BuildPanelManager.getInstance();
     private static final BuildPanel BUILD_PANEL = BuildPanel.getInstance();
     private static final RunTopMenu INSTANCE = new RunTopMenu();
@@ -134,7 +134,7 @@ public class RunTopMenu extends AbstractTopMenu {
      * 注册顶部菜单
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
 
         // 运行
         registerMenuItem(topMenuBar.getRunItem(), RUN, "runItem", codeRun);

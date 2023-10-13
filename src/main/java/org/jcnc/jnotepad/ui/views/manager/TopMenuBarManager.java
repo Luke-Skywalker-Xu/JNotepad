@@ -3,12 +3,9 @@ package org.jcnc.jnotepad.ui.views.manager;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
 import org.jcnc.jnotepad.app.utils.LogUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
-import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.jcnc.jnotepad.ui.views.root.top.menubar.TopMenuBar;
 import org.jcnc.jnotepad.ui.views.root.top.menubar.menu.*;
 import org.slf4j.Logger;
@@ -27,6 +24,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
     private final List<Menu> nodeList = new ArrayList<>();
     Logger logger = LogUtil.getLogger(this.getClass());
     UserConfigController userConfigController = UserConfigController.getInstance();
+
 
     FileTopMenu fileTopMenu = FileTopMenu.getInstance();
     LanguageTopMenu languageTopMenu = LanguageTopMenu.getInstance();
@@ -63,13 +61,12 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         helpTopMenu.initMenu();
         // 初始化插件菜单
         pluginTopMenu.initMenu();
-
+        // 初始化运行菜单
         runTopMenu.initMenu();
 
         // 刷新顶部菜单栏
         refreshTopMenuBar();
-        // 初始化快捷键
-        initShortcutKeys();
+
     }
 
     /**
@@ -92,30 +89,6 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
         registerNode(helpTopMenu.getMenu());
     }
 
-
-    /**
-     * 初始化快捷键
-     */
-    public void initShortcutKeys() {
-        List<MenuItem> itemsToUnbind = new ArrayList<>();
-        List<ShortcutKey> shortcutKeyConfigs = userConfigController.getShortcutKey();
-        for (ShortcutKey shortcutKey : shortcutKeyConfigs) {
-            // 保证json的key必须和变量名一致
-            MenuItem menuItem = topMenuBar.getAllItemMap().get(shortcutKey.getButtonName());
-            String shortKeyValue = shortcutKey.getShortcutKeyValue();
-            if ("".equals(shortKeyValue) && menuItem != null) {
-                itemsToUnbind.add(menuItem);
-                continue;
-            }
-            if (menuItem != null) {
-                logger.info("功能名称：{}->快捷键:{}", menuItem.getText(), shortKeyValue);
-                // 动态添加快捷键
-                menuItem.setAccelerator(KeyCombination.keyCombination(shortKeyValue));
-            }
-        }
-        // 解绑需要解绑的快捷键
-        itemsToUnbind.forEach(menuItem -> menuItem.setAccelerator(null));
-    }
 
     /**
      * 刷新顶部菜单

@@ -5,7 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.controller.i18n.LocalizationController;
@@ -22,7 +22,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
  *
  * @author gewuyou
  */
-public class LanguageTopMenu extends AbstractTopMenu {
+public class LanguageTopMenu extends AbstractBaseMenu {
 
     private static final LanguageTopMenu INSTANCE = new LanguageTopMenu();
 
@@ -69,14 +69,12 @@ public class LanguageTopMenu extends AbstractTopMenu {
      */
     @Override
     public void initMenu() {
-        registerTopMenu();
+        registerMenu();
         logger.info("初始化语言菜单!");
         // 语言菜单
         ToggleGroup languageToggleGroup = new ToggleGroup();
-        var itemMap = topMenuBar.getAllItemMap();
         languageMenuItems.forEach((key, value) -> {
             UiResourceBundle.bindStringProperty(value.textProperty(), key);
-            itemMap.put(key, value);
             languageToggleGroup.getToggles().add(value);
             topMenuBar.getLanguageMenu().getItems().add(value);
         });
@@ -91,7 +89,7 @@ public class LanguageTopMenu extends AbstractTopMenu {
      * @apiNote 此方法
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
         registerRadioMenuItem(languageMenuItems, topMenuBar.getChineseItem(), UPPER_CHINESE, Locale.CHINESE, this::toggleLanguage);
         registerRadioMenuItem(languageMenuItems, topMenuBar.getEnglishItem(), UPPER_ENGLISH, Locale.ENGLISH, this::toggleLanguage);
     }

@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.ui.views.root.top.menubar.menu;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import org.jcnc.jnotepad.api.core.views.top.menu.AbstractTopMenu;
+import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
 import org.jcnc.jnotepad.ui.component.stage.topmenu.plugin.PluginManagementPane;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
  *
  * @author gewuyou
  */
-public class PluginTopMenu extends AbstractTopMenu {
+public class PluginTopMenu extends AbstractBaseMenu {
 
     private static final PluginTopMenu INSTANCE = new PluginTopMenu();
 
@@ -60,7 +60,7 @@ public class PluginTopMenu extends AbstractTopMenu {
      * 注册顶部菜单
      */
     @Override
-    protected void registerTopMenu() {
+    protected void registerMenu() {
         registerMenuItem(topMenuBar.getPluginManagerItem(), MANAGER_PLUGIN, "pluginManagerItem", event -> new PluginManagementPane().run());
         registerMenuItem(topMenuBar.getCountItem(), STATISTICS, "countItem", event -> {
         });

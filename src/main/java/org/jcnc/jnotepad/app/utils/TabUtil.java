@@ -19,7 +19,6 @@ import org.jcnc.jnotepad.ui.component.module.TextCodeArea;
 import org.jcnc.jnotepad.ui.component.stage.dialog.factory.impl.BasicFileChooserFactory;
 import org.jcnc.jnotepad.ui.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
-import org.jcnc.jnotepad.ui.views.manager.TopMenuBarManager;
 import org.jcnc.jnotepad.ui.views.root.center.main.center.tab.CenterTab;
 import org.jcnc.jnotepad.ui.views.root.center.main.center.tab.CenterTabPane;
 import org.slf4j.Logger;
@@ -63,7 +62,7 @@ public class TabUtil {
             if (CONFIG_NAME.equals(tab.getText())) {
                 // 重新加载语言包和快捷键
                 UserConfigController.getInstance().loadConfig();
-                TopMenuBarManager.getInstance().initShortcutKeys();
+                UserConfigController.getInstance().initAllShortcutKeys();
                 LocalizationController.initLocal();
                 logger.info("已刷新语言包！");
                 logger.info("已刷新快捷键！");
@@ -365,13 +364,9 @@ public class TabUtil {
                         .addMenu(
                                 new MenuBuilder("复制")
                                         .addMenuItem("文件名", e -> {
-                                            ClipboardUtil.writeTextToClipboard(tab.getText());
+                                            ClipboardUtil.writeTextToClipboard(file.getName());
                                             NotificationUtil.infoNotification("已复制文件名!");
                                         }, tab.isRelevance())
-                                        .addMenuItem("标签页名", e -> {
-                                            ClipboardUtil.writeTextToClipboard(tab.getText());
-                                            NotificationUtil.infoNotification("已复制标签页名!");
-                                        }, !tab.isRelevance())
                                         .addMenuItem("文件路径", e -> {
                                             ClipboardUtil.writeTextToClipboard(file.getAbsolutePath());
                                             NotificationUtil.infoNotification("已复制文件路径!");

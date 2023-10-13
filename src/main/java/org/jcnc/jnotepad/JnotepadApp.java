@@ -26,12 +26,16 @@ public class JnotepadApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void init() {
         // 获取当前启动位置a
         String currentWorkingDirectory = System.getProperty("user.dir");
         LogUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
         // 设置参数
         APPLICATION_MANAGER.setApplication(this);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
         APPLICATION_MANAGER.setPrimaryStage(primaryStage);
         // 加载应用程序资源
         APPLICATION_MANAGER.loadAppResources();
