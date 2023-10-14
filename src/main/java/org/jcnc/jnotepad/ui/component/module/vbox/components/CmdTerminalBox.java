@@ -36,6 +36,7 @@ public class CmdTerminalBox extends VBox {
      * 用户输入命令的文本框
      */
     private final TextField cmdInput;
+    String currentDirectory;
     /**
      * 用于运行命令的进程
      */
@@ -44,8 +45,6 @@ public class CmdTerminalBox extends VBox {
      * 用于向命令进程发送输入的写入器
      */
     private PrintWriter cmdInputWriter;
-
-    String currentDirectory;
 
     /**
      * 创建CmdTerminal对象的构造函数。

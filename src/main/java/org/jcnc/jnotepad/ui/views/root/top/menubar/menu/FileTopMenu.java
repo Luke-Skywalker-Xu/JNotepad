@@ -63,9 +63,9 @@ public class FileTopMenu extends AbstractBaseMenu {
         // 文件菜单
         registerMenuItem(topMenuBar.getNewItem(), NEW, "newItem", new NewFile());
         registerMenuItem(topMenuBar.getOpenItem(), OPEN, "openItem", new OpenFile());
-        registerMenuItem(topMenuBar.getSaveItem(), SAVE, "saveItem", new SaveFile());
-        registerMenuItem(topMenuBar.getSaveAsItem(), SAVE_AS, "saveAsItem", new SaveAsFile());
-        registerMenuItem(topMenuBar.getRenameItem(), RENAME, "renameItem", new RenameFile());
+        registerMenuItem(topMenuBar.getSaveItem(), SAVE, SAVE.toLowerCase(), new SaveFile());
+        registerMenuItem(topMenuBar.getSaveAsItem(), SAVE_AS, SAVE_AS.toLowerCase(), new SaveAsFile());
+        registerMenuItem(topMenuBar.getRenameItem(), RENAME, RENAME.toLowerCase(), new RenameFile());
         // 打开文件夹按钮
         registerMenuItem(topMenuBar.getOpenDirItem(), OPEN_DIRECTORY, "openDirItem", new OpenDirectory());
     }

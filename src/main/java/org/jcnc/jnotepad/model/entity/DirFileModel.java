@@ -48,6 +48,10 @@ public class DirFileModel {
         return childFile;
     }
 
+    public void setChildFile(List<DirFileModel> childFile) {
+        this.childFile = childFile;
+    }
+
     public String getPath() {
         return path;
     }
@@ -77,16 +81,11 @@ public class DirFileModel {
         this.iconIsNotSelected = iconIsNotSelected;
     }
 
-    public void setIconIsSelected(Node iconIsSelected) {
-        this.iconIsSelected = iconIsSelected;
-    }
-
     public Node getIconIsSelected() {
         return iconIsSelected;
     }
 
-
-    public void setChildFile(List<DirFileModel> childFile) {
-        this.childFile = childFile;
+    public void setIconIsSelected(Node iconIsSelected) {
+        this.iconIsSelected = iconIsSelected;
     }
 }

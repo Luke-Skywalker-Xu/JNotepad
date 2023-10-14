@@ -13,33 +13,18 @@ import org.jcnc.jnotepad.ui.component.module.vbox.components.RunBox;
  *
  * <p>可以通过调用getInstance方法获取单例实例。</p>
  *
+ * @author cccqyu
  * @see CmdTerminalBox
  * @see RunBox
  * @see DebugBox
  * @see TabPane
- * @author cccqyu
  */
 public class BuildPanel extends TabPane {
 
     private static BuildPanel instance = null;
-
-    /**
-     * 获取BuildPanel的单例实例。
-     *
-     * @return BuildPanel的单例实例
-     */
-    public static BuildPanel getInstance() {
-
-        if (instance == null) {
-            instance = new BuildPanel();
-        }
-        return instance;
-    }
-
     private final CmdTerminalBox cmdTerminalBox;
     private final RunBox runBox;
     private final DebugBox debugBox;
-
     private BuildPanel() {
         cmdTerminalBox = new CmdTerminalBox();
         runBox = new RunBox();
@@ -54,6 +39,19 @@ public class BuildPanel extends TabPane {
         Tab cmdTab = new Tab("命令终端", cmdTerminalBox);
         cmdTab.setClosable(false);
         this.getTabs().addAll(runTab, buildTab, cmdTab);
+    }
+
+    /**
+     * 获取BuildPanel的单例实例。
+     *
+     * @return BuildPanel的单例实例
+     */
+    public static BuildPanel getInstance() {
+
+        if (instance == null) {
+            instance = new BuildPanel();
+        }
+        return instance;
     }
 
     /**

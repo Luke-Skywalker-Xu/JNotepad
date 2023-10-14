@@ -22,7 +22,6 @@ import java.nio.file.Paths;
  * </p>
  *
  * @param <T> 配置文件类型
- *           
  * @author gewuyou
  */
 public abstract class BaseConfigController<T> implements ConfigController<T> {
@@ -30,9 +29,8 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     protected static final String ROOT_CONFIG_DIR = "config";
 
     protected static final String SYSTEM_CONFIG_DIR = "system";
-
-    protected T config;
     private final Logger logger = LogUtil.getLogger(getClass());
+    protected T config;
 
     /**
      * 获取配置文件Class类。

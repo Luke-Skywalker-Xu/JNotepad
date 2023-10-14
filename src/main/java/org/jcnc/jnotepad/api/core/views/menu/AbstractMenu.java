@@ -1,15 +1,18 @@
 package org.jcnc.jnotepad.api.core.views.menu;
 
 import javafx.beans.value.ChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.slf4j.Logger;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,6 +22,7 @@ import java.util.Map;
  */
 public abstract class AbstractMenu<T> {
     protected Logger logger = LogUtil.getLogger(this.getClass());
+    UserConfigController userConfigController = UserConfigController.getInstance();
 
     /**
      * 获取菜单
@@ -44,6 +48,13 @@ public abstract class AbstractMenu<T> {
      */
     protected abstract void initMenu();
 
+    /**
+     * 获取菜单项
+     *
+     * @return 菜单项集合
+     */
+    protected abstract ObservableList<MenuItem> getItems();
+
 
     /**
      * 注册菜单项
@@ -57,20 +68,6 @@ public abstract class AbstractMenu<T> {
         getMenuItems().put(menuItemName, menuItem);
         menuItem.setUserData(userData);
         menuItem.setOnAction(eventHandler);
-    }
-
-    /**
-     * 注册菜单项
-     *
-     * @param menuItem     菜单项
-     * @param menuItemName 菜单项名称
-     * @param userData     用户数据，用来存放必要的数据，比如按钮菜单项名称
-     * @param eventHandler 事件处理器
-     */
-    public void registerMenuItem(MenuItem menuItem, String menuItemName, Object userData, EventHandler<ActionEvent> eventHandler, boolean isDisable) {
-        if (!isDisable) {
-            registerMenuItem(menuItem, menuItemName, userData, eventHandler);
-        }
     }
 
     /**
@@ -88,32 +85,6 @@ public abstract class AbstractMenu<T> {
     }
 
     /**
-     * 在给定菜单映射中注册具有指定名称、用户数据和事件处理程序的菜单项。
-     *
-     * @param menu         菜单项映射
-     * @param menuItemName 要注册的菜单项的名称
-     * @param userData     与菜单项关联的用户数据
-     */
-    public void registerMenu(Menu menu, String menuItemName, Object userData) {
-        getMenuItems().put(menuItemName, menu);
-        menu.setUserData(userData);
-    }
-
-    /**
-     * Registers a menu item in the specified menu with the given name and user data.
-     *
-     * @param menu         the menu to register the item in
-     * @param menuItemName the name of the menu item
-     * @param userData     the user data associated with the menu item
-     * @param isDisable    whether the menu item is disabled
-     */
-    public void registerMenu(Menu menu, String menuItemName, Object userData, boolean isDisable) {
-        if (!isDisable) {
-            registerMenu(menu, menuItemName, userData);
-        }
-    }
-
-    /**
      * 注册单选菜单项
      *
      * @param radioMenuItem 单选菜单项
@@ -127,12 +98,22 @@ public abstract class AbstractMenu<T> {
         radioMenuItem.setOnAction(eventHandler);
     }
 
+
     /**
      * 初始化菜单项
      *
      * @param menuItems 菜单项集合
-     * @param menu      菜单
      */
-    protected abstract void initMenuItems(Map<String, MenuItem> menuItems, T menu);
+    protected void initMenuItems(Map<String, MenuItem> menuItems) {
+        logger.info("初始化菜单项!");
+        Map<String, MenuItem> menuItemMap = new HashMap<>(16);
+        menuItems.forEach((key, value) -> {
+            UiResourceBundle.bindStringProperty(value.textProperty(), key);
+            menuItemMap.put((String) value.getUserData(), value);
+            getItems().add(value);
+        });
+        userConfigController.getMenuItems().add(menuItemMap);
+        userConfigController.initShortcutKeys(menuItemMap);
+    }
 
 }

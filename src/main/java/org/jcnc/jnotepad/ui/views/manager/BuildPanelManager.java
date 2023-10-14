@@ -13,22 +13,20 @@ import org.jcnc.jnotepad.ui.views.root.center.main.MainBorderPane;
  */
 public class BuildPanelManager {
 
-    private BuildPanelManager() {
-    }
-
     /**
      * 单例模式，保证只有一个 BuildPanelManager 实例
      */
     private static final BuildPanelManager INSTANCE = new BuildPanelManager();
+    private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
+    private boolean isShow = false;
 
+
+    private BuildPanelManager() {
+    }
 
     public static BuildPanelManager getInstance() {
         return INSTANCE;
     }
-
-
-    private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
-    private boolean isShow = false;
 
     /**
      * 控制终端显示

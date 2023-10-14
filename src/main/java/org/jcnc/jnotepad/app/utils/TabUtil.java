@@ -28,6 +28,7 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
 import static org.jcnc.jnotepad.app.utils.FileUtil.getFileText;
 import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NAME;
 
@@ -51,7 +52,7 @@ public class TabUtil {
             return;
         }
         // 如果打开的是非关联文件，则调用另存为方法
-        if (!tab.isRelevance()) {
+        if (!tab.getRelevanceProperty()) {
             logger.info("当前保存文件为非关联打开文件，调用另存为方法");
             saveAsFile(tab);
         } else {
@@ -99,7 +100,7 @@ public class TabUtil {
             logger.info("正在保存文件: {}", file.getName());
             tab.save(file);
             // 将保存后的文件设置为关联文件
-            tab.setRelevance(true);
+            tab.setRelevanceProperty(true);
             // 更新标签页上的文件名
             tab.setText(file.getName());
         }
@@ -113,7 +114,7 @@ public class TabUtil {
             return;
         }
         // 判断当前是否为关联文件
-        if (tab.isRelevance()) {
+        if (tab.getRelevanceProperty()) {
             // 重命名关联文件
             handleRenameRelevanceFile(tab);
         }
@@ -273,8 +274,6 @@ public class TabUtil {
         CenterTab centerTab = new CenterTab(
                 tabTitle.toString(),
                 textArea);
-        // 设置当前标签页与本地文件无关联
-        centerTab.setRelevance(false);
         // 将Tab页添加到TabPane中
         CenterTabPaneManager.getInstance().addNewTab(centerTab);
         // 更新编码信息
@@ -317,11 +316,8 @@ public class TabUtil {
         String fileText = getFileText(file, encoding);
         LogUtil.getLogger(OpenFile.class).info("已调用读取文件功能");
         textCodeArea.appendText(fileText);
-        CenterTab tab = new CenterTab(file.getName(), textCodeArea, encoding);
-        // 设置当前标签页关联本地文件
-        tab.setRelevance(true);
-        // 设置标签页关联文件
-        tab.setUserData(file);
+        // 设置当前标签页关联本地文件 设置标签页关联文件
+        CenterTab tab = new CenterTab(file.getName(), textCodeArea, encoding, file, true);
         // 设置关联文件最后的修改时间
         tab.setLastModifiedTimeOfAssociatedFile(file.lastModified());
         CenterTabPaneManager.getInstance().addNewTab(tab);
@@ -332,76 +328,69 @@ public class TabUtil {
      *
      * @param tab The tab for which the context menu is being updated.
      */
-    public static void updateTabContextMenu(CenterTab tab) {
+    public static void initTabContextMenu(CenterTab tab) {
         ContextMenuBuilder builder = new ContextMenuBuilder();
         CenterTabPaneManager centerTabPaneManager = CenterTabPaneManager.getInstance();
         File file = (File) tab.getUserData();
-        //todo 设置上下文菜单
+        // 设置上下文菜单
         tab.setContextMenu(
                 builder
                         .addMenuItem(
-                                "关闭",
+                                CLOSE,
                                 e -> centerTabPaneManager.removeTab(tab))
                         .addMenuItem(
-                                "关闭其它标签页",
+                                CLOSE_OTHER_TABS,
                                 e -> centerTabPaneManager.removeOtherTabs(tab),
-                                centerTabPaneManager.hasOtherTabs()
+                                tab.hasOtherTabsPropertyProperty()
                         )
                         .addMenuItem(
-                                "关闭所有标签页",
+                                CLOSE_ALL_TABS,
                                 e -> centerTabPaneManager.removeAllTabs())
                         .addMenuItem(
-                                "关闭左侧标签页",
+                                CLOSE_LEFT_TABS,
                                 e -> centerTabPaneManager.removeLeftTabs(tab),
-                                centerTabPaneManager.hasLeftTabs(tab)
+                                tab.hasLeftTabsPropertyProperty()
                         )
                         .addMenuItem(
-                                "关闭右侧标签页",
+                                CLOSE_RIGHT_TABS,
                                 e -> centerTabPaneManager.removeRightTabs(tab),
-                                centerTabPaneManager.hasRightTabs(tab)
+                                tab.hasRightTabsPropertyProperty()
                         )
-                        .addSeparatorMenuItem()
+                        .addSeparatorMenuItem(tab.relevancePropertyProperty())
                         .addMenu(
-                                new MenuBuilder("复制")
-                                        .addMenuItem("文件名", e -> {
+                                new MenuBuilder(COPY)
+                                        .addMenuItem(FILE_NAME, e -> {
                                             ClipboardUtil.writeTextToClipboard(file.getName());
                                             NotificationUtil.infoNotification("已复制文件名!");
-                                        }, tab.isRelevance())
-                                        .addMenuItem("文件路径", e -> {
+                                        })
+                                        .addMenuItem(FILE_PATH, e -> {
                                             ClipboardUtil.writeTextToClipboard(file.getAbsolutePath());
                                             NotificationUtil.infoNotification("已复制文件路径!");
-                                        }, tab.isRelevance())
-                                        .addMenuItem("所在文件夹", e -> {
+                                        })
+                                        .addMenuItem(FOLDER_PATH, e -> {
                                             ClipboardUtil.writeTextToClipboard(file.getParent());
                                             NotificationUtil.infoNotification("已复制所在文件夹!");
-                                        }, tab.isRelevance())
+                                        })
                                         .build()
+                                , tab.relevancePropertyProperty()
                         )
                         .addSeparatorMenuItem()
-                        .addMenuItem("保存", e -> saveFile(tab))
-                        .addMenuItem("另存为", e -> saveAsFile(tab), tab.isRelevance())
-                        .addMenuItem("重命名", e -> rename(tab))
-                        .addSeparatorMenuItem()
-                        .addMenu(new MenuBuilder("打开于")
-                                .addMenuItem("资源管理器", e -> FileUtil.openExplorer(file))
-                                .addMenuItem("终端", e -> {
+                        .addMenuItem(SAVE, e -> saveFile(tab))
+                        .addMenuItem(SAVE_AS, e -> saveAsFile(tab), tab.relevancePropertyProperty())
+                        .addMenuItem(RENAME, e -> rename(tab))
+                        .addSeparatorMenuItem(tab.relevancePropertyProperty())
+                        .addMenu(new MenuBuilder(OPEN_ON)
+                                .addMenuItem(EXPLORER, e -> FileUtil.openExplorer(file))
+                                .addMenuItem(TERMINAL, e -> {
                                     //todo @luke 请你在此设置打开文件所在文件夹路径于终端
                                 })
-                                .build(), tab.isRelevance())
+                                .build(), tab.relevancePropertyProperty())
                         .addSeparatorMenuItem()
-                        .addMenuItem("固定标签页",
-                                e -> centerTabPaneManager.updateTabPinnedState(tab),
-                                !tab.isFixed())
-                        .addMenuItem("取消固定",
-                                e -> centerTabPaneManager.updateTabPinnedState(tab),
-                                tab.isFixed())
+                        .addCheckMenuItem(FIXED_TAB,
+                                e -> centerTabPaneManager.updateTabPinnedState(tab))
                         .addSeparatorMenuItem()
-                        .addMenuItem("只读",
-                                e -> centerTabPaneManager.updateReadOnlyProperty(tab),
-                                tab.getTextCodeArea().isEditable())
-                        .addMenuItem("取消只读",
-                                e -> centerTabPaneManager.updateReadOnlyProperty(tab),
-                                !tab.getTextCodeArea().isEditable())
+                        .addCheckMenuItem(tab.getReadOnly(),
+                                e -> centerTabPaneManager.updateReadOnlyProperty(tab))
                         .build());
     }
 }

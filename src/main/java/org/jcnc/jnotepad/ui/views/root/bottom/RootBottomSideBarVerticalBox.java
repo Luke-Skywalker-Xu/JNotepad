@@ -12,10 +12,15 @@ import org.jcnc.jnotepad.ui.component.module.base.AbstractVerticalBox;
  */
 public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
 
+    private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
     /**
      * VBox实例
      */
     private final VBox vBox = new VBox();
+
+    private RootBottomSideBarVerticalBox() {
+
+    }
 
     /**
      * 获取 RootBottomSideBarVerticalBox 的唯一实例。
@@ -26,10 +31,6 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
         return INSTANCE;
     }
 
-    private RootBottomSideBarVerticalBox() {
-
-    }
-
     /**
      * 获取vbox实例
      *
@@ -38,7 +39,5 @@ public class RootBottomSideBarVerticalBox extends AbstractVerticalBox {
     public VBox getVbox() {
         return vBox;
     }
-
-    private static final RootBottomSideBarVerticalBox INSTANCE = new RootBottomSideBarVerticalBox();
 
 }

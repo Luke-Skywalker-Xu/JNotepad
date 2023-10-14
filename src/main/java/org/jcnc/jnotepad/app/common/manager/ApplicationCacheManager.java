@@ -7,7 +7,7 @@ import org.jcnc.jnotepad.api.core.manager.AbstractCacheManager;
  * <p>
  * 该类用于管理应用程序中的缓存数据。
  * </p>
- * 
+ *
  * @author gewuyou
  */
 public class ApplicationCacheManager extends AbstractCacheManager {

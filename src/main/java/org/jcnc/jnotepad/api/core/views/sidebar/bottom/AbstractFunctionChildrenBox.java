@@ -13,7 +13,6 @@ import org.jcnc.jnotepad.ui.views.root.bottom.function.FunctionBox;
  * </p>
  *
  * @author gewuyou
- *
  */
 public abstract class AbstractFunctionChildrenBox {
     protected final FunctionBox functionBox;

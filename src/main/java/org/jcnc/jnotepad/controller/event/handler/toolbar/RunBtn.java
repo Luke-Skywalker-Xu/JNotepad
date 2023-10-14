@@ -8,7 +8,6 @@ import org.jcnc.jnotepad.ui.views.manager.BuildPanelManager;
 /**
  * 终端处理器
  *
- *
  * @author cccqyu
  */
 public class RunBtn implements EventHandler<ActionEvent> {

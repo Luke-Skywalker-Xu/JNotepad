@@ -27,10 +27,8 @@ import java.util.Set;
 public class CacheController {
 
     private static final ApplicationCacheManager APPLICATION_CACHE_MANAGER = ApplicationCacheManager.getInstance();
-    Logger logger = LogUtil.getLogger(this.getClass());
-
     private static final CacheController INSTANCE = new CacheController();
-
+    Logger logger = LogUtil.getLogger(this.getClass());
     private String cacheDir;
 
     private CacheController() {

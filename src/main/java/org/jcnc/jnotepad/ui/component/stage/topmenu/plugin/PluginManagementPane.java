@@ -53,27 +53,23 @@ import java.util.Map;
  * @author luke
  */
 public class PluginManagementPane extends AbstractPaneStage {
-    PluginManager pluginManager = PluginManager.getInstance();
-
     /**
      * 图标大小常量
      */
     public static int ICON_SIZE = 40;
-
-    /**
-     * 日志记录器
-     */
-    Logger logger = LogUtil.getLogger(this.getClass());
-
-    /**
-     * 自定义分割面板
-     */
-    private CustomSplitPane customSplitPane;
-
     /**
      * 用于存储Tile与其内容节点的映射关系
      */
     private final Map<Tile, Node> tileContentMap = new HashMap<>();
+    PluginManager pluginManager = PluginManager.getInstance();
+    /**
+     * 日志记录器
+     */
+    Logger logger = LogUtil.getLogger(this.getClass());
+    /**
+     * 自定义分割面板
+     */
+    private CustomSplitPane customSplitPane;
 
     /**
      * 创建一个插件管理面板的实例。
@@ -81,6 +77,7 @@ public class PluginManagementPane extends AbstractPaneStage {
     public PluginManagementPane() {
         initialize();
     }
+
     /**
      * 初始化插件管理面板。
      */
