@@ -13,10 +13,6 @@ public class TopMenuBar extends MenuBar {
 
     private static final TopMenuBar MENU_BAR = new TopMenuBar();
     /**
-     * 标签页布局组件封装。
-     */
-    CenterTabPaneManager centerTabPane = CenterTabPaneManager.getInstance();
-    /**
      * 文件菜单
      */
     private final Menu fileMenu = new Menu();
@@ -24,23 +20,20 @@ public class TopMenuBar extends MenuBar {
      * 设置菜单
      */
     private final Menu setMenu = new Menu();
-
     /**
      * 帮助菜单
      */
     private final Menu helpMenu = new Menu();
-
     /**
      * 运行菜单
      */
     private final Menu runMenu = new Menu();
-
-    ///  菜单按钮
     /**
      * 插件菜单
      */
     private final Menu pluginMenu = new Menu();
 
+    ///  菜单按钮
     /**
      * 语言菜单
      */
@@ -49,12 +42,10 @@ public class TopMenuBar extends MenuBar {
      * 新建
      */
     private final MenuItem newItem = new MenuItem();
-
     /**
      * 关于
      */
     private final MenuItem aboutItem = new MenuItem();
-
     /**
      * 调试
      */
@@ -64,9 +55,7 @@ public class TopMenuBar extends MenuBar {
      */
 
     private final MenuItem runItem = new MenuItem();
-
     private final MenuItem developerItem = new MenuItem();
-
     /**
      * 打开
      */
@@ -87,7 +76,6 @@ public class TopMenuBar extends MenuBar {
      * 重命名
      */
     private final MenuItem renameItem = new MenuItem();
-
     /**
      * 查看
      */
@@ -112,11 +100,14 @@ public class TopMenuBar extends MenuBar {
      * 英文选项
      */
     private final RadioMenuItem englishItem = new RadioMenuItem();
-
     /**
      * 插件管理菜单项
      */
     private final MenuItem pluginManagerItem = new MenuItem();
+    /**
+     * 标签页布局组件封装。
+     */
+    CenterTabPaneManager centerTabPane = CenterTabPaneManager.getInstance();
 
     private TopMenuBar() {
     }

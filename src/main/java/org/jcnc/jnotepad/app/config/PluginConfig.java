@@ -12,7 +12,6 @@ import java.util.List;
  * </p>
  *
  * @author gewuyou
- *
  */
 public class PluginConfig {
     private List<PluginDescriptor> plugins;

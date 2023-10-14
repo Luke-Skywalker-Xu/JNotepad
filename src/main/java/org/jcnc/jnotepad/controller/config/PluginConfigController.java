@@ -66,6 +66,10 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
         return configDir;
     }
 
+    public void setConfigDir(String configDir) {
+        this.configDir = configDir;
+    }
+
     /**
      * 创建配置文件实体
      *
@@ -77,11 +81,6 @@ public class PluginConfigController extends BaseConfigController<PluginConfig> {
         PluginConfig pluginConfig = new PluginConfig();
         pluginConfig.setPlugins(new ArrayList<>());
         return pluginConfig;
-    }
-
-
-    public void setConfigDir(String configDir) {
-        this.configDir = configDir;
     }
 
     /**

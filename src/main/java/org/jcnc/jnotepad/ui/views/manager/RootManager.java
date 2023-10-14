@@ -24,11 +24,11 @@ import org.jcnc.jnotepad.ui.views.root.RootBorderPane;
 public class RootManager {
 
     private static RootManager instance = null;
-    StackPane rootStackPane;
     /**
      * 主布局
      */
     private final BorderPane root;
+    StackPane rootStackPane;
 
     /**
      * 私有构造函数。设置场景和根布局。
@@ -65,23 +65,6 @@ public class RootManager {
         } else {
             throw new AppException("RootManager 的实例未初始化!");
         }
-    }
-
-
-    /**
-     * 初始化屏幕组件。
-     *
-     * @param scene 与视图相关联的 JavaFX 场景。
-     */
-    public void initScreen(Scene scene) {
-        rootStackPane = new StackPane();
-
-        // 创建主界面布局
-        root.setCenter(RootBorderPane.getInstance());
-
-        rootStackPane.getChildren().addAll(root);
-        scene.setRoot(rootStackPane);
-
     }
 
     /**
@@ -153,6 +136,22 @@ public class RootManager {
         }));
         timeline.setCycleCount(1);
         timeline.play();
+    }
+
+    /**
+     * 初始化屏幕组件。
+     *
+     * @param scene 与视图相关联的 JavaFX 场景。
+     */
+    public void initScreen(Scene scene) {
+        rootStackPane = new StackPane();
+
+        // 创建主界面布局
+        root.setCenter(RootBorderPane.getInstance());
+
+        rootStackPane.getChildren().addAll(root);
+        scene.setRoot(rootStackPane);
+
     }
 
     public StackPane getRootStackPane() {

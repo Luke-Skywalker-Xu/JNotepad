@@ -15,22 +15,20 @@ import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_D
  */
 public class AppConfigController extends BaseConfigController<AppConfig> {
 
-    private static final AppConfigController INSTANCE = new AppConfigController();
-
-    public static AppConfigController getInstance() {
-        return INSTANCE;
-    }
-
     /**
      * 配置文件名
      */
     public static final String CONFIG_NAME = "JNotepadConfig.json";
-
+    private static final AppConfigController INSTANCE = new AppConfigController();
     private final String configDir;
 
     public AppConfigController() {
         configDir = Paths.get(System.getProperty(DEFAULT_PROPERTY), PROGRAM_FILE_DIRECTORY, SYSTEM_CONFIG_DIR).toString();
         loadConfig();
+    }
+
+    public static AppConfigController getInstance() {
+        return INSTANCE;
     }
 
     /**

@@ -28,6 +28,25 @@ public class RunTopMenu extends AbstractBaseMenu {
     private static final BuildPanel BUILD_PANEL = BuildPanel.getInstance();
     private static final RunTopMenu INSTANCE = new RunTopMenu();
     private final Map<String, MenuItem> runMenuItems = new HashMap<>();
+    EventHandler<ActionEvent> codeRun = event -> {
+
+        // 获取TextCodeArea的文本内容
+        CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
+
+        String code = centerTab.getTextCodeArea().getText();
+
+        String fileName = centerTab.getText();
+
+        // 将C代码写入临时文件
+        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
+            writer.write(code);
+        } catch (IOException ex) {
+            LogUtil.getLogger(this.getClass()).info("正在写入：{}", code);
+        }
+
+        // 编译C代码
+        compileAndRunCode(fileName);
+    };
 
     public static RunTopMenu getInstance() {
         return INSTANCE;
@@ -62,26 +81,6 @@ public class RunTopMenu extends AbstractBaseMenu {
     public Map<String, MenuItem> getMenuItems() {
         return runMenuItems;
     }
-
-    EventHandler<ActionEvent> codeRun = event -> {
-
-        // 获取TextCodeArea的文本内容
-        CenterTab centerTab = CenterTabPaneManager.getInstance().getSelected();
-
-        String code = centerTab.getTextCodeArea().getText();
-
-        String fileName = centerTab.getText();
-
-        // 将C代码写入临时文件
-        try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
-            writer.write(code);
-        } catch (IOException ex) {
-            LogUtil.getLogger(this.getClass()).info("正在写入：{}", code);
-        }
-
-        // 编译C代码
-        compileAndRunCode(fileName);
-    };
 
     /**
      * 编译和运行C代码的方法

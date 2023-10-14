@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class SidebarToolBarManager extends AbstractManager<Node> {
     private static final SidebarToolBarManager INSTANCE = new SidebarToolBarManager();
+    private final List<Node> nodeList = new ArrayList<>();
     /**
      * 工具栏
      */
     SidebarToolBar sidebarToolBar = SidebarToolBar.getInstance();
-    private final List<Node> nodeList = new ArrayList<>();
 
     public static SidebarToolBarManager getInstance() {
         return INSTANCE;

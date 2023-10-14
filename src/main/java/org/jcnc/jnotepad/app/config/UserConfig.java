@@ -13,7 +13,6 @@ import java.util.List;
  * </p>
  *
  * @author luke
- *
  */
 public class UserConfig {
 

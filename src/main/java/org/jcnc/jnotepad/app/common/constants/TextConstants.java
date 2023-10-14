@@ -169,6 +169,81 @@ public class TextConstants {
      */
     public static final String CHINESE = "chinese";
 
+    /**
+     * 关闭
+     */
+    public static final String CLOSE = "CLOSE";
+
+    /**
+     * 关闭其他标签页
+     */
+    public static final String CLOSE_OTHER_TABS = "CLOSE_OTHER_TABS";
+
+    /**
+     * 关闭所有标签页
+     */
+    public static final String CLOSE_ALL_TABS = "CLOSE_ALL_TABS";
+
+    /**
+     * 关闭左侧标签
+     */
+    public static final String CLOSE_LEFT_TABS = "CLOSE_LEFT_TABS";
+
+    /**
+     * 关闭右侧标签
+     */
+    public static final String CLOSE_RIGHT_TABS = "CLOSE_RIGHT_TABS";
+
+    /**
+     * 复制
+     */
+    public static final String COPY = "COPY";
+
+    /**
+     * 粘贴
+     */
+    public static final String PASTE = "PASTE";
+
+    /**
+     * 剪切
+     */
+    public static final String SHEAR = "SHEAR";
+
+    /**
+     * 文件名
+     */
+    public static final String FILE_NAME = "FILE_NAME";
+
+    /**
+     * 文件路径
+     */
+    public static final String FILE_PATH = "FILE_PATH";
+
+
+    /**
+     * 所在文件夹
+     */
+    public static final String FOLDER_PATH = "FOLDER_PATH";
+    /**
+     * 固定标签页
+     */
+    public static final String FIXED_TAB = "FIXED_TAB";
+    /**
+     * 只读
+     */
+    public static final String READ_ONLY = "READ_ONLY";
+
+    public static final String SEPARATOR = "separator";
+
+    /**
+     * 打开于
+     */
+    public static final String OPEN_ON = "OPEN_ON";
+    /**
+     * 资源管理器
+     */
+    public static final String EXPLORER = "EXPLORER";
+
     private TextConstants() {
     }
 

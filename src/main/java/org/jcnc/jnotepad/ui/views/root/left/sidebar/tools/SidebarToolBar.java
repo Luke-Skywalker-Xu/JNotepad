@@ -38,7 +38,7 @@ public class SidebarToolBar extends javafx.scene.control.ToolBar {
     private SidebarToolBar() {
         // 垂直排列
         this.setOrientation(Orientation.VERTICAL);
-        this.setPadding(new Insets(1,5,0,0));
+        this.setPadding(new Insets(1, 5, 0, 0));
         this.setOnMouseClicked(event -> {
             // SidebarToolBar 点击事件
         });

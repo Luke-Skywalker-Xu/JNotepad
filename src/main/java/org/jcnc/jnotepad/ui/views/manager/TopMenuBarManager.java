@@ -31,7 +31,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
 
     SettingTopMenu settingTopMenu = SettingTopMenu.getInstance();
 
-    RunTopMenu runTopMenu=RunTopMenu.getInstance();
+    RunTopMenu runTopMenu = RunTopMenu.getInstance();
     PluginTopMenu pluginTopMenu = PluginTopMenu.getInstance();
 
     HelpTopMenu helpTopMenu = HelpTopMenu.getInstance();

@@ -23,29 +23,49 @@ import java.util.List;
  */
 public class DirectorySidebarManager {
 
-    private DirectorySidebarManager() {
-    }
-
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
-
     /**
      * 单例模式，保证只有一个 DirectorySidebar 实例
      */
     private static final DirectorySidebarManager INSTANCE = new DirectorySidebarManager();
+    private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
+    private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
+    private static final double LAST_DIVIDER_POSITION = 0.3;
+    private static boolean isShow = false;
 
+
+    private DirectorySidebarManager() {
+    }
 
     public static DirectorySidebarManager getInstance() {
         return INSTANCE;
     }
 
-    private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
+    /**
+     * 设置文件树项监听事件
+     *
+     * @param item 文件树项
+     * @return 监听事件
+     */
+    private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
+        return (observable, oldValue, newValue) -> {
+            if (Boolean.TRUE.equals(newValue)) {
+                item.setGraphic(item.getValue().getIconIsSelected());
+            } else {
+                item.setGraphic(item.getValue().getIconIsNotSelected());
+            }
+        };
+    }
 
-    private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
-
-
-    private static final double LAST_DIVIDER_POSITION = 0.3;
-
-    private static boolean isShow = false;
+    /**
+     * Check if the given `DirFileModel` represents a directory.
+     *
+     * @param childFile the `DirFileModel` to check
+     * @return `true` if the `childFile` represents a directory, `false` otherwise
+     */
+    private static boolean isDirectoryByDirFileModel(DirFileModel childFile) {
+        return new File(childFile.getPath()).isDirectory();
+    }
 
     /**
      * 控制文件树显示
@@ -84,22 +104,6 @@ public class DirectorySidebarManager {
     }
 
     /**
-     * 设置文件树项监听事件
-     *
-     * @param item 文件树项
-     * @return 监听事件
-     */
-    private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
-        return (observable, oldValue, newValue) -> {
-            if (Boolean.TRUE.equals(newValue)) {
-                item.setGraphic(item.getValue().getIconIsSelected());
-            } else {
-                item.setGraphic(item.getValue().getIconIsNotSelected());
-            }
-        };
-    }
-
-    /**
      * 设置文件树内容
      *
      * @param dirFileModel 文件
@@ -110,16 +114,6 @@ public class DirectorySidebarManager {
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
         rootItem.expandedProperty().addListener(getTreeItemListener(rootItem));
         expandFolder(dirFileModel, rootItem);
-    }
-
-    /**
-     * Check if the given `DirFileModel` represents a directory.
-     *
-     * @param childFile the `DirFileModel` to check
-     * @return `true` if the `childFile` represents a directory, `false` otherwise
-     */
-    private static boolean isDirectoryByDirFileModel(DirFileModel childFile) {
-        return new File(childFile.getPath()).isDirectory();
     }
 
     /**

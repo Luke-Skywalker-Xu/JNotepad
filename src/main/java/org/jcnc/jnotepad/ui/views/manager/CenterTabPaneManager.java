@@ -1,5 +1,6 @@
 package org.jcnc.jnotepad.ui.views.manager;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
@@ -44,7 +45,10 @@ public class CenterTabPaneManager {
      * 初始化标签页布局组件
      */
     public void initCenterTabPane() {
-        initListeners();
+        Platform.runLater(() -> {
+            initListeners();
+            addTabsListener();
+        });
     }
 
 
@@ -79,7 +83,7 @@ public class CenterTabPaneManager {
         if (tab == null) {
             return;
         }
-        if (tab.isRelevance()) {
+        if (tab.getRelevanceProperty()) {
             // 获取当前文本域对象
             TextCodeArea textCodeArea = tab.getTextCodeArea();
             // 获取当前标签页对应文件上次修改时间
@@ -115,9 +119,8 @@ public class CenterTabPaneManager {
         }
         // 将标签页加入标签页列表
         centerTabPane.getTabs().add(tab);
-        // 设置索引
-        centerTabPane.getSelectionModel().select(tab);
-        // 将标签页设置为选中状态
+        // 异步刷新界面 将标签页设置为选中状态
+        Platform.runLater(() -> centerTabPane.getSelectionModel().select(tab));
         fireTabSelected();
     }
 
@@ -187,7 +190,7 @@ public class CenterTabPaneManager {
             if (centerTab.equals(currTab)) {
                 return false;
             }
-            return !centerTab.isFixed() && !centerTab.equals(currTab);
+            return centerTab.getNotFixedProperty() && !centerTab.equals(currTab);
         });
     }
 
@@ -204,7 +207,7 @@ public class CenterTabPaneManager {
             if (tab.equals(centerTab)) {
                 return;
             }
-            if (!tab.isFixed()) {
+            if (tab.getNotFixedProperty()) {
                 iterator.remove();
             }
         }
@@ -225,86 +228,10 @@ public class CenterTabPaneManager {
                 flag = true;
                 continue;
             }
-            if (flag && !tab.isFixed()) {
+            if (flag && tab.getNotFixedProperty()) {
                 iterator.remove();
             }
         }
-    }
-
-    /**
-     * 判断是否有其它标签页
-     *
-     * @return 是否有其它标签页
-     */
-    public boolean hasOtherTabs() {
-        return centerTabPane.getTabs().size() > 1;
-    }
-
-
-    /**
-     * 判断是否有左侧标签页
-     *
-     * @param centerTab 标签页
-     * @apiNote 由于不知道怎么监听固定状态，因此，还是使用简单的判断，如果能够监听固定状态时可以把代码修改为
-     * <blockquote><pre>
-     *  public boolean hasLeftTabs(CenterTab centerTab) {
-     *     ObservableList<Tab> tabs = centerTabPane.getTabs();
-     *     int edge = tabs.indexOf(centerTab);
-     *     if (edge == 0) {
-     *         return false;
-     *     }
-     *     for (int i = 0; i < edge; i++) {
-     *         CenterTab tab = (CenterTab) tabs.get(i);
-     *         if (!tab.isFixed()) {
-     *             return true;
-     *         }
-     *     }
-     *     return false;
-     * }
-     * <blockquote><pre>
-     * @return 是否有左侧标签页
-     */
-    public boolean hasLeftTabs(CenterTab centerTab) {
-        int index = centerTabPane.getTabs().indexOf(centerTab);
-        return index > 0;
-    }
-
-    /**
-     * 判断是否有右侧标签页
-     *
-     * @param centerTab 标签页
-     * @return 是否有右侧标签页
-     * @apiNote 由于不知道怎么监听固定状态，因此，还是使用简单的判断，如果能够监听固定状态时可以把代码修改为
-     * <blockquote><pre>
-     *  public boolean hasRightTabs(CenterTab centerTab) {
-     *         ObservableList<Tab> tabs = centerTabPane.getTabs();
-     *         for (int i = tabs.indexOf(centerTab)+1; i < tabs.size(); i++) {
-     *             CenterTab tab = (CenterTab) tabs.get(i);
-     *             if (!tab.isFixed()) {
-     *                 return true;
-     *             }
-     *         }
-     *         return false;
-     *     }
-     * </pre></blockquote>
-     */
-    public boolean hasRightTabs(CenterTab centerTab) {
-        ObservableList<Tab> tabs = centerTabPane.getTabs();
-        int index = tabs.indexOf(centerTab);
-        return index != tabs.size() - 1;
-    }
-
-    /**
-     * Sets a listener for the tabs in the center tab pane.
-     *
-     * @param tab the tab to set the listener for
-     */
-    public void setTabsListener(CenterTab tab) {
-        ObservableList<Tab> tabs = centerTabPane.getTabs();
-        tabs.addListener((ListChangeListener<Tab>) c -> {
-            tab.contextMenuMonitor();
-            BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, tabs);
-        });
     }
 
     /**
@@ -313,8 +240,8 @@ public class CenterTabPaneManager {
      * @param tab the center tab to update
      */
     public void updateTabPinnedState(CenterTab tab) {
-        tab.setFixed(!tab.isFixed());
-        tab.setClosable(!tab.isFixed());
+        tab.setFixedProperty(tab.getNotFixedProperty());
+        tab.setClosable(tab.getNotFixedProperty());
     }
 
     /**
@@ -325,7 +252,57 @@ public class CenterTabPaneManager {
     public void updateReadOnlyProperty(CenterTab tab) {
         TextCodeArea textCodeArea = tab.getTextCodeArea();
         textCodeArea.setEditable(!textCodeArea.isEditable());
-        tab.contextMenuMonitor();
         BottomStatusBoxManager.getInstance().updateReadOnlyProperty(tab, centerTabPane.getTabs());
+    }
+
+    /**
+     * Adds a listener to the tabs in the center tab pane.
+     */
+    private void addTabsListener() {
+        centerTabPane.getTabs().addListener((ListChangeListener<Tab>) change -> {
+            ObservableList<? extends Tab> list = change.getList();
+            list.forEach(tab -> {
+                CenterTab centerTab = (CenterTab) tab;
+                // 判断标签页
+                checkTabs(list, centerTab);
+            });
+        });
+    }
+
+    /**
+     * Checks the tabs in the given list and updates the properties of the centerTab accordingly.
+     *
+     * @param list      the list of tabs to check
+     * @param centerTab the centerTab to update
+     */
+    public void checkTabs(ObservableList<? extends Tab> list, CenterTab centerTab) {
+        int index = list.indexOf(centerTab);
+        boolean hasOther = false;
+        boolean hasLeft = false;
+        boolean hasRight = false;
+        int tabCount = list.size();
+
+        for (int i = 0; i < tabCount; i++) {
+            CenterTab temp = (CenterTab) list.get(i);
+
+            // 判断是否有其他标签页
+            if (!centerTab.equals(temp) && temp.getNotFixedProperty()) {
+                hasOther = true;
+            }
+
+            // 判断是否有左侧标签页
+            if (!centerTab.equals(temp) && i < index && temp.getNotFixedProperty()) {
+                hasLeft = true;
+            }
+
+            // 判断是否有右侧标签页
+            if (!centerTab.equals(temp) && i > index && temp.getNotFixedProperty()) {
+                hasRight = true;
+            }
+        }
+
+        centerTab.setHasOtherTabsProperty(hasOther);
+        centerTab.setHasLeftTabsProperty(hasLeft);
+        centerTab.setHasRightTabsProperty(hasRight);
     }
 }

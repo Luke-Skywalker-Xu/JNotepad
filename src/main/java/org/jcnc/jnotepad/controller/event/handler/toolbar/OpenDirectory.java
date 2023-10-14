@@ -25,10 +25,10 @@ import java.io.File;
  */
 public class OpenDirectory implements EventHandler<ActionEvent> {
 
+    public static final String GROUP = "directory";
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
     private static final DirectorySidebarManager DIRECTORY_SIDEBAR_MANAGER = DirectorySidebarManager.getInstance();
 
-    public static final String GROUP = "directory";
     @Override
     public void handle(ActionEvent actionEvent) {
         // 获取缓存

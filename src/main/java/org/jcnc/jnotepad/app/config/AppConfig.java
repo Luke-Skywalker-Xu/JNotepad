@@ -19,13 +19,8 @@ import static org.jcnc.jnotepad.app.common.constants.AppConstants.PROGRAM_FILE_D
  * </p>
  *
  * @author gewuyou
- *
  */
 public class AppConfig {
-    /**
-     * 程序根路径
-     */
-    private String rootPath;
     /**
      * 排除的文件夹
      */
@@ -36,6 +31,10 @@ public class AppConfig {
      */
     @JsonIgnore
     private final Set<File> ignoreFile;
+    /**
+     * 程序根路径
+     */
+    private String rootPath;
     /**
      * 上次的程序根路径
      */

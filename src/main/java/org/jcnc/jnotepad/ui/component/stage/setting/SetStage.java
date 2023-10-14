@@ -52,9 +52,8 @@ public class SetStage {
     public static final String SECURITY_SETTING_2 = "安全设置项2";
 
     private static SetStage instance;
-    private StackPane contentDisplay;
-
     private final ApplicationCacheManager cacheManager = ApplicationCacheManager.getInstance();
+    private StackPane contentDisplay;
 
     /**
      * 私有构造方法以实现单例模式。

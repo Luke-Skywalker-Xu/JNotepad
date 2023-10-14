@@ -52,8 +52,6 @@ public class TextCodeArea extends CodeArea {
             "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/"
                     // 用于可见段落处理（逐行）
                     + "|" + "/\\*\\V*" + "|" + "^\\h*\\*(\\V*|/)";
-
-
     /**
      * 使用正则表达式将关键字、括号、分号、字符串和注释的模式组合成一个复合模式
      */
@@ -110,22 +108,6 @@ public class TextCodeArea extends CodeArea {
         this.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/jcnc/app/css/java_code_styles.css")).toString());
     }
 
-
-    private StyleSpans<Collection<String>> computeHighlighting(String text) {
-        Matcher matcher = PATTERN.matcher(text);
-        int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder
-                = new StyleSpansBuilder<>();
-        while (matcher.find()) {
-            String styleClass = getStyleClass(matcher);
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
-            lastKwEnd = matcher.end();
-        }
-        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
-        return spansBuilder.create();
-    }
-
     private static String getStyleClass(Matcher matcher) {
         Map<String, String> patternToStyleClass = new HashMap<>(16);
         patternToStyleClass.put("keyword", matcher.group("KEYWORD"));
@@ -142,5 +124,20 @@ public class TextCodeArea extends CodeArea {
         }
         // 永不发生
         return null;
+    }
+
+    private StyleSpans<Collection<String>> computeHighlighting(String text) {
+        Matcher matcher = PATTERN.matcher(text);
+        int lastKwEnd = 0;
+        StyleSpansBuilder<Collection<String>> spansBuilder
+                = new StyleSpansBuilder<>();
+        while (matcher.find()) {
+            String styleClass = getStyleClass(matcher);
+            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            lastKwEnd = matcher.end();
+        }
+        spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
+        return spansBuilder.create();
     }
 }

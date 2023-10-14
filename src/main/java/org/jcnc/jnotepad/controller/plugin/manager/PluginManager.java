@@ -34,16 +34,15 @@ public class PluginManager {
      * 插件类别
      */
     private final Map<String, List<String>> categories = new HashMap<>();
+    Logger logger = LogUtil.getLogger(this.getClass());
     /**
      * 插件信息
      */
     private List<PluginDescriptor> pluginDescriptors = new ArrayList<>();
-
     /**
      * 插件信息临时集合
      */
     private List<PluginDescriptor> temporaryPluginDescriptors;
-    Logger logger = LogUtil.getLogger(this.getClass());
 
     private PluginManager() {
 
@@ -134,6 +133,7 @@ public class PluginManager {
 
     /**
      * 执行加载的插件
+     *
      * @deprecated 待删除
      */
     public void executePlugins() {

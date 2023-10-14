@@ -71,6 +71,14 @@ public class BottomStatusBoxManager {
         registerChildren(statusLabel);
         statusLabel.setText(getStatusBarFormattedText(0, 0, 1));
         registerChildren(BOTTOM_STATUS_BOX.getEncodingLabel());
+
+        Button readOnlyButton = BOTTOM_STATUS_BOX.getReadOnlyButton();
+        BottomStatusBoxButtonBuilder builder = new BottomStatusBoxButtonBuilder(readOnlyButton);
+        FontIcon icon = FontIcon.of(UNLOCK);
+        registerChildren(builder
+                .setFontIcon(icon)
+                .setEventHandler(e -> CenterTabPaneManager.getInstance().updateReadOnlyProperty(CenterTabPaneManager.getInstance().getSelected()))
+                .build());
     }
 
     /**
@@ -213,33 +221,16 @@ public class BottomStatusBoxManager {
      * @param tabs the list of tabs in the center tab pane
      */
     public void updateReadOnlyProperty(CenterTab tab, ObservableList<Tab> tabs) {
-        ObservableList<Node> children = BOTTOM_STATUS_BOX.getChildren();
         Button readOnlyButton = BOTTOM_STATUS_BOX.getReadOnlyButton();
-        BottomStatusBoxButtonBuilder builder = new BottomStatusBoxButtonBuilder(readOnlyButton);
+        readOnlyButton.setVisible(!tabs.isEmpty());
+        FontIcon icon;
         if (tab.getTextCodeArea().isEditable()) {
-            FontIcon icon = FontIcon.of(UNLOCK);
-            if (children.contains(readOnlyButton)) {
-                readOnlyButton.setGraphic(icon);
-            } else {
-                registerChildren(builder
-                        .setFontIcon(icon)
-                        .setEventHandler(e -> CenterTabPaneManager.getInstance().updateReadOnlyProperty(tab))
-                        .build());
-            }
-
+            icon = FontIcon.of(UNLOCK);
+            readOnlyButton.setGraphic(icon);
         } else {
-            FontIcon icon = FontIcon.of(LOCK);
-            if (children.contains(readOnlyButton)) {
-                readOnlyButton.setGraphic(icon);
-            } else {
-                registerChildren(builder
-                        .setFontIcon(icon)
-                        .setEventHandler(e -> CenterTabPaneManager.getInstance().updateReadOnlyProperty(tab))
-                        .build());
-            }
+            icon = FontIcon.of(LOCK);
+            readOnlyButton.setGraphic(icon);
         }
-        if (tabs.isEmpty()) {
-            children.remove(readOnlyButton);
-        }
+        tab.getReadOnly().setSelected(!tab.getTextCodeArea().isEditable());
     }
 }

@@ -12,10 +12,11 @@ import javafx.scene.control.MenuItem;
  * </p>
  *
  * @author gewuyou
- *
  */
 public class MenuBuilder extends AbstractMenuBuilder<MenuBuilder, Menu> {
+
     private final Menu menu;
+
 
     /**
      * 构造菜单建造者
@@ -37,6 +38,16 @@ public class MenuBuilder extends AbstractMenuBuilder<MenuBuilder, Menu> {
     }
 
     /**
+     * 获取菜单
+     *
+     * @return 菜单
+     */
+    @Override
+    protected Menu getMenu() {
+        return menu;
+    }
+
+    /**
      * 获取菜单的菜单项列表
      *
      * @return 菜单项列表
@@ -46,13 +57,4 @@ public class MenuBuilder extends AbstractMenuBuilder<MenuBuilder, Menu> {
         return menu.getItems();
     }
 
-    /**
-     * 构建菜单
-     *
-     * @return 构建的菜单对象
-     */
-    @Override
-    public Menu build() {
-        return menu;
-    }
 }

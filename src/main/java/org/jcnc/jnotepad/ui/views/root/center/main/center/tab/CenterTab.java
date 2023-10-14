@@ -1,7 +1,10 @@
 package org.jcnc.jnotepad.ui.views.root.center.main.center.tab;
 
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.ObservableList;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.jcnc.jnotepad.app.utils.FileUtil;
@@ -19,6 +22,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.READ_ONLY;
+
 /**
  * 封装标签页组件，增加属于标签页的属性，例如：自动换行开关。
  * 每个Tab关联一个TextCodeArea。
@@ -26,55 +31,81 @@ import java.nio.charset.Charset;
  * @author songdragon
  */
 public class CenterTab extends Tab {
-    Logger logger = LogUtil.getLogger(this.getClass());
     private final TextCodeArea textCodeArea;
-    /**
-     * 默认关闭自动换行
-     */
-    private boolean autoLine = false;
     /**
      * 是否与本地文件关联
      */
-    private boolean isRelevance = false;
-
+    private final BooleanProperty relevanceProperty = new SimpleBooleanProperty(false);
     /**
      * 是否固定
      */
-    private final BooleanProperty isFixed = new SimpleBooleanProperty(false);
+    private final BooleanProperty fixedProperty = new SimpleBooleanProperty(false);
+    /**
+     * 只读菜单项
+     */
+    private final CheckMenuItem readOnly = new CheckMenuItem(READ_ONLY);
+    private final BooleanProperty hasLeftTabsProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty hasRightTabsProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty hasOtherTabsProperty = new SimpleBooleanProperty(false);
+    Logger logger = LogUtil.getLogger(this.getClass());
+    /**
+     * 默认关闭自动换行
+     */
+    private boolean autoLine;
     /**
      * 关联文件上次修改时间
      */
     private Long lastModifiedTimeOfAssociatedFile;
-    private Charset charset = Charset.defaultCharset();
+    /**
+     * 编码
+     */
+    private Charset charset;
 
     public CenterTab(String tabTitle) {
         this(tabTitle, new TextCodeArea());
     }
 
     public CenterTab(String tabTitle, TextCodeArea textArea) {
-        this(tabTitle, textArea, Charset.defaultCharset());
+        this(tabTitle, textArea, Charset.defaultCharset(), null, false);
     }
 
-    public CenterTab(String tabTitle, TextCodeArea textArea, Charset charset) {
+    public CenterTab(String tabTitle, TextCodeArea textCodeArea, Charset charset, File file, boolean relevanceProperty) {
         super(tabTitle);
         // 在此根据标签页名称设置文件图标
         this.setGraphic(FileUtil.getIconCorrespondingToFileName(tabTitle));
-        textCodeArea = textArea;
-        initTextAreaListeners();
-        this.setContent(new VirtualizedScrollPane<>(textCodeArea));
-        setAutoLine(UserConfigController.getInstance().getAutoLineConfig());
+        this.textCodeArea = textCodeArea;
+        this.setContent(new VirtualizedScrollPane<>(this.textCodeArea));
+        this.autoLine = UserConfigController.getInstance().getAutoLineConfig();
         this.charset = charset;
-        // 绑定标签页监听
-        CenterTabPaneManager.getInstance().setTabsListener(this);
-        isFixed.addListener((observable, oldValue, newValue) -> this.contextMenuMonitor());
+        this.relevanceProperty.set(relevanceProperty);
+        this.setUserData(file);
+        // 将监听器于上下文菜单集中处理
+        Platform.runLater(() -> {
+            initTextAreaListeners();
+            this.contextMenuMonitor();
+            initFixedStateListener();
+        });
     }
 
-    public boolean isRelevance() {
-        return isRelevance;
+    private void initFixedStateListener() {
+        fixedProperty.addListener((observable, oldValue, newValue) -> {
+            ObservableList<Tab> tabs = CenterTabPane.getInstance().getTabs();
+            tabs.forEach(tab -> CenterTabPaneManager.getInstance().checkTabs(tabs, (CenterTab) tab));
+        });
     }
 
-    public void setRelevance(boolean relevance) {
-        isRelevance = relevance;
+
+    public boolean getRelevanceProperty() {
+        return relevanceProperty.get();
+    }
+
+    public void setRelevanceProperty(boolean relevanceProperty) {
+        this.relevanceProperty.set(relevanceProperty);
+    }
+
+
+    public BooleanProperty relevancePropertyProperty() {
+        return relevanceProperty;
     }
 
     public boolean isAutoLine() {
@@ -102,7 +133,7 @@ public class CenterTab extends Tab {
      * Monitors the context menu.
      */
     public void contextMenuMonitor() {
-        TabUtil.updateTabContextMenu(this);
+        TabUtil.initTabContextMenu(this);
     }
 
 
@@ -144,7 +175,7 @@ public class CenterTab extends Tab {
     }
 
     /**
-     * 初始化监听器方法
+     * 初始化文本监听器方法
      */
     private void initTextAreaListeners() {
         // 监听主要文本区域的文本变化
@@ -175,11 +206,42 @@ public class CenterTab extends Tab {
         this.lastModifiedTimeOfAssociatedFile = lastModifiedTimeOfAssociatedFile;
     }
 
-    public boolean isFixed() {
-        return isFixed.get();
+    public boolean getNotFixedProperty() {
+        return !fixedProperty.get();
     }
 
-    public void setFixed(boolean fixed) {
-        isFixed.set(fixed);
+    public void setFixedProperty(boolean fixedProperty) {
+        this.fixedProperty.set(fixedProperty);
+    }
+
+
+    public BooleanProperty hasLeftTabsPropertyProperty() {
+        return hasLeftTabsProperty;
+    }
+
+
+    public BooleanProperty hasRightTabsPropertyProperty() {
+        return hasRightTabsProperty;
+    }
+
+
+    public BooleanProperty hasOtherTabsPropertyProperty() {
+        return hasOtherTabsProperty;
+    }
+
+    public CheckMenuItem getReadOnly() {
+        return readOnly;
+    }
+
+    public void setHasLeftTabsProperty(boolean hasLeftTabsProperty) {
+        this.hasLeftTabsProperty.set(hasLeftTabsProperty);
+    }
+
+    public void setHasRightTabsProperty(boolean hasRightTabsProperty) {
+        this.hasRightTabsProperty.set(hasRightTabsProperty);
+    }
+
+    public void setHasOtherTabsProperty(boolean hasOtherTabsProperty) {
+        this.hasOtherTabsProperty.set(hasOtherTabsProperty);
     }
 }

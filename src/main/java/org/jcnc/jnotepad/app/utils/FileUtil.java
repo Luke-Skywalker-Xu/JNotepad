@@ -316,5 +316,9 @@ public class FileUtil {
         }
         return orDefault;
     }
+
+    public static void openTerminal(File file) {
+        //todo @luke 请你在此设置打开文件所在文件夹路径于终端
+    }
 }
 

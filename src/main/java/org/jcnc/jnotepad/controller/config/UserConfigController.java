@@ -34,11 +34,9 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
     private static final String CTRL_ALT_S = "ctrl+alt+s";
     private static final String ALT_S = "alt+s";
     private static final UserConfigController INSTANCE = new UserConfigController();
-    private String configDir;
-
     private final List<Map<String, MenuItem>> menuItems = new ArrayList<>();
-
     Logger logger = LogUtil.getLogger(this.getClass());
+    private String configDir;
 
     private UserConfigController() {
         configDir = Paths.get(AppConfigController.getInstance().getConfig().getRootPath(), PROGRAM_FILE_DIRECTORY, ROOT_CONFIG_DIR).toString();
