@@ -35,7 +35,7 @@ public class ClipboardUtil {
      */
     public static String readTextFromClipboard() {
         String text = CLIPBOARD.getString();
-        LogUtil.getLogger(ClipboardUtil.class).info("剪切板内容:{}", text);
+        LoggerUtil.getLogger(ClipboardUtil.class).info("剪切板内容:{}", text);
         return text;
     }
 

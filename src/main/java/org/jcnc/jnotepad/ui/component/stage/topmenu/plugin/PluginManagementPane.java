@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.plugin.manager.PluginManager;
@@ -65,7 +65,7 @@ public class PluginManagementPane extends AbstractPaneStage {
     /**
      * 日志记录器
      */
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     /**
      * 自定义分割面板
      */

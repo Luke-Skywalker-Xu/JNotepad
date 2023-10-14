@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.controller.event.handler.menuitem;
 
 import javafx.event.ActionEvent;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
 
 import static org.jcnc.jnotepad.app.utils.TabUtil.saveAsFile;
@@ -24,7 +24,7 @@ public class SaveAsFile extends SaveFile {
      */
     @Override
     public void handle(ActionEvent event) {
-        LogUtil.getLogger(SaveAsFile.class).info("已调用另存为功能");
+        LoggerUtil.getLogger(SaveAsFile.class).info("已调用另存为功能");
         saveAsFile(CenterTabPaneManager.getInstance().getSelected());
     }
 }

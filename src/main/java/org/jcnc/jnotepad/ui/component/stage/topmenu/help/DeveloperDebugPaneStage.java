@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.ui.component.stage.topmenu.builder.StageButtonBuilder;
@@ -23,7 +23,7 @@ import org.slf4j.Logger;
  */
 public class DeveloperDebugPaneStage extends AbstractPaneStage {
     private static final String DEBUG_STR = "开发者调试: {}启动!";
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
 
     /**
      * 获取舞台图标

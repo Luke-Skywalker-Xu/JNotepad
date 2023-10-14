@@ -39,7 +39,7 @@ import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NA
  */
 public class TabUtil {
     private static final ApplicationCacheManager CACHE_MANAGER = ApplicationCacheManager.getInstance();
-    private static final Logger logger = LogUtil.getLogger(TabUtil.class);
+    private static final Logger logger = LoggerUtil.getLogger(TabUtil.class);
 
     private TabUtil() {
     }
@@ -75,7 +75,7 @@ public class TabUtil {
      * 另存为
      *
      * @apiNote 将当前选中的标签页进行另存为弹出窗口式的保存。
-     * @see LogUtil
+     * @see LoggerUtil
      */
     public static void saveAsFile(CenterTab tab) {
         if (tab == null) {
@@ -321,7 +321,7 @@ public class TabUtil {
         // 检测文件编码
         Charset encoding = EncodingDetector.detectEncodingCharset(file);
         String fileText = getFileText(file, encoding);
-        LogUtil.getLogger(OpenFile.class).info("已调用读取文件功能");
+        LoggerUtil.getLogger(OpenFile.class).info("已调用读取文件功能");
         textCodeArea.appendText(fileText);
         // 设置当前标签页关联本地文件 设置标签页关联文件
         CenterTab tab = new CenterTab(file.getName(), textCodeArea, encoding, file, true);
@@ -388,9 +388,7 @@ public class TabUtil {
                         .addSeparatorMenuItem(tab.relevancePropertyProperty())
                         .addMenu(new MenuBuilder(OPEN_ON)
                                 .addMenuItem(EXPLORER, e -> FileUtil.openExplorer(file))
-                                .addMenuItem(TERMINAL, e -> {
-                                    //todo @luke 请你在此设置打开文件所在文件夹路径于终端
-                                })
+                                .addMenuItem(TERMINAL, e -> FileUtil.openTerminal(file.getParentFile()))
                                 .build(), tab.relevancePropertyProperty())
                         .addSeparatorMenuItem()
                         .addCheckMenuItem(FIXED_TAB,

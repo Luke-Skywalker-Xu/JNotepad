@@ -21,7 +21,7 @@ public class EncodingDetector {
      * 编码侦测概率阈值，50%
      */
     public static final int THRESHOLD_CONFIDENCE = 50;
-    private static final Logger LOG = LogUtil.getLogger(EncodingDetector.class);
+    private static final Logger LOG = LoggerUtil.getLogger(EncodingDetector.class);
 
     private EncodingDetector() {
     }

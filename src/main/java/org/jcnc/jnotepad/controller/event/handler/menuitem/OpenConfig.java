@@ -1,7 +1,7 @@
 package org.jcnc.jnotepad.controller.event.handler.menuitem;
 
 import javafx.event.ActionEvent;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 
 import java.io.File;
@@ -26,7 +26,7 @@ public class OpenConfig extends OpenFile {
     public void handle(ActionEvent actionEvent) {
         // 显示文件选择对话框，并获取配置文件
         File file = UserConfigController.getInstance().getConfigPath().toFile();
-        LogUtil.getLogger(this.getClass()).info("已调用打开配置文件功能, {}", file);
+        LoggerUtil.getLogger(this.getClass()).info("已调用打开配置文件功能, {}", file);
         // 创建打开文件的任务并启动线程执行任务
         openFileToTab(file);
     }

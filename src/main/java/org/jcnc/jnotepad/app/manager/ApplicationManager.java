@@ -14,7 +14,7 @@ import org.jcnc.jnotepad.app.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.app.config.AppConfig;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
 import org.jcnc.jnotepad.app.utils.FileUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.ResourceController;
 import org.jcnc.jnotepad.controller.cache.CacheController;
@@ -287,7 +287,7 @@ public class ApplicationManager {
             // 关闭当前应用程序
             stop();
         } catch (IOException e) {
-            LogUtil.getLogger("正在重启当前应用程序".getClass());
+            LoggerUtil.getLogger("正在重启当前应用程序".getClass());
         }
     }
 

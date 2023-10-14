@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.plugin;
 
 import org.jcnc.jnotepad.app.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.app.utils.JsonUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.controller.plugin.interfaces.Plugin;
@@ -32,7 +32,7 @@ public class PluginLoader {
     private static final PluginLoader INSTANCE = new PluginLoader();
 
     private static final ExecutorService THREAD_POOL = ThreadPoolManager.getThreadPool();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
 
     /**
      * 从插件jar包中读取 json 文件到 PluginDescriptor 类

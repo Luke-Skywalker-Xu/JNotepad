@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.controller.plugin.manager;
 
 import org.jcnc.jnotepad.app.common.manager.ThreadPoolManager;
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.controller.config.PluginConfigController;
 import org.jcnc.jnotepad.model.entity.PluginDescriptor;
@@ -34,7 +34,7 @@ public class PluginManager {
      * 插件类别
      */
     private final Map<String, List<String>> categories = new HashMap<>();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     /**
      * 插件信息
      */

@@ -8,7 +8,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.jcnc.jnotepad.app.utils.FileUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.TabUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.component.module.TextCodeArea;
@@ -47,7 +47,7 @@ public class CenterTab extends Tab {
     private final BooleanProperty hasLeftTabsProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty hasRightTabsProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty hasOtherTabsProperty = new SimpleBooleanProperty(false);
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     /**
      * 默认关闭自动换行
      */
@@ -165,10 +165,10 @@ public class CenterTab extends Tab {
             // 将新的文本内容写入文件
             writer.write(newValue);
             // 记录保存操作的日志信息
-            LogUtil.getLogger(this.getClass()).info("正在自动保存---");
+            LoggerUtil.getLogger(this.getClass()).info("正在自动保存---");
         } catch (IOException ignored) {
             // 如果发生IO异常，记录忽视的日志信息，但不中断程序执行
-            LogUtil.getLogger(this.getClass()).info("已忽视IO异常!");
+            LoggerUtil.getLogger(this.getClass()).info("已忽视IO异常!");
         }
         // 更新最后修改时间
         tab.setLastModifiedTimeOfAssociatedFile(file.lastModified());

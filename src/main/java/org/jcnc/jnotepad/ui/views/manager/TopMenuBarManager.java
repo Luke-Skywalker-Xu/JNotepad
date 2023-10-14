@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import org.jcnc.jnotepad.api.core.views.manager.AbstractManager;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.views.root.top.menubar.TopMenuBar;
 import org.jcnc.jnotepad.ui.views.root.top.menubar.menu.*;
@@ -22,7 +22,7 @@ public class TopMenuBarManager extends AbstractManager<Menu> {
     private static final TopMenuBarManager INSTANCE = new TopMenuBarManager();
     private final TopMenuBar topMenuBar = TopMenuBar.getInstance();
     private final List<Menu> nodeList = new ArrayList<>();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     UserConfigController userConfigController = UserConfigController.getInstance();
 
 

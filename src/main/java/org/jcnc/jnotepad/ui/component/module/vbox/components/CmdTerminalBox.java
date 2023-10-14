@@ -10,7 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.fxmisc.richtext.StyleClassedTextArea;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -78,7 +78,7 @@ public class CmdTerminalBox extends VBox {
                     .start();
             cmdInputWriter = new PrintWriter(new OutputStreamWriter(cmdProcess.getOutputStream(), Charset.forName("GBK")));
         } catch (IOException e) {
-            LogUtil.getLogger(this.getClass()).info("已调用, {}", cmdProcess);
+            LoggerUtil.getLogger(this.getClass()).info("已调用, {}", cmdProcess);
         }
 
         // 延迟执行打印当前文件夹路径的语句
@@ -114,7 +114,7 @@ public class CmdTerminalBox extends VBox {
                         Platform.runLater(() -> appendTextToCmdOutput(outputLine));
                     }
                 } catch (IOException e) {
-                    LogUtil.getLogger(this.getClass()).info("已调用, {}", this);
+                    LoggerUtil.getLogger(this.getClass()).info("已调用, {}", this);
                 }
                 return null;
             }

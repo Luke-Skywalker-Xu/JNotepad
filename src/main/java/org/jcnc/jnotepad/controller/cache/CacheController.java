@@ -3,7 +3,7 @@ package org.jcnc.jnotepad.controller.cache;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.jcnc.jnotepad.app.common.manager.ApplicationCacheManager;
 import org.jcnc.jnotepad.app.utils.JsonUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.controller.config.AppConfigController;
 import org.jcnc.jnotepad.model.entity.Cache;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ public class CacheController {
 
     private static final ApplicationCacheManager APPLICATION_CACHE_MANAGER = ApplicationCacheManager.getInstance();
     private static final CacheController INSTANCE = new CacheController();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     private String cacheDir;
 
     private CacheController() {

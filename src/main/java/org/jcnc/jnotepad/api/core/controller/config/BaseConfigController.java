@@ -2,7 +2,7 @@ package org.jcnc.jnotepad.api.core.controller.config;
 
 import org.jcnc.jnotepad.api.core.controller.interfaces.ConfigController;
 import org.jcnc.jnotepad.app.utils.JsonUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public abstract class BaseConfigController<T> implements ConfigController<T> {
     protected static final String ROOT_CONFIG_DIR = "config";
 
     protected static final String SYSTEM_CONFIG_DIR = "system";
-    private final Logger logger = LogUtil.getLogger(getClass());
+    private final Logger logger = LoggerUtil.getLogger(getClass());
     protected T config;
 
     /**
