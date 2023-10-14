@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.jcnc.jnotepad.api.core.views.menu.AbstractBaseMenu;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.ui.component.module.vbox.BuildPanel;
 import org.jcnc.jnotepad.ui.views.manager.BuildPanelManager;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
@@ -41,7 +41,7 @@ public class RunTopMenu extends AbstractBaseMenu {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             writer.write(code);
         } catch (IOException ex) {
-            LogUtil.getLogger(this.getClass()).info("正在写入：{}", code);
+            LoggerUtil.getLogger(this.getClass()).info("正在写入：{}", code);
         }
 
         // 编译C代码
@@ -125,7 +125,7 @@ public class RunTopMenu extends AbstractBaseMenu {
                 System.out.println("编译失败，返回代码：" + compileExitCode);
             }
         } catch (IOException | InterruptedException e) {
-            LogUtil.getLogger(this.getClass()).info("编译失败：{}", fileName);
+            LoggerUtil.getLogger(this.getClass()).info("编译失败：{}", fileName);
         }
     }
 

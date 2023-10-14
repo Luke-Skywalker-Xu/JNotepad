@@ -6,6 +6,7 @@ import org.jcnc.jnotepad.controller.event.handler.menuitem.OpenFile;
 import org.jcnc.jnotepad.controller.exception.AppException;
 import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.kordamp.ikonli.javafx.FontIcon;
+import org.slf4j.Logger;
 
 import java.awt.*;
 import java.io.*;
@@ -30,6 +31,11 @@ import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.*;
 public class FileUtil {
     private static final MessageDigest MESSAGE_DIGEST_SHA_256;
     private static final int BUFFER_SIZE = 8192;
+    private static final Logger logger = LoggerUtil.getLogger(FileUtil.class);
+
+    private static final String WINDOWS = "win";
+
+    private static final String MAC = "mac";
 
     static {
         try {
@@ -133,7 +139,7 @@ public class FileUtil {
                 stringBuilder.append(line);
             }
         } catch (IOException ignored) {
-            LogUtil.getLogger(OpenFile.class).info("已忽视IO异常!");
+            LoggerUtil.getLogger(OpenFile.class).info("已忽视IO异常!");
         }
         return stringBuilder.toString();
     }
@@ -162,7 +168,7 @@ public class FileUtil {
                     DirFileModel childDirFileModel = getDirFileModel(f);
                     dirFileModel.getChildFile().add(childDirFileModel);
                 } else {
-                    // todo 在此监测文件后缀，设置对应的图标
+                    // 在此监测文件后缀，设置对应的图标
                     dirFileModel.getChildFile().add(new DirFileModel(
                             f.getAbsolutePath(), f.getName(), null,
                             getIconCorrespondingToFileName(f.getName()),
@@ -305,7 +311,7 @@ public class FileUtil {
      * @return the corresponding icon for the file extension
      */
     public static Node getIconCorrespondingToFileName(String fileName) {
-        // todo 在此根据文件缀名获取对应的图标
+        // 在此根据文件缀名获取对应的图标
         String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1);
         Node orDefault = UiUtil.getIconMap().getOrDefault(fileExtension, FontIcon.of(FILE_UNKNOWN));
         if (orDefault instanceof FontIcon fontIcon) {
@@ -317,8 +323,46 @@ public class FileUtil {
         return orDefault;
     }
 
-    public static void openTerminal(File file) {
-        //todo @luke 请你在此设置打开文件所在文件夹路径于终端
+    /**
+     * Opens a terminal in the specified folder.
+     *
+     * @param folder the folder in which to open the terminal
+     */
+    public static void openTerminal(File folder) {
+        if (folder.exists() && folder.isDirectory()) {
+            String os = System.getProperty("os.name").toLowerCase();
+
+            ProcessBuilder processBuilder = getProcessBuilder(folder, os);
+            try {
+                processBuilder.start();
+            } catch (IOException e) {
+                PopUpUtil.errorAlert("打开失败", "打开于终端失败", "错误原因" + e.getMessage(), null, null);
+            }
+        } else {
+            logger.info("文件夹不存在或者不是文件夹");
+        }
+    }
+
+    /**
+     * Returns a ProcessBuilder object based on the provided folder and operating system.
+     *
+     * @param folder the folder to set as the working directory for the ProcessBuilder object
+     * @param os     the operating system to determine the appropriate command for the ProcessBuilder object
+     * @return a ProcessBuilder object with the correct command for the specified operating system
+     */
+    private static ProcessBuilder getProcessBuilder(File folder, String os) {
+        ProcessBuilder processBuilder;
+        if (os.contains(WINDOWS)) {
+            // Windows系统
+            processBuilder = new ProcessBuilder("cmd.exe", "/c", "start", "cmd.exe", "/k", "cd", folder.getAbsolutePath());
+        } else if (os.contains(MAC)) {
+            // macOS系统
+            processBuilder = new ProcessBuilder("open", "-a", "Terminal", folder.getAbsolutePath());
+        } else {
+            // Linux或其他系统
+            processBuilder = new ProcessBuilder("gnome-terminal", "--working-directory=", folder.getAbsolutePath());
+        }
+        return processBuilder;
     }
 }
 

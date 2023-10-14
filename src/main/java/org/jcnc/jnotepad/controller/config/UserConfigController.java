@@ -4,7 +4,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 import org.jcnc.jnotepad.api.core.controller.config.BaseConfigController;
 import org.jcnc.jnotepad.app.config.UserConfig;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.model.entity.ShortcutKey;
 import org.slf4j.Logger;
 
@@ -35,7 +35,7 @@ public class UserConfigController extends BaseConfigController<UserConfig> {
     private static final String ALT_S = "alt+s";
     private static final UserConfigController INSTANCE = new UserConfigController();
     private final List<Map<String, MenuItem>> menuItems = new ArrayList<>();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
     private String configDir;
 
     private UserConfigController() {

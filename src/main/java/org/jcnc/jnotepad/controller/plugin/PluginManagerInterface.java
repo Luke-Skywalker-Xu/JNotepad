@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.PopUpUtil;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 import org.jcnc.jnotepad.controller.plugin.manager.PluginManager;
@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class PluginManagerInterface {
     private static final PluginManagerInterface INSTANCE = new PluginManagerInterface();
-    Logger logger = LogUtil.getLogger(this.getClass());
+    Logger logger = LoggerUtil.getLogger(this.getClass());
 
     public static PluginManagerInterface getInstance() {
         return INSTANCE;

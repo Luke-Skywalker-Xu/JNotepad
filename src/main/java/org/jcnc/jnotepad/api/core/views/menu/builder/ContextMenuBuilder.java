@@ -1,9 +1,7 @@
 package org.jcnc.jnotepad.api.core.views.menu.builder;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
 /**
@@ -51,20 +49,5 @@ public class ContextMenuBuilder extends AbstractMenuBuilder<ContextMenuBuilder, 
     @Override
     protected ObservableList<MenuItem> getItems() {
         return contextMenu.getItems();
-    }
-
-    /**
-     * 添加菜单
-     *
-     * @param menu    菜单
-     * @param visible 是否隐藏
-     * @return 建造者
-     */
-    @Override
-    public ContextMenuBuilder addMenu(Menu menu, BooleanProperty visible) {
-        menu.setVisible(visible.get());
-        visible.addListener((observable, oldValue, newValue) -> menu.setVisible(Boolean.TRUE.equals(newValue)));
-        getItems().add(menu);
-        return getBuilder();
     }
 }

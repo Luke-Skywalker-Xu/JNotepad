@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author gewuyou
  */
-public class LogUtil {
-    private LogUtil() {
+public class LoggerUtil {
+    private LoggerUtil() {
     }
 
     /**

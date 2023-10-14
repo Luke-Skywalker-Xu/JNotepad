@@ -1,6 +1,6 @@
 package org.jcnc.jnotepad.app.common.manager;
 
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.slf4j.Logger;
 
 import java.util.concurrent.*;
@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author gewuyou
  */
 public class ThreadPoolManager {
-    private static final Logger logger = LogUtil.getLogger(ThreadPoolManager.class);
+    private static final Logger logger = LoggerUtil.getLogger(ThreadPoolManager.class);
     /**
      * 核心线程数
      */

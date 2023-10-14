@@ -3,7 +3,7 @@ package org.jcnc.jnotepad;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.app.manager.ApplicationManager;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 
 
 /**
@@ -29,7 +29,7 @@ public class JnotepadApp extends Application {
     public void init() {
         // 获取当前启动位置a
         String currentWorkingDirectory = System.getProperty("user.dir");
-        LogUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
+        LoggerUtil.getLogger(this.getClass()).info("当前启动位置：{}", currentWorkingDirectory);
         // 设置参数
         APPLICATION_MANAGER.setApplication(this);
     }

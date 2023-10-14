@@ -17,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.jcnc.jnotepad.api.core.component.stage.AbstractPaneStage;
 import org.jcnc.jnotepad.app.utils.ClipboardUtil;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.app.utils.NotificationUtil;
 import org.jcnc.jnotepad.app.utils.UiUtil;
 
@@ -130,7 +130,7 @@ public class HelpPaneStage extends AbstractPaneStage {
             NotificationUtil.infoNotification("软件信息已经复制到剪贴板!");
             String info = "软件名字:" + APP_NAME + "\t" + "版本:" + VERSION;
             ClipboardUtil.writeTextToClipboard(info);
-            LogUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:{}", info);
+            LoggerUtil.getLogger(this.getClass()).info("软件信息已经复制到剪贴板:{}", info);
 
             // 关闭当前的 Stage
             Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -191,10 +191,10 @@ public class HelpPaneStage extends AbstractPaneStage {
      */
     private void openWebsite(String url) {
         try {
-            LogUtil.getLogger(this.getClass()).info("正在打开---{}", url);
+            LoggerUtil.getLogger(this.getClass()).info("正在打开---{}", url);
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
         } catch (java.io.IOException e) {
-            LogUtil.getLogger(this.getClass()).info("打开失败---{}", url);
+            LoggerUtil.getLogger(this.getClass()).info("打开失败---{}", url);
         }
     }
 }

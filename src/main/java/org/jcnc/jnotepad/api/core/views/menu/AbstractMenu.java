@@ -8,7 +8,7 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import org.jcnc.jnotepad.app.i18n.UiResourceBundle;
-import org.jcnc.jnotepad.app.utils.LogUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.slf4j.Logger;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author gewuyou
  */
 public abstract class AbstractMenu<T> {
-    protected Logger logger = LogUtil.getLogger(this.getClass());
+    protected Logger logger = LoggerUtil.getLogger(this.getClass());
     UserConfigController userConfigController = UserConfigController.getInstance();
 
     /**
