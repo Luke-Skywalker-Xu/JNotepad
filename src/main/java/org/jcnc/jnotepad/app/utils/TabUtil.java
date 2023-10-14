@@ -250,6 +250,7 @@ public class TabUtil {
         // 设定初始索引
         int index = 1;
         StringBuilder tabTitle = new StringBuilder();
+        String content = UiResourceBundle.getContent(NEW_FILE);
         // 获取当前默认创建标签页集合
         List<Tab> tabs = CenterTabPane.getInstance()
                 .getTabs()
@@ -257,15 +258,21 @@ public class TabUtil {
                 // 排除不属于默认创建的标签页
                 .filter(tab -> AppConstants.TABNAME_PATTERN.matcher(tab.getText()).matches())
                 // 对默认创建的标签页进行排序
-                .sorted(Comparator.comparing(Tab::getText))
+                .sorted(Comparator.comparing(tab -> {
+                    String tabText = tab.getText();
+                    // 提取数字部分
+                    String numberPart = tabText.substring(content.length());
+                    // 解析为数字
+                    return Integer.parseInt(numberPart);
+                }))
                 // 转为List集合
                 .toList();
         // 构建初始标签页名称
-        tabTitle.append(UiResourceBundle.getContent(TextConstants.NEW_FILE)).append(index);
+        tabTitle.append(content).append(index);
         for (Tab tab : tabs) {
             if (tab.getText().contentEquals(tabTitle)) {
                 tabTitle.setLength(0);
-                tabTitle.append(UiResourceBundle.getContent(TextConstants.NEW_FILE)).append(++index);
+                tabTitle.append(content).append(++index);
             } else {
                 break;
             }
