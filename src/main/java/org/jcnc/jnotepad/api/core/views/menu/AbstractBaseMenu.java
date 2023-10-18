@@ -41,7 +41,6 @@ public abstract class AbstractBaseMenu extends AbstractMenu<Menu> {
     @Override
     public void initMenu() {
         registerMenu();
-        logger.info("初始化菜单!");
         Menu menu = getMenu();
         // 菜单名称国际化
         UiResourceBundle.bindStringProperty(menu.textProperty(), getMenuName());

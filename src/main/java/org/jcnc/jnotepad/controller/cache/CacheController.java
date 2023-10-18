@@ -54,6 +54,18 @@ public class CacheController {
             return;
         }
         Map<String, Cache> caches = new HashMap<>(16);
+        setCaches(namespaces, cacheFileDir, caches);
+
+    }
+
+    /**
+     * Sets the caches for the given namespaces.
+     *
+     * @param namespaces   an array of namespace names
+     * @param cacheFileDir the directory where the cache files are stored
+     * @param caches       a map of caches to be set
+     */
+    private void setCaches(String[] namespaces, File cacheFileDir, Map<String, Cache> caches) {
         for (String namespace : namespaces) {
             // 获取命名空间对应的文件夹
             File namespaceDir = new File(cacheFileDir, namespace);
@@ -80,12 +92,16 @@ public class CacheController {
                     cacheMap.forEach((k, v) -> setUpCache(namespace, groupName, k, v, caches));
                 } catch (IOException e) {
                     logger.error("读取缓存文件出错!", e);
+                    try {
+                        Files.delete(cacheFileDir.toPath());
+                    } catch (IOException ignore) {
+                        logger.error("删除失败");
+                    }
                 }
             }
             // 设置缓存
             APPLICATION_CACHE_MANAGER.setCaches(caches);
         }
-
     }
 
     /**

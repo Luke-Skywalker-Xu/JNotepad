@@ -11,7 +11,7 @@ import org.jcnc.jnotepad.model.entity.DirFileModel;
 import org.jcnc.jnotepad.ui.views.root.center.main.MainBorderPane;
 import org.jcnc.jnotepad.ui.views.root.center.main.center.directory.DirectorySidebarPane;
 
-import java.io.File;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ public class DirectorySidebarManager {
     private static final MainBorderPane MAIN_BORDER_PANE = MainBorderPane.getInstance();
     private static final DirectorySidebarPane DIRECTORY_SIDEBAR_PANE = DirectorySidebarPane.getInstance();
     private static final double LAST_DIVIDER_POSITION = 0.3;
-    private static boolean isShow = false;
+    private boolean isShow = false;
 
 
     private DirectorySidebarManager() {
@@ -49,6 +49,8 @@ public class DirectorySidebarManager {
      */
     private static ChangeListener<Boolean> getTreeItemListener(TreeItem<DirFileModel> item) {
         return (observable, oldValue, newValue) -> {
+            // 记录打开状态
+            item.getValue().setOpen(newValue);
             if (Boolean.TRUE.equals(newValue)) {
                 item.setGraphic(item.getValue().getIconIsSelected());
             } else {
@@ -57,15 +59,6 @@ public class DirectorySidebarManager {
         };
     }
 
-    /**
-     * Check if the given `DirFileModel` represents a directory.
-     *
-     * @param childFile the `DirFileModel` to check
-     * @return `true` if the `childFile` represents a directory, `false` otherwise
-     */
-    private static boolean isDirectoryByDirFileModel(DirFileModel childFile) {
-        return new File(childFile.getPath()).isDirectory();
-    }
 
     /**
      * 控制文件树显示
@@ -113,6 +106,7 @@ public class DirectorySidebarManager {
 
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
         rootItem.expandedProperty().addListener(getTreeItemListener(rootItem));
+        rootItem.setExpanded(dirFileModel.isOpen());
         expandFolder(dirFileModel, rootItem);
     }
 
@@ -127,14 +121,14 @@ public class DirectorySidebarManager {
         if (childFileList != null) {
             for (DirFileModel childFile : childFileList) {
                 TreeItem<DirFileModel> childItem = new TreeItem<>(childFile, childFile.getIconIsNotSelected());
-                // 只有文件夹树才添加监听事件
-                if (isDirectoryByDirFileModel(childFile)) {
+                // 只有文件夹树才添加监听事件与展开
+                if (DirFileModel.isDirectoryByDirFileModel(childFile)) {
+                    childItem.setExpanded(childFile.isOpen());
                     childItem.expandedProperty().addListener(getTreeItemListener(childItem));
                 }
                 item.getChildren().add(childItem);
                 expandFolder(childFile, childItem);
             }
-
         }
     }
 
@@ -145,7 +139,7 @@ public class DirectorySidebarManager {
      */
     public void expandTheOpenFileTree() {
         // 获取缓存
-        Object cacheData = CACHE_MANAGER.getCacheData(OpenDirectory.GROUP, "folderThatWasOpened");
+        LinkedHashMap<String, Object> cacheData = (LinkedHashMap<String, Object>) CACHE_MANAGER.getCacheData(OpenDirectory.GROUP, "folderThatWasOpened");
         // 判空
         if (cacheData == null) {
             return;
@@ -153,8 +147,6 @@ public class DirectorySidebarManager {
         // 打开侧边栏
         controlShow(true);
         // 设置文件树功能
-        setTreeView(FileUtil.getDirFileModel(new File((String) cacheData)));
+        setTreeView(FileUtil.getDirFileModel(cacheData));
     }
-
-
 }
