@@ -46,7 +46,6 @@ public class Controller implements ControllerAble<List<String>> {
         List<String> fileTab = (List<String>) cacheData.orElse(Collections.emptyList());
         // 打开上次打开的标签页
         fileTab.forEach(filePath -> openFileToTab(new File(filePath)));
-
         if (!rawParameters.isEmpty()) {
             String filePath = rawParameters.get(0);
             openAssociatedFile(filePath);

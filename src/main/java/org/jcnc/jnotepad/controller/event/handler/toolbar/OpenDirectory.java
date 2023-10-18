@@ -57,11 +57,11 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
     public void flushDirSidebar(File file) {
         // 将文件转为实体类
         DirFileModel dirFileModel = FileUtil.getDirFileModel(file);
-        // 缓存已打开的文件夹
-        CACHE_MANAGER.addCache(CACHE_MANAGER.createCache(GROUP, "folderThatWasOpened", file.getAbsolutePath(), CacheExpirationTime.NEVER_EXPIRES.getValue()));
         // 打开侧边栏
         DIRECTORY_SIDEBAR_MANAGER.controlShow(true);
         // 设置文件树功能
         DIRECTORY_SIDEBAR_MANAGER.setTreeView(dirFileModel);
+        // 缓存已打开的文件夹
+        CACHE_MANAGER.addCache(CACHE_MANAGER.createCache(GROUP, "folderThatWasOpened", dirFileModel, CacheExpirationTime.NEVER_EXPIRES.getValue()));
     }
 }

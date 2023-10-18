@@ -7,9 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
-import org.jcnc.jnotepad.app.utils.FileUtil;
-import org.jcnc.jnotepad.app.utils.LoggerUtil;
-import org.jcnc.jnotepad.app.utils.TabUtil;
+import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
+import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
+import org.jcnc.jnotepad.app.utils.*;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.component.module.TextCodeArea;
 import org.jcnc.jnotepad.ui.views.manager.BottomStatusBoxManager;
@@ -22,7 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import static org.jcnc.jnotepad.app.common.constants.TextConstants.READ_ONLY;
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
 
 /**
  * 封装标签页组件，增加属于标签页的属性，例如：自动换行开关。
@@ -79,10 +79,10 @@ public class CenterTab extends Tab {
         this.charset = charset;
         this.relevanceProperty.set(relevanceProperty);
         this.setUserData(file);
-        // 将监听器于上下文菜单集中处理
+        // 将监听器与上下文菜单集中处理
         Platform.runLater(() -> {
             initTextAreaListeners();
-            this.contextMenuMonitor();
+            initTabContextMenu();
             initFixedStateListener();
         });
     }
@@ -130,12 +130,72 @@ public class CenterTab extends Tab {
     }
 
     /**
-     * Monitors the context menu.
+     * Updates the context menu for a given tab in the center tab pane.
+     *
      */
-    public void contextMenuMonitor() {
-        TabUtil.initTabContextMenu(this);
+    private void initTabContextMenu() {
+        ContextMenuBuilder builder = new ContextMenuBuilder();
+        CenterTabPaneManager centerTabPaneManager = CenterTabPaneManager.getInstance();
+        File file = (File) this.getUserData();
+        // 设置上下文菜单
+        this.setContextMenu(
+                builder
+                        .addMenuItem(
+                                CLOSE,
+                                e -> centerTabPaneManager.removeTab(this))
+                        .addMenuItem(
+                                CLOSE_OTHER_TABS,
+                                e -> centerTabPaneManager.removeOtherTabs(this),
+                                this.hasOtherTabsPropertyProperty()
+                        )
+                        .addMenuItem(
+                                CLOSE_ALL_TABS,
+                                e -> centerTabPaneManager.removeAllTabs())
+                        .addMenuItem(
+                                CLOSE_LEFT_TABS,
+                                e -> centerTabPaneManager.removeLeftTabs(this),
+                                this.hasLeftTabsPropertyProperty()
+                        )
+                        .addMenuItem(
+                                CLOSE_RIGHT_TABS,
+                                e -> centerTabPaneManager.removeRightTabs(this),
+                                this.hasRightTabsPropertyProperty()
+                        )
+                        .addSeparatorMenuItem(this.relevancePropertyProperty())
+                        .addMenu(
+                                new MenuBuilder(COPY)
+                                        .addMenuItem(FILE_NAME, e -> {
+                                            ClipboardUtil.writeTextToClipboard(file.getName());
+                                            NotificationUtil.infoNotification("已复制文件名!");
+                                        })
+                                        .addMenuItem(FILE_PATH, e -> {
+                                            ClipboardUtil.writeTextToClipboard(file.getAbsolutePath());
+                                            NotificationUtil.infoNotification("已复制文件路径!");
+                                        })
+                                        .addMenuItem(FOLDER_PATH, e -> {
+                                            ClipboardUtil.writeTextToClipboard(file.getParent());
+                                            NotificationUtil.infoNotification("已复制所在文件夹!");
+                                        })
+                                        .build()
+                                , this.relevancePropertyProperty()
+                        )
+                        .addSeparatorMenuItem()
+                        .addMenuItem(SAVE, e -> TabUtil.saveFile(this))
+                        .addMenuItem(SAVE_AS, e -> TabUtil.saveAsFile(this), this.relevancePropertyProperty())
+                        .addMenuItem(RENAME, e -> TabUtil.rename(this))
+                        .addSeparatorMenuItem(this.relevancePropertyProperty())
+                        .addMenu(new MenuBuilder(OPEN_ON)
+                                .addMenuItem(EXPLORER, e -> FileUtil.openExplorer(file))
+                                .addMenuItem(TERMINAL, e -> FileUtil.openTerminal(file.getParentFile()))
+                                .build(), this.relevancePropertyProperty())
+                        .addSeparatorMenuItem()
+                        .addCheckMenuItem(FIXED_TAB,
+                                e -> centerTabPaneManager.updateTabPinnedState(this))
+                        .addSeparatorMenuItem()
+                        .addCheckMenuItem(this.getReadOnly(),
+                                e -> centerTabPaneManager.updateReadOnlyProperty(this))
+                        .build());
     }
-
 
     /**
      * 保存选中的文件标签页

@@ -1,7 +1,9 @@
 package org.jcnc.jnotepad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javafx.scene.Node;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -17,6 +19,7 @@ public class DirFileModel {
      * 路径
      */
     private String path;
+
     /**
      * 文件名
      */
@@ -25,15 +28,29 @@ public class DirFileModel {
     /**
      * 未选中时的图标
      */
+    @JsonIgnore
     private Node iconIsNotSelected;
     /**
      * 选中时的图标
      */
+    @JsonIgnore
     private Node iconIsSelected;
     /**
      * 子文件
      */
     private List<DirFileModel> childFile;
+
+    /**
+     * 是否打开
+     */
+    private boolean isOpen;
+
+    public DirFileModel(String path, String name, List<DirFileModel> childFile, boolean isOpen) {
+        this.path = path;
+        this.name = name;
+        this.childFile = childFile;
+        this.isOpen = isOpen;
+    }
 
     public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected) {
         this.path = path;
@@ -41,8 +58,34 @@ public class DirFileModel {
         this.childFile = childFile;
         this.iconIsNotSelected = iconIsNotSelected;
         this.iconIsSelected = iconIsSelected;
+        this.isOpen = false;
     }
 
+    public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected, boolean isOpen) {
+        this.path = path;
+        this.name = name;
+        this.childFile = childFile;
+        this.iconIsNotSelected = iconIsNotSelected;
+        this.iconIsSelected = iconIsSelected;
+        this.isOpen = isOpen;
+    }
+
+    public DirFileModel() {
+    }
+
+    /**
+     * Check if the given `DirFileModel` represents a directory.
+     *
+     * @param childFile the `DirFileModel` to check
+     * @return `true` if the `childFile` represents a directory, `false` otherwise
+     */
+    public static boolean isDirectoryByDirFileModel(DirFileModel childFile) {
+        return new File(childFile.getPath()).isDirectory();
+    }
+
+    public boolean isOpen() {
+        return isOpen;
+    }
 
     public List<DirFileModel> getChildFile() {
         return childFile;
@@ -88,4 +131,9 @@ public class DirFileModel {
     public void setIconIsSelected(Node iconIsSelected) {
         this.iconIsSelected = iconIsSelected;
     }
+
+    public void setOpen(boolean open) {
+        isOpen = open;
+    }
+
 }

@@ -4,8 +4,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
-import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
-import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
 import org.jcnc.jnotepad.app.common.constants.AppConstants;
 import org.jcnc.jnotepad.app.common.constants.TextConstants;
 import org.jcnc.jnotepad.app.common.manager.ApplicationCacheManager;
@@ -28,7 +26,7 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.jcnc.jnotepad.app.common.constants.TextConstants.*;
+import static org.jcnc.jnotepad.app.common.constants.TextConstants.NEW_FILE;
 import static org.jcnc.jnotepad.app.utils.FileUtil.getFileText;
 import static org.jcnc.jnotepad.controller.config.UserConfigController.CONFIG_NAME;
 
@@ -328,74 +326,5 @@ public class TabUtil {
         // 设置关联文件最后的修改时间
         tab.setLastModifiedTimeOfAssociatedFile(file.lastModified());
         CenterTabPaneManager.getInstance().addNewTab(tab);
-    }
-
-    /**
-     * Updates the context menu for a given tab in the center tab pane.
-     *
-     * @param tab The tab for which the context menu is being updated.
-     */
-    public static void initTabContextMenu(CenterTab tab) {
-        ContextMenuBuilder builder = new ContextMenuBuilder();
-        CenterTabPaneManager centerTabPaneManager = CenterTabPaneManager.getInstance();
-        File file = (File) tab.getUserData();
-        // 设置上下文菜单
-        tab.setContextMenu(
-                builder
-                        .addMenuItem(
-                                CLOSE,
-                                e -> centerTabPaneManager.removeTab(tab))
-                        .addMenuItem(
-                                CLOSE_OTHER_TABS,
-                                e -> centerTabPaneManager.removeOtherTabs(tab),
-                                tab.hasOtherTabsPropertyProperty()
-                        )
-                        .addMenuItem(
-                                CLOSE_ALL_TABS,
-                                e -> centerTabPaneManager.removeAllTabs())
-                        .addMenuItem(
-                                CLOSE_LEFT_TABS,
-                                e -> centerTabPaneManager.removeLeftTabs(tab),
-                                tab.hasLeftTabsPropertyProperty()
-                        )
-                        .addMenuItem(
-                                CLOSE_RIGHT_TABS,
-                                e -> centerTabPaneManager.removeRightTabs(tab),
-                                tab.hasRightTabsPropertyProperty()
-                        )
-                        .addSeparatorMenuItem(tab.relevancePropertyProperty())
-                        .addMenu(
-                                new MenuBuilder(COPY)
-                                        .addMenuItem(FILE_NAME, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getName());
-                                            NotificationUtil.infoNotification("已复制文件名!");
-                                        })
-                                        .addMenuItem(FILE_PATH, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getAbsolutePath());
-                                            NotificationUtil.infoNotification("已复制文件路径!");
-                                        })
-                                        .addMenuItem(FOLDER_PATH, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getParent());
-                                            NotificationUtil.infoNotification("已复制所在文件夹!");
-                                        })
-                                        .build()
-                                , tab.relevancePropertyProperty()
-                        )
-                        .addSeparatorMenuItem()
-                        .addMenuItem(SAVE, e -> saveFile(tab))
-                        .addMenuItem(SAVE_AS, e -> saveAsFile(tab), tab.relevancePropertyProperty())
-                        .addMenuItem(RENAME, e -> rename(tab))
-                        .addSeparatorMenuItem(tab.relevancePropertyProperty())
-                        .addMenu(new MenuBuilder(OPEN_ON)
-                                .addMenuItem(EXPLORER, e -> FileUtil.openExplorer(file))
-                                .addMenuItem(TERMINAL, e -> FileUtil.openTerminal(file.getParentFile()))
-                                .build(), tab.relevancePropertyProperty())
-                        .addSeparatorMenuItem()
-                        .addCheckMenuItem(FIXED_TAB,
-                                e -> centerTabPaneManager.updateTabPinnedState(tab))
-                        .addSeparatorMenuItem()
-                        .addCheckMenuItem(tab.getReadOnly(),
-                                e -> centerTabPaneManager.updateReadOnlyProperty(tab))
-                        .build());
     }
 }

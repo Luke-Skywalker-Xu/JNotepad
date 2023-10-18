@@ -18,8 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
+import java.util.*;
 
 import static org.kordamp.ikonli.antdesignicons.AntDesignIconsFilled.*;
 
@@ -178,6 +178,42 @@ public class FileUtil {
         }
         return dirFileModel;
     }
+
+    /**
+     * Retrieves a DirFileModel object based on the given dirFileModels map.
+     *
+     * @param dirFileModels a map containing the dirFileModels data
+     * @return the DirFileModel object
+     */
+    public static DirFileModel getDirFileModel(Map<String, Object> dirFileModels) {
+        if (Objects.isNull(dirFileModels) || dirFileModels.isEmpty()) {
+            return null;
+        }
+        DirFileModel dirFileModel = new DirFileModel(
+                (String) dirFileModels.get("path"),
+                (String) dirFileModels.get("name"), new ArrayList<>(),
+                new FontIcon(FOLDER),
+                new FontIcon(FOLDER_OPEN), (Boolean) dirFileModels.get("open"));
+        Optional<Object> o = Optional.ofNullable(dirFileModels.get("childFile"));
+        if (o.isEmpty()) {
+            return null;
+        }
+        List<Map<String, Object>> childFile = (List<Map<String, Object>>) o.get();
+        for (Map<String, Object> map : childFile) {
+            Object obj = map.get("childFile");
+            if (obj == null) {
+                dirFileModel.getChildFile().add(new DirFileModel(
+                        (String) map.get("path"), (String) map.get("name"), null,
+                        getIconCorrespondingToFileName((String) map.get("name")),
+                        null));
+            } else {
+                DirFileModel childDirFileModel = getDirFileModel(map);
+                dirFileModel.getChildFile().add(childDirFileModel);
+            }
+        }
+        return dirFileModel;
+    }
+
 
     /**
      * 文件夹迁移
@@ -360,7 +396,7 @@ public class FileUtil {
             processBuilder = new ProcessBuilder("open", "-a", "Terminal", folder.getAbsolutePath());
         } else {
             // Linux或其他系统
-            processBuilder = new ProcessBuilder("gnome-terminal", "--working-directory=", folder.getAbsolutePath());
+            processBuilder = new ProcessBuilder("xdg-open", folder.getAbsolutePath());
         }
         return processBuilder;
     }
