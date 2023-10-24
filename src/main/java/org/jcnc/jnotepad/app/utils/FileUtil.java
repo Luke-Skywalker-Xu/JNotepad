@@ -37,6 +37,8 @@ public class FileUtil {
 
     private static final String MAC = "mac";
 
+    private static final String PATH = "path";
+
     static {
         try {
             MESSAGE_DIGEST_SHA_256 = MessageDigest.getInstance("SHA-256");
@@ -189,9 +191,10 @@ public class FileUtil {
         if (Objects.isNull(dirFileModels) || dirFileModels.isEmpty()) {
             return null;
         }
+        File rootDir = new File((String) dirFileModels.get(PATH));
         DirFileModel dirFileModel = new DirFileModel(
-                (String) dirFileModels.get("path"),
-                (String) dirFileModels.get("name"), new ArrayList<>(),
+                rootDir.getAbsolutePath(),
+                rootDir.getName(), new ArrayList<>(),
                 new FontIcon(FOLDER),
                 new FontIcon(FOLDER_OPEN), (Boolean) dirFileModels.get("open"));
         Optional<Object> o = Optional.ofNullable(dirFileModels.get("childFile"));
@@ -199,16 +202,29 @@ public class FileUtil {
             return null;
         }
         List<Map<String, Object>> childFile = (List<Map<String, Object>>) o.get();
-        for (Map<String, Object> map : childFile) {
-            Object obj = map.get("childFile");
-            if (obj == null) {
-                dirFileModel.getChildFile().add(new DirFileModel(
-                        (String) map.get("path"), (String) map.get("name"), null,
-                        getIconCorrespondingToFileName((String) map.get("name")),
-                        null));
-            } else {
-                DirFileModel childDirFileModel = getDirFileModel(map);
+        File[] files = rootDir.listFiles();
+        if (files == null) {
+            return null;
+        }
+
+        for (File f : files) {
+            if (f.isDirectory()) {
+                Optional<Map<String, Object>> first = childFile
+                        .stream()
+                        .filter(map -> map.get(PATH).equals(f.getAbsolutePath())).findFirst();
+                DirFileModel childDirFileModel;
+                if (first.isPresent()) {
+                    childDirFileModel = getDirFileModel(first.get());
+                } else {
+                    childDirFileModel = getDirFileModel(f);
+                }
                 dirFileModel.getChildFile().add(childDirFileModel);
+            } else {
+                // 在此监测文件后缀，设置对应的图标
+                dirFileModel.getChildFile().add(new DirFileModel(
+                        f.getAbsolutePath(), f.getName(), null,
+                        getIconCorrespondingToFileName(f.getName()),
+                        null));
             }
         }
         return dirFileModel;
@@ -365,17 +381,18 @@ public class FileUtil {
      * @param folder the folder in which to open the terminal
      */
     public static void openTerminal(File folder) {
-        if (folder.exists() && folder.isDirectory()) {
-            String os = System.getProperty("os.name").toLowerCase();
-
-            ProcessBuilder processBuilder = getProcessBuilder(folder, os);
-            try {
-                processBuilder.start();
-            } catch (IOException e) {
-                PopUpUtil.errorAlert("打开失败", "打开于终端失败", "错误原因" + e.getMessage(), null, null);
-            }
-        } else {
-            logger.info("文件夹不存在或者不是文件夹");
+        if (!folder.exists()) {
+            return;
+        }
+        if (folder.isFile()) {
+            folder = folder.getParentFile();
+        }
+        String os = System.getProperty("os.name").toLowerCase();
+        ProcessBuilder processBuilder = getProcessBuilder(folder, os);
+        try {
+            processBuilder.start();
+        } catch (IOException e) {
+            PopUpUtil.errorAlert("打开失败", "打开于终端失败", "错误原因:" + e.getMessage(), null, null);
         }
     }
 
@@ -399,6 +416,19 @@ public class FileUtil {
             processBuilder = new ProcessBuilder("xdg-open", folder.getAbsolutePath());
         }
         return processBuilder;
+    }
+
+    /**
+     * Creates a file at the specified path.
+     *
+     * @param path The path to the file to be created.
+     */
+    public static void createFile(Path path) {
+        try {
+            Files.createFile(path);
+        } catch (IOException e) {
+            logger.error("创建文件失败", e);
+        }
     }
 }
 

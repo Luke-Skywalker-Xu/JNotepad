@@ -23,6 +23,7 @@ public class DirFileModel {
     /**
      * 文件名
      */
+    @JsonIgnore
     private String name;
 
     /**
@@ -44,13 +45,6 @@ public class DirFileModel {
      * 是否打开
      */
     private boolean isOpen;
-
-    public DirFileModel(String path, String name, List<DirFileModel> childFile, boolean isOpen) {
-        this.path = path;
-        this.name = name;
-        this.childFile = childFile;
-        this.isOpen = isOpen;
-    }
 
     public DirFileModel(String path, String name, List<DirFileModel> childFile, Node iconIsNotSelected, Node iconIsSelected) {
         this.path = path;

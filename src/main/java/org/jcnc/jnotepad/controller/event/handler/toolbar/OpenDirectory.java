@@ -51,9 +51,13 @@ public class OpenDirectory implements EventHandler<ActionEvent> {
             CACHE_MANAGER.addCache(cache);
         }
         flushDirSidebar(file);
-
     }
 
+    /**
+     * Flushes the directory sidebar with the given file.
+     *
+     * @param file the file to be converted into an entity class
+     */
     public void flushDirSidebar(File file) {
         // 将文件转为实体类
         DirFileModel dirFileModel = FileUtil.getDirFileModel(file);

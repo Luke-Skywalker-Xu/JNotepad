@@ -103,12 +103,12 @@ public class DirectorySidebarManager {
      */
     public void setTreeView(DirFileModel dirFileModel) {
         TreeItem<DirFileModel> rootItem = new TreeItem<>(dirFileModel, dirFileModel.getIconIsNotSelected());
-
         DIRECTORY_SIDEBAR_PANE.setRoot(rootItem);
         rootItem.expandedProperty().addListener(getTreeItemListener(rootItem));
         rootItem.setExpanded(dirFileModel.isOpen());
         expandFolder(dirFileModel, rootItem);
     }
+
 
     /**
      * 递归展开 dirFileModel

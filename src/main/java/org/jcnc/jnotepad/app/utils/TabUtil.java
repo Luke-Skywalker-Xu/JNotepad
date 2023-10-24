@@ -128,19 +128,18 @@ public class TabUtil {
      * @param tab 标签页组件
      */
     private static void handleRenameTab(CenterTab tab) {
-        TextField textField = new TextField(tab.getText());
-        textField.getStyleClass().add("tab-title-editable");
         // 临时记录标签页名称
         String tempName = tab.getText();
+        TextField textField = new TextField(tempName);
+        textField.getStyleClass().add("tab-title-editable");
         // 清空标签页名称
         tab.setText("");
-
         // 监听 Enter 键，完成编辑
         textField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 String newTabName = textField.getText();
                 // 检查是否存在相同名称的标签页
-                if (isTabNameExists(newTabName)) {
+                if (tabNameExists(newTabName)) {
 
                     // 显示弹窗并提示用户更换名称
                     showDuplicateNameAlert(newTabName);
@@ -162,7 +161,7 @@ public class TabUtil {
         textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
             String newTabName = textField.getText();
             // 检查是否存在相同名称的标签页
-            if (isTabNameExists(newTabName)) {
+            if (tabNameExists(newTabName)) {
                 // 恢复原始名称
                 tab.setText(tempName);
 
@@ -191,7 +190,7 @@ public class TabUtil {
      * @param newTabName 要检查的新标签页名称
      * @return 如果存在具有相同名称的标签页，则返回 true；否则返回 false
      */
-    private static boolean isTabNameExists(String newTabName) {
+    private static boolean tabNameExists(String newTabName) {
         CenterTabPane tabPane = CenterTabPane.getInstance();
         return tabPane.getTabs().stream()
                 .anyMatch(tab -> tab.getText().equals(newTabName));
@@ -245,6 +244,22 @@ public class TabUtil {
     public static void addNewFileTab() {
         // 创建一个新的文本编辑区
         TextCodeArea textArea = new TextCodeArea();
+        // 创建标签页
+        CenterTab centerTab = new CenterTab(
+                generateDefaultName(),
+                textArea);
+        // 将Tab页添加到TabPane中
+        CenterTabPaneManager.getInstance().addNewTab(centerTab);
+        // 更新编码信息
+        BottomStatusBoxManager.getInstance().updateEncodingLabel();
+    }
+
+    /**
+     * Generate the default name for a new tab.
+     *
+     * @return The default name for a new tab.
+     */
+    private static String generateDefaultName() {
         // 设定初始索引
         int index = 1;
         StringBuilder tabTitle = new StringBuilder();
@@ -275,14 +290,7 @@ public class TabUtil {
                 break;
             }
         }
-        // 创建标签页
-        CenterTab centerTab = new CenterTab(
-                tabTitle.toString(),
-                textArea);
-        // 将Tab页添加到TabPane中
-        CenterTabPaneManager.getInstance().addNewTab(centerTab);
-        // 更新编码信息
-        BottomStatusBoxManager.getInstance().updateEncodingLabel();
+        return tabTitle.toString();
     }
 
     /**
