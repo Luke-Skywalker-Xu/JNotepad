@@ -77,6 +77,23 @@ public abstract class AbstractMenuBuilder<B, T> {
     }
 
     /**
+     * 添加菜单项
+     *
+     * @param label        菜单项名称
+     * @param eventHandler 事件
+     * @param visible      是否可见
+     * @return 建造者
+     */
+    public B addMenuItem(String label, EventHandler<ActionEvent> eventHandler, boolean visible) {
+        MenuItem menuItem = new MenuItem(label);
+        menuItem.setOnAction(eventHandler);
+        menuItem.setVisible(visible);
+        menuItems.put(label, menuItem);
+        getItems().add(menuItem);
+        return getBuilder();
+    }
+
+    /**
      * 添加单选菜单项
      *
      * @param label        菜单项名称
@@ -141,6 +158,20 @@ public abstract class AbstractMenuBuilder<B, T> {
         return getBuilder();
     }
 
+    /**
+     * 添加菜单
+     *
+     * @param menu    菜单
+     * @param visible 是否隐藏
+     * @return 建造者
+     */
+    public B addMenu(Menu menu, boolean visible) {
+        menu.setVisible(visible);
+        menuItems.put(menu.getText(), menu);
+        getItems().add(menu);
+        return getBuilder();
+    }
+
 
     /**
      * 添加分割线
@@ -162,6 +193,19 @@ public abstract class AbstractMenuBuilder<B, T> {
         SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
         separatorMenuItem.setVisible(visible.get());
         visible.addListener((observable, oldValue, newValue) -> separatorMenuItem.setVisible(Boolean.TRUE.equals(newValue)));
+        getItems().add(separatorMenuItem);
+        return getBuilder();
+    }
+
+    /**
+     * 添加分割线
+     *
+     * @param visible 是否可见
+     * @return 建造者
+     */
+    public B addSeparatorMenuItem(boolean visible) {
+        SeparatorMenuItem separatorMenuItem = new SeparatorMenuItem();
+        separatorMenuItem.setVisible(visible);
         getItems().add(separatorMenuItem);
         return getBuilder();
     }

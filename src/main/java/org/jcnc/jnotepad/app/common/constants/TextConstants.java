@@ -23,6 +23,10 @@ public class TextConstants {
      * 文件文本常量
      */
     public static final String FILE = "FILE";
+    /**
+     * 文件夹
+     */
+    public static final String FOLDER = "FOLDER";
 
     /**
      * 构建文本常量
@@ -138,6 +142,16 @@ public class TextConstants {
      * 新建文件文本常量
      */
     public static final String NEW_FILE = "NEW_FILE";
+
+    /**
+     * 新建文件夹
+     */
+    public static final String NEW_DIRECTORY = "NEW_DIRECTORY";
+
+    /**
+     * 删除
+     */
+    public static final String DELETE = "DELETE";
 
     /**
      * 行文本常量

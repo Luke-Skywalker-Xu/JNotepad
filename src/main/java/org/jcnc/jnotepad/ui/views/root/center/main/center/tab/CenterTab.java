@@ -8,12 +8,14 @@ import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Tab;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.jcnc.jnotepad.api.core.views.menu.builder.ContextMenuBuilder;
-import org.jcnc.jnotepad.api.core.views.menu.builder.MenuBuilder;
-import org.jcnc.jnotepad.app.utils.*;
+import org.jcnc.jnotepad.app.utils.FileUtil;
+import org.jcnc.jnotepad.app.utils.LoggerUtil;
+import org.jcnc.jnotepad.app.utils.TabUtil;
 import org.jcnc.jnotepad.controller.config.UserConfigController;
 import org.jcnc.jnotepad.ui.component.module.TextCodeArea;
 import org.jcnc.jnotepad.ui.views.manager.BottomStatusBoxManager;
 import org.jcnc.jnotepad.ui.views.manager.CenterTabPaneManager;
+import org.jcnc.jnotepad.ui.views.manager.MenuManager;
 import org.slf4j.Logger;
 
 import java.io.BufferedWriter;
@@ -163,20 +165,7 @@ public class CenterTab extends Tab {
                         )
                         .addSeparatorMenuItem(this.relevancePropertyProperty())
                         .addMenu(
-                                new MenuBuilder(COPY)
-                                        .addMenuItem(FILE_NAME, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getName());
-                                            NotificationUtil.infoNotification("已复制文件名!");
-                                        })
-                                        .addMenuItem(FILE_PATH, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getAbsolutePath());
-                                            NotificationUtil.infoNotification("已复制文件路径!");
-                                        })
-                                        .addMenuItem(FOLDER_PATH, e -> {
-                                            ClipboardUtil.writeTextToClipboard(file.getParent());
-                                            NotificationUtil.infoNotification("已复制所在文件夹!");
-                                        })
-                                        .build()
+                                MenuManager.getCopyMenu(file)
                                 , this.relevancePropertyProperty()
                         )
                         .addSeparatorMenuItem()
@@ -184,10 +173,7 @@ public class CenterTab extends Tab {
                         .addMenuItem(SAVE_AS, e -> TabUtil.saveAsFile(this), this.relevancePropertyProperty())
                         .addMenuItem(RENAME, e -> TabUtil.rename(this))
                         .addSeparatorMenuItem(this.relevancePropertyProperty())
-                        .addMenu(new MenuBuilder(OPEN_ON)
-                                .addMenuItem(EXPLORER, e -> FileUtil.openExplorer(file))
-                                .addMenuItem(TERMINAL, e -> FileUtil.openTerminal(file.getParentFile()))
-                                .build(), this.relevancePropertyProperty())
+                        .addMenu(MenuManager.getOpenMenu(file), this.relevancePropertyProperty())
                         .addSeparatorMenuItem()
                         .addCheckMenuItem(FIXED_TAB,
                                 e -> centerTabPaneManager.updateTabPinnedState(this))
@@ -196,6 +182,7 @@ public class CenterTab extends Tab {
                                 e -> centerTabPaneManager.updateReadOnlyProperty(this))
                         .build());
     }
+
 
     /**
      * 保存选中的文件标签页
